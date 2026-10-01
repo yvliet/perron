@@ -1,0 +1,129 @@
+{
+  "num_trajectories": 10,
+  "resolved_count": 5,
+  "unresolved_count": 5,
+  "turns": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "action_frequencies": {
+    "CSR_INGEST": [
+      10,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "TELEPORT_PRIOR": [
+      10,
+      7,
+      5,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "PPR_WALK": [
+      10,
+      7,
+      5,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "SPEC_FILTER": [
+      10,
+      7,
+      5,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "AST_PACK": [
+      10,
+      7,
+      5,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "MODEL_INFER": [
+      10,
+      7,
+      5,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "AST_EDIT": [
+      8,
+      5,
+      3,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "PYTEST_RUN": [
+      7,
+      2,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "failure_labels": [
+    "Multi-file Latent Dependency",
+    "Dynamic Reflection / Monkey-patch",
+    "Underspecified Issue Text",
+    "Harness Timeout / Deadlock",
+    "Premature Search Termination"
+  ],
+  "failure_percentages": [
+    20.0,
+    20.0,
+    20.0,
+    20.0,
+    20.0
+  ]
+}

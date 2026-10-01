@@ -1,0 +1,52 @@
+# ==============================================================================
+# Perron Autonomous Developer Agent - Turnkey Deployment Specification (Apache 2.0)
+# Model: Gemma 4 E4B (Edge 16GB) & 26B A4B (Workstation) with Perron Subgraph Retrieval
+# ==============================================================================
+
+name: perron-developer-agent
+version: 1.1.0
+author: Sultan Haikal (@yvliet)
+entrypoint: python -m perron.runner
+license: Apache-2.0
+
+runtime:
+  python_version: ">=3.10"
+  timeout_per_instance_seconds: 300
+  offline_mode: true
+
+model:
+  # Edge Tier (16GB Laptops): Gemma 4 E2B / E4B INT4 (6.8 GB RAM footprint)
+  base: google/gemma-4/transformers/gemma-4-e2b-it-qat-mobile-transformers
+  # Workstation Tier (24GB GPUs): Gemma 4 26B A4B / 31B INT4
+  scaled_base: google/gemma-4/transformers/gemma-4-26b-a4b-it
+  backend: transformers
+  quantization: 4bit
+  offline_mode: true
+  torch_dtype: bfloat16
+  max_context_tokens: 3480
+  max_new_tokens: 2048
+  max_turns: 5
+  temperature: 0.2
+
+diffusion:
+  beta: 0.85
+  gamma: 0.70
+  tau: 0.05
+  top_k_teleport: 25
+
+tools:
+  - name: ast_subgraph_retrieval
+    description: Query-directed specificity diffusion over zero-copy memory-mapped CSR code graphs
+    parameters:
+      token_budget: 3480
+      hub_damping_gamma: 0.70
+  - name: ast_grounded_patch
+    description: Atomic multi-file search-and-replace patching with AST syntax validation
+    parameters:
+      format: xml_edit_blocks
+      strict_line_matching: true
+  - name: isolated_test_runner
+    description: Targeted pytest execution with process-group timeouts and worktree isolation
+    parameters:
+      timeout_seconds: 45.0
+      isolation: git_worktree
