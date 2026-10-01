@@ -1,0 +1,67 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "perron-core"
+version = "0.2.0"
+description = "Context-Bounded Repository Navigation via Query-Directed Spectral Hub Suppression for Edge Developer Agents"
+authors = [
+    { name = "Sultan Haikal", email = "yvliet@users.noreply.github.com" }
+]
+readme = "README.md"
+license = { text = "Apache-2.0" }
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+polyglot = [
+    "tree-sitter>=0.22.0",
+    "tree-sitter-typescript>=0.21.0",
+]
+inference-gguf = [
+    "llama-cpp-python>=0.2.80",
+]
+inference-torch = [
+    "torch>=2.2.0",
+    "transformers>=4.40.0",
+    "accelerate>=0.28.0",
+    "bitsandbytes>=0.43.0",
+    "peft>=0.10.0",
+]
+eval = [
+    "datasets>=2.18.0",
+    "matplotlib>=3.8.0",
+    "optuna>=3.6.0",
+    "huggingface_hub>=0.22.0",
+]
+dev = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "ruff>=0.1.0",
+    "build>=1.0.0",
+    "twine>=4.0.0",
+]
+
+[project.scripts]
+perron = "perron.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["perron*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
