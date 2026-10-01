@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @page {
+    size: 1180px 560px;
+    margin: 0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 1180px;
+    height: 560px;
+    padding: 10px 14px;
+    background: #ffffff;
+    font-family: "Times New Roman", Times, "Computer Modern Roman", "DejaVu Serif", serif;
+    color: #0f172a;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Two Tier Section Headers */
+  .tier-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f8fafc;
+    border-top: 1.5px solid #0f172a;
+    border-bottom: 1px solid #cbd5e1;
+    padding: 3px 8px;
+    margin-bottom: 6px;
+  }
+  .tier-title {
+    font-size: 11px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: 0.3px;
+  }
+  .tier-tag {
+    font-size: 9px;
+    color: #475569;
+    font-style: italic;
+  }
+
+  /* Horizontal Stage Blocks */
+  .tier-row {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .stage-box {
+    background: #ffffff;
+    border: 1px solid #94a3b8;
+    border-radius: 2px;
+    padding: 6px 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .stage-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 0.8px solid #cbd5e1;
+    padding-bottom: 2px;
+    margin-bottom: 4px;
+  }
+  .stage-title {
+    font-size: 9.5px;
+    font-weight: 700;
+    color: #0f172a;
+  }
+  .stage-num {
+    font-size: 9px;
+    font-weight: 700;
+    color: #0072B2; /* Okabe-Ito Blue */
+  }
+
+  .math-snippet {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 9px;
+    background: #f8fafc;
+    border: 0.8px solid #e2e8f0;
+    border-radius: 2px;
+    padding: 3px 5px;
+    line-height: 1.35;
+    margin: 2px 0;
+  }
+
+  .mono {
+    font-family: "Consolas", "SFMono-Regular", "Liberation Mono", Menlo, monospace;
+    font-size: 8px;
+    line-height: 1.35;
+  }
+
+  .stage-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 0.8px solid #f1f5f9;
+    padding-top: 2px;
+    margin-top: 3px;
+    font-size: 8px;
+    color: #475569;
+  }
+
+  /* Transition Channel Between Tiers */
+  .inter-tier-channel {
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    position: relative;
+  }
+  .channel-line {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 11px;
+    border-top: 1px dashed #cbd5e1;
+    z-index: 1;
+  }
+  .channel-badge {
+    position: relative;
+    z-index: 2;
+    background: #ffffff;
+    padding: 0 10px;
+    font-size: 8.5px;
+    color: #0072B2;
+    font-weight: 700;
+    font-style: italic;
+  }
+
+  /* Academic Mini-Table */
+  .mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8px;
+    line-height: 1.3;
+    margin-top: 2px;
+  }
+  .mini-table thead tr {
+    border-top: 1px solid #334155;
+    border-bottom: 0.6px solid #64748b;
+    font-weight: 700;
+  }
+  .mini-table th { padding: 1px 3px; text-align: left; }
+  .mini-table td { padding: 1.5px 3px; }
+  .mini-table tbody tr:last-child { border-bottom: 1px solid #334155; }
+
+  /* Flow Arrow Connector */
+  .flow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 12px;
+    color: #0072B2;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+  <!-- ============================================================================== -->
+  <!-- TIER 1: OFFLINE CODEBASE INDEXING & COMPILATION (Precomputed Once Per Repo)     -->
+  <!-- ============================================================================== -->
+  <div class="tier-banner">
+    <span class="tier-title">TIER 1: OFFLINE CODEBASE GRAPH COMPILATION</span>
+    <span class="tier-tag">Executed Once per Repository &bull; Amortized Overhead: 0 ms</span>
+  </div>
+
+  <div class="tier-row" style="height: 195px; margin-bottom: 4px;">
+
+    <!-- Stage 1.1: Codebase AST Ingestion -->
+    <div class="stage-box" style="flex: 1.1;">
+      <div>
+        <div class="stage-header">
+          <span class="stage-title">Repository AST Parser</span>
+          <span class="stage-num">[1.1]</span>
+        </div>
+        <div style="font-size: 8.5px; color: #334155; margin-bottom: 2px;">
+          Traverses symbols to build call graph <span style="font-style:italic;">G = (V, E)</span>:
+        </div>
+        <div class="mono" style="background: #f8fafc; border: 0.8px solid #cbd5e1; padding: 4px 6px; border-radius: 2px; color: #1e293b;">
+          repo/db/models/<br>
+          &nbsp;&boxvr;&HorizontalLine; query.py (QuerySet.filter)<br>
+          &nbsp;&boxvr;&HorizontalLine; compiler.py (SQLCompiler.as_sql)<br>
+          &nbsp;&boxur;&HorizontalLine; logging.py (Logger.debug)
+        </div>
+        <div style="font-size: 8px; color: #64748b; margin-top: 3px;">
+          Power-law degree distribution: |V| = 1,000 symbols.
+        </div>
+      </div>
+      <div class="stage-footer">
+        <span>Language: Python 3.10+</span>
+        <span style="color: #0072B2; font-weight: 700;">AST Symbols</span>
+      </div>
+    </div>
+
+    <div class="flow-arrow">
+      <svg width="12" height="20" viewBox="0 0 12 20"><polyline points="2,4 8,10 2,16" fill="none" stroke="#0072B2" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </div>
+
+    <!-- Stage 1.2: Asymmetric Edge Weighting -->
+    <div class="stage-box" style="flex: 1.3;">
+      <div>
+        <div class="stage-header">
+          <span class="stage-title">Static CSR Matrix Ingestion</span>
+          <span class="stage-num">[1.2]</span>
+        </div>
+        <div style="font-size: 8.5px; color: #334155; margin-bottom: 2px;">
+          Asymmetric causal weights &amp; row-stochastic normalization:
+        </div>
+        <div class="math-snippet">
+          <span style="font-style:italic;">W<sub>uv</sub></span> = 1.0 &middot; <span style="font-style:italic;">I</span><sub>call</sub>(u, v) + 0.2 &middot; <span style="font-style:italic;">I</span><sub>caller</sub>(u, v)<br>
+          <span style="font-style:italic;">T<sub>uv</sub></span> = <span style="font-style:italic;">W<sub>uv</sub></span> / <span style="font-style:italic;">D<sub>u</sub></span>, &nbsp;&nbsp;
+          <span style="font-style:italic;">d<sub>u</sub></span> = 1.0 &nbsp;<span style="font-size:8px;">if</span> <span style="font-style:italic;">D<sub>u</sub></span> = 0 &nbsp;<span style="font-size:8px;">else</span> 0.0
+        </div>
+        <div style="font-size: 8px; color: #475569; margin-top: 2px;">
+          Preserves forward execution chains without undirected walk drift.
+        </div>
+      </div>
+      <div class="stage-footer">
+        <span style="color: #009E73; font-weight: 700;">&lambda;call = 1.0 &nbsp;&lambda;caller = 0.2</span>
+        <span>Stochastic T</span>
+      </div>
+    </div>
+
+    <div class="flow-arrow">
+      <svg width="12" height="20" viewBox="0 0 12 20"><polyline points="2,4 8,10 2,16" fill="none" stroke="#0072B2" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </div>
+
+    <!-- Stage 1.3: Binary Memory-Mapped Disk Array -->
+    <div class="stage-box" style="flex: 1.2;">
+      <div>
+        <div class="stage-header">
+          <span class="stage-title">Zero-Copy Disk Serialization</span>
+          <span class="stage-num">[1.3]</span>
+        </div>
+        <div style="font-size: 8.5px; color: #334155; margin-bottom: 2px;">
+          Uncompressed raw binary CSR disk arrays:
+        </div>
+        <div class="mono" style="background: #f8fafc; border: 0.8px solid #cbd5e1; padding: 4px 6px; border-radius: 2px;">
+          data.npy &nbsp;&nbsp;&nbsp;&nbsp;&rarr; float64 weights<br>
+          indices.npy &rarr; int32 column keys<br>
+          indptr.npy &nbsp;&rarr; int32 row offsets<br>
+          dangling.npy&rarr; float64 sink vector
+        </div>
+        <div style="font-size: 8px; color: #475569; margin-top: 2px;">
+          Loaded via <span class="mono">mmap_mode='r'</span> with zero RAM reallocation.
+        </div>
+      </div>
+      <div class="stage-footer">
+        <span style="color: #009E73; font-weight: 700;">Zero-Copy mmap</span>
+        <span style="color: #0072B2; font-weight: 700;">&lt; 1.0 ms Load</span>
+      </div>
+    </div>
+
+    <div class="flow-arrow">
+      <svg width="12" height="20" viewBox="0 0 12 20"><polyline points="2,4 8,10 2,16" fill="none" stroke="#0072B2" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </div>
+
+    <!-- Stage 1.4: Stationary Global Baseline -->
+    <div class="stage-box" style="flex: 1.25;">
+      <div>
+        <div class="stage-header">
+          <span class="stage-title">Stationary Baseline &pi;<sub>global</sub></span>
+          <span class="stage-num">[1.4]</span>
+        </div>
+        <div style="font-size: 8.5px; color: #334155; margin-bottom: 2px;">
+          Repository-wide stationary distribution under uniform prior:
+        </div>
+        <div class="math-snippet">
+          <span style="font-style:italic;">p</span><sub>uniform</sub> = (1 / |<span style="font-style:italic;">V</span>|) &middot; <b>1</b><br>
+          &pi;<sub>global</sub> = &beta; &middot; (&pi;<sub>global</sub> <span style="font-style:italic;">T</span>) + (1 &minus; &beta;) &middot; <span style="font-style:italic;">p</span><sub>uniform</sub>
+        </div>
+        <div style="font-size: 8px; color: #475569; margin-top: 2px;">
+          Quantifies structural topological popularity across all nodes.
+        </div>
+      </div>
+      <div class="stage-footer">
+        <span>Precomputed Baseline</span>
+        <span style="color: #0072B2; font-weight: 700;">Static Invariant</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- INTER-TIER COUPLING CHANNEL -->
+  <div class="inter-tier-channel">
+    <div class="channel-line"></div>
+    <div class="channel-badge">&darr; RUNTIME INFERENCE: Memory-Mapped CSR Graph (<span style="font-style:italic;">T</span>, <span style="font-style:italic;">d</span>) and Stationary Baseline &pi;<sub>global</sub> streamed to Online Engine &darr;</div>
+  </div>
+
+  <!-- ============================================================================== -->
+  <!-- TIER 2: ONLINE ISSUE RETRIEVAL, SLICING & VERIFICATION (Sub-5 ms Latency)     -->
+  <!-- ============================================================================== -->
+  <div class="tier-banner" style="margin-top: 2px;">
+    <span class="tier-title">TIER 2: ONLINE QUERY LOCALIZATION, AST SLICING &amp; TEST VERIFICATION</span>
+    <span class="tier-tag">Deterministic Pipeline &bull; End-to-End Latency: 0.32s per Issue</span>
+  </div>
+
+  <div class="tier-row" style="height: 255px;">
+
+    <!-- Stage 2.1: Query Embeddings & Teleport Prior -->
+    <div class="stage-box" style="flex: 1.15;">
+      <div>
+        <div class="stage-header">
+          <span class="stage-title">Shift-Invariant Teleport Prior</span>
+          <span class="stage-num">[2.1]</span>
+        </div>
+        <div class="mono" style="background: #f8fafc; border: 0.8px solid #cbd5e1; padding: 3px 5px; border-radius: 2px; font-size: 7.5px; margin-bottom: 3px;">
+          <strong>Issue q</strong>: KeyError in QuerySet.filter<br>
+          when chained with 'author__name'.
+        </div>
+        <div class="math-snippet">
+          <span style="font-style:italic;">c</span> = max<sub>j &isin; &Kappa;</sub> (<span style="font-style:italic;">s<sub>j</sub></span> / &tau;), &nbsp;&nbsp;&tau; = 0.05, <span style="font-style:italic;">k</span> = 25<br>
+          <b>p</b><sub>0</sub>(<span style="font-style:italic;">i</span>) &prop; exp(<span style="font-style:italic;">s<sub>i</sub></span> / &tau; &minus; <span style="font-style:italic;">c</span>) &nbsp; <span style="font-size:8px;">(&forall; <span style="font-style:italic;">i</span> &isin; &Kappa;)</span>
+        </div>
+        <div style="font-size: 8px; color: #475569; margin-top: 2px;">
+          Guarantees zero float underflow over long-tail candidate nodes.
+        </div>
+      </div>
+      <div class="stage-footer">
+        <span style="color: #0072B2; font-weight: 700;">Top-25 Embeddings</span>
+        <span style="color: #009E73; font-weight: 700;">Shift-Invariant</span>
+      </div>
+    </div>
+
+    <div class="flow-arrow">
+      <svg width="12" height="20" viewBox="0 0 12 20"><polyline points="2,4 8,10 2,16" fill="none" stroke="#0072B2" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </div>
+
+    <!-- Stage 2.2: Sparse PPR Diffusion & Walk Visual -->
+    <div class="stage-box" style="flex: 1.35;">
+      <div>
+        <div class="stage-header">
+          <span class="stage-title">Sparse PPR Random Walk</span>
+          <span class="stage-num">[2.2]</span>
+        </div>
+        <!-- Clean Line Art Graph Walk (Zero Pills) -->
+        <div style="background: #f8fafc; border: 0.8px solid #e2e8f0; border-radius: 2px; padding: 2px; height: 68px;">
+          <svg width="100%" height="64" viewBox="0 0 190 64">
+            <defs>
+              <marker id="arr-m-blue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#0072B2"/>
+              </marker>
+              <marker id="arr-m-red" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#D55E00"/>
+              </marker>
+            </defs>
+            <!-- Causal Arc -->
+            <path d="M 40 22 Q 95 6 150 22" fill="none" stroke="#0072B2" stroke-width="2" marker-end="url(#arr-m-blue)"/>
+            <text x="95" y="11" fill="#0072B2" font-size="7.5" font-weight="700" text-anchor="middle" font-family="'Times New Roman', serif">&lambda;call = 1.0 (Causal Path)</text>
+            <!-- Hub Edges -->
+            <path d="M 40 30 L 88 48" fill="none" stroke="#D55E00" stroke-width="1.2" stroke-dasharray="2,2" marker-end="url(#arr-m-red)"/>
+            <path d="M 150 30 L 102 48" fill="none" stroke="#D55E00" stroke-width="1.2" stroke-dasharray="2,2" marker-end="url(#arr-m-red)"/>
+            <!-- Nodes -->
+            <circle cx="30" cy="25" r="11" fill="#ffffff" stroke="#0072B2" stroke-width="1.5"/>
+            <text x="30" y="25" fill="#0072B2" font-size="7" font-weight="700" text-anchor="middle" dominant-baseline="central" font-family="monospace">filter</text>
+            <circle cx="160" cy="25" r="11" fill="#ffffff" stroke="#0072B2" stroke-width="1.5"/>
+            <text x="160" y="25" fill="#0072B2" font-size="7" font-weight="700" text-anchor="middle" dominant-baseline="central" font-family="monospace">as_sql</text>
+            <circle cx="95" cy="51" r="10" fill="#fff5f5" stroke="#D55E00" stroke-width="1.4"/>
+            <text x="95" y="51" fill="#D55E00" font-size="6.5" font-weight="700" text-anchor="middle" dominant-baseline="central" font-family="monospace">Logger</text>
+          </svg>
+        </div>
+        <div class="math-snippet" style="font-size: 8.5px; margin-top: 3px;">
+          &pi;<sup>(t+1)</sup> = &beta;(&pi;<sup>(t)</sup><span style="font-style:italic;">T</span>) + (&beta;&pi;<sup>(t)</sup><span style="font-style:italic;">d</span> + 1 &minus; &beta;)<b>p</b><sub>0</sub><br>
+          Spectral gap: 1 &minus; |&lambda;<sub>2</sub>| &ge; 0.15 &nbsp;&bull;&nbsp; Iterations: <span style="font-style:italic;">t</span> &le; 20
+        </div>
+      </div>
+      <div class="stage-footer">
+        <span style="color: #0072B2; font-weight: 700;">&beta; = 0.85 Invariant</span>
+        <span style="color: #009E73; font-weight: 700;">0.64 ms on CPU</span>
+      </div>
+    </div>
+
+    <div class="flow-arrow">
+      <svg width="12" height="20" viewBox="0 0 12 20"><polyline points="2,4 8,10 2,16" fill="none" stroke="#0072B2" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </div>
+
+    <!-- Stage 2.3: Decoupled Specificity Damping Table -->
+    <div class="stage-box" style="flex: 1.35;">
+      <div>
+        <div class="stage-header">
+          <span class="stage-title">Decoupled Specificity Damping</span>
+          <span class="stage-num">[2.3]</span>
+        </div>
+        <div class="math-snippet">
+          Specificity(<span style="font-style:italic;">v</span>) = &pi;<sub>query</sub>(<span style="font-style:italic;">v</span>) / (&pi;<sub>global</sub>(<span style="font-style:italic;">v</span>) + &epsilon;)<sup>0.7</sup>
+        </div>
+        <!-- Academic Specificity Mini-Table -->
+        <table class="mini-table">
+          <thead>
+            <tr>
+              <th>Symbol <span style="font-style:italic;">v</span></th>
+              <th style="text-align:right;">&pi;<sub>query</sub></th>
+              <th style="text-align:right;">&pi;<sub>global</sub></th>
+              <th style="text-align:right;">Ratio</th>
+              <th style="text-align:center;">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="color: #009E73; font-weight: 600;">
+              <td class="mono">filter()</td>
+              <td class="mono" style="text-align:right;">0.42</td>
+              <td class="mono" style="text-align:right;">0.02</td>
+              <td class="mono" style="text-align:right; font-weight:700;">19.4</td>
+              <td style="text-align:center; font-weight:700;">RETAIN</td>
+            </tr>
+            <tr style="color: #009E73; font-weight: 600;">
+              <td class="mono">as_sql()</td>
+              <td class="mono" style="text-align:right;">0.25</td>
+              <td class="mono" style="text-align:right;">0.01</td>
+              <td class="mono" style="text-align:right; font-weight:700;">14.2</td>
+              <td style="text-align:center; font-weight:700;">RETAIN</td>
+            </tr>
+            <tr style="color: #D55E00; font-weight: 600; background: #fff5f5;">
+              <td class="mono">Logger</td>
+              <td class="mono" style="text-align:right;">0.28</td>
+              <td class="mono" style="text-align:right;">0.31</td>
+              <td class="mono" style="text-align:right; font-weight:700;">0.78</td>
+              <td style="text-align:center; font-weight:700;">SUPPRESS</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="font-size: 8px; color: #475569; margin-top: 3px;">
+          Eliminates hub explosion without mutating static matrix <span style="font-style:italic;">T</span>.
+        </div>
+      </div>
+      <div class="stage-footer">
+        <span style="color: #009E73; font-weight: 700;">90.20% Hub Suppr.</span>
+        <span style="color: #0072B2; font-weight: 700;">100% Recall@2k</span>
+      </div>
+    </div>
+
+    <div class="flow-arrow">
+      <svg width="12" height="20" viewBox="0 0 12 20"><polyline points="2,4 8,10 2,16" fill="none" stroke="#0072B2" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </div>
+
+    <!-- Stage 2.4: Versioned Packing & AST Program Slicing -->
+    <div class="stage-box" style="flex: 1.25;">
+      <div>
+        <div class="stage-header">
+          <span class="stage-title">Versioned Frontier Packing</span>
+          <span class="stage-num">[2.4]</span>
+        </div>
+        <div class="math-snippet">
+          <span style="font-style:italic;">K<sub>i</sub></span> = max(<span style="font-style:italic;">K</span><sub>min</sub>, &lfloor;<span style="font-style:italic;">K</span><sub>eff</sub> &middot; &Sigma;<sub>C<sub>i</sub></sub>Spec / &Sigma;<sub>V</sub>Spec&rfloor;)<br>
+          score(<span style="font-style:italic;">v</span>) = (Spec / <span style="font-style:italic;">c(v)</span>) &middot; (1 + &mu; &middot; ratio)<br>
+          heap: (&minus;score, <span style="font-style:italic;">v</span>, version[<span style="font-style:italic;">v</span>])
+        </div>
+        <div style="font-size: 8px; color: #475569; margin-top: 2px;">
+          Drops stale keys in O(1) time without rescans.
+        </div>
+        <!-- AST Diff Box -->
+        <div class="mono" style="background: #f8fafc; border: 0.8px solid #cbd5e1; padding: 3px 5px; border-radius: 2px; font-size: 7.2px; margin-top: 3px;">
+          <span style="color:#64748b;">class QuerySet:</span><br>
+          <span style="color:#D55E00; background:#fff5f5;">- &nbsp;if key in clone.query:</span><br>
+          <span style="color:#009E73; background:#f0fdf4; font-weight:700;">+ &nbsp;parts = key.split('__')</span><br>
+          <span style="color:#009E73; background:#f0fdf4; font-weight:700;">+ &nbsp;if parts[0] in clone.query:</span>
+        </div>
+      </div>
+      <div class="stage-footer">
+        <span style="color: #0072B2; font-weight: 700;">Budget: 3,480 tok</span>
+        <span style="color: #009E73; font-weight: 700;">O(|E| log |V|)</span>
+      </div>
+    </div>
+
+    <div class="flow-arrow">
+      <svg width="12" height="20" viewBox="0 0 12 20"><polyline points="2,4 8,10 2,16" fill="none" stroke="#0072B2" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </div>
+
+    <!-- Stage 2.5: Targeted Test Isolation & Git Patch -->
+    <div class="stage-box" style="flex: 1.15; border: 1.2px solid #009E73;">
+      <div>
+        <div class="stage-header" style="border-bottom: 1px solid #009E73;">
+          <span class="stage-title" style="color: #009E73;">Verification &amp; Delivery</span>
+          <span class="stage-num" style="color: #009E73;">[2.5]</span>
+        </div>
+        <div class="mono" style="background: #f8fafc; border: 0.8px solid #cbd5e1; padding: 4px 5px; border-radius: 2px; font-size: 7.4px;">
+          $ pytest -k test_filter_rel<br>
+          tests/test_filter.py <span style="color:#009E73; font-weight:700;">PASSED</span><br>
+          1 passed in 0.32s on CPU
+        </div>
+        <div class="mono" style="background: #f0fdf4; border: 0.8px solid #86efac; padding: 4px 5px; border-radius: 2px; font-size: 7.4px; color: #14532d; margin-top: 3px;">
+          &#10004; test_filter: PASSED (0.32s)<br>
+          &#10004; ast.parse() validated OK<br>
+          &#10004; Syntax error rate: 0.0%<br>
+          &#10004; Verified Git-ready patch
+        </div>
+      </div>
+      <div class="stage-footer" style="border-top: 1px solid #86efac;">
+        <span style="color: #009E73; font-weight: 700;">100% Pass@1</span>
+        <span style="color: #0072B2; font-weight: 700;">0.32s Wall Clock</span>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

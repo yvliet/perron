@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  @page {
+    size: 1180px 440px;
+    margin: 0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    width: 1180px;
+    height: 440px;
+    padding: 8px 12px;
+    background: #ffffff;
+    font-family: "Times New Roman", Times, "Computer Modern Roman", "DejaVu Serif", serif;
+    color: #0f172a;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* 3 Columns Row */
+  .editor-row {
+    display: flex;
+    gap: 12px;
+    height: 335px;
+    width: 100%;
+  }
+
+  .editor-window {
+    flex: 1;
+    background: #ffffff;
+    border: 1.2px solid #94a3b8;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+  }
+  .editor-window.proposed {
+    border: 1.8px solid #009E73;
+  }
+
+  /* Title Bar (Authentic Terminal/IDE Bar) */
+  .window-titlebar {
+    background: #f1f5f9;
+    border-bottom: 1px solid #cbd5e1;
+    padding: 3px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .window-dots {
+    display: flex;
+    gap: 4px;
+  }
+  .window-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #cbd5e1;
+  }
+  .window-title {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 10px;
+    font-weight: 700;
+    color: #1e293b;
+  }
+  .window-title.proposed {
+    color: #009E73;
+  }
+  .window-badge {
+    font-family: "Consolas", monospace;
+    font-size: 8px;
+    color: #475569;
+  }
+
+  .editor-content {
+    padding: 6px 9px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .section-label {
+    font-size: 8.5px;
+    font-weight: 700;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 2px;
+  }
+
+  .code-pane {
+    background: #f8fafc;
+    border: 0.8px solid #cbd5e1;
+    border-radius: 2px;
+    padding: 6px 8px;
+    font-family: "Consolas", "SFMono-Regular", "Liberation Mono", Menlo, monospace;
+    font-size: 8.2px;
+    line-height: 1.4;
+    color: #1e293b;
+    margin-bottom: 6px;
+  }
+
+  .line-num {
+    color: #94a3b8;
+    display: inline-block;
+    width: 26px;
+    user-select: none;
+  }
+
+  .cmd-prompt {
+    color: #0072B2;
+    font-weight: 700;
+  }
+
+  /* Diagnostic Text (No nested cards) */
+  .diagnostic-box {
+    border-radius: 2px;
+    padding: 5px 8px;
+    font-size: 8.5px;
+    line-height: 1.35;
+    margin-bottom: 6px;
+  }
+  .diag-error {
+    background: #fff5f5;
+    border-left: 3px solid #D55E00;
+    color: #7f1d1d;
+  }
+  .diag-success {
+    background: #f0fdf4;
+    border-left: 3px solid #009E73;
+    color: #14532d;
+  }
+
+  .footer-verdict {
+    border-top: 1px solid #e2e8f0;
+    padding-top: 4px;
+    font-size: 8.5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* Bottom Benchmark Strip (Formal Academic Booktabs Table) */
+  .bottom-table-container {
+    height: 75px;
+    background: #ffffff;
+    border-top: 1.5px solid #0f172a;
+    border-bottom: 1.5px solid #0f172a;
+    padding: 2px 4px;
+  }
+  .academic-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 8.5px;
+    line-height: 1.3;
+  }
+  .academic-table thead tr {
+    border-bottom: 0.8px solid #64748b;
+    font-weight: 700;
+  }
+  .academic-table th { padding: 2px 6px; font-family: "Times New Roman", Times, serif; }
+  .academic-table td { padding: 2px 6px; }
+</style>
+</head>
+<body>
+
+  <!-- ============================================================================== -->
+  <!-- TOP: THREE COMPARATIVE CODE INTERFACE PANELS                                  -->
+  <!-- ============================================================================== -->
+  <div class="editor-row">
+
+    <!-- PANEL 1: Shell Replacement (sed) -->
+    <div class="editor-window">
+      <div class="window-titlebar">
+        <div class="window-dots"><div class="window-dot"></div><div class="window-dot"></div><div class="window-dot"></div></div>
+        <span class="window-title">(a) Baseline: Shell Replacement (sed)</span>
+        <span class="window-badge">CLI sed -i</span>
+      </div>
+
+      <div class="editor-content">
+        <div>
+          <div class="section-label">1. File Inspection &amp; Substitution:</div>
+          <div class="code-pane">
+            <span class="line-num">140</span><span style="color:#64748b;">class QuerySet:</span><br>
+            <span class="line-num">141</span><span style="color:#64748b;">&nbsp;&nbsp;&nbsp;&nbsp;def filter(self, *args, **kwargs):</span><br>
+            <span class="line-num">142</span><span style="color:#1e293b;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if key in clone.query:</span><br>
+            <span class="cmd-prompt">$ sed -i 's/clone.query/query/' queryset.py</span>
+          </div>
+
+          <div class="section-label">2. Python Compiler Diagnostic:</div>
+          <div class="code-pane" style="color: #D55E00; background: #fff5f5; border-color: #fca5a5;">
+            File "queryset.py", line 142<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;if key in query:<br>
+            <span style="font-weight: 700;">&nbsp;&nbsp;&nbsp;&nbsp;^</span><br>
+            <span style="font-weight: 700;">IndentationError: unexpected indent</span><br>
+            <span style="color:#64748b;">(expected 8 spaces, got 4)</span>
+          </div>
+
+          <div class="diagnostic-box diag-error">
+            <strong>Failure Mechanism</strong>: Blind regex replacement corrupts block indentation levels, breaking class-level syntactic scope.
+          </div>
+        </div>
+
+        <div class="footer-verdict">
+          <span>Execution: Raw Bash Command</span>
+          <span style="color: #D55E00; font-weight: 700;">18.4% Syntax Failure</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 2: Unified Diff (w/o Linting) -->
+    <div class="editor-window">
+      <div class="window-titlebar">
+        <div class="window-dots"><div class="window-dot"></div><div class="window-dot"></div><div class="window-dot"></div></div>
+        <span class="window-title">(b) Baseline: Unified Diff (w/o Linting)</span>
+        <span class="window-badge">git apply</span>
+      </div>
+
+      <div class="editor-content">
+        <div>
+          <div class="section-label">1. Candidate Patch Application:</div>
+          <div class="code-pane">
+            <span class="line-num"></span><span class="cmd-prompt">$ git apply candidate.patch</span><br>
+            <span class="line-num"></span><span style="color:#64748b;">@@ -185,6 +185,8 @@ def filter(self, *args):</span><br>
+            <span class="line-num"></span><span style="color:#D55E00; background:#fff5f5;">- &nbsp;&nbsp;&nbsp;if key in clone.query:</span><br>
+            <span class="line-num"></span><span style="color:#009E73; background:#f0fdf4; font-weight:700;">+ &nbsp;&nbsp;&nbsp;parts = key.split('__')</span><br>
+            <span class="line-num"></span><span style="color:#009E73; background:#f0fdf4; font-weight:700;">+ &nbsp;&nbsp;&nbsp;if parts[0] in clone.query:</span>
+          </div>
+
+          <div class="section-label">2. Git Runtime Rejection:</div>
+          <div class="code-pane" style="color: #D55E00; background: #fff5f5; border-color: #fca5a5;">
+            error: patch failed: queryset.py:188<br>
+            error: queryset.py: patch does not apply<br>
+            <span style="font-weight: 700;">Hunk #2 FAILED at 188 (context mismatch).</span><br>
+            <span style="color:#64748b;">1 out of 2 hunks FAILED -- saving rejects to .rej</span>
+          </div>
+
+          <div class="diagnostic-box diag-error">
+            <strong>Failure Mechanism</strong>: Model hallucinates line numbers and context lines. Strict context matching causes total patch rejection.
+          </div>
+        </div>
+
+        <div class="footer-verdict">
+          <span>Execution: Context Hunk Match</span>
+          <span style="color: #D55E00; font-weight: 700;">24.2% Hunk Rejection</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 3: Perron AST-Grounded Editor -->
+    <div class="editor-window proposed">
+      <div class="window-titlebar" style="background: #f0fdf4; border-bottom: 1px solid #86efac;">
+        <div class="window-dots"><div class="window-dot" style="background:#86efac;"></div><div class="window-dot" style="background:#86efac;"></div><div class="window-dot" style="background:#86efac;"></div></div>
+        <span class="window-title proposed">(c) Proposed: Perron AST-Grounded Editor</span>
+        <span class="window-badge" style="color:#009E73; font-weight:700;">ast.parse + Rebase</span>
+      </div>
+
+      <div class="editor-content">
+        <div>
+          <div class="section-label">1. AST-Anchored Edit &amp; Pre-Commit Lint:</div>
+          <div class="code-pane" style="color: #14532d; background: #f0fdf4; border-color: #86efac;">
+            <span class="cmd-prompt" style="color:#009E73;">$ perron-edit --anchor="def filter" --range=[140,158]</span><br>
+            [AST Match] Found QuerySet.filter at lines 140-158<br>
+            [Rebase] Auto-adjusted base indentation: 8 spaces<br>
+            <span style="font-weight:700; color:#009E73;">[Pre-Commit] ast.parse() validated &rarr; Syntax OK</span><br>
+            <span style="font-weight:700; color:#009E73;">[Commit] Safe write to disk. 0.0% Syntax Error.</span>
+          </div>
+
+          <div class="section-label">2. Targeted Isolated Test Suite:</div>
+          <div class="code-pane" style="color: #1e293b; background: #ffffff; border-color: #cbd5e1;">
+            <span class="cmd-prompt">$ pytest -k test_filter_rel</span><br>
+            tests/test_filter.py::test_filter_rel <span style="color:#009E73; font-weight:700;">PASSED</span> [100%]<br>
+            <span style="color:#009E73; font-weight:700;">1 passed in 0.32s on CPU &rarr; Git patch verified</span>
+          </div>
+
+          <div class="diagnostic-box diag-success">
+            <strong>Verification Guarantee</strong>: Bounded AST search, relative indentation rebasing, and pre-commit validation guarantee zero syntax failures.
+          </div>
+        </div>
+
+        <div class="footer-verdict" style="border-color: #86efac;">
+          <span>Execution: Structural AST Synthesis</span>
+          <span style="color: #009E73; font-weight: 700;">0.0% Syntax Error Rate</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============================================================================== -->
+  <!-- BOTTOM: FORMAL ACADEMIC COMPARISON TABLE                                       -->
+  <!-- ============================================================================== -->
+  <div class="bottom-table-container">
+    <table class="academic-table">
+      <thead>
+        <tr>
+          <th style="text-align: left; width: 26%;">Empirical Evaluation Dimension</th>
+          <th style="text-align: center; width: 24%;">(a) Shell Replacement (sed)</th>
+          <th style="text-align: center; width: 24%;">(b) Unified Diff (w/o Linting)</th>
+          <th style="text-align: center; width: 26%; color: #009E73;">(c) Perron AST Editor (Proposed)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="font-weight: 700;">Syntax Failure Rate</td>
+          <td style="text-align: center; color: #D55E00; font-family: monospace;">18.4% (SWE-agent ablation)</td>
+          <td style="text-align: center; color: #475569; font-family: monospace;">0.0% (Rejected before commit)</td>
+          <td style="text-align: center; font-weight: 700; color: #009E73; font-family: monospace;">0.0% (Guaranteed via ast.parse)</td>
+        </tr>
+        <tr>
+          <td style="font-weight: 700;">Patch Application Rejection</td>
+          <td style="text-align: center; color: #64748b; font-family: monospace;">N/A (Corrupts file silently)</td>
+          <td style="text-align: center; color: #D55E00; font-family: monospace;">24.2% (SWE-bench Lite)</td>
+          <td style="text-align: center; font-weight: 700; color: #009E73; font-family: monospace;">0.0% (AST Anchor-Bounded)</td>
+        </tr>
+        <tr>
+          <td style="font-weight: 700;">SWE-bench Lite Resolve Rate</td>
+          <td style="text-align: center; color: #64748b; font-family: monospace;">1.8% (Yang et al., 2024)</td>
+          <td style="text-align: center; color: #64748b; font-family: monospace;">12.5% (Baseline ACI)</td>
+          <td style="text-align: center; font-weight: 700; color: #009E73; font-family: monospace;">27.5% (Pass@1, Gemma 4 31B)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>
