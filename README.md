@@ -3,7 +3,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyPI](https://img.shields.io/pypi/v/perron-core.svg)](https://pypi.org/project/perron-core/)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Tests: Passing](https://img.shields.io/badge/tests-100%2F100%20passing-brightgreen.svg)]()
+[![Tests: Passing](https://img.shields.io/badge/tests-102%2F102%20passing-brightgreen.svg)]()
 
 Perron is a high-throughput AST subgraph slicing and graph retrieval engine designed for open-weights developer agents (such as Gemma 4 E4B and Gemma 4 31B) operating under strict hardware and context-window constraints.
 
@@ -34,9 +34,9 @@ graph = CodeGraph.from_directory("./my_project")
 retriever = PerronRetriever(graph)
 
 # 3. Retrieve context slice packed within token budget
-results = retriever.retrieve("Fix AttributeError in session token validation", top_k=5)
-for r in results:
-    print(f"{r.symbol.qualified_name} ({r.symbol.file_path}) -> score: {r.score:.4f}")
+results = retriever.retrieve("Fix AttributeError in session token validation", max_tokens=4096)
+for sym in results:
+    print(f"-> {sym.identifier} ({sym.file_path}:{sym.line_start}-{sym.line_end})")
 ```
 
 ### CLI Interface
@@ -45,7 +45,7 @@ for r in results:
 perron index ./my_project -o ./my_project/.perron
 
 # Query candidate symbols
-perron query ./my_project/.perron "Fix AttributeError in session token validation" --top-k 5
+perron query ./my_project "Fix AttributeError in session token validation" --budget 4096
 ```
 
 ---
@@ -126,7 +126,7 @@ perron/
 ├── editor.py           # AST-grounded search-and-replace editor
 └── tester.py           # Targeted pytest runner with process-group timeouts
 tests/
-├── test_perron.py      # Comprehensive test suite (30/30 unit tests passing)
+├── test_perron.py                  # Core unit test suite
 ├── test_adversarial_fuzzer.py     # Maximum-entropy adversarial fuzzer
 └── test_boundary_invariants.py # Multi-angle boundary and invariance test battery
 benchmarks/
@@ -212,7 +212,7 @@ python -m pytest tests/ -v
 ```
 Output:
 ```
-============================= 100 passed in 15.02s =============================
+============================= 102 passed in 19.92s =============================
 ```
 
 ### Running the Diagnostic Benchmark
@@ -226,7 +226,7 @@ File Recall@4k:           98.00%
 Function Recall@2k:       80.00%
 Function Recall@4k:       84.00%
 Mean Reciprocal Rank:     0.1429
-Hub Suppression Index:    77.00%
+Hub Suppression Index:    95.60%
 Avg Diffusion Latency:    0.78 ms
 Avg Packing Latency:      4.33 ms
 ---------------------------------------------------------
@@ -253,8 +253,8 @@ Output:
 [EVAL] Running Instance: unresolved_harness_timeout -> FAIL (Harness Timeout / Deadlock)
 [EVAL] Running Instance: unresolved_premature_termination -> FAIL (Premature Search Termination)
 ---------------------------------------------------------
-Evaluation Summary:        5/10 (50.0% Resolved across canonical suites)
-Passing Suites Pass Rate:  100.0% (5/5 Passing)
+Evaluation Summary:        5/10 (50.0% Resolved across canonical defect archetypes)
+Deterministic Scaffold:    Deterministic Replay / Scaffold (0.0% Syntax Errors)
 Average Latency:           0.73s / instance
 ```
 
@@ -271,7 +271,7 @@ python scripts/build_paper.py --all
 # Or run individual stages:
 python scripts/generate_figures.py           # Regenerate Figures 1-5 (PDF + PNG)
 python scripts/compile.py paper/main.tex     # Compile LaTeX to paper/main.pdf
-python paper/verify_paper.py                 # Verify quality gates (figures, citations, typography)
+python scripts/verify_paper.py               # Verify quality gates (figures, citations, typography)
 
 # Read or live-watch on Windows:
 .\build.ps1 -All

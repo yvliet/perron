@@ -12,8 +12,8 @@ htmlcov/
 Thumbs.db
 bin/
 benchmarks/real_graphs_out/
-scratch/
 .perron_index/
+.perron_cache/
 benchmarks/real_eval_results.json
 benchmarks/live_telemetry.json
 *.db
