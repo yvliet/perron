@@ -96,7 +96,7 @@ def compute_token_budget_pareto(
         adj[u].append(v)
 
     budgets = [512, 1024, 1536, 2048, 2560, 3072, 3480, 4096]
-    methods = ["Bi-Encoder", "2-Hop BFS", "Standard PPR", "Perron (Ours)"]
+    methods = ["Token Overlap", "2-Hop BFS", "Standard PPR", "Perron (Ours)"]
 
     recalls: Dict[str, Dict[int, List[float]]] = {m: {b: [] for b in budgets} for m in methods}
     hsi_scores: Dict[str, List[float]] = {m: [] for m in methods}
@@ -121,9 +121,9 @@ def compute_token_budget_pareto(
         for h in rng.choice(hubs, size=min(4, len(hubs)), replace=False):
             sims[h] = float(rng.uniform(0.40, 0.65))
 
-        # 1. Bi-Encoder
+        # 1. Token Overlap
         ranked_bi = np.argsort(sims)[::-1]
-        hsi_scores["Bi-Encoder"].append((1.0 - (sum(1 for n in ranked_bi[:10] if n in hubs_set) / 10.0)) * 100.0)
+        hsi_scores["Token Overlap"].append((1.0 - (sum(1 for n in ranked_bi[:10] if n in hubs_set) / 10.0)) * 100.0)
 
         # 2. 2-Hop BFS
         bfs_scores = np.zeros(graph_size, dtype=np.float64)
@@ -154,7 +154,7 @@ def compute_token_budget_pareto(
             p_std, _ = pack_context_subgraphs(symbols, pi_q, t_matrix, token_budget=b)
             p_cp, _ = pack_context_subgraphs(symbols, scores_cp, t_matrix, token_budget=b)
 
-            recalls["Bi-Encoder"][b].append(1.0 if target in {s.node_id for s in p_bi} else 0.0)
+            recalls["Token Overlap"][b].append(1.0 if target in {s.node_id for s in p_bi} else 0.0)
             recalls["2-Hop BFS"][b].append(1.0 if target in {s.node_id for s in p_bfs} else 0.0)
             recalls["Standard PPR"][b].append(1.0 if target in {s.node_id for s in p_std} else 0.0)
             recalls["Perron (Ours)"][b].append(1.0 if target in {s.node_id for s in p_cp} else 0.0)
@@ -223,19 +223,19 @@ def plot_pareto_and_sensitivity(pareto_data: Dict, gamma_vals: np.ndarray, beta_
         "Perron (Ours)": COLOR_PERRON,
         "Standard PPR": COLOR_STD_PPR,
         "2-Hop BFS": COLOR_BFS,
-        "Bi-Encoder": COLOR_BIENCODER,
+        "Token Overlap": COLOR_BIENCODER,
     }
     markers = {
         "Perron (Ours)": "o",
         "Standard PPR": "s",
         "2-Hop BFS": "^",
-        "Bi-Encoder": "d",
+        "Token Overlap": "d",
     }
     linestyles = {
         "Perron (Ours)": "-",
         "Standard PPR": "--",
         "2-Hop BFS": "-.",
-        "Bi-Encoder": ":",
+        "Token Overlap": ":",
     }
 
     # =============================================================
@@ -260,7 +260,7 @@ def plot_pareto_and_sensitivity(pareto_data: Dict, gamma_vals: np.ndarray, beta_
 
     # Shaded budget region for Gemma 4 (3,480 budget)
     ax1.axvline(x=3480, color="#555555", linestyle=":", linewidth=1.1, alpha=0.85)
-    ax1.text(3520, 22, "Gemma 4 Budget\n($K = 3,480$)", fontsize=8, color="#333333", verticalalignment="bottom")
+    ax1.text(3520, 52, "Gemma 4 Budget\n($K = 3,480$)", fontsize=8, color="#333333", verticalalignment="bottom")
 
     ax1.set_xlabel("Context Token Budget ($K$)")
     ax1.set_ylabel("Controlled Topological Recall (%)")
@@ -329,7 +329,7 @@ def plot_pareto_and_sensitivity(pareto_data: Dict, gamma_vals: np.ndarray, beta_
             linestyle=linestyles[method],
         )
     ax.axvline(x=3480, color="#555555", linestyle=":", linewidth=1.1, alpha=0.85)
-    ax.text(3520, 22, "Gemma 4 Budget\n($K = 3,480$)", fontsize=8, color="#333333", verticalalignment="bottom")
+    ax.text(3520, 52, "Gemma 4 Budget\n($K = 3,480$)", fontsize=8, color="#333333", verticalalignment="bottom")
     ax.set_xlabel("Context Token Budget ($K$)")
     ax.set_ylabel("Function-Level Recall (%)")
     ax.set_title("Empirical Pareto Frontier: Context Budget vs. Defect Recall", pad=10)

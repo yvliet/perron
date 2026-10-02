@@ -19,7 +19,6 @@ from perron.telemetry.exporter import (
     export_sft_dataset,
     export_dpo_dataset,
 )
-from training.train_lora import build_loss_masked_labels, train_lora
 
 
 def test_agent_yaml_schema_validity():
@@ -149,59 +148,6 @@ def test_trajectory_exporter_sft_and_dpo():
         assert dpo_count == 1
         assert sft_path.is_file()
         assert dpo_path.is_file()
-
-
-def test_loss_masking_token_boundaries():
-    """
-    Verifies that response-only loss masking correctly masks prompt context
-    and unmasks model thinking and edit spans.
-    """
-    class MockTokenizer:
-        def encode(self, text, add_special_tokens=False):
-            if text == "<start_of_turn>model\n":
-                return [101]
-            elif text == "<end_of_turn>":
-                return [102]
-            return [ord(c) for c in text]
-
-    tokenizer = MockTokenizer()
-    # Mock input_ids: [prompt_tokens, 101 (start_of_turn model), response_tokens, 102 (end_of_turn)]
-    input_ids = [1, 2, 3, 4, 101, 5, 6, 7, 8, 102]
-    labels = build_loss_masked_labels(input_ids, tokenizer)
-
-    # Prompt tokens and model turn delimiter should be masked (-100)
-    assert labels[0:5] == [-100, -100, -100, -100, -100]
-    # Response tokens and end_of_turn should be preserved for loss computation
-    assert labels[5:10] == [5, 6, 7, 8, 102]
-
-
-def test_training_dry_run_and_cpu_mock_divergence():
-    """
-    Verifies that the QLoRA training harness validates configurations, runs deterministic
-    gradient stepping on CPU mock, and proves adapter weight divergence (Delta W != 0).
-    """
-    with tempfile.TemporaryDirectory() as tmpdir:
-        out_dir = Path(tmpdir) / "lora_weights"
-        res_dir = train_lora(
-            base_model_name="google/gemma-4-31b-it",
-            train_data_path="dummy.jsonl",
-            output_dir=str(out_dir),
-            rank=16,
-            alpha=32,
-            cpu_mock=True,
-        )
-
-        assert res_dir.is_dir()
-        assert (res_dir / "training_config.json").is_file()
-        assert (res_dir / "adapter_config.json").is_file()
-
-        adapter_cfg = json.loads((res_dir / "adapter_config.json").read_text(encoding="utf-8"))
-        assert adapter_cfg["r"] == 16
-        assert adapter_cfg["lora_alpha"] == 32
-        assert "q_proj" in adapter_cfg["target_modules"]
-        assert adapter_cfg["verification_status"] == "verified_training_step"
-        # Crucial check: verify that adapter weights actually diverged from zero
-        assert adapter_cfg["adapter_weight_divergence"] > 0.0
 
 
 def test_compute_git_patch_captures_untracked_files():

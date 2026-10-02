@@ -1,12 +1,13 @@
 """
-Perron Autonomous Agent Repair Evaluation Harness.
+Perron Deterministic AST Scaffold & Agent Repair Evaluation Harness.
 
-Evaluates PerronAgent across archetypal repository bug instances:
+Evaluates PerronAgent across 10 archetypal repository bug instances:
 1. Context-budgeted subgraph retrieval via query-directed specificity diffusion.
 2. Gemma 4 prompt formulation with native thinking mode (<|think|>).
-3. Atomic AST-grounded search-and-replace patching.
-4. Isolated targeted pytest execution.
-5. Telemetry collection and export to benchmarks/run_telemetry.json.
+3. Atomic AST-grounded search-and-replace patching and indentation rebasing.
+4. Isolated targeted pytest execution in detached EphemeralWorktree sandboxes.
+5. Verifies toolchain determinism using ground-truth step replays to validate
+   the multi-turn agent repair loop, anchor-bounded replacement, and error recovery.
 """
 
 from __future__ import annotations

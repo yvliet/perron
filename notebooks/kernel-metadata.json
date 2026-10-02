@@ -1,20 +1,15 @@
 {
   "id": "yvliet/perron-gemma-4-workstation",
-  "title": "Perron: Gemma 4 SWE Agent Workstation (26B A4B & 31B)",
+  "title": "Perron Gemma 4 Workstation",
   "code_file": "kaggle_gemma4_workstation.ipynb",
   "language": "python",
   "kernel_type": "notebook",
-  "is_private": false,
+  "is_private": true,
   "enable_gpu": true,
   "enable_tpu": false,
   "enable_internet": true,
   "dataset_sources": [],
-  "competition_sources": [
-    "gemma-4-developer-agent"
-  ],
+  "competition_sources": [],
   "kernel_sources": [],
-  "model_sources": [
-    "google/gemma-4/transformers/gemma-4-e2b-it-qat-mobile-transformers",
-    "google/gemma-4/transformers/gemma-4-26b-a4b-it"
-  ]
+  "model_sources": []
 }

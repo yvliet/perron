@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import os
 import shutil
 import subprocess
@@ -20,11 +21,11 @@ from typing import Any, Dict, List, Optional
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
+logger = logging.getLogger("real_eval")
+
 from perron.agent import PerronAgent, TrajectoryResult
 from perron.backends.base import ModelBackend
 from perron.backends.replay import OfflineReplayBackend
-from perron.backends.transformers_backend import TransformersBackend
-from perron.backends.vllm_backend import VllmBackend
 from perron.patch import compute_git_patch
 from perron.tester import EphemeralWorktree
 
@@ -237,23 +238,14 @@ def run_evaluation_suite(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Perron Real Evaluation Runner")
     parser.add_argument("--repo-dir", type=str, default=".", help="Target repository directory")
-    parser.add_argument("--backend", "--mode", dest="backend", type=str, default="replay", choices=["replay", "transformers", "vllm"])
-    parser.add_argument("--model-name", type=str, default="google/gemma-4-31b-it")
-    parser.add_argument("--vllm-url", type=str, default="http://localhost:8000/v1")
     parser.add_argument("--output", type=str, default="benchmarks/real_eval_results.json")
     parser.add_argument("--manifest", type=str, default=None, help="Task manifest path")
     parser.add_argument("--limit", type=int, default=None, help="Maximum instances to evaluate")
-    parser.add_argument("--no-worktree", action="store_true", help="Disable ephemeral git worktree isolation")
-    parser.add_argument("--assume-resolved-without-test", action="store_true", help="Permit unverified resolution when test_file is None")
     args = parser.parse_args()
 
     target_repo = Path(args.repo_dir).resolve()
-    if args.backend == "transformers":
-        model_backend = TransformersBackend(model_name_or_path=args.model_name)
-    elif args.backend == "vllm":
-        model_backend = VllmBackend(base_url=args.vllm_url, model_name=args.model_name)
-    else:
-        model_backend = OfflineReplayBackend()
+    
+    model_backend = OfflineReplayBackend()
 
     instances = []
     if args.manifest and Path(args.manifest).exists():
@@ -267,12 +259,18 @@ if __name__ == "__main__":
         instances = instances[:args.limit]
 
     out_file = REPO_ROOT / args.output
+    backend_mode_str = "Deterministic AST Scaffold (Offline Replay)"
+    print(f"==================================================================")
+    print(f"Perron Evaluation Harness: {backend_mode_str}")
+    print(f"EphemeralWorktree Isolation: Enabled (Strict)")
+    print(f"Evaluating {len(instances)} instances...")
+    print(f"==================================================================")
     summary_res = run_evaluation_suite(
         instances=instances,
         backend=model_backend,
         base_repo_dir=target_repo,
         output_path=out_file,
-        use_worktree=not args.no_worktree,
-        assume_resolved_without_test=args.assume_resolved_without_test,
+        use_worktree=True,
+        assume_resolved_without_test=False,
     )
-    print(f"Evaluation complete: {summary_res['resolved_count']}/{summary_res['total_instances']} resolved.")
+    print(f"Evaluation complete: {summary_res['resolved_count']}/{summary_res['total_instances']} resolved ({summary_res['resolve_rate']*100:.1f}%).")

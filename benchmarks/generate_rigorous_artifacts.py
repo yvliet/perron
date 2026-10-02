@@ -511,7 +511,7 @@ def generate_rigorous_evaluation_artifacts():
     # Panel (a): Raincloud Plot for Hub Suppression Index (HSI)
     # -------------------------------------------------------------
     raincloud_dict = {
-        "Bi-Encoder": bi_hsi,
+        "Token Overlap": bi_hsi,
         "2-Hop BFS": bfs_hsi,
         "Standard PPR": std_hsi,
         "Perron (Ours)": cp_hsi,
@@ -569,7 +569,7 @@ def generate_rigorous_evaluation_artifacts():
     # Panel (b): Dolan-More Performance Profile for Reciprocal Rank
     # -------------------------------------------------------------
     perf_dict = {
-        "Bi-Encoder": raw_data["Bi-Encoder"]["mrr"],
+        "Token Overlap": raw_data["Bi-Encoder"]["mrr"],
         "2-Hop BFS": raw_data["2-Hop BFS"]["mrr"],
         "Standard PPR": std_mrr,
         "Perron (Ours)": cp_mrr,
@@ -594,7 +594,7 @@ def generate_rigorous_evaluation_artifacts():
     ax2.set_ylabel(r"Fraction of Tasks $P(\mathrm{MRR} \geq \tau)$", fontsize=9.0, fontweight="bold")
     ax2.set_ylim(-0.02, 1.04)
     ax2.set_title(r"(b) Retrieval Performance Profile ($P(\mathrm{MRR} \geq \tau)$)", pad=8, fontsize=9.8, fontweight="bold")
-    ax2.legend(frameon=True, facecolor="#f8fafc", edgecolor="#cbd5e1", fontsize=7.8, loc="lower left")
+    ax2.legend(frameon=True, facecolor="#f8fafc", edgecolor="#cbd5e1", fontsize=7.8, loc="upper right")
 
     plt.tight_layout(pad=1.5)
     out_pdf = FIGURES_DIR / "benchmark_statistical_evaluation.pdf"

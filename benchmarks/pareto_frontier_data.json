@@ -11,7 +11,7 @@
       4096
     ],
     "mean_recalls": {
-      "Bi-Encoder": [
+      "Token Overlap": [
         0.0,
         2.0,
         8.0,
@@ -53,7 +53,7 @@
       ]
     },
     "mean_hsi": {
-      "Bi-Encoder": 60.0,
+      "Token Overlap": 60.0,
       "2-Hop BFS": 63.6,
       "Standard PPR": 28.4,
       "Perron (Ours)": 75.4

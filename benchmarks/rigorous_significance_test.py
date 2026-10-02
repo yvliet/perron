@@ -19,6 +19,12 @@ from typing import Dict, List, Tuple
 import numpy as np
 import scipy.stats as stats
 
+def format_p(p_value: float) -> str:
+    """Format p-value dynamically to prevent hardcoded inflation."""
+    if p_value < 0.001:
+        return "< .001"
+    return f"= {p_value:.3f}"
+
 # Project root
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
@@ -52,7 +58,7 @@ def run_and_sync_all_statistics() -> Dict:
     print("Running Rigorous Statistical Evaluation (N=50, multi-hop symptom-to-cause)...")
     print("=" * 70)
 
-    raw_data = run_rigorous_benchmark(num_instances=50, graph_size=1000, seed=42)
+    raw_data = run_rigorous_benchmark(num_instances=50, seed=42)
 
     # 1. Extract metric arrays
     perron_hsi = np.array(raw_data["Perron"]["hsi"])
@@ -163,9 +169,9 @@ def run_and_sync_all_statistics() -> Dict:
 
 % --- HSI Inferential Statistics ---
 \\newcommand{{\\HSITValue}}{{{hsi_t_stat:.2f}}}
-\\newcommand{{\\HSIPValue}}{{< .001}}
+\\newcommand{{\\HSIPValue}}{{{format_p(hsi_t_p)}}}
 \\newcommand{{\\HSIWilcoxonW}}{{{hsi_w_stat:.1f}}}
-\\newcommand{{\\HSIWilcoxonP}}{{< .001}}
+\\newcommand{{\\HSIWilcoxonP}}{{{format_p(hsi_w_p)}}}
 \\newcommand{{\\HSICohensD}}{{{hsi_cohens_d:.2f}}}
 \\newcommand{{\\HSICliffsDelta}}{{{hsi_cliffs_delta:.2f}}}
 
@@ -180,9 +186,9 @@ def run_and_sync_all_statistics() -> Dict:
 
 % --- MRR Inferential Statistics ---
 \\newcommand{{\\MRRTValue}}{{{mrr_t_stat:.2f}}}
-\\newcommand{{\\MRRPValue}}{{< .001}}
+\\newcommand{{\\MRRPValue}}{{{format_p(mrr_t_p)}}}
 \\newcommand{{\\MRRWilcoxonW}}{{{mrr_w_stat:.1f}}}
-\\newcommand{{\\MRRWilcoxonP}}{{< .001}}
+\\newcommand{{\\MRRWilcoxonP}}{{{format_p(mrr_w_p)}}}
 \\newcommand{{\\MRRCohensD}}{{{mrr_cohens_d:.2f}}}
 \\newcommand{{\\MRRCliffsDelta}}{{{mrr_cliffs_delta:.2f}}}
 

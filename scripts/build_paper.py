@@ -54,7 +54,7 @@ def step_verify_quality_gates():
     print("\n" + "=" * 70)
     print("STEP: VERIFYING ACADEMIC QUALITY GATES")
     print("=" * 70)
-    cmd = [sys.executable, str(REPO_ROOT / "paper" / "verify_paper.py")]
+    cmd = [sys.executable, str(REPO_ROOT / "scripts" / "verify_paper.py")]
     res = subprocess.run(cmd, cwd=str(REPO_ROOT))
     if res.returncode != 0:
         print("[FAIL] Quality gates verification failed.")

@@ -67,10 +67,8 @@ def run_benchmark(
     logger.info(f"Instantiating TransformersBackend for {resolved_path} in 4-bit...")
 
     backend = TransformersBackend(
-        base_model=resolved_path,
+        model_name_or_path=resolved_path,
         load_in_4bit=True,
-        device="cuda" if torch.cuda.is_available() else "cpu",
-        temperature=0.0,
     )
 
     results: List[Dict] = []
@@ -105,19 +103,19 @@ def run_benchmark(
                     repo_dir=target_worktree,
                     backend=backend,
                     token_budget=4096,
-                    use_sliding_window_fallback=True,
                     max_turns=2,
                 )
 
-            traj: TrajectoryResult = agent.resolve_issue(problem_statement)
+            traj: TrajectoryResult = agent.solve_issue(issue_text=problem_statement, instance_id=instance_id)
             latency = time.time() - start_t
 
             if traj.resolved:
                 success_count += 1
-            if traj.syntax_error_encountered:
+            is_syntax_error = (not traj.patch_applied and traj.failure_category == "syntax_error")
+            if is_syntax_error:
                 syntax_error_count += 1
 
-            task_tokens = sum(t.prompt_tokens + t.completion_tokens for t in traj.turns)
+            task_tokens = sum(t.token_cost for t in traj.turns)
             total_tokens_spent += task_tokens
 
             results.append({
@@ -125,7 +123,7 @@ def run_benchmark(
                 "repo": repo,
                 "resolved": traj.resolved,
                 "patch_applied": traj.patch_applied,
-                "syntax_error": traj.syntax_error_encountered,
+                "syntax_error": is_syntax_error,
                 "turns": len(traj.turns),
                 "total_tokens": task_tokens,
                 "latency_sec": latency,
