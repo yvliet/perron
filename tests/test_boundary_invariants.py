@@ -14,6 +14,7 @@ Executes hundreds of automated boundary invariance tests across 7 distinct syste
 from __future__ import annotations
 
 import ast
+import pytest
 import concurrent.futures
 import os
 from pathlib import Path
@@ -158,7 +159,10 @@ def run_battery():
     call_star = [(i, hub) for i in range(1, n_star)]
     t_star, d_star = build_static_transition_matrix(n_star, call_star, [])
     p_0_star = np.full(n_star, 1.0 / n_star, dtype=np.float32)
-    pi_star = personalized_pagerank_power_iteration(t_star, d_star, p_0_star, beta=0.85, max_iter=20)
+    import warnings
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", message=".*max_iter.*", category=RuntimeWarning)
+        pi_star = personalized_pagerank_power_iteration(t_star, d_star, p_0_star, beta=0.85, max_iter=20)
     if not np.isclose(np.sum(pi_star), 1.0, atol=1e-4) or (pi_star < 0).any():
         failures.append(f"Angle 2.1 In-Star PPR violated mass conservation: sum={np.sum(pi_star)}")
     else:
@@ -168,7 +172,10 @@ def run_battery():
     test_count += 1
     call_out = [(hub, i) for i in range(1, n_star)]
     t_out, d_out = build_static_transition_matrix(n_star, call_out, [])
-    pi_out = personalized_pagerank_power_iteration(t_out, d_out, p_0_star, beta=0.85, max_iter=20)
+    import warnings
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", message=".*max_iter.*", category=RuntimeWarning)
+        pi_out = personalized_pagerank_power_iteration(t_out, d_out, p_0_star, beta=0.85, max_iter=20)
     if not np.isclose(np.sum(pi_out), 1.0, atol=1e-4) or (pi_out < 0).any():
         failures.append(f"Angle 2.2 Out-Star PPR violated mass conservation: sum={np.sum(pi_out)}")
     else:
@@ -186,7 +193,10 @@ def run_battery():
     t_bip, d_bip = build_static_transition_matrix(n_bip, call_bip, [])
     p_0_bip = np.zeros(n_bip, dtype=np.float32)
     p_0_bip[0] = 1.0 # single node teleport
-    pi_bip = personalized_pagerank_power_iteration(t_bip, d_bip, p_0_bip, beta=0.85, max_iter=80)
+    import warnings
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", message=".*max_iter.*", category=RuntimeWarning)
+        pi_bip = personalized_pagerank_power_iteration(t_bip, d_bip, p_0_bip, beta=0.85, max_iter=80)
     if not np.isclose(np.sum(pi_bip), 1.0, atol=1e-4) or (pi_bip < 0).any():
         failures.append("Angle 2.3 K_{200,200} bipartite violated mass conservation!")
     else:
@@ -196,8 +206,13 @@ def run_battery():
     test_count += 1
     t_small, d_small = build_static_transition_matrix(4, [(0, 1), (1, 2), (2, 3), (3, 0)], [])
     p_0_small = np.array([1.0, 0, 0, 0], dtype=np.float32)
-    pi_high_beta = personalized_pagerank_power_iteration(t_small, d_small, p_0_small, beta=0.9999, max_iter=50)
-    pi_low_beta = personalized_pagerank_power_iteration(t_small, d_small, p_0_small, beta=0.0001, max_iter=10)
+    import warnings
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", message=".*max_iter.*", category=RuntimeWarning)
+        pi_high_beta = personalized_pagerank_power_iteration(t_small, d_small, p_0_small, beta=0.9999, max_iter=50)
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", message=".*max_iter.*", category=RuntimeWarning)
+        pi_low_beta = personalized_pagerank_power_iteration(t_small, d_small, p_0_small, beta=0.0001, max_iter=10)
     if not np.isclose(np.sum(pi_high_beta), 1.0) or not np.isclose(np.sum(pi_low_beta), 1.0):
         failures.append("Angle 2.4 Extreme beta PPR failed mass conservation!")
     else:
@@ -427,6 +442,11 @@ def run_battery():
         print("  [FAIL] " + f)
 
     return len(failures) == 0
+
+
+def test_boundary_invariants():
+    """Pytest discovery entrypoint for boundary invariance battery."""
+    assert run_battery(), "Boundary invariance battery encountered failures."
 
 
 if __name__ == "__main__":

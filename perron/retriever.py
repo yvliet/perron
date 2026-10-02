@@ -33,7 +33,7 @@ from perron.matrix import (
     load_mmap_csr,
 )
 from perron.packer import ASTContextSymbol, pack_context_subgraphs
-from perron.specificity import calculate_specificity_scores
+from perron.specificity import calculate_specificity_scores, compute_global_pagerank
 
 # Standard Python and English stop words to filter out common tokens
 # preventing false-positive noise amplification in lexical indexing.
@@ -375,12 +375,16 @@ class CodeGraph:
         t_matrix,
         symbols,
         metadata: dict,
+        dangling: Optional[np.ndarray] = None,
+        pi_global: Optional[np.ndarray] = None,
     ):
         self.cache_dir = cache_dir
         self.nodes = nodes
         self.t_matrix = t_matrix
         self.symbols = symbols
         self.metadata = metadata
+        self.dangling = dangling
+        self.pi_global = pi_global
         self.n_symbols = len(self.symbols)
 
     @classmethod
@@ -411,6 +415,14 @@ class CodeGraph:
                     shutil.copy2(indptr_path, t_indptr_path)
                 except Exception:
                     pass
+            pi_global_path = cache_path / "pi_global.npy"
+            if pi_global_path.exists():
+                try:
+                    pi_global = np.load(pi_global_path, mmap_mode="r")
+                except Exception:
+                    pi_global = compute_global_pagerank(t_matrix, dangling)
+            else:
+                pi_global = compute_global_pagerank(t_matrix, dangling)
             symbols = nodes
             metadata = {
                 "symbols_count": len(symbols),
@@ -420,6 +432,8 @@ class CodeGraph:
         else:
             logger.info(f"Loading existing cache from {cache_path}...")
             sym_file = cache_path / "id_to_symbol.json"
+            if not sym_file.exists():
+                sym_file = cache_path / "symbols.json"
             if sym_file.exists():
                 with open(sym_file, "r", encoding="utf-8") as f:
                     raw_syms = json.load(f)
@@ -428,6 +442,18 @@ class CodeGraph:
                 nodes_res = extract_repository_graph(repo_path)
                 nodes = nodes_res[0] if isinstance(nodes_res, tuple) else nodes_res
             t_matrix, dangling, node_to_id, id_to_node = load_mmap_csr(cache_path)
+            pi_global_path = cache_path / "pi_global.npy"
+            if pi_global_path.exists():
+                try:
+                    pi_global = np.load(pi_global_path, mmap_mode="r")
+                except Exception:
+                    pi_global = compute_global_pagerank(t_matrix, dangling)
+            else:
+                pi_global = compute_global_pagerank(t_matrix, dangling)
+                try:
+                    np.save(pi_global_path, pi_global.astype(np.float64))
+                except Exception:
+                    pass
             symbols = nodes
             metadata = {
                 "symbols_count": len(symbols),
@@ -435,7 +461,7 @@ class CodeGraph:
                 "nnz": int(t_matrix.nnz),
             }
 
-        return cls(cache_path, nodes, t_matrix, symbols, metadata)
+        return cls(cache_path, nodes, t_matrix, symbols, metadata, dangling, pi_global)
 
     def close(self) -> None:
         """Close memory-mapped array buffers safely."""
@@ -456,7 +482,7 @@ class PerronRetriever:
         code_graph: CodeGraph,
         gamma: float = 0.70,
         beta: float = 0.85,
-        max_iterations: int = 15,
+        max_iterations: int = 100,
         tolerance: float = 1e-6,
     ):
         self.graph = code_graph
@@ -465,7 +491,27 @@ class PerronRetriever:
         self.max_iterations = max_iterations
         self.tolerance = tolerance
 
-        # Precompute static degrees vector for sub-millisecond specificity scoring
+        # Precompute or load stationary global PageRank vector pi_g for smoothed PMI hub damping
+        # Dynamically recompute if self.beta departs from baseline beta=0.85 to maintain spectral alignment
+        if (
+            hasattr(self.graph, "pi_global")
+            and self.graph.pi_global is not None
+            and abs(self.beta - 0.85) < 1e-4
+        ):
+            self.pi_global = np.asarray(self.graph.pi_global, dtype=np.float64)
+        else:
+            dangling = getattr(self.graph, "dangling", None)
+            if dangling is None:
+                dangling = (np.diff(self.graph.t_matrix.indptr) == 0).astype(np.float64)
+            self.pi_global = compute_global_pagerank(
+                self.graph.t_matrix,
+                np.asarray(dangling, dtype=np.float64),
+                beta=self.beta,
+                max_iter=self.max_iterations,
+                tol=self.tolerance,
+            ).astype(np.float64)
+
+        # Static degrees vector for structural bounds and backward compatibility
         self.degrees = np.diff(self.graph.t_matrix.indptr).astype(np.float64)
 
     def query(
@@ -489,11 +535,12 @@ class PerronRetriever:
             tolerance=self.tolerance,
         )
 
-        # 3. Specificity damping: penalize power-law hubs via degree scaling
+        # 3. Specificity damping: penalize power-law hubs via stationary distribution pi_g
         scores = calculate_specificity_scores(
             pi,
-            self.degrees,
+            self.pi_global,
             gamma=self.gamma,
+            query_prior=p0,
         )
 
         # 4. AST subgraph context packing within token budget K
@@ -513,4 +560,12 @@ class PerronRetriever:
             formatted_chunks.append(f"{header}\n{sym.source_code}")
 
         return "\n\n".join(formatted_chunks) if formatted_chunks else context_str
+
+    def retrieve(
+        self,
+        query_text: str,
+        max_tokens: int = 4096,
+    ) -> List[ASTContextSymbol]:
+        """Convenience alias returning packed AST symbols for the query within token budget."""
+        return self.query(query_text=query_text, max_tokens=max_tokens, return_symbols=True)
 

@@ -204,7 +204,12 @@ class PerronAgent:
 
         new_sym_map = {item["qualified_name"]: item for item in collector.symbols_raw}
 
-        # Update existing symbols for this file in-place
+        # Update existing symbols for this file in-place.
+        # INVARIANT (EPITAPH-020, EPITAPH-028): Topology is strictly frozen at N_0.
+        # Memory-mapped CSR arrays cannot be resized dynamically without memory bloat (>12GB)
+        # or dimension mismatch in sparse power iteration (pi @ t_matrix). Newly synthesized
+        # inner functions/methods are absorbed into their parent class/function symbol spans;
+        # new top-level symbols are omitted from self.symbols to preserve N_0 index alignment.
         for sym in self.symbols:
             if sym.file_path == rel_path:
                 sym_key = getattr(sym, "qualified_name", getattr(sym, "name", ""))
@@ -387,6 +392,32 @@ class PerronAgent:
 
         return edits
 
+    @staticmethod
+    def compact_history_content(content: str) -> str:
+        """
+        Compacts model response for multi-turn history tracking:
+        1. Strips thinking traces completely.
+        2. Preserves intact XML <edit> blocks while discarding conversational filler.
+        3. Prevents severed XML tags across multi-turn context boundaries.
+        4. Falls back to scalar truncation when no XML edit blocks are present.
+        """
+        clean = re.sub(
+            r"<\|think\|>.*?(?:</\|think\|>|<\|/think\|>|$)",
+            "",
+            content,
+            flags=re.DOTALL,
+        ).strip()
+
+        edit_blocks = re.findall(r"<edit\b.*?</edit>", clean, flags=re.DOTALL | re.IGNORECASE)
+        if edit_blocks:
+            clean = "\n\n".join(edit_blocks)
+            if len(clean) > 2500:
+                clean = clean[:2500] + "\n</new>\n</edit>\n...[truncated historical edit]..."
+        elif len(clean) > 800:
+            clean = clean[:800] + "\n...[truncated historical edit]..."
+
+        return clean
+
     def solve_issue(
         self,
         issue_text: str,
@@ -395,7 +426,7 @@ class PerronAgent:
         instance_id: str = "custom_task",
     ) -> TrajectoryResult:
         """
-        Multi-turn autonomous repair loop: retrieve -> generate -> patch -> test -> reflect.
+        Multi-turn autonomous repair loop: retrieve → generate → patch → test → reflect.
         """
         start_time = time.perf_counter()
         all_telemetry: List[TurnTelemetry] = []
@@ -469,15 +500,8 @@ class PerronAgent:
             if response.thinking_trace:
                 thinking_traces.append(response.thinking_trace)
 
-            # Compact model content in history: strip thinking trace completely before any length truncation
-            clean_history_content = re.sub(
-                r"<\|think\|>.*?(?:</\|think\|>|<\|/think\|>|$)",
-                "",
-                response.content,
-                flags=re.DOTALL,
-            ).strip()
-            if len(clean_history_content) > 800:
-                clean_history_content = clean_history_content[:800] + "\n...[truncated historical edit]..."
+            # Compact model content in history: strip thinking trace completely and retain well-formed XML edits
+            clean_history_content = self.compact_history_content(response.content)
             turn_history.append({"role": "model", "content": clean_history_content})
 
             # 3. Parse and apply edits
@@ -646,3 +670,8 @@ class PerronAgent:
             turns=all_telemetry,
             test_output=last_test_output,
         )
+
+
+# Backward-compatible alias
+DeveloperAgent = PerronAgent
+

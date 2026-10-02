@@ -149,8 +149,19 @@ def run_targeted_test(
 
     if isolation == "git_worktree":
         with EphemeralWorktree(target_cwd) as iso_dir:
+            # Rebase test target relative to target_cwd so child call resolves inside iso_dir
+            try:
+                rel_f = file_path.relative_to(target_cwd.resolve())
+            except ValueError:
+                rel_f = file_path.name
+            if "::" in raw_target:
+                _, sel = raw_target.split("::", 1)
+                rebased_target = f"{rel_f}::{sel}"
+            else:
+                rebased_target = str(rel_f)
+
             return run_targeted_test(
-                test_file=test_file,
+                test_file=rebased_target,
                 test_filter=test_filter,
                 cwd=iso_dir,
                 timeout_seconds=timeout_seconds,

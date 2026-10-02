@@ -8,6 +8,7 @@ and subprocess isolation boundaries to actively break system invariants.
 from __future__ import annotations
 
 import ast
+import pytest
 from collections import deque
 import concurrent.futures
 from pathlib import Path
@@ -158,7 +159,10 @@ def run_fuzzer():
         failures.append(f"Giant p_0 sum is not 1.0: {np.sum(p_0_giant)}")
 
     t2 = time.perf_counter()
-    pi_giant = personalized_pagerank_power_iteration(t_giant, d_giant, p_0_giant, beta=0.85, max_iter=25)
+    import warnings
+    with warnings.catch_warnings():
+        warnings.filterwarnings("ignore", message=".*max_iter.*", category=RuntimeWarning)
+        pi_giant = personalized_pagerank_power_iteration(t_giant, d_giant, p_0_giant, beta=0.85, max_iter=25)
     t_ppr = time.perf_counter() - t2
     print(f"  -> Ran PPR on |V|={n_giant} in {t_ppr*1000:.2f}ms: sum={np.sum(pi_giant):.6f}, min={np.min(pi_giant):.8e}")
     if not np.isclose(np.sum(pi_giant), 1.0, atol=1e-4):
@@ -257,6 +261,11 @@ def run_fuzzer():
         print("  [FAIL] " + f)
     
     return len(failures) == 0
+
+
+def test_adversarial_fuzzer():
+    """Pytest discovery entrypoint for maximum-entropy fuzzing battery."""
+    assert run_fuzzer(), "Adversarial fuzzer encountered failures."
 
 
 if __name__ == "__main__":

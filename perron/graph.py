@@ -588,6 +588,11 @@ def compile_and_save_repository_graph(
 
     save_mmap_csr(output_dir, t_matrix, dangling, canonical_to_id, id_to_canonical)
 
+    # Compute and save stationary PageRank distribution for static call graph
+    from perron.specificity import compute_global_pagerank
+    pi_global = compute_global_pagerank(t_matrix, dangling, beta=0.85, max_iter=100)
+    np.save(output_dir / "pi_global.npy", pi_global.astype(np.float64))
+
     # Save full symbol representations with code segments
     symbols_json_path = output_dir / "id_to_symbol.json"
     with open(symbols_json_path, "w", encoding="utf-8") as f:
