@@ -11,6 +11,7 @@ from perron.fusion import (
     compute_instance_fusion_rankings,
     min_max_scale,
     reciprocal_rank_fusion,
+    select_fusion_weight,
     weighted_score_fusion,
 )
 
@@ -83,3 +84,17 @@ def test_compute_instance_fusion_rankings() -> None:
     for w in [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]:
         assert f"weighted_w_{w:.1f}" in res
         assert len(res[f"weighted_w_{w:.1f}"]) == 4
+
+
+def test_rrf_tie_order_is_input_order_invariant():
+    a, b = [0, 1, 2], [1, 0, 2]
+    assert reciprocal_rank_fusion(a, b, k=60) == reciprocal_rank_fusion(b, a, k=60) == [0, 1, 2]
+
+
+def test_select_fusion_weight_tie_rule():
+    def cell(f10, f5):
+        return {"metrics": {"fn_acc_10": {"mean": f10}, "fn_acc_5": {"mean": f5}}}
+    summary = {"weighted_w_0.0": cell(0.20, 0.11), "weighted_w_0.1": cell(0.20, 0.12),
+               "weighted_w_0.2": cell(0.20, 0.11), "weighted_w_0.3": cell(0.19, 0.13)}
+    assert select_fusion_weight(summary, [0.3, 0.2, 0.1, 0.0]) == 0.1
+

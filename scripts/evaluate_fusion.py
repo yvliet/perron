@@ -34,6 +34,7 @@ from perron.fusion import (
     compute_instance_fusion_rankings,
     min_max_scale,
     reciprocal_rank_fusion,
+    select_fusion_weight,
     weighted_score_fusion,
 )
 from perron.metrics import (
@@ -180,14 +181,8 @@ def run_dev_val_fusion_selection(
 
     # Pre-registered selection rule:
     # Choose w with highest Fn Acc@10 on dev_val; ties go to smaller w.
-    best_w = WEIGHTS[0]
-    best_score = -1.0
-    for w in WEIGHTS:
-        score = summary[f"weighted_w_{w:.1f}"]["metrics"]["fn_acc_10"]["mean"]
-        # If strictly better, or equal and smaller w (since WEIGHTS is ascending, strictly better suffices)
-        if score > best_score:
-            best_score = score
-            best_w = w
+    best_w = select_fusion_weight(summary, WEIGHTS)
+    best_score = summary[f"weighted_w_{best_w:.1f}"]["metrics"]["fn_acc_10"]["mean"]
 
     rrf_score = summary["rrf_60"]["metrics"]["fn_acc_10"]["mean"]
 

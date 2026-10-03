@@ -1,0 +1,522 @@
+{
+  "suite": "top10_indegree",
+  "split": "heldout",
+  "beta": 0.85,
+  "num_tasks": 118,
+  "in_degree_definition": "binary column count of the row-normalized transition matrix",
+  "gold": {
+    "n": 150,
+    "mean": 4.666666666666667,
+    "median": 3.0,
+    "p90": 10.0,
+    "max": 38.0
+  },
+  "methods": {
+    "standard_ppr": {
+      "n": 1180,
+      "mean": 323.8313559322034,
+      "median": 135.0,
+      "p90": 926.0,
+      "max": 1753.0,
+      "fn_acc_10_hits": 0,
+      "mannwhitney_u": 175389.5,
+      "mannwhitney_p": 1.1129048706701694e-85,
+      "rank_biserial": 0.9818022598870058,
+      "top_identifiers": [
+        {
+          "identifier": "BlockNode.super",
+          "count": 57,
+          "in_degree": 1362.0
+        },
+        {
+          "identifier": "Error",
+          "count": 57,
+          "in_degree": 151.0
+        },
+        {
+          "identifier": "CharFieldTests",
+          "count": 57,
+          "in_degree": 41.0
+        },
+        {
+          "identifier": "RelativeFieldTests",
+          "count": 57,
+          "in_degree": 100.0
+        },
+        {
+          "identifier": "override_settings",
+          "count": 57,
+          "in_degree": 720.0
+        },
+        {
+          "identifier": "SimpleTestCase.assertRaisesMessage",
+          "count": 55,
+          "in_degree": 1017.0
+        },
+        {
+          "identifier": "reverse",
+          "count": 53,
+          "in_degree": 596.0
+        },
+        {
+          "identifier": "setup",
+          "count": 39,
+          "in_degree": 926.0
+        },
+        {
+          "identifier": "OtherModelTests",
+          "count": 38,
+          "in_degree": 72.0
+        },
+        {
+          "identifier": "SimpleTestCase",
+          "count": 17,
+          "in_degree": 786.0
+        }
+      ]
+    },
+    "aider": {
+      "n": 1180,
+      "mean": 358.5042372881356,
+      "median": 151.0,
+      "p90": 935.1000000000124,
+      "max": 1753.0,
+      "fn_acc_10_hits": 0,
+      "mannwhitney_u": 176489.0,
+      "mannwhitney_p": 8.043002212397107e-88,
+      "rank_biserial": 0.9942259887005649,
+      "top_identifiers": [
+        {
+          "identifier": "BlockNode.super",
+          "count": 57,
+          "in_degree": 1362.0
+        },
+        {
+          "identifier": "Error",
+          "count": 57,
+          "in_degree": 151.0
+        },
+        {
+          "identifier": "CharFieldTests",
+          "count": 57,
+          "in_degree": 41.0
+        },
+        {
+          "identifier": "RelativeFieldTests",
+          "count": 57,
+          "in_degree": 100.0
+        },
+        {
+          "identifier": "override_settings",
+          "count": 57,
+          "in_degree": 720.0
+        },
+        {
+          "identifier": "SimpleTestCase.assertRaisesMessage",
+          "count": 57,
+          "in_degree": 1017.0
+        },
+        {
+          "identifier": "reverse",
+          "count": 57,
+          "in_degree": 596.0
+        },
+        {
+          "identifier": "setup",
+          "count": 52,
+          "in_degree": 926.0
+        },
+        {
+          "identifier": "SimpleTestCase",
+          "count": 47,
+          "in_degree": 786.0
+        },
+        {
+          "identifier": "OtherModelTests",
+          "count": 42,
+          "in_degree": 72.0
+        }
+      ]
+    },
+    "blocklist_lex": {
+      "n": 1180,
+      "mean": 274.04237288135596,
+      "median": 72.0,
+      "p90": 926.0,
+      "max": 1362.0,
+      "fn_acc_10_hits": 0,
+      "mannwhitney_u": 171332.0,
+      "mannwhitney_p": 4.803309242370911e-78,
+      "rank_biserial": 0.9359548022598869,
+      "top_identifiers": [
+        {
+          "identifier": "BlockNode.super",
+          "count": 57,
+          "in_degree": 1362.0
+        },
+        {
+          "identifier": "Error",
+          "count": 57,
+          "in_degree": 151.0
+        },
+        {
+          "identifier": "CharFieldTests",
+          "count": 57,
+          "in_degree": 41.0
+        },
+        {
+          "identifier": "RelativeFieldTests",
+          "count": 57,
+          "in_degree": 100.0
+        },
+        {
+          "identifier": "override_settings",
+          "count": 57,
+          "in_degree": 720.0
+        },
+        {
+          "identifier": "SimpleTestCase.assertRaisesMessage",
+          "count": 55,
+          "in_degree": 1017.0
+        },
+        {
+          "identifier": "reverse",
+          "count": 53,
+          "in_degree": 596.0
+        },
+        {
+          "identifier": "setup",
+          "count": 39,
+          "in_degree": 926.0
+        },
+        {
+          "identifier": "OtherModelTests",
+          "count": 38,
+          "in_degree": 72.0
+        },
+        {
+          "identifier": "SimpleTestCase",
+          "count": 17,
+          "in_degree": 786.0
+        }
+      ]
+    },
+    "deg_discount_matrix": {
+      "n": 1180,
+      "mean": 183.1491525423729,
+      "median": 72.0,
+      "p90": 471.0,
+      "max": 1753.0,
+      "fn_acc_10_hits": 0,
+      "mannwhitney_u": 169594.0,
+      "mannwhitney_p": 7.049211024789406e-75,
+      "rank_biserial": 0.9163163841807909,
+      "top_identifiers": [
+        {
+          "identifier": "Error",
+          "count": 57,
+          "in_degree": 151.0
+        },
+        {
+          "identifier": "RelativeFieldTests",
+          "count": 56,
+          "in_degree": 100.0
+        },
+        {
+          "identifier": "CharFieldTests",
+          "count": 56,
+          "in_degree": 41.0
+        },
+        {
+          "identifier": "BlockNode.super",
+          "count": 54,
+          "in_degree": 1362.0
+        },
+        {
+          "identifier": "OtherModelTests",
+          "count": 45,
+          "in_degree": 72.0
+        },
+        {
+          "identifier": "FileFieldTests",
+          "count": 38,
+          "in_degree": 11.0
+        },
+        {
+          "identifier": "UniqueTogetherTests",
+          "count": 27,
+          "in_degree": 12.0
+        },
+        {
+          "identifier": "setup",
+          "count": 24,
+          "in_degree": 926.0
+        },
+        {
+          "identifier": "SelfReferentialM2MClashTests",
+          "count": 22,
+          "in_degree": 10.0
+        },
+        {
+          "identifier": "DecimalFieldTests",
+          "count": 21,
+          "in_degree": 10.0
+        }
+      ]
+    },
+    "hipporag": {
+      "n": 1180,
+      "mean": 318.67033898305084,
+      "median": 130.0,
+      "p90": 926.0,
+      "max": 1753.0,
+      "fn_acc_10_hits": 0,
+      "mannwhitney_u": 175398.5,
+      "mannwhitney_p": 1.0760823066911616e-85,
+      "rank_biserial": 0.9819039548022599,
+      "top_identifiers": [
+        {
+          "identifier": "Error",
+          "count": 57,
+          "in_degree": 151.0
+        },
+        {
+          "identifier": "BlockNode.super",
+          "count": 57,
+          "in_degree": 1362.0
+        },
+        {
+          "identifier": "CharFieldTests",
+          "count": 57,
+          "in_degree": 41.0
+        },
+        {
+          "identifier": "RelativeFieldTests",
+          "count": 57,
+          "in_degree": 100.0
+        },
+        {
+          "identifier": "override_settings",
+          "count": 56,
+          "in_degree": 720.0
+        },
+        {
+          "identifier": "SimpleTestCase.assertRaisesMessage",
+          "count": 54,
+          "in_degree": 1017.0
+        },
+        {
+          "identifier": "reverse",
+          "count": 41,
+          "in_degree": 596.0
+        },
+        {
+          "identifier": "OtherModelTests",
+          "count": 40,
+          "in_degree": 72.0
+        },
+        {
+          "identifier": "setup",
+          "count": 36,
+          "in_degree": 926.0
+        },
+        {
+          "identifier": "SimpleTestCase",
+          "count": 24,
+          "in_degree": 786.0
+        }
+      ]
+    },
+    "query_reweighted_ppr": {
+      "n": 1180,
+      "mean": 314.78050847457627,
+      "median": 126.0,
+      "p90": 926.0,
+      "max": 1753.0,
+      "fn_acc_10_hits": 0,
+      "mannwhitney_u": 175039.5,
+      "mannwhitney_p": 5.237403701387479e-85,
+      "rank_biserial": 0.9778474576271186,
+      "top_identifiers": [
+        {
+          "identifier": "BlockNode.super",
+          "count": 57,
+          "in_degree": 1362.0
+        },
+        {
+          "identifier": "Error",
+          "count": 57,
+          "in_degree": 151.0
+        },
+        {
+          "identifier": "CharFieldTests",
+          "count": 57,
+          "in_degree": 41.0
+        },
+        {
+          "identifier": "RelativeFieldTests",
+          "count": 56,
+          "in_degree": 100.0
+        },
+        {
+          "identifier": "override_settings",
+          "count": 56,
+          "in_degree": 720.0
+        },
+        {
+          "identifier": "SimpleTestCase.assertRaisesMessage",
+          "count": 55,
+          "in_degree": 1017.0
+        },
+        {
+          "identifier": "reverse",
+          "count": 53,
+          "in_degree": 596.0
+        },
+        {
+          "identifier": "setup",
+          "count": 39,
+          "in_degree": 926.0
+        },
+        {
+          "identifier": "OtherModelTests",
+          "count": 36,
+          "in_degree": 72.0
+        },
+        {
+          "identifier": "FileFieldTests",
+          "count": 16,
+          "in_degree": 11.0
+        }
+      ]
+    },
+    "perron_static": {
+      "n": 1180,
+      "mean": 95.82372881355933,
+      "median": 8.0,
+      "p90": 151.0,
+      "max": 1753.0,
+      "fn_acc_10_hits": 17,
+      "mannwhitney_u": 120781.5,
+      "mannwhitney_p": 2.8368118732194007e-13,
+      "rank_biserial": 0.3647627118644068,
+      "top_identifiers": [
+        {
+          "identifier": "BlockNode.super",
+          "count": 39,
+          "in_degree": 1362.0
+        },
+        {
+          "identifier": "Error",
+          "count": 25,
+          "in_degree": 151.0
+        },
+        {
+          "identifier": "reverse",
+          "count": 13,
+          "in_degree": 596.0
+        },
+        {
+          "identifier": "ValidationMessagesTest._test_validation_messages",
+          "count": 11,
+          "in_degree": 11.0
+        },
+        {
+          "identifier": "Foo",
+          "count": 11,
+          "in_degree": 23.0
+        },
+        {
+          "identifier": "ExampleClass",
+          "count": 11,
+          "in_degree": 9.0
+        },
+        {
+          "identifier": "ForeignObjectRel",
+          "count": 10,
+          "in_degree": 26.0
+        },
+        {
+          "identifier": "Field",
+          "count": 9,
+          "in_degree": 120.0
+        },
+        {
+          "identifier": "Query",
+          "count": 8,
+          "in_degree": 100.0
+        },
+        {
+          "identifier": "FieldFlagsTests",
+          "count": 8,
+          "in_degree": 17.0
+        }
+      ]
+    },
+    "bm25": {
+      "n": 1180,
+      "mean": 5.295762711864406,
+      "median": 2.0,
+      "p90": 6.0,
+      "max": 335.0,
+      "fn_acc_10_hits": 27,
+      "mannwhitney_u": 65057.0,
+      "mannwhitney_p": 7.188876036065574e-08,
+      "rank_biserial": -0.2648926553672316,
+      "top_identifiers": [
+        {
+          "identifier": "Migration",
+          "count": 16,
+          "in_degree": 151.0
+        },
+        {
+          "identifier": "ConditionalGetMiddlewareTest.test_if_modified_since_and_same_last_modified",
+          "count": 6,
+          "in_degree": 2.0
+        },
+        {
+          "identifier": "mult",
+          "count": 6,
+          "in_degree": 0.0
+        },
+        {
+          "identifier": "pytest_runtest_makereport",
+          "count": 5,
+          "in_degree": 2.0
+        },
+        {
+          "identifier": "AdminCustomSaveRelatedTests.test_should_be_able_to_edit_related_objects_on_add_view",
+          "count": 4,
+          "in_degree": 5.0
+        },
+        {
+          "identifier": "ConditionalGetMiddlewareTest.test_if_modified_since_and_last_modified_in_the_future",
+          "count": 4,
+          "in_degree": 2.0
+        },
+        {
+          "identifier": "execute_from_command_line",
+          "count": 4,
+          "in_degree": 3.0
+        },
+        {
+          "identifier": "ManagementUtility.fetch_command",
+          "count": 4,
+          "in_degree": 5.0
+        },
+        {
+          "identifier": "CharField._check_max_length_attribute",
+          "count": 4,
+          "in_degree": 2.0
+        },
+        {
+          "identifier": "FunctionTests.test_autoescape_off",
+          "count": 4,
+          "in_degree": 2.0
+        }
+      ]
+    }
+  },
+  "git_sha": "8d79f885517ef4a408b6130235b0a89eb9a7ed0e",
+  "utc_timestamp": "2026-10-03T16:38:38.860883+00:00"
+}

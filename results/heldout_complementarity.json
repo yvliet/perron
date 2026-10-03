@@ -1,8 +1,8 @@
 {
-  "git_sha": "fa47fbe7a0fd51326b8fa170c6cdacc4a5bc7aab",
+  "git_sha": "468227704d55188cda4c3836355ff79b452dec33",
   "python_version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
   "package_versions": {
-    "perron-core": "0.2.1",
+    "perron-core": "0.3.0",
     "perron": "0.1.0",
     "numpy": "2.5.2",
     "scipy": "1.18.1",
@@ -22,11 +22,11 @@
     "RAM": 16831815680,
     "GPU": "NVIDIA GeForce MX550"
   },
-  "utc_timestamp": "2026-10-03T07:02:57.962542+00:00",
-  "git sha": "fa47fbe7a0fd51326b8fa170c6cdacc4a5bc7aab",
+  "utc_timestamp": "2026-10-03T16:46:50.330965+00:00",
+  "git sha": "468227704d55188cda4c3836355ff79b452dec33",
   "python version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
   "package versions": {
-    "perron-core": "0.2.1",
+    "perron-core": "0.3.0",
     "perron": "0.1.0",
     "numpy": "2.5.2",
     "scipy": "1.18.1",
@@ -37,13 +37,13 @@
     "psutil": "7.2.2"
   },
   "split name": "heldout",
-  "UTC timestamp": "2026-10-03T07:02:57.962542+00:00",
+  "UTC timestamp": "2026-10-03T16:46:50.330965+00:00",
   "suite": "complementarity",
   "metadata": {
-    "git_sha": "fa47fbe7a0fd51326b8fa170c6cdacc4a5bc7aab",
+    "git_sha": "468227704d55188cda4c3836355ff79b452dec33",
     "python_version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
     "package_versions": {
-      "perron-core": "0.2.1",
+      "perron-core": "0.3.0",
       "perron": "0.1.0",
       "numpy": "2.5.2",
       "scipy": "1.18.1",
@@ -63,11 +63,11 @@
       "RAM": 16831815680,
       "GPU": "NVIDIA GeForce MX550"
     },
-    "utc_timestamp": "2026-10-03T07:02:57.962542+00:00",
-    "git sha": "fa47fbe7a0fd51326b8fa170c6cdacc4a5bc7aab",
+    "utc_timestamp": "2026-10-03T16:46:50.330965+00:00",
+    "git sha": "468227704d55188cda4c3836355ff79b452dec33",
     "python version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
     "package versions": {
-      "perron-core": "0.2.1",
+      "perron-core": "0.3.0",
       "perron": "0.1.0",
       "numpy": "2.5.2",
       "scipy": "1.18.1",
@@ -78,12 +78,12 @@
       "psutil": "7.2.2"
     },
     "split name": "heldout",
-    "UTC timestamp": "2026-10-03T07:02:57.962542+00:00",
+    "UTC timestamp": "2026-10-03T16:46:50.330965+00:00",
     "suite": "complementarity"
   },
   "split": "heldout",
   "num_instances": 150,
-  "selected_fusion_variant": "weighted_w_0.0",
+  "selected_fusion_variant": "weighted_w_0.1",
   "contingency_table_bm25_perron": {
     "both_hit_1_1": 11,
     "bm25_only_1_0": 16,
@@ -92,10 +92,10 @@
   },
   "mcnemar_fusion_vs_bm25": {
     "n_target_wins": 0,
-    "n_baseline_wins": 0,
-    "n_both_hit": 27,
+    "n_baseline_wins": 1,
+    "n_both_hit": 26,
     "n_both_miss": 123,
-    "n_discordant": 0,
+    "n_discordant": 1,
     "p_value": 1.0
   },
   "mcnemar_perron_vs_bm25": {
@@ -111,7 +111,7 @@
     "split": "heldout",
     "seed": 20261003,
     "num_instances": 150,
-    "selected_fusion_variant": "weighted_w_0.0",
+    "selected_fusion_variant": "weighted_w_0.1",
     "contingency_table_bm25_perron": {
       "both_hit_1_1": 11,
       "bm25_only_1_0": 16,
@@ -120,10 +120,10 @@
     },
     "mcnemar_fusion_vs_bm25": {
       "n_target_wins": 0,
-      "n_baseline_wins": 0,
-      "n_both_hit": 27,
+      "n_baseline_wins": 1,
+      "n_both_hit": 26,
       "n_both_miss": 123,
-      "n_discordant": 0,
+      "n_discordant": 1,
       "p_value": 1.0
     },
     "mcnemar_perron_vs_bm25": {
@@ -140,7 +140,7 @@
     "split": "heldout",
     "seed": 20261003,
     "num_instances": 150,
-    "selected_fusion_variant": "weighted_w_0.0",
+    "selected_fusion_variant": "weighted_w_0.1",
     "contingency_table_bm25_perron": {
       "both_hit_1_1": 11,
       "bm25_only_1_0": 16,
@@ -149,10 +149,10 @@
     },
     "mcnemar_fusion_vs_bm25": {
       "n_target_wins": 0,
-      "n_baseline_wins": 0,
-      "n_both_hit": 27,
+      "n_baseline_wins": 1,
+      "n_both_hit": 26,
       "n_both_miss": 123,
-      "n_discordant": 0,
+      "n_discordant": 1,
       "p_value": 1.0
     },
     "mcnemar_perron_vs_bm25": {
