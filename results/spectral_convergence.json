@@ -1,0 +1,30 @@
+{
+  "theoretical_bounds": {
+    "beta": 0.85,
+    "brauer_bound_lambda_2": 0.85,
+    "spectral_gap": 0.15,
+    "tolerance_epsilon": 1e-06,
+    "theoretical_max_iterations": 86,
+    "formula": "ceil(ln(1e-6) / ln(0.85))"
+  },
+  "empirical_convergence": {
+    "requests": {
+      "num_nodes": 284,
+      "num_edges": 796,
+      "beta": 0.85,
+      "tolerance": 1e-06,
+      "power_iterations": 71,
+      "latency_ms": 2.7,
+      "final_l1_residual": 8.94e-07
+    },
+    "sympy": {
+      "num_nodes": 6033,
+      "num_edges": 17938,
+      "beta": 0.85,
+      "tolerance": 1e-06,
+      "power_iterations": 68,
+      "latency_ms": 6.6,
+      "final_l1_residual": 9.42e-07
+    }
+  }
+}

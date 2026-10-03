@@ -19,7 +19,7 @@ This ledger binds all empirical assertions made in `paper/paper_writeup.md` and 
 | `CLAIM-09` | Perron Engine runs at 144.33 MB peak RSS, preserving 6.86 GB available headroom on 16GB host | `results/memory_measured.json` | `process_memory.peak_process_rss_mb`, `hardware_host.available_system_ram_gb` | 144.33 MB RSS, 6.86 GB headroom | **Supported** |
 | `CLAIM-10` | Full dataset spans 300 instances, 4,876,848 AST nodes, and 41,591,756 directed multigraph edges | `data_release/VALIDATION.md`, `facts.json` | `dataset.total_ast_nodes`, `dataset.total_multigraph_edges` | 4,876,848 nodes, 41,591,756 edges | **Supported** |
 | `CLAIM-11` | Brauer rank-1 perturbation establishes invariant spectral gap $1 - \vert\lambda_2\vert \ge 0.15$ | `paper/main.tex`, `paper/paper_writeup.md` | Section 3.3, `\beta = 0.85` | $\vert\lambda_2\vert \le 0.85$, gap $\ge 0.15$ | **Supported** |
-| `CLAIM-12` | Power iteration reaches $\epsilon = 10^{-6}$ in $\le \lceil \ln 10^{-6} / \ln 0.85 \rceil = 86$ iterations (71 on Requests, 68 on SymPy) | `facts.json` | `spectral_convergence.max_iterations_eps_1e_6`, `spectral_convergence.requests_power_iterations`, `spectral_convergence.sympy_power_iterations` | 86 bound; 71 iters (2.7 ms), 68 iters (6.6 ms) | **Supported** |
+| `CLAIM-12` | Power iteration reaches $\epsilon = 10^{-6}$ in $\le \lceil \ln 10^{-6} / \ln 0.85 \rceil = 86$ iterations (71 on Requests, 68 on SymPy) | `results/spectral_convergence.json`, `facts.json` | `empirical_convergence.requests.power_iterations`, `empirical_convergence.sympy.power_iterations` | 86 bound; 71 iters (2.7 ms), 68 iters (6.6 ms) | **Supported** |
 
 ---
 

@@ -69,7 +69,17 @@ def check_facts() -> int:
     val_0_15 = facts["spectral_convergence"]["spectral_gap"]
     checks.append((f"Spectral gap >= {val_0_15}", f"{val_0_15}" in writeup_text))
 
-    # 7. Power Iteration Bounds
+    # 7. Power Iteration Bounds & Provenance Parity
+    spectral_artifact = REPO_ROOT / "results" / "spectral_convergence.json"
+    if spectral_artifact.exists():
+        with open(spectral_artifact, "r", encoding="utf-8") as f:
+            sc_data = json.load(f)
+        req_sc = sc_data["empirical_convergence"]["requests"]["power_iterations"]
+        sym_sc = sc_data["empirical_convergence"]["sympy"]["power_iterations"]
+        checks.append(("Spectral telemetry artifact parity", req_sc == 71 and sym_sc == 68))
+    else:
+        checks.append(("Spectral telemetry artifact parity", False))
+
     val_71 = facts["spectral_convergence"]["requests_power_iterations"]
     checks.append((f"{val_71} iterations on Requests", f"{val_71} iterations" in writeup_text))
 

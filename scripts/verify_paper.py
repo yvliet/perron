@@ -109,18 +109,17 @@ def check_writeup_word_count():
 
 
 def check_notebook_execution():
-    nb_file = REPO_ROOT / "notebooks" / "perron_showcase.ipynb"
-    assert nb_file.is_file(), f"Missing notebook: {nb_file}"
-    quickstart_file = REPO_ROOT / "notebooks" / "perron_quickstart.ipynb"
-    assert quickstart_file.is_file(), f"Missing quickstart notebook: {quickstart_file}"
-    with open(nb_file, "r", encoding="utf-8") as f:
-        nb = json.load(f)
+    for nb_name in ["perron_showcase.ipynb", "perron_quickstart.ipynb"]:
+        nb_path = REPO_ROOT / "notebooks" / nb_name
+        assert nb_path.is_file(), f"Missing notebook: {nb_path}"
+        with open(nb_path, "r", encoding="utf-8") as f:
+            nb = json.load(f)
 
-    global_ns = {"__name__": "__main__"}
-    for idx, cell in enumerate(nb["cells"]):
-        if cell["cell_type"] == "code":
-            code = "".join(cell["source"])
-            exec(code, global_ns)
+        global_ns = {"__name__": "__main__"}
+        for idx, cell in enumerate(nb["cells"]):
+            if cell["cell_type"] == "code":
+                code = "".join(cell["source"])
+                exec(code, global_ns)
 
 
 def check_facts_and_claims():
