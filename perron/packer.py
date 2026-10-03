@@ -65,7 +65,7 @@ def pack_context_subgraphs(
        components and allocates proportional token budgets to prevent cluster starvation.
     3. Target-first anchor selection per component with versioned priority queue expansion.
     4. Bounded degree connectivity bonus ensuring ratio in [0, 1].
-    5. Strict positive-specificity gate suppressing zero-specificity test routing nodes.
+    5. Strict positive-specificity filter suppressing zero-specificity test routing nodes.
     6. Breadcrumb overhead accounting guaranteeing emitted context <= token_budget.
     """
     if isinstance(adjacency_matrix, (int, float)) and token_budget == 3480:
@@ -245,7 +245,7 @@ def pack_context_subgraphs(
 
                 v_spec = float(specificity_scores[v_int])
                 if v_spec <= 0.0:
-                    # Strict gate: do not expand into zero-specificity (e.g. test) nodes
+                    # Strict filter: do not expand into zero-specificity (e.g. test) nodes
                     continue
 
                 neighbor_counts[v_int] += 1

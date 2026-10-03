@@ -97,7 +97,7 @@ def main():
         res = run_cmd([str(venv_perron_mcp), "--version"])
         assert "0.3.0" in res.stdout.strip() or "0.3.0" in res.stderr.strip()
 
-        logger.info("All clean-room installation gates PASSED successfully!")
+        logger.info("All clean-room installation checks PASSED successfully!")
 
 
 if __name__ == "__main__":

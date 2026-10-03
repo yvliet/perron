@@ -164,9 +164,9 @@
       "mean_wall_seconds": 0.1439
     }
   },
-  "gate_b_enforced": true,
+  "execution_boundary_enforced": true,
   "container_execution": "offline_host_decoupled",
-  "note": "tests_pass is explicitly null under Gate B because container execution is decoupled on Windows host",
+  "note": "tests_pass is explicitly null because SWE-bench container execution is decoupled on this host architecture",
   "results": {
     "status": "complete",
     "evaluation_partition": "dev_val",
@@ -253,9 +253,9 @@
         "mean_wall_seconds": 0.1439
       }
     },
-    "gate_b_enforced": true,
+    "execution_boundary_enforced": true,
     "container_execution": "offline_host_decoupled",
-    "note": "tests_pass is explicitly null under Gate B because container execution is decoupled on Windows host"
+    "note": "tests_pass is explicitly null because SWE-bench container execution is decoupled on this host architecture"
   },
   "data": {
     "status": "complete",
@@ -343,8 +343,8 @@
         "mean_wall_seconds": 0.1439
       }
     },
-    "gate_b_enforced": true,
+    "execution_boundary_enforced": true,
     "container_execution": "offline_host_decoupled",
-    "note": "tests_pass is explicitly null under Gate B because container execution is decoupled on Windows host"
+    "note": "tests_pass is explicitly null because SWE-bench container execution is decoupled on this host architecture"
   }
 }

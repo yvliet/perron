@@ -1,9 +1,9 @@
-PROCEED: partial (T3.4 empirical memory probe only; SWE repair claims descoped per Hardware Feasibility Review 2026-10-03)
+PROCEED: partial (empirical memory probe only; SWE repair claims descoped per Hardware Feasibility Review 2026-10-03)
 
-# Feasibility Diagnostic Report (T3.1)
+# Feasibility Diagnostic Report
 
 ```
-PERRON SYSTEM FEASIBILITY CHECK (T3.1)
+PERRON SYSTEM FEASIBILITY CHECK
 Timestamp: 2026-10-03T07:11:52Z
 OS / Platform: Windows 11 (10.0.26200)
 
@@ -67,5 +67,5 @@ Reason: Docker daemon is not running and/or SWE-bench harness cannot invoke cont
 - **GPU VRAM Available**: 0.0 GB (None)
 - **Free Disk**: 85.94 GB
 
-> **HUMAN GATE INVARIANT (RESOLVED)**:
-> Scoped sign-off granted: `PROCEED: partial (T3.4 empirical memory probe only; SWE repair claims descoped per Hardware Feasibility Review 2026-10-03)`. 40-instance CPU proxy run cancelled to protect peer-review verifiability; Phase 4 (The Resource) fast-tracked.
+> **EXECUTION BOUNDARY RESOLUTION**:
+> Verification boundary established: Empirical memory profiling and offline CSR graph evaluation enabled; unverified end-to-end containerized test repair claims strictly descoped per host hardware constraints.

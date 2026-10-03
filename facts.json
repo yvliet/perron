@@ -8,7 +8,7 @@
   },
   "dataset": {
     "total_instances": 300,
-    "instances_passing_gates": 300,
+    "instances_passing_validation": 300,
     "instances_passing_pct": 100.0,
     "total_ast_nodes": 4876848,
     "total_multigraph_edges": 41591756,

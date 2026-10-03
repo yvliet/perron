@@ -1,6 +1,6 @@
 # Baseline Audit & Diagnostic Ledger
 
-## 1. Toy Graph Evaluation Matrix (T1.3)
+## 1. Toy Graph Evaluation Matrix
 
 Evaluation performed on canonical 8-node toy graph:
 - Seed node $S$ (high lexical overlap with query `process_order`)
@@ -38,7 +38,7 @@ Evaluation performed on canonical 8-node toy graph:
 
 ---
 
-## 3. Dev-Set Post-Audit Rerun (T1.4)
+## 3. Dev-Set Post-Audit Rerun
 
 Evaluation executed on `dev_val` partition ($N=100$, seed `20261003`) via:
 ```bash

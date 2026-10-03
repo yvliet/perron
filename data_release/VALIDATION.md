@@ -11,8 +11,8 @@
 | Metric | Value |
 | :--- | :--- |
 | Total Instances Audited | 300 |
-| Instances Passing All Gates | 300 (100.0%) |
-| Instances Failing Gates | 0 |
+| Instances Passing All Validation Checks | 300 (100.0%) |
+| Instances Failing Validation Checks | 0 |
 | Total AST Nodes | 4,876,848 |
 | Total Directed Multigraph Edges | 41,591,756 |
 | Mean Nodes per Repository | 16256.2 |
@@ -22,7 +22,7 @@
 
 ---
 
-## 2. Invariant Verification Gates
+## 2. Invariant Verification Checks
 
 1. **SHA-256 Digest Integrity**: Every numpy array and parquet table matches manifest digest bit-for-bit.
 2. **Topological Bounds**: Strictly zero dangling edge indices ($0 \le \text{col} < N$).
@@ -33,4 +33,4 @@
 
 ## 3. Detailed Failure Ledger
 
-No validation failures detected. All instances passed 100% of topological and integrity gates.
+No validation failures detected. All instances passed 100% of topological and integrity checks.

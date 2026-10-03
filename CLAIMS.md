@@ -1,6 +1,6 @@
 # Perron Empirical Claims Ledger
 
-This ledger binds all empirical assertions made in `paper/paper_writeup.md` and `paper/main.tex` to authoritative serialized result files, following the scientific verification gate protocol.
+This ledger binds all empirical assertions made in `paper/paper_writeup.md` and `paper/main.tex` to authoritative serialized result files, following the empirical verification protocol.
 
 ---
 
@@ -12,7 +12,7 @@ This ledger binds all empirical assertions made in `paper/paper_writeup.md` and 
 | `CLAIM-02` | Degree-Normalized PPR achieves 4.2% Fn Acc@10; exact McNemar $p = 0.0042$, Holm $p = 0.0251$ | `paper/metrics_macros.tex`, `data/retrieval_sweep_results.json` | `\DegNormPPRFnAccTen`, `statistical_tests.heldout_s_func_primary.perron_vs_deg_ppr` | 4.2% ($p = 0.0042$, $p_{\text{holm}} = 0.0251$) | **Supported** |
 | `CLAIM-03` | Standard PPR, Aider Repo Maps, Hub Blocklists, and Query-Reweighted PPR collapse to 0.0% | `paper/metrics_macros.tex`, `data/retrieval_sweep_results.json` | `\StandardPPRFnAccTen`, `\AiderFnAccTen`, `\HubBlocklistFnAccTen` | 0.0% ($p < 0.001$) | **Supported** |
 | `CLAIM-04` | BM25 achieves 22.9% Fn Acc@10 on callable set and 18.0% on full heldout ($N=150$) | `results/heldout_table2_v2_postaudit.json`, `results/heldout_fusion.json` | `summary.bm25.metrics.fn_acc_10.mean` | 18.00% (full), 22.9% (callable) | **Supported** |
-| `CLAIM-05` | Gate A Story 2: Reciprocal Rank Fusion and weighted fusion ($w=0.0$) tie BM25 at 18.0% | `results/heldout_fusion.json` | `summary.weighted_w_0.0.metrics.fn_acc_10.mean` | 18.00% ($\Delta = +0.00$) | **Supported** |
+| `CLAIM-05` | Lexical Complementarity: Reciprocal Rank Fusion and weighted fusion ($w=0.0$) tie BM25 at 18.0% | `results/heldout_fusion.json` | `summary.weighted_w_0.0.metrics.fn_acc_10.mean` | 18.00% ($\Delta = +0.00$) | **Supported** |
 | `CLAIM-06` | Stratum C (unnamed defect targets, $N=112$) yields 8.04% for Perron vs 8.93% for BM25 | `results/heldout_strata.json` | `strata.C.methods.perron_static.fn_acc_10.mean` | 8.04% vs 8.93% | **Supported** |
 | `CLAIM-07` | Perron AST patcher achieves 76.7% valid apply with 0.0% syntax errors (23.3% rollback) | `data/editor_eval_results.json`, `paper/metrics_macros.tex` | `\PerronASTApplyRate`, `\PerronASTSyntaxErrorRate` | 76.7% apply, 0.0% syntax error | **Supported** |
 | `CLAIM-08` | Raw sed introduces 46.7% syntax errors; git apply suffers 20.0% hunk rejections | `data/editor_eval_results.json`, `paper/metrics_macros.tex` | `\SedSyntaxErrorRate`, `\GitApplyHunkRejectRate` | 46.7% sed err, 20.0% git reject | **Supported** |
@@ -23,7 +23,7 @@ This ledger binds all empirical assertions made in `paper/paper_writeup.md` and 
 
 ---
 
-## 2. Gate Decision Cross-References
+## 2. Empirical Scope & Methodological Invariants
 
-- **Gate A Outcome**: Story 2 formally ratified. Pure lexical BM25 (18.0%) outperforms or matches graph diffusion on full SWE-bench Lite ($N=150$). Perron is framed honestly as a high-throughput CSR graph diffusion, hub suppression, and context-packing substrate.
-- **Gate B Outcome**: Zero SWE repair claims without verified execution (`tests_pass: null` preserved). Engine memory reported strictly from authentic host telemetry (`results/memory_measured.json`).
+- **Lexical Baseline Invariant**: Pure lexical BM25 (18.0%) outperforms or matches graph diffusion on full SWE-bench Lite ($N=150$). Perron is framed honestly as a high-throughput CSR graph diffusion, hub suppression, and context-packing substrate.
+- **Host Execution Boundary Invariant**: Zero SWE repair claims without verified execution (`tests_pass: null` preserved). Engine memory reported strictly from authentic host telemetry (`results/memory_measured.json`).

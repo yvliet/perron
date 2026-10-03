@@ -1,5 +1,5 @@
 """
-Empirical Agent Evaluation & Telemetry Runner (T3.2, T3.3, T3.4).
+Empirical Agent Evaluation & Telemetry Runner.
 
 Executes the empirical developer agent probe across specified evaluation arms:
 - 'none': Zero-context baseline (problem statement only).
@@ -9,13 +9,13 @@ Executes the empirical developer agent probe across specified evaluation arms:
 Records per-instance telemetry:
 - raw_model_output
 - patch_produced, patch_applies, touches_gold_file, touches_gold_function
-- tests_pass (null under Gate B when container execution is unavailable)
+- tests_pass (null when host container execution is unavailable)
 - wall_seconds, peak_rss_mb (psutil), context_tokens
 
 Produces:
 - results/agent/<arm>/<instance_id>.json (per-instance records)
-- results/agent_summary.json (summary counts and Wilson 95% intervals with G5 metadata)
-- results/memory_measured.json (authentic host hardware memory profile for T3.4)
+- results/agent_summary.json (summary counts and Wilson 95% intervals with provenance metadata)
+- results/memory_measured.json (authentic host hardware memory profile)
 """
 
 from __future__ import annotations
@@ -363,9 +363,9 @@ def run_agent_evaluation(
         "sample_size": total_n,
         "evaluated_instances": instance_ids,
         "arms": summary_arms,
-        "gate_b_enforced": True,
+        "execution_boundary_enforced": True,
         "container_execution": "offline_host_decoupled",
-        "note": "tests_pass is explicitly null under Gate B because container execution is decoupled on Windows host",
+        "note": "tests_pass is explicitly null because SWE-bench container execution is decoupled on this host architecture",
     }
 
     save_results(
@@ -376,7 +376,7 @@ def run_agent_evaluation(
     )
     print(f"\n[Artifact Saved]: {output_summary_path}")
 
-    # Compile Authentic Memory Telemetry (T3.4)
+    # Compile Authentic Memory Telemetry
     vm_final = psutil.virtual_memory()
     peak_rss_mb = round(peak_rss_bytes / (1024 * 1024), 2)
     initial_rss_mb = round(initial_rss_bytes / (1024 * 1024), 2)
@@ -409,7 +409,7 @@ def run_agent_evaluation(
         "claims_ledger_harmonization": {
             "replaces_theoretical_claim": "10.4 GB resident RAM claim",
             "empirical_finding": f"Perron core graph retrieval and context packing operates at {peak_rss_mb} MB peak RSS, preserving {avail_sys_ram_gb} GB free headroom on a 16GB consumer laptop.",
-            "gate_b_compliance": "Zero claims of Gemma 4 solving SWE-bench tasks without verified test execution.",
+            "execution_boundary_compliance": "Zero claims of Gemma 4 solving SWE-bench tasks without verified test execution.",
         },
     }
 

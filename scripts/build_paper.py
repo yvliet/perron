@@ -5,7 +5,7 @@ scripts/build_paper.py - Master Unified Build & Publication Pipeline for Perron.
 Single command orchestrator for:
     - Generating all publication-grade figures (HTML/Chrome & Matplotlib)
     - Compiling paper/main.tex -> paper/main.pdf via standalone Tectonic
-    - Running rigorous paper verification gates
+    - Running rigorous paper verification checks
     - Executing full test suites
     - Launching local PDF reader or hot-reload watcher
 
@@ -13,7 +13,7 @@ Usage:
     python scripts/build_paper.py --all         # Full pipeline: Figures -> Compile -> Verify -> Test
     python scripts/build_paper.py --figures     # Regenerate all publication figures
     python scripts/build_paper.py --compile     # Compile LaTeX to PDF
-    python scripts/build_paper.py --verify      # Run academic quality gates
+    python scripts/build_paper.py --verify      # Run academic quality checks
     python scripts/build_paper.py --test        # Run pytest test suite
     python scripts/build_paper.py --read        # Open compiled PDF in Chrome / system viewer
     python scripts/build_paper.py --watch       # Hot-reload watcher (recompiles on edit)
@@ -50,14 +50,14 @@ def step_compile_latex():
         return False
     return True
 
-def step_verify_quality_gates():
+def step_verify_quality_checks():
     print("\n" + "=" * 70)
-    print("STEP: VERIFYING ACADEMIC QUALITY GATES")
+    print("STEP: VERIFYING ACADEMIC QUALITY CHECKS")
     print("=" * 70)
     cmd = [sys.executable, str(REPO_ROOT / "scripts" / "verify_paper.py")]
     res = subprocess.run(cmd, cwd=str(REPO_ROOT))
     if res.returncode != 0:
-        print("[FAIL] Quality gates verification failed.")
+        print("[FAIL] Quality checks verification failed.")
         return False
     return True
 
@@ -124,7 +124,7 @@ Examples:
     if args.all:
         if not step_generate_figures("all"): return 1
         if not step_compile_latex(): return 1
-        if not step_verify_quality_gates(): return 1
+        if not step_verify_quality_checks(): return 1
         if not step_run_tests(): return 1
         print("\n" + "=" * 70)
         print("ALL PIPELINE STAGES PASSED! PERRON PAPER IS FULLY PUBLICATION-READY.")
@@ -139,7 +139,7 @@ Examples:
         success = step_compile_latex() and success
 
     if args.verify:
-        success = step_verify_quality_gates() and success
+        success = step_verify_quality_checks() and success
 
     if args.test:
         success = step_run_tests() and success

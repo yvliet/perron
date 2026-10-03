@@ -325,16 +325,16 @@ Average Latency:           0.73s / instance
 
 ## 6. Paper Building & Publication Pipeline
 
-Perron includes a single-command master pipeline for generating figures, compiling the LaTeX document via an isolated standalone Tectonic engine, and running academic quality gates:
+Perron includes a single-command master pipeline for generating figures, compiling the LaTeX document via an isolated standalone Tectonic engine, and running academic quality checks:
 
 ```bash
-# Full unified pipeline: generate all figures, compile PDF, verify gates, and run tests
+# Full unified pipeline: generate all figures, compile PDF, verify checks, and run tests
 python scripts/build_paper.py --all
 
 # Or run individual stages:
 python scripts/generate_figures.py           # Regenerate Figures 1-5 (PDF + PNG)
 python scripts/compile.py paper/main.tex     # Compile LaTeX to paper/main.pdf
-python scripts/verify_paper.py               # Verify quality gates (figures, citations, typography)
+python scripts/verify_paper.py               # Verify quality checks (figures, citations, typography)
 
 # Read or live-watch on Windows:
 .\build.ps1 -All

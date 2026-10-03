@@ -154,10 +154,10 @@ All 14 retrieval baselines are implemented in `benchmarks/baseline_retrievers.py
 | `tests/test_split_frozen.py` | `tests/test_split_frozen.py` | Defined in task T0.2; validates hardcoded SHA256 hash and partition integrity. |
 | `RUNLOG.md` | `RUNLOG.md` | Defined in task T0.2; markdown table logging all benchmark and held-out runs. |
 | `facts.json` | `facts.json` | Defined in task T0.2; skeleton facts database for paper verifier. |
-| `scripts/check_facts.py` | `scripts/check_facts.py` | Defined in task T0.2; assertion gate verifying numerical consistency in paper. |
-| `perron/results.py` | `perron/results.py` | Defined in task T0.3; standardized results serialization helper capturing G5 metadata. |
-| `tests/test_results.py` | `tests/test_results.py` | Defined in task T0.3; unit test verifying G5 metadata keys in serialized results. |
-| `scripts/run_heldout.py` | `scripts/run_heldout.py` | Defined in task G3; dedicated gate for held-out evaluation logging to `RUNLOG.md`. |
+| `scripts/check_facts.py` | `scripts/check_facts.py` | Assertion script verifying numerical consistency in paper. |
+| `perron/results.py` | `perron/results.py` | Standardized results serialization helper capturing provenance metadata. |
+| `tests/test_results.py` | `tests/test_results.py` | Unit test verifying provenance metadata keys in serialized results. |
+| `scripts/run_heldout.py` | `scripts/run_heldout.py` | Dedicated runner for held-out evaluation logging to `RUNLOG.md`. |
 | `results/heldout_table2_v1_preaudit.json` | `results/heldout_table2_v1_preaudit.json` | Defined in task G8; archived pre-audit held-out baseline result file. |
 | `scripts/build_instance_graphs.py` | `scripts/export_swebench_graphs.py` | Phase 4 graph builder mapped to existing authoritative export pipeline with `--cleanup-clones`. |
 | `scripts/make_gold.py` | `benchmarks/gold_patch_parser.py` | Phase 4 gold label generation mapped to existing gold parser generating `data_release/gold.jsonl`. |

@@ -11,7 +11,7 @@ Audits:
 6. LaTeX paper build (paper/main.pdf).
 7. Showcase notebook execution (perron_showcase.ipynb).
 8. Research writeup word count limit (<= 3,000 words on paper/paper_writeup.md).
-9. Turnkey agent runner CLI and manifest gate.
+9. Turnkey agent runner CLI and manifest verification.
 """
 
 from __future__ import annotations
@@ -152,7 +152,7 @@ def main():
         ("Research Writeup Word Count (<= 3,000 words)", check_writeup_word_count),
         ("Showcase Notebook Execution", check_notebook_execution),
         ("Core Unit Test Battery", check_unit_tests),
-        ("Turnkey Agent Runner CLI & Manifest Gate", check_runner_cli),
+        ("Turnkey Agent Runner CLI & Manifest Verification", check_runner_cli),
     ]
 
     all_passed = True

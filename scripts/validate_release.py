@@ -221,8 +221,8 @@ def main():
         "| Metric | Value |",
         "| :--- | :--- |",
         f"| Total Instances Audited | {len(instance_dirs)} |",
-        f"| Instances Passing All Gates | {pass_count} ({pass_count/len(instance_dirs)*100:.1f}%) |",
-        f"| Instances Failing Gates | {fail_count} |",
+        f"| Instances Passing All Validation Checks | {pass_count} ({pass_count/len(instance_dirs)*100:.1f}%) |",
+        f"| Instances Failing Validation Checks | {fail_count} |",
         f"| Total AST Nodes | {total_nodes:,} |",
         f"| Total Directed Multigraph Edges | {total_edges:,} |",
         f"| Mean Nodes per Repository | {total_nodes / max(1, pass_count):.1f} |",
@@ -232,7 +232,7 @@ def main():
         "",
         "---",
         "",
-        "## 2. Invariant Verification Gates",
+        "## 2. Invariant Verification Checks",
         "",
         "1. **SHA-256 Digest Integrity**: Every numpy array and parquet table matches manifest digest bit-for-bit.",
         "2. **Topological Bounds**: Strictly zero dangling edge indices ($0 \\le \\text{col} < N$).",
@@ -247,7 +247,7 @@ def main():
 
     failures = [r for r in results if not r["valid"]]
     if not failures:
-        report_lines.append("No validation failures detected. All instances passed 100% of topological and integrity gates.\n")
+        report_lines.append("No validation failures detected. All instances passed 100% of topological and integrity checks.\n")
     else:
         report_lines.append("| Instance ID | Errors |")
         report_lines.append("| :--- | :--- |")

@@ -1,11 +1,11 @@
 """
-Tests for scripts/agent_eval.py and empirical memory telemetry (T3.2, T3.3, T3.4).
+Tests for scripts/agent_eval.py and empirical memory telemetry.
 
 Verifies:
 - Wilson score interval calculation logic
 - Schema compliance of results/agent_summary.json
-- Schema and G5 compliance of results/memory_measured.json
-- Gate B invariant adherence (tests_pass is null)
+- Schema and provenance compliance of results/memory_measured.json
+- Execution boundary invariant adherence (tests_pass is null)
 """
 
 from __future__ import annotations
@@ -60,7 +60,7 @@ def test_agent_eval_smoke_execution() -> None:
         assert "perron" in summary_data["arms"]
         assert summary_data["arms"]["none"]["tests_pass"] is None
         assert summary_data["arms"]["perron"]["tests_pass"] is None
-        assert summary_data["gate_b_enforced"] is True
+        assert summary_data["execution_boundary_enforced"] is True
 
         # Check memory measured content
         assert "engine_label" in mem_data
@@ -68,8 +68,8 @@ def test_agent_eval_smoke_execution() -> None:
         assert mem_data["process_memory"]["peak_process_rss_mb"] > 0
         assert mem_data["hardware_host"]["total_system_ram_gb"] > 0
 
-        # Check G5 metadata in saved JSON
+        # Check provenance metadata in saved JSON
         with open(memory_path, "r", encoding="utf-8") as f:
             saved_mem = json.load(f)
         for key in ["git_sha", "python_version", "package_versions", "seed", "split_name", "hardware", "utc_timestamp"]:
-            assert key in saved_mem, f"Missing G5 key: {key}"
+            assert key in saved_mem, f"Missing provenance key: {key}"

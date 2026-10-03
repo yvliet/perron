@@ -5,7 +5,7 @@ Measures actual success, syntax error, and hunk rejection rates across three
 editing paradigms on realistic model patch generation challenges:
 1. Standard `git apply` (Unified diff hunks with strict line coordinates)
 2. `sed`-style line/regex search-and-replace
-3. Perron AST Patcher (Anchor-bounded, indentation-rebased, syntax-gated transactional patching)
+3. Perron AST Patcher (Anchor-bounded, indentation-rebased, syntax-validated transactional patching)
 
 Outputs verified metrics to `data/editor_eval_results.json`.
 """
@@ -473,7 +473,7 @@ def run_editor_evaluation() -> Dict[str, Any]:
             "perron_ast": {
                 "apply_rate": round(results["perron_ast"]["applied"] / n_total * 100.0, 1),
                 "syntax_valid_rate": round(results["perron_ast"]["syntax_valid"] / n_total * 100.0, 1),
-                "syntax_error_rate": 0.0,  # Enforced 0.0% by ast.parse pre-commit gate
+                "syntax_error_rate": 0.0,  # Enforced 0.0% by ast.parse pre-commit validation
                 "rollback_rate": round(results["perron_ast"]["rollback_protected"] / n_total * 100.0, 1),
             },
         },
