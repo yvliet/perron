@@ -1,0 +1,902 @@
+{
+  "git_sha": "fa47fbe7a0fd51326b8fa170c6cdacc4a5bc7aab",
+  "python_version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
+  "package_versions": {
+    "perron-core": "0.2.1",
+    "perron": "0.1.0",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "pytest": "9.1.1",
+    "torch": "2.14.0",
+    "transformers": "5.17.0",
+    "tree-sitter": "0.25.2",
+    "psutil": "7.2.2"
+  },
+  "seed": 20261003,
+  "split_name": "dev_val",
+  "hardware": {
+    "cpu": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+    "ram": 16831815680,
+    "gpu": "NVIDIA GeForce MX550",
+    "CPU": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+    "RAM": 16831815680,
+    "GPU": "NVIDIA GeForce MX550"
+  },
+  "utc_timestamp": "2026-10-03T07:04:15.750324+00:00",
+  "git sha": "fa47fbe7a0fd51326b8fa170c6cdacc4a5bc7aab",
+  "python version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
+  "package versions": {
+    "perron-core": "0.2.1",
+    "perron": "0.1.0",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "pytest": "9.1.1",
+    "torch": "2.14.0",
+    "transformers": "5.17.0",
+    "tree-sitter": "0.25.2",
+    "psutil": "7.2.2"
+  },
+  "split name": "dev_val",
+  "UTC timestamp": "2026-10-03T07:04:15.750324+00:00",
+  "suite": "gamma_sweep",
+  "metadata": {
+    "git_sha": "fa47fbe7a0fd51326b8fa170c6cdacc4a5bc7aab",
+    "python_version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
+    "package_versions": {
+      "perron-core": "0.2.1",
+      "perron": "0.1.0",
+      "numpy": "2.5.2",
+      "scipy": "1.18.1",
+      "pytest": "9.1.1",
+      "torch": "2.14.0",
+      "transformers": "5.17.0",
+      "tree-sitter": "0.25.2",
+      "psutil": "7.2.2"
+    },
+    "seed": 20261003,
+    "split_name": "dev_val",
+    "hardware": {
+      "cpu": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+      "ram": 16831815680,
+      "gpu": "NVIDIA GeForce MX550",
+      "CPU": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+      "RAM": 16831815680,
+      "GPU": "NVIDIA GeForce MX550"
+    },
+    "utc_timestamp": "2026-10-03T07:04:15.750324+00:00",
+    "git sha": "fa47fbe7a0fd51326b8fa170c6cdacc4a5bc7aab",
+    "python version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
+    "package versions": {
+      "perron-core": "0.2.1",
+      "perron": "0.1.0",
+      "numpy": "2.5.2",
+      "scipy": "1.18.1",
+      "pytest": "9.1.1",
+      "torch": "2.14.0",
+      "transformers": "5.17.0",
+      "tree-sitter": "0.25.2",
+      "psutil": "7.2.2"
+    },
+    "split name": "dev_val",
+    "UTC timestamp": "2026-10-03T07:04:15.750324+00:00",
+    "suite": "gamma_sweep"
+  },
+  "split": "dev_val",
+  "num_instances": 100,
+  "gammas": [
+    0.0,
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5,
+    0.6,
+    0.7,
+    0.8,
+    0.9,
+    1.0
+  ],
+  "sweep": {
+    "gamma_0.00": {
+      "gamma": 0.0,
+      "fn_acc_10": {
+        "mean": 0.02,
+        "ci_lower": 0.0,
+        "ci_upper": 0.05
+      },
+      "hsi_10": {
+        "mean": 0.6,
+        "ci_lower": 0.518,
+        "ci_upper": 0.68
+      },
+      "file_acc_5": {
+        "mean": 0.1,
+        "ci_lower": 0.05,
+        "ci_upper": 0.16
+      },
+      "coverage_4096": {
+        "mean": 0.005,
+        "ci_lower": 0.0,
+        "ci_upper": 0.015
+      }
+    },
+    "gamma_0.10": {
+      "gamma": 0.1,
+      "fn_acc_10": {
+        "mean": 0.02,
+        "ci_lower": 0.0,
+        "ci_upper": 0.05
+      },
+      "hsi_10": {
+        "mean": 0.619,
+        "ci_lower": 0.5399,
+        "ci_upper": 0.695
+      },
+      "file_acc_5": {
+        "mean": 0.13,
+        "ci_lower": 0.07,
+        "ci_upper": 0.2
+      },
+      "coverage_4096": {
+        "mean": 0.005,
+        "ci_lower": 0.0,
+        "ci_upper": 0.015
+      }
+    },
+    "gamma_0.20": {
+      "gamma": 0.2,
+      "fn_acc_10": {
+        "mean": 0.02,
+        "ci_lower": 0.0,
+        "ci_upper": 0.05
+      },
+      "hsi_10": {
+        "mean": 0.645,
+        "ci_lower": 0.567,
+        "ci_upper": 0.719
+      },
+      "file_acc_5": {
+        "mean": 0.13,
+        "ci_lower": 0.07,
+        "ci_upper": 0.2
+      },
+      "coverage_4096": {
+        "mean": 0.005,
+        "ci_lower": 0.0,
+        "ci_upper": 0.015
+      }
+    },
+    "gamma_0.30": {
+      "gamma": 0.3,
+      "fn_acc_10": {
+        "mean": 0.02,
+        "ci_lower": 0.0,
+        "ci_upper": 0.05
+      },
+      "hsi_10": {
+        "mean": 0.667,
+        "ci_lower": 0.592,
+        "ci_upper": 0.737
+      },
+      "file_acc_5": {
+        "mean": 0.18,
+        "ci_lower": 0.11,
+        "ci_upper": 0.26
+      },
+      "coverage_4096": {
+        "mean": 0.005,
+        "ci_lower": 0.0,
+        "ci_upper": 0.015
+      }
+    },
+    "gamma_0.40": {
+      "gamma": 0.4,
+      "fn_acc_10": {
+        "mean": 0.02,
+        "ci_lower": 0.0,
+        "ci_upper": 0.05
+      },
+      "hsi_10": {
+        "mean": 0.703,
+        "ci_lower": 0.633,
+        "ci_upper": 0.767
+      },
+      "file_acc_5": {
+        "mean": 0.24,
+        "ci_lower": 0.16,
+        "ci_upper": 0.33
+      },
+      "coverage_4096": {
+        "mean": 0.005,
+        "ci_lower": 0.0,
+        "ci_upper": 0.015
+      }
+    },
+    "gamma_0.50": {
+      "gamma": 0.5,
+      "fn_acc_10": {
+        "mean": 0.04,
+        "ci_lower": 0.01,
+        "ci_upper": 0.09
+      },
+      "hsi_10": {
+        "mean": 0.756,
+        "ci_lower": 0.697,
+        "ci_upper": 0.814
+      },
+      "file_acc_5": {
+        "mean": 0.32,
+        "ci_lower": 0.23,
+        "ci_upper": 0.41
+      },
+      "coverage_4096": {
+        "mean": 0.02,
+        "ci_lower": 0.0,
+        "ci_upper": 0.045
+      }
+    },
+    "gamma_0.60": {
+      "gamma": 0.6,
+      "fn_acc_10": {
+        "mean": 0.08,
+        "ci_lower": 0.03,
+        "ci_upper": 0.14
+      },
+      "hsi_10": {
+        "mean": 0.834,
+        "ci_lower": 0.788,
+        "ci_upper": 0.876
+      },
+      "file_acc_5": {
+        "mean": 0.39,
+        "ci_lower": 0.29,
+        "ci_upper": 0.4802
+      },
+      "coverage_4096": {
+        "mean": 0.055,
+        "ci_lower": 0.015,
+        "ci_upper": 0.1
+      }
+    },
+    "gamma_0.70": {
+      "gamma": 0.7,
+      "fn_acc_10": {
+        "mean": 0.13,
+        "ci_lower": 0.07,
+        "ci_upper": 0.2
+      },
+      "hsi_10": {
+        "mean": 0.923,
+        "ci_lower": 0.896,
+        "ci_upper": 0.948
+      },
+      "file_acc_5": {
+        "mean": 0.5,
+        "ci_lower": 0.4,
+        "ci_upper": 0.6
+      },
+      "coverage_4096": {
+        "mean": 0.105,
+        "ci_lower": 0.05,
+        "ci_upper": 0.17
+      }
+    },
+    "gamma_0.80": {
+      "gamma": 0.8,
+      "fn_acc_10": {
+        "mean": 0.13,
+        "ci_lower": 0.07,
+        "ci_upper": 0.2
+      },
+      "hsi_10": {
+        "mean": 0.972,
+        "ci_lower": 0.956,
+        "ci_upper": 0.984
+      },
+      "file_acc_5": {
+        "mean": 0.5,
+        "ci_lower": 0.4,
+        "ci_upper": 0.6
+      },
+      "coverage_4096": {
+        "mean": 0.1167,
+        "ci_lower": 0.0567,
+        "ci_upper": 0.18
+      }
+    },
+    "gamma_0.90": {
+      "gamma": 0.9,
+      "fn_acc_10": {
+        "mean": 0.12,
+        "ci_lower": 0.06,
+        "ci_upper": 0.19
+      },
+      "hsi_10": {
+        "mean": 0.994,
+        "ci_lower": 0.988,
+        "ci_upper": 0.999
+      },
+      "file_acc_5": {
+        "mean": 0.46,
+        "ci_lower": 0.36,
+        "ci_upper": 0.55
+      },
+      "coverage_4096": {
+        "mean": 0.1417,
+        "ci_lower": 0.0767,
+        "ci_upper": 0.21
+      }
+    },
+    "gamma_1.00": {
+      "gamma": 1.0,
+      "fn_acc_10": {
+        "mean": 0.13,
+        "ci_lower": 0.07,
+        "ci_upper": 0.2
+      },
+      "hsi_10": {
+        "mean": 1.0,
+        "ci_lower": 1.0,
+        "ci_upper": 1.0
+      },
+      "file_acc_5": {
+        "mean": 0.38,
+        "ci_lower": 0.28,
+        "ci_upper": 0.47
+      },
+      "coverage_4096": {
+        "mean": 0.17,
+        "ci_lower": 0.105,
+        "ci_upper": 0.245
+      }
+    }
+  },
+  "results": {
+    "suite": "gamma_sweep",
+    "split": "dev_val",
+    "seed": 20261003,
+    "num_instances": 100,
+    "gammas": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "sweep": {
+      "gamma_0.00": {
+        "gamma": 0.0,
+        "fn_acc_10": {
+          "mean": 0.02,
+          "ci_lower": 0.0,
+          "ci_upper": 0.05
+        },
+        "hsi_10": {
+          "mean": 0.6,
+          "ci_lower": 0.518,
+          "ci_upper": 0.68
+        },
+        "file_acc_5": {
+          "mean": 0.1,
+          "ci_lower": 0.05,
+          "ci_upper": 0.16
+        },
+        "coverage_4096": {
+          "mean": 0.005,
+          "ci_lower": 0.0,
+          "ci_upper": 0.015
+        }
+      },
+      "gamma_0.10": {
+        "gamma": 0.1,
+        "fn_acc_10": {
+          "mean": 0.02,
+          "ci_lower": 0.0,
+          "ci_upper": 0.05
+        },
+        "hsi_10": {
+          "mean": 0.619,
+          "ci_lower": 0.5399,
+          "ci_upper": 0.695
+        },
+        "file_acc_5": {
+          "mean": 0.13,
+          "ci_lower": 0.07,
+          "ci_upper": 0.2
+        },
+        "coverage_4096": {
+          "mean": 0.005,
+          "ci_lower": 0.0,
+          "ci_upper": 0.015
+        }
+      },
+      "gamma_0.20": {
+        "gamma": 0.2,
+        "fn_acc_10": {
+          "mean": 0.02,
+          "ci_lower": 0.0,
+          "ci_upper": 0.05
+        },
+        "hsi_10": {
+          "mean": 0.645,
+          "ci_lower": 0.567,
+          "ci_upper": 0.719
+        },
+        "file_acc_5": {
+          "mean": 0.13,
+          "ci_lower": 0.07,
+          "ci_upper": 0.2
+        },
+        "coverage_4096": {
+          "mean": 0.005,
+          "ci_lower": 0.0,
+          "ci_upper": 0.015
+        }
+      },
+      "gamma_0.30": {
+        "gamma": 0.3,
+        "fn_acc_10": {
+          "mean": 0.02,
+          "ci_lower": 0.0,
+          "ci_upper": 0.05
+        },
+        "hsi_10": {
+          "mean": 0.667,
+          "ci_lower": 0.592,
+          "ci_upper": 0.737
+        },
+        "file_acc_5": {
+          "mean": 0.18,
+          "ci_lower": 0.11,
+          "ci_upper": 0.26
+        },
+        "coverage_4096": {
+          "mean": 0.005,
+          "ci_lower": 0.0,
+          "ci_upper": 0.015
+        }
+      },
+      "gamma_0.40": {
+        "gamma": 0.4,
+        "fn_acc_10": {
+          "mean": 0.02,
+          "ci_lower": 0.0,
+          "ci_upper": 0.05
+        },
+        "hsi_10": {
+          "mean": 0.703,
+          "ci_lower": 0.633,
+          "ci_upper": 0.767
+        },
+        "file_acc_5": {
+          "mean": 0.24,
+          "ci_lower": 0.16,
+          "ci_upper": 0.33
+        },
+        "coverage_4096": {
+          "mean": 0.005,
+          "ci_lower": 0.0,
+          "ci_upper": 0.015
+        }
+      },
+      "gamma_0.50": {
+        "gamma": 0.5,
+        "fn_acc_10": {
+          "mean": 0.04,
+          "ci_lower": 0.01,
+          "ci_upper": 0.09
+        },
+        "hsi_10": {
+          "mean": 0.756,
+          "ci_lower": 0.697,
+          "ci_upper": 0.814
+        },
+        "file_acc_5": {
+          "mean": 0.32,
+          "ci_lower": 0.23,
+          "ci_upper": 0.41
+        },
+        "coverage_4096": {
+          "mean": 0.02,
+          "ci_lower": 0.0,
+          "ci_upper": 0.045
+        }
+      },
+      "gamma_0.60": {
+        "gamma": 0.6,
+        "fn_acc_10": {
+          "mean": 0.08,
+          "ci_lower": 0.03,
+          "ci_upper": 0.14
+        },
+        "hsi_10": {
+          "mean": 0.834,
+          "ci_lower": 0.788,
+          "ci_upper": 0.876
+        },
+        "file_acc_5": {
+          "mean": 0.39,
+          "ci_lower": 0.29,
+          "ci_upper": 0.4802
+        },
+        "coverage_4096": {
+          "mean": 0.055,
+          "ci_lower": 0.015,
+          "ci_upper": 0.1
+        }
+      },
+      "gamma_0.70": {
+        "gamma": 0.7,
+        "fn_acc_10": {
+          "mean": 0.13,
+          "ci_lower": 0.07,
+          "ci_upper": 0.2
+        },
+        "hsi_10": {
+          "mean": 0.923,
+          "ci_lower": 0.896,
+          "ci_upper": 0.948
+        },
+        "file_acc_5": {
+          "mean": 0.5,
+          "ci_lower": 0.4,
+          "ci_upper": 0.6
+        },
+        "coverage_4096": {
+          "mean": 0.105,
+          "ci_lower": 0.05,
+          "ci_upper": 0.17
+        }
+      },
+      "gamma_0.80": {
+        "gamma": 0.8,
+        "fn_acc_10": {
+          "mean": 0.13,
+          "ci_lower": 0.07,
+          "ci_upper": 0.2
+        },
+        "hsi_10": {
+          "mean": 0.972,
+          "ci_lower": 0.956,
+          "ci_upper": 0.984
+        },
+        "file_acc_5": {
+          "mean": 0.5,
+          "ci_lower": 0.4,
+          "ci_upper": 0.6
+        },
+        "coverage_4096": {
+          "mean": 0.1167,
+          "ci_lower": 0.0567,
+          "ci_upper": 0.18
+        }
+      },
+      "gamma_0.90": {
+        "gamma": 0.9,
+        "fn_acc_10": {
+          "mean": 0.12,
+          "ci_lower": 0.06,
+          "ci_upper": 0.19
+        },
+        "hsi_10": {
+          "mean": 0.994,
+          "ci_lower": 0.988,
+          "ci_upper": 0.999
+        },
+        "file_acc_5": {
+          "mean": 0.46,
+          "ci_lower": 0.36,
+          "ci_upper": 0.55
+        },
+        "coverage_4096": {
+          "mean": 0.1417,
+          "ci_lower": 0.0767,
+          "ci_upper": 0.21
+        }
+      },
+      "gamma_1.00": {
+        "gamma": 1.0,
+        "fn_acc_10": {
+          "mean": 0.13,
+          "ci_lower": 0.07,
+          "ci_upper": 0.2
+        },
+        "hsi_10": {
+          "mean": 1.0,
+          "ci_lower": 1.0,
+          "ci_upper": 1.0
+        },
+        "file_acc_5": {
+          "mean": 0.38,
+          "ci_lower": 0.28,
+          "ci_upper": 0.47
+        },
+        "coverage_4096": {
+          "mean": 0.17,
+          "ci_lower": 0.105,
+          "ci_upper": 0.245
+        }
+      }
+    }
+  },
+  "data": {
+    "suite": "gamma_sweep",
+    "split": "dev_val",
+    "seed": 20261003,
+    "num_instances": 100,
+    "gammas": [
+      0.0,
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5,
+      0.6,
+      0.7,
+      0.8,
+      0.9,
+      1.0
+    ],
+    "sweep": {
+      "gamma_0.00": {
+        "gamma": 0.0,
+        "fn_acc_10": {
+          "mean": 0.02,
+          "ci_lower": 0.0,
+          "ci_upper": 0.05
+        },
+        "hsi_10": {
+          "mean": 0.6,
+          "ci_lower": 0.518,
+          "ci_upper": 0.68
+        },
+        "file_acc_5": {
+          "mean": 0.1,
+          "ci_lower": 0.05,
+          "ci_upper": 0.16
+        },
+        "coverage_4096": {
+          "mean": 0.005,
+          "ci_lower": 0.0,
+          "ci_upper": 0.015
+        }
+      },
+      "gamma_0.10": {
+        "gamma": 0.1,
+        "fn_acc_10": {
+          "mean": 0.02,
+          "ci_lower": 0.0,
+          "ci_upper": 0.05
+        },
+        "hsi_10": {
+          "mean": 0.619,
+          "ci_lower": 0.5399,
+          "ci_upper": 0.695
+        },
+        "file_acc_5": {
+          "mean": 0.13,
+          "ci_lower": 0.07,
+          "ci_upper": 0.2
+        },
+        "coverage_4096": {
+          "mean": 0.005,
+          "ci_lower": 0.0,
+          "ci_upper": 0.015
+        }
+      },
+      "gamma_0.20": {
+        "gamma": 0.2,
+        "fn_acc_10": {
+          "mean": 0.02,
+          "ci_lower": 0.0,
+          "ci_upper": 0.05
+        },
+        "hsi_10": {
+          "mean": 0.645,
+          "ci_lower": 0.567,
+          "ci_upper": 0.719
+        },
+        "file_acc_5": {
+          "mean": 0.13,
+          "ci_lower": 0.07,
+          "ci_upper": 0.2
+        },
+        "coverage_4096": {
+          "mean": 0.005,
+          "ci_lower": 0.0,
+          "ci_upper": 0.015
+        }
+      },
+      "gamma_0.30": {
+        "gamma": 0.3,
+        "fn_acc_10": {
+          "mean": 0.02,
+          "ci_lower": 0.0,
+          "ci_upper": 0.05
+        },
+        "hsi_10": {
+          "mean": 0.667,
+          "ci_lower": 0.592,
+          "ci_upper": 0.737
+        },
+        "file_acc_5": {
+          "mean": 0.18,
+          "ci_lower": 0.11,
+          "ci_upper": 0.26
+        },
+        "coverage_4096": {
+          "mean": 0.005,
+          "ci_lower": 0.0,
+          "ci_upper": 0.015
+        }
+      },
+      "gamma_0.40": {
+        "gamma": 0.4,
+        "fn_acc_10": {
+          "mean": 0.02,
+          "ci_lower": 0.0,
+          "ci_upper": 0.05
+        },
+        "hsi_10": {
+          "mean": 0.703,
+          "ci_lower": 0.633,
+          "ci_upper": 0.767
+        },
+        "file_acc_5": {
+          "mean": 0.24,
+          "ci_lower": 0.16,
+          "ci_upper": 0.33
+        },
+        "coverage_4096": {
+          "mean": 0.005,
+          "ci_lower": 0.0,
+          "ci_upper": 0.015
+        }
+      },
+      "gamma_0.50": {
+        "gamma": 0.5,
+        "fn_acc_10": {
+          "mean": 0.04,
+          "ci_lower": 0.01,
+          "ci_upper": 0.09
+        },
+        "hsi_10": {
+          "mean": 0.756,
+          "ci_lower": 0.697,
+          "ci_upper": 0.814
+        },
+        "file_acc_5": {
+          "mean": 0.32,
+          "ci_lower": 0.23,
+          "ci_upper": 0.41
+        },
+        "coverage_4096": {
+          "mean": 0.02,
+          "ci_lower": 0.0,
+          "ci_upper": 0.045
+        }
+      },
+      "gamma_0.60": {
+        "gamma": 0.6,
+        "fn_acc_10": {
+          "mean": 0.08,
+          "ci_lower": 0.03,
+          "ci_upper": 0.14
+        },
+        "hsi_10": {
+          "mean": 0.834,
+          "ci_lower": 0.788,
+          "ci_upper": 0.876
+        },
+        "file_acc_5": {
+          "mean": 0.39,
+          "ci_lower": 0.29,
+          "ci_upper": 0.4802
+        },
+        "coverage_4096": {
+          "mean": 0.055,
+          "ci_lower": 0.015,
+          "ci_upper": 0.1
+        }
+      },
+      "gamma_0.70": {
+        "gamma": 0.7,
+        "fn_acc_10": {
+          "mean": 0.13,
+          "ci_lower": 0.07,
+          "ci_upper": 0.2
+        },
+        "hsi_10": {
+          "mean": 0.923,
+          "ci_lower": 0.896,
+          "ci_upper": 0.948
+        },
+        "file_acc_5": {
+          "mean": 0.5,
+          "ci_lower": 0.4,
+          "ci_upper": 0.6
+        },
+        "coverage_4096": {
+          "mean": 0.105,
+          "ci_lower": 0.05,
+          "ci_upper": 0.17
+        }
+      },
+      "gamma_0.80": {
+        "gamma": 0.8,
+        "fn_acc_10": {
+          "mean": 0.13,
+          "ci_lower": 0.07,
+          "ci_upper": 0.2
+        },
+        "hsi_10": {
+          "mean": 0.972,
+          "ci_lower": 0.956,
+          "ci_upper": 0.984
+        },
+        "file_acc_5": {
+          "mean": 0.5,
+          "ci_lower": 0.4,
+          "ci_upper": 0.6
+        },
+        "coverage_4096": {
+          "mean": 0.1167,
+          "ci_lower": 0.0567,
+          "ci_upper": 0.18
+        }
+      },
+      "gamma_0.90": {
+        "gamma": 0.9,
+        "fn_acc_10": {
+          "mean": 0.12,
+          "ci_lower": 0.06,
+          "ci_upper": 0.19
+        },
+        "hsi_10": {
+          "mean": 0.994,
+          "ci_lower": 0.988,
+          "ci_upper": 0.999
+        },
+        "file_acc_5": {
+          "mean": 0.46,
+          "ci_lower": 0.36,
+          "ci_upper": 0.55
+        },
+        "coverage_4096": {
+          "mean": 0.1417,
+          "ci_lower": 0.0767,
+          "ci_upper": 0.21
+        }
+      },
+      "gamma_1.00": {
+        "gamma": 1.0,
+        "fn_acc_10": {
+          "mean": 0.13,
+          "ci_lower": 0.07,
+          "ci_upper": 0.2
+        },
+        "hsi_10": {
+          "mean": 1.0,
+          "ci_lower": 1.0,
+          "ci_upper": 1.0
+        },
+        "file_acc_5": {
+          "mean": 0.38,
+          "ci_lower": 0.28,
+          "ci_upper": 0.47
+        },
+        "coverage_4096": {
+          "mean": 0.17,
+          "ci_lower": 0.105,
+          "ci_upper": 0.245
+        }
+      }
+    }
+  }
+}

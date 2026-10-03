@@ -21,8 +21,13 @@ def compile_real_graphs():
     req_dir.mkdir(parents=True, exist_ok=True)
     pkg_req = Path(requests.__file__).parent
     print(f"Extracting Requests from {pkg_req}...")
-    r_syms, r_calls, r_callers, r_c2id, r_id2c = extract_repository_graph(pkg_req)
-    r_t, r_dang = build_static_transition_matrix(len(r_syms), r_calls, r_callers)
+    r_syms, r_calls, r_callers, r_c2id, r_id2c, r_inherit, r_import = extract_repository_graph(
+        pkg_req, return_multiplex=True
+    )
+    r_t, r_dang = build_static_transition_matrix(
+        len(r_syms), r_calls, r_callers,
+        inherit_edges=r_inherit, import_edges=r_import
+    )
     save_mmap_csr(req_dir, r_t, r_dang, r_c2id, r_id2c)
     with open(req_dir / "symbols.json", "w", encoding="utf-8") as f:
         json.dump([s.__dict__ for s in r_syms], f, indent=2)
@@ -35,6 +40,7 @@ def compile_real_graphs():
     subpackages = ["printing", "core", "matrices", "functions", "polys", "utilities", "simplify", "solvers"]
     
     all_syms, all_calls, all_callers = [], [], []
+    all_inherit, all_imports = [], []
     curr_offset = 0
     all_c2id = {}
     all_id2c = {}
@@ -43,7 +49,9 @@ def compile_real_graphs():
     for sp in subpackages:
         sub_p = pkg_sym / sp
         if sub_p.is_dir():
-            s, c, cr, c2i, i2c = extract_repository_graph(sub_p, max_files=25)
+            s, c, cr, c2i, i2c, inh, imp = extract_repository_graph(
+                sub_p, max_files=25, return_multiplex=True
+            )
             for node in s:
                 node.node_id += curr_offset
                 all_syms.append(node)
@@ -53,10 +61,17 @@ def compile_real_graphs():
                 all_calls.append((u + curr_offset, v + curr_offset))
             for u, v in cr:
                 all_callers.append((u + curr_offset, v + curr_offset))
+            for u, v in inh:
+                all_inherit.append((u + curr_offset, v + curr_offset))
+            for u, v in imp:
+                all_imports.append((u + curr_offset, v + curr_offset))
             curr_offset = len(all_syms)
-            print(f"  -> {sp}: {len(s)} symbols, {len(c)+len(cr)} edges")
+            print(f"  -> {sp}: {len(s)} symbols, {len(c)+len(cr)+len(inh)+len(imp)} edges")
 
-    s_t, s_dang = build_static_transition_matrix(len(all_syms), all_calls, all_callers)
+    s_t, s_dang = build_static_transition_matrix(
+        len(all_syms), all_calls, all_callers,
+        inherit_edges=all_inherit, import_edges=all_imports
+    )
     save_mmap_csr(sym_dir, s_t, s_dang, all_c2id, all_id2c)
     with open(sym_dir / "symbols.json", "w", encoding="utf-8") as f:
         json.dump([s.__dict__ for s in all_syms], f, indent=2)

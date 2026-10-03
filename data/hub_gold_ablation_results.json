@@ -1,0 +1,95 @@
+{
+  "summary": "Hub-Gold vs Non-Hub-Gold Trade-off Analysis",
+  "breakdown": {
+    "bm25": {
+      "label": "Okapi BM25",
+      "hub_gold": {
+        "file_acc_1": 38.3,
+        "file_acc_5": 68.09,
+        "fn_acc_10": 29.79,
+        "hsi": 92.98
+      },
+      "non_hub_gold": {
+        "file_acc_1": 32.81,
+        "file_acc_5": 49.8,
+        "fn_acc_10": 24.9,
+        "hsi": 98.97
+      }
+    },
+    "dense": {
+      "label": "Dense Semantic",
+      "hub_gold": {
+        "file_acc_1": 34.04,
+        "file_acc_5": 46.81,
+        "fn_acc_10": 23.4,
+        "hsi": 95.53
+      },
+      "non_hub_gold": {
+        "file_acc_1": 18.58,
+        "file_acc_5": 30.43,
+        "fn_acc_10": 15.81,
+        "hsi": 99.13
+      }
+    },
+    "aider": {
+      "label": "Aider Repo Map",
+      "hub_gold": {
+        "file_acc_1": 23.4,
+        "file_acc_5": 61.7,
+        "fn_acc_10": 68.09,
+        "hsi": 29.57
+      },
+      "non_hub_gold": {
+        "file_acc_1": 0.0,
+        "file_acc_5": 4.74,
+        "fn_acc_10": 2.77,
+        "hsi": 60.04
+      }
+    },
+    "blocklist": {
+      "label": "Hub Blocklist",
+      "hub_gold": {
+        "file_acc_1": 34.04,
+        "file_acc_5": 63.83,
+        "fn_acc_10": 4.26,
+        "hsi": 100.0
+      },
+      "non_hub_gold": {
+        "file_acc_1": 7.91,
+        "file_acc_5": 28.46,
+        "fn_acc_10": 21.34,
+        "hsi": 100.0
+      }
+    },
+    "deg_ppr": {
+      "label": "Deg-Norm PPR",
+      "hub_gold": {
+        "file_acc_1": 31.91,
+        "file_acc_5": 68.09,
+        "fn_acc_10": 25.53,
+        "hsi": 92.98
+      },
+      "non_hub_gold": {
+        "file_acc_1": 12.25,
+        "file_acc_5": 35.57,
+        "fn_acc_10": 12.65,
+        "hsi": 98.7
+      }
+    },
+    "perron": {
+      "label": "Perron Specificity",
+      "hub_gold": {
+        "file_acc_1": 40.43,
+        "file_acc_5": 70.21,
+        "fn_acc_10": 51.06,
+        "hsi": 86.6
+      },
+      "non_hub_gold": {
+        "file_acc_1": 22.53,
+        "file_acc_5": 46.25,
+        "fn_acc_10": 30.04,
+        "hsi": 96.72
+      }
+    }
+  }
+}

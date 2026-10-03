@@ -1,0 +1,563 @@
+{
+  "git_sha": "fa47fbe7a0fd51326b8fa170c6cdacc4a5bc7aab",
+  "python_version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
+  "package_versions": {
+    "perron-core": "0.2.1",
+    "perron": "0.1.0",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "pytest": "9.1.1",
+    "torch": "2.14.0",
+    "transformers": "5.17.0",
+    "tree-sitter": "0.25.2",
+    "psutil": "7.2.2"
+  },
+  "seed": 20261003,
+  "split_name": "heldout",
+  "hardware": {
+    "cpu": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+    "ram": 16831815680,
+    "gpu": "NVIDIA GeForce MX550",
+    "CPU": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+    "RAM": 16831815680,
+    "GPU": "NVIDIA GeForce MX550"
+  },
+  "utc_timestamp": "2026-10-03T07:03:10.281876+00:00",
+  "git sha": "fa47fbe7a0fd51326b8fa170c6cdacc4a5bc7aab",
+  "python version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
+  "package versions": {
+    "perron-core": "0.2.1",
+    "perron": "0.1.0",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "pytest": "9.1.1",
+    "torch": "2.14.0",
+    "transformers": "5.17.0",
+    "tree-sitter": "0.25.2",
+    "psutil": "7.2.2"
+  },
+  "split name": "heldout",
+  "UTC timestamp": "2026-10-03T07:03:10.281876+00:00",
+  "suite": "strata",
+  "metadata": {
+    "git_sha": "fa47fbe7a0fd51326b8fa170c6cdacc4a5bc7aab",
+    "python_version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
+    "package_versions": {
+      "perron-core": "0.2.1",
+      "perron": "0.1.0",
+      "numpy": "2.5.2",
+      "scipy": "1.18.1",
+      "pytest": "9.1.1",
+      "torch": "2.14.0",
+      "transformers": "5.17.0",
+      "tree-sitter": "0.25.2",
+      "psutil": "7.2.2"
+    },
+    "seed": 20261003,
+    "split_name": "heldout",
+    "hardware": {
+      "cpu": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+      "ram": 16831815680,
+      "gpu": "NVIDIA GeForce MX550",
+      "CPU": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+      "RAM": 16831815680,
+      "GPU": "NVIDIA GeForce MX550"
+    },
+    "utc_timestamp": "2026-10-03T07:03:10.281876+00:00",
+    "git sha": "fa47fbe7a0fd51326b8fa170c6cdacc4a5bc7aab",
+    "python version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
+    "package versions": {
+      "perron-core": "0.2.1",
+      "perron": "0.1.0",
+      "numpy": "2.5.2",
+      "scipy": "1.18.1",
+      "pytest": "9.1.1",
+      "torch": "2.14.0",
+      "transformers": "5.17.0",
+      "tree-sitter": "0.25.2",
+      "psutil": "7.2.2"
+    },
+    "split name": "heldout",
+    "UTC timestamp": "2026-10-03T07:03:10.281876+00:00",
+    "suite": "strata"
+  },
+  "split": "heldout",
+  "bootstrap_iterations": 10000,
+  "strata": {
+    "stratum_A": {
+      "n": 22,
+      "descriptive_only": false,
+      "methods": {
+        "bm25": {
+          "label": "Okapi BM25",
+          "fn_acc_10": {
+            "mean": 0.7273,
+            "ci_95_lower": 0.5455,
+            "ci_95_upper": 0.9091,
+            "count": 22
+          }
+        },
+        "dense": {
+          "label": "Dense Semantic",
+          "fn_acc_10": {
+            "mean": 0.5455,
+            "ci_95_lower": 0.3182,
+            "ci_95_upper": 0.7273,
+            "count": 22
+          }
+        },
+        "perron_static": {
+          "label": "Perron Static",
+          "fn_acc_10": {
+            "mean": 0.3182,
+            "ci_95_lower": 0.1364,
+            "ci_95_upper": 0.5,
+            "count": 22
+          }
+        },
+        "deg_ppr": {
+          "label": "Degree-Norm PPR",
+          "fn_acc_10": {
+            "mean": 0.0455,
+            "ci_95_lower": 0.0,
+            "ci_95_upper": 0.1364,
+            "count": 22
+          }
+        },
+        "fusion": {
+          "label": "Perron+BM25 Fusion (weighted_w_0.0)",
+          "fn_acc_10": {
+            "mean": 0.7273,
+            "ci_95_lower": 0.5455,
+            "ci_95_upper": 0.9091,
+            "count": 22
+          }
+        }
+      }
+    },
+    "stratum_B": {
+      "n": 16,
+      "descriptive_only": false,
+      "methods": {
+        "bm25": {
+          "label": "Okapi BM25",
+          "fn_acc_10": {
+            "mean": 0.0625,
+            "ci_95_lower": 0.0,
+            "ci_95_upper": 0.1875,
+            "count": 16
+          }
+        },
+        "dense": {
+          "label": "Dense Semantic",
+          "fn_acc_10": {
+            "mean": 0.0,
+            "ci_95_lower": 0.0,
+            "ci_95_upper": 0.0,
+            "count": 16
+          }
+        },
+        "perron_static": {
+          "label": "Perron Static",
+          "fn_acc_10": {
+            "mean": 0.0625,
+            "ci_95_lower": 0.0,
+            "ci_95_upper": 0.1875,
+            "count": 16
+          }
+        },
+        "deg_ppr": {
+          "label": "Degree-Norm PPR",
+          "fn_acc_10": {
+            "mean": 0.0,
+            "ci_95_lower": 0.0,
+            "ci_95_upper": 0.0,
+            "count": 16
+          }
+        },
+        "fusion": {
+          "label": "Perron+BM25 Fusion (weighted_w_0.0)",
+          "fn_acc_10": {
+            "mean": 0.0625,
+            "ci_95_lower": 0.0,
+            "ci_95_upper": 0.1875,
+            "count": 16
+          }
+        }
+      }
+    },
+    "stratum_C": {
+      "n": 112,
+      "descriptive_only": false,
+      "methods": {
+        "bm25": {
+          "label": "Okapi BM25",
+          "fn_acc_10": {
+            "mean": 0.0893,
+            "ci_95_lower": 0.0446,
+            "ci_95_upper": 0.1429,
+            "count": 112
+          }
+        },
+        "dense": {
+          "label": "Dense Semantic",
+          "fn_acc_10": {
+            "mean": 0.0804,
+            "ci_95_lower": 0.0357,
+            "ci_95_upper": 0.1339,
+            "count": 112
+          }
+        },
+        "perron_static": {
+          "label": "Perron Static",
+          "fn_acc_10": {
+            "mean": 0.0804,
+            "ci_95_lower": 0.0357,
+            "ci_95_upper": 0.1339,
+            "count": 112
+          }
+        },
+        "deg_ppr": {
+          "label": "Degree-Norm PPR",
+          "fn_acc_10": {
+            "mean": 0.0357,
+            "ci_95_lower": 0.0089,
+            "ci_95_upper": 0.0714,
+            "count": 112
+          }
+        },
+        "fusion": {
+          "label": "Perron+BM25 Fusion (weighted_w_0.0)",
+          "fn_acc_10": {
+            "mean": 0.0893,
+            "ci_95_lower": 0.0446,
+            "ci_95_upper": 0.1429,
+            "count": 112
+          }
+        }
+      }
+    }
+  },
+  "results": {
+    "suite": "strata",
+    "split": "heldout",
+    "seed": 20261003,
+    "bootstrap_iterations": 10000,
+    "strata": {
+      "stratum_A": {
+        "n": 22,
+        "descriptive_only": false,
+        "methods": {
+          "bm25": {
+            "label": "Okapi BM25",
+            "fn_acc_10": {
+              "mean": 0.7273,
+              "ci_95_lower": 0.5455,
+              "ci_95_upper": 0.9091,
+              "count": 22
+            }
+          },
+          "dense": {
+            "label": "Dense Semantic",
+            "fn_acc_10": {
+              "mean": 0.5455,
+              "ci_95_lower": 0.3182,
+              "ci_95_upper": 0.7273,
+              "count": 22
+            }
+          },
+          "perron_static": {
+            "label": "Perron Static",
+            "fn_acc_10": {
+              "mean": 0.3182,
+              "ci_95_lower": 0.1364,
+              "ci_95_upper": 0.5,
+              "count": 22
+            }
+          },
+          "deg_ppr": {
+            "label": "Degree-Norm PPR",
+            "fn_acc_10": {
+              "mean": 0.0455,
+              "ci_95_lower": 0.0,
+              "ci_95_upper": 0.1364,
+              "count": 22
+            }
+          },
+          "fusion": {
+            "label": "Perron+BM25 Fusion (weighted_w_0.0)",
+            "fn_acc_10": {
+              "mean": 0.7273,
+              "ci_95_lower": 0.5455,
+              "ci_95_upper": 0.9091,
+              "count": 22
+            }
+          }
+        }
+      },
+      "stratum_B": {
+        "n": 16,
+        "descriptive_only": false,
+        "methods": {
+          "bm25": {
+            "label": "Okapi BM25",
+            "fn_acc_10": {
+              "mean": 0.0625,
+              "ci_95_lower": 0.0,
+              "ci_95_upper": 0.1875,
+              "count": 16
+            }
+          },
+          "dense": {
+            "label": "Dense Semantic",
+            "fn_acc_10": {
+              "mean": 0.0,
+              "ci_95_lower": 0.0,
+              "ci_95_upper": 0.0,
+              "count": 16
+            }
+          },
+          "perron_static": {
+            "label": "Perron Static",
+            "fn_acc_10": {
+              "mean": 0.0625,
+              "ci_95_lower": 0.0,
+              "ci_95_upper": 0.1875,
+              "count": 16
+            }
+          },
+          "deg_ppr": {
+            "label": "Degree-Norm PPR",
+            "fn_acc_10": {
+              "mean": 0.0,
+              "ci_95_lower": 0.0,
+              "ci_95_upper": 0.0,
+              "count": 16
+            }
+          },
+          "fusion": {
+            "label": "Perron+BM25 Fusion (weighted_w_0.0)",
+            "fn_acc_10": {
+              "mean": 0.0625,
+              "ci_95_lower": 0.0,
+              "ci_95_upper": 0.1875,
+              "count": 16
+            }
+          }
+        }
+      },
+      "stratum_C": {
+        "n": 112,
+        "descriptive_only": false,
+        "methods": {
+          "bm25": {
+            "label": "Okapi BM25",
+            "fn_acc_10": {
+              "mean": 0.0893,
+              "ci_95_lower": 0.0446,
+              "ci_95_upper": 0.1429,
+              "count": 112
+            }
+          },
+          "dense": {
+            "label": "Dense Semantic",
+            "fn_acc_10": {
+              "mean": 0.0804,
+              "ci_95_lower": 0.0357,
+              "ci_95_upper": 0.1339,
+              "count": 112
+            }
+          },
+          "perron_static": {
+            "label": "Perron Static",
+            "fn_acc_10": {
+              "mean": 0.0804,
+              "ci_95_lower": 0.0357,
+              "ci_95_upper": 0.1339,
+              "count": 112
+            }
+          },
+          "deg_ppr": {
+            "label": "Degree-Norm PPR",
+            "fn_acc_10": {
+              "mean": 0.0357,
+              "ci_95_lower": 0.0089,
+              "ci_95_upper": 0.0714,
+              "count": 112
+            }
+          },
+          "fusion": {
+            "label": "Perron+BM25 Fusion (weighted_w_0.0)",
+            "fn_acc_10": {
+              "mean": 0.0893,
+              "ci_95_lower": 0.0446,
+              "ci_95_upper": 0.1429,
+              "count": 112
+            }
+          }
+        }
+      }
+    }
+  },
+  "data": {
+    "suite": "strata",
+    "split": "heldout",
+    "seed": 20261003,
+    "bootstrap_iterations": 10000,
+    "strata": {
+      "stratum_A": {
+        "n": 22,
+        "descriptive_only": false,
+        "methods": {
+          "bm25": {
+            "label": "Okapi BM25",
+            "fn_acc_10": {
+              "mean": 0.7273,
+              "ci_95_lower": 0.5455,
+              "ci_95_upper": 0.9091,
+              "count": 22
+            }
+          },
+          "dense": {
+            "label": "Dense Semantic",
+            "fn_acc_10": {
+              "mean": 0.5455,
+              "ci_95_lower": 0.3182,
+              "ci_95_upper": 0.7273,
+              "count": 22
+            }
+          },
+          "perron_static": {
+            "label": "Perron Static",
+            "fn_acc_10": {
+              "mean": 0.3182,
+              "ci_95_lower": 0.1364,
+              "ci_95_upper": 0.5,
+              "count": 22
+            }
+          },
+          "deg_ppr": {
+            "label": "Degree-Norm PPR",
+            "fn_acc_10": {
+              "mean": 0.0455,
+              "ci_95_lower": 0.0,
+              "ci_95_upper": 0.1364,
+              "count": 22
+            }
+          },
+          "fusion": {
+            "label": "Perron+BM25 Fusion (weighted_w_0.0)",
+            "fn_acc_10": {
+              "mean": 0.7273,
+              "ci_95_lower": 0.5455,
+              "ci_95_upper": 0.9091,
+              "count": 22
+            }
+          }
+        }
+      },
+      "stratum_B": {
+        "n": 16,
+        "descriptive_only": false,
+        "methods": {
+          "bm25": {
+            "label": "Okapi BM25",
+            "fn_acc_10": {
+              "mean": 0.0625,
+              "ci_95_lower": 0.0,
+              "ci_95_upper": 0.1875,
+              "count": 16
+            }
+          },
+          "dense": {
+            "label": "Dense Semantic",
+            "fn_acc_10": {
+              "mean": 0.0,
+              "ci_95_lower": 0.0,
+              "ci_95_upper": 0.0,
+              "count": 16
+            }
+          },
+          "perron_static": {
+            "label": "Perron Static",
+            "fn_acc_10": {
+              "mean": 0.0625,
+              "ci_95_lower": 0.0,
+              "ci_95_upper": 0.1875,
+              "count": 16
+            }
+          },
+          "deg_ppr": {
+            "label": "Degree-Norm PPR",
+            "fn_acc_10": {
+              "mean": 0.0,
+              "ci_95_lower": 0.0,
+              "ci_95_upper": 0.0,
+              "count": 16
+            }
+          },
+          "fusion": {
+            "label": "Perron+BM25 Fusion (weighted_w_0.0)",
+            "fn_acc_10": {
+              "mean": 0.0625,
+              "ci_95_lower": 0.0,
+              "ci_95_upper": 0.1875,
+              "count": 16
+            }
+          }
+        }
+      },
+      "stratum_C": {
+        "n": 112,
+        "descriptive_only": false,
+        "methods": {
+          "bm25": {
+            "label": "Okapi BM25",
+            "fn_acc_10": {
+              "mean": 0.0893,
+              "ci_95_lower": 0.0446,
+              "ci_95_upper": 0.1429,
+              "count": 112
+            }
+          },
+          "dense": {
+            "label": "Dense Semantic",
+            "fn_acc_10": {
+              "mean": 0.0804,
+              "ci_95_lower": 0.0357,
+              "ci_95_upper": 0.1339,
+              "count": 112
+            }
+          },
+          "perron_static": {
+            "label": "Perron Static",
+            "fn_acc_10": {
+              "mean": 0.0804,
+              "ci_95_lower": 0.0357,
+              "ci_95_upper": 0.1339,
+              "count": 112
+            }
+          },
+          "deg_ppr": {
+            "label": "Degree-Norm PPR",
+            "fn_acc_10": {
+              "mean": 0.0357,
+              "ci_95_lower": 0.0089,
+              "ci_95_upper": 0.0714,
+              "count": 112
+            }
+          },
+          "fusion": {
+            "label": "Perron+BM25 Fusion (weighted_w_0.0)",
+            "fn_acc_10": {
+              "mean": 0.0893,
+              "ci_95_lower": 0.0446,
+              "ci_95_upper": 0.1429,
+              "count": 112
+            }
+          }
+        }
+      }
+    }
+  }
+}

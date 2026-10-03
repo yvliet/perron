@@ -1,0 +1,58 @@
+{
+  "benchmark_name": "Synthetic 1M-Node CSR Systems Profile",
+  "diffusion_vs_reweighting": {
+    "num_nodes": 1000000,
+    "num_edges": 7412387,
+    "spmv_iterations": 85,
+    "mean_diffusion_time_ms": 1820.15,
+    "mean_reweighting_time_ms": 319.03,
+    "reweighting_overhead_percentage": 17.53
+  },
+  "storage_and_cold_start": {
+    "formats": {
+      "pickle": {
+        "size_mb": 60.37,
+        "load_time_ms": 43.06
+      },
+      "npz": {
+        "size_mb": 10.71,
+        "load_time_ms": 256.22
+      },
+      "mmap_csr": {
+        "size_mb": 60.37,
+        "load_time_ms": 64.86
+      }
+    }
+  },
+  "multiworker_memory_virtualization": {
+    "1_workers": {
+      "workers": 1,
+      "dynamic_reweighting_rss_mb": 84.0,
+      "static_mmap_rss_mb": 84.0,
+      "memory_saved_mb": 0.0,
+      "reduction_factor": "1x"
+    },
+    "2_workers": {
+      "workers": 2,
+      "dynamic_reweighting_rss_mb": 168.0,
+      "static_mmap_rss_mb": 84.0,
+      "memory_saved_mb": 84.0,
+      "reduction_factor": "2x"
+    },
+    "4_workers": {
+      "workers": 4,
+      "dynamic_reweighting_rss_mb": 336.0,
+      "static_mmap_rss_mb": 84.0,
+      "memory_saved_mb": 252.0,
+      "reduction_factor": "4x"
+    },
+    "8_workers": {
+      "workers": 8,
+      "dynamic_reweighting_rss_mb": 672.0,
+      "static_mmap_rss_mb": 84.0,
+      "memory_saved_mb": 588.0,
+      "reduction_factor": "8x"
+    }
+  },
+  "timestamp": "2026-10-03 11:22:47"
+}

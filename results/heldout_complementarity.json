@@ -1,0 +1,167 @@
+{
+  "git_sha": "fa47fbe7a0fd51326b8fa170c6cdacc4a5bc7aab",
+  "python_version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
+  "package_versions": {
+    "perron-core": "0.2.1",
+    "perron": "0.1.0",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "pytest": "9.1.1",
+    "torch": "2.14.0",
+    "transformers": "5.17.0",
+    "tree-sitter": "0.25.2",
+    "psutil": "7.2.2"
+  },
+  "seed": 20261003,
+  "split_name": "heldout",
+  "hardware": {
+    "cpu": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+    "ram": 16831815680,
+    "gpu": "NVIDIA GeForce MX550",
+    "CPU": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+    "RAM": 16831815680,
+    "GPU": "NVIDIA GeForce MX550"
+  },
+  "utc_timestamp": "2026-10-03T07:02:57.962542+00:00",
+  "git sha": "fa47fbe7a0fd51326b8fa170c6cdacc4a5bc7aab",
+  "python version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
+  "package versions": {
+    "perron-core": "0.2.1",
+    "perron": "0.1.0",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "pytest": "9.1.1",
+    "torch": "2.14.0",
+    "transformers": "5.17.0",
+    "tree-sitter": "0.25.2",
+    "psutil": "7.2.2"
+  },
+  "split name": "heldout",
+  "UTC timestamp": "2026-10-03T07:02:57.962542+00:00",
+  "suite": "complementarity",
+  "metadata": {
+    "git_sha": "fa47fbe7a0fd51326b8fa170c6cdacc4a5bc7aab",
+    "python_version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
+    "package_versions": {
+      "perron-core": "0.2.1",
+      "perron": "0.1.0",
+      "numpy": "2.5.2",
+      "scipy": "1.18.1",
+      "pytest": "9.1.1",
+      "torch": "2.14.0",
+      "transformers": "5.17.0",
+      "tree-sitter": "0.25.2",
+      "psutil": "7.2.2"
+    },
+    "seed": 20261003,
+    "split_name": "heldout",
+    "hardware": {
+      "cpu": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+      "ram": 16831815680,
+      "gpu": "NVIDIA GeForce MX550",
+      "CPU": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+      "RAM": 16831815680,
+      "GPU": "NVIDIA GeForce MX550"
+    },
+    "utc_timestamp": "2026-10-03T07:02:57.962542+00:00",
+    "git sha": "fa47fbe7a0fd51326b8fa170c6cdacc4a5bc7aab",
+    "python version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
+    "package versions": {
+      "perron-core": "0.2.1",
+      "perron": "0.1.0",
+      "numpy": "2.5.2",
+      "scipy": "1.18.1",
+      "pytest": "9.1.1",
+      "torch": "2.14.0",
+      "transformers": "5.17.0",
+      "tree-sitter": "0.25.2",
+      "psutil": "7.2.2"
+    },
+    "split name": "heldout",
+    "UTC timestamp": "2026-10-03T07:02:57.962542+00:00",
+    "suite": "complementarity"
+  },
+  "split": "heldout",
+  "num_instances": 150,
+  "selected_fusion_variant": "weighted_w_0.0",
+  "contingency_table_bm25_perron": {
+    "both_hit_1_1": 11,
+    "bm25_only_1_0": 16,
+    "perron_only_0_1": 6,
+    "neither_hit_0_0": 117
+  },
+  "mcnemar_fusion_vs_bm25": {
+    "n_target_wins": 0,
+    "n_baseline_wins": 0,
+    "n_both_hit": 27,
+    "n_both_miss": 123,
+    "n_discordant": 0,
+    "p_value": 1.0
+  },
+  "mcnemar_perron_vs_bm25": {
+    "n_target_wins": 6,
+    "n_baseline_wins": 16,
+    "n_both_hit": 11,
+    "n_both_miss": 117,
+    "n_discordant": 22,
+    "p_value": 0.052478790283203125
+  },
+  "results": {
+    "suite": "complementarity",
+    "split": "heldout",
+    "seed": 20261003,
+    "num_instances": 150,
+    "selected_fusion_variant": "weighted_w_0.0",
+    "contingency_table_bm25_perron": {
+      "both_hit_1_1": 11,
+      "bm25_only_1_0": 16,
+      "perron_only_0_1": 6,
+      "neither_hit_0_0": 117
+    },
+    "mcnemar_fusion_vs_bm25": {
+      "n_target_wins": 0,
+      "n_baseline_wins": 0,
+      "n_both_hit": 27,
+      "n_both_miss": 123,
+      "n_discordant": 0,
+      "p_value": 1.0
+    },
+    "mcnemar_perron_vs_bm25": {
+      "n_target_wins": 6,
+      "n_baseline_wins": 16,
+      "n_both_hit": 11,
+      "n_both_miss": 117,
+      "n_discordant": 22,
+      "p_value": 0.052478790283203125
+    }
+  },
+  "data": {
+    "suite": "complementarity",
+    "split": "heldout",
+    "seed": 20261003,
+    "num_instances": 150,
+    "selected_fusion_variant": "weighted_w_0.0",
+    "contingency_table_bm25_perron": {
+      "both_hit_1_1": 11,
+      "bm25_only_1_0": 16,
+      "perron_only_0_1": 6,
+      "neither_hit_0_0": 117
+    },
+    "mcnemar_fusion_vs_bm25": {
+      "n_target_wins": 0,
+      "n_baseline_wins": 0,
+      "n_both_hit": 27,
+      "n_both_miss": 123,
+      "n_discordant": 0,
+      "p_value": 1.0
+    },
+    "mcnemar_perron_vs_bm25": {
+      "n_target_wins": 6,
+      "n_baseline_wins": 16,
+      "n_both_hit": 11,
+      "n_both_miss": 117,
+      "n_discordant": 22,
+      "p_value": 0.052478790283203125
+    }
+  }
+}

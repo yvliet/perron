@@ -476,9 +476,13 @@ def generate_rigorous_evaluation_artifacts():
 \\newcommand{{\\TokenOverlapFileRecTwoK}}{{\\BiEncoderFileRecTwoK}}
 \\newcommand{{\\TokenOverlapFileRecFourK}}{{\\BiEncoderFileRecFourK}}
 """
-    with open(macros_file, "w", encoding="utf-8") as f:
-        f.write(macros_text)
-    print(f"Exported frozen LaTeX macros: {macros_file}")
+    try:
+        from scripts.generate_paper_macros import generate_macros
+        generate_macros()
+    except Exception:
+        with open(macros_file, "w", encoding="utf-8") as f:
+            f.write(macros_text)
+        print(f"Exported frozen LaTeX macros: {macros_file}")
 
     # -------------------------------------------------------------
     # 2. GENERATE PUBLICATION-GRADE COMPOSITE VISUALIZATION

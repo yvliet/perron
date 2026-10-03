@@ -1,0 +1,4326 @@
+{
+  "astropy__astropy-12907": {
+    "instance_id": "astropy__astropy-12907",
+    "repo": "astropy/astropy",
+    "gold_files": [
+      "astropy/modeling/separable.py"
+    ],
+    "gold_symbol_ids": [
+      8198
+    ],
+    "gold_symbol_names": [
+      "_cstack"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "astropy__astropy-14182": {
+    "instance_id": "astropy__astropy-14182",
+    "repo": "astropy/astropy",
+    "gold_files": [
+      "astropy/io/ascii/rst.py"
+    ],
+    "gold_symbol_ids": [
+      3597,
+      3598,
+      3599
+    ],
+    "gold_symbol_names": [
+      "RST",
+      "RST.__init__",
+      "SimpleRSTData"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "astropy__astropy-14365": {
+    "instance_id": "astropy__astropy-14365",
+    "repo": "astropy/astropy",
+    "gold_files": [
+      "astropy/io/ascii/qdp.py"
+    ],
+    "gold_symbol_ids": [
+      3580,
+      3584
+    ],
+    "gold_symbol_names": [
+      "_get_tables_from_qdp_file",
+      "_line_type"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "astropy__astropy-14995": {
+    "instance_id": "astropy__astropy-14995",
+    "repo": "astropy/astropy",
+    "gold_files": [
+      "astropy/nddata/mixins/ndarithmetic.py"
+    ],
+    "gold_symbol_ids": [
+      9440
+    ],
+    "gold_symbol_names": [
+      "NDArithmeticMixin.subtract"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "astropy__astropy-6938": {
+    "instance_id": "astropy__astropy-6938",
+    "repo": "astropy/astropy",
+    "gold_files": [
+      "astropy/io/fits/fitsrec.py"
+    ],
+    "gold_symbol_ids": [
+      4302
+    ],
+    "gold_symbol_names": [
+      "FITS_rec._scale_back_ascii"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "astropy__astropy-7746": {
+    "instance_id": "astropy__astropy-7746",
+    "repo": "astropy/astropy",
+    "gold_files": [
+      "astropy/wcs/wcs.py"
+    ],
+    "gold_symbol_ids": [
+      17531,
+      17532
+    ],
+    "gold_symbol_names": [
+      "WCS._denormalize_sky",
+      "WCS.write_array"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-10914": {
+    "instance_id": "django__django-10914",
+    "repo": "django/django",
+    "gold_files": [
+      "django/conf/global_settings.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "django__django-10924": {
+    "instance_id": "django__django-10924",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/fields/__init__.py"
+    ],
+    "gold_symbol_ids": [
+      5746
+    ],
+    "gold_symbol_names": [
+      "FilePathField.get_prep_value"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11001": {
+    "instance_id": "django__django-11001",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/sql/compiler.py"
+    ],
+    "gold_symbol_ids": [
+      6601
+    ],
+    "gold_symbol_names": [
+      "SQLCompiler.setup_query"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11019": {
+    "instance_id": "django__django-11019",
+    "repo": "django/django",
+    "gold_files": [
+      "django/forms/widgets.py"
+    ],
+    "gold_symbol_ids": [
+      7227,
+      7233
+    ],
+    "gold_symbol_names": [
+      "Media.__add__",
+      "Media.render"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11039": {
+    "instance_id": "django__django-11039",
+    "repo": "django/django",
+    "gold_files": [
+      "django/core/management/commands/sqlmigrate.py"
+    ],
+    "gold_symbol_ids": [
+      3699
+    ],
+    "gold_symbol_names": [
+      "Command.handle"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11049": {
+    "instance_id": "django__django-11049",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/fields/__init__.py"
+    ],
+    "gold_symbol_ids": [
+      5730
+    ],
+    "gold_symbol_names": [
+      "DurationField"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11099": {
+    "instance_id": "django__django-11099",
+    "repo": "django/django",
+    "gold_files": [
+      "django/contrib/auth/validators.py"
+    ],
+    "gold_symbol_ids": [
+      928,
+      929
+    ],
+    "gold_symbol_names": [
+      "ASCIIUsernameValidator",
+      "UnicodeUsernameValidator"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11133": {
+    "instance_id": "django__django-11133",
+    "repo": "django/django",
+    "gold_files": [
+      "django/http/response.py"
+    ],
+    "gold_symbol_ids": [
+      7468
+    ],
+    "gold_symbol_names": [
+      "HttpResponseBase.make_bytes"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11179": {
+    "instance_id": "django__django-11179",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/deletion.py"
+    ],
+    "gold_symbol_ids": [
+      5378
+    ],
+    "gold_symbol_names": [
+      "Collector.delete"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11283": {
+    "instance_id": "django__django-11283",
+    "repo": "django/django",
+    "gold_files": [
+      "django/contrib/auth/migrations/0011_update_proxy_permissions.py"
+    ],
+    "gold_symbol_ids": [
+      828,
+      829
+    ],
+    "gold_symbol_names": [
+      "revert_proxy_model_permissions",
+      "update_proxy_model_permissions"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11422": {
+    "instance_id": "django__django-11422",
+    "repo": "django/django",
+    "gold_files": [
+      "django/utils/autoreload.py"
+    ],
+    "gold_symbol_ids": [
+      8625
+    ],
+    "gold_symbol_names": [
+      "iter_modules_and_files"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11564": {
+    "instance_id": "django__django-11564",
+    "repo": "django/django",
+    "gold_files": [
+      "django/conf/__init__.py"
+    ],
+    "gold_symbol_ids": [
+      42,
+      45
+    ],
+    "gold_symbol_names": [
+      "LazySettings.configured",
+      "Settings.__init__"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11583": {
+    "instance_id": "django__django-11583",
+    "repo": "django/django",
+    "gold_files": [
+      "django/utils/autoreload.py"
+    ],
+    "gold_symbol_ids": [
+      8626
+    ],
+    "gold_symbol_names": [
+      "common_roots"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11620": {
+    "instance_id": "django__django-11620",
+    "repo": "django/django",
+    "gold_files": [
+      "django/views/debug.py"
+    ],
+    "gold_symbol_ids": [
+      9268
+    ],
+    "gold_symbol_names": [
+      "technical_404_response"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11630": {
+    "instance_id": "django__django-11630",
+    "repo": "django/django",
+    "gold_files": [
+      "django/core/checks/model_checks.py"
+    ],
+    "gold_symbol_ids": [
+      3209
+    ],
+    "gold_symbol_names": [
+      "check_all_models"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11742": {
+    "instance_id": "django__django-11742",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/fields/__init__.py"
+    ],
+    "gold_symbol_ids": [
+      5607
+    ],
+    "gold_symbol_names": [
+      "Field._check_choices"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11797": {
+    "instance_id": "django__django-11797",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/lookups.py"
+    ],
+    "gold_symbol_ids": [
+      6312
+    ],
+    "gold_symbol_names": [
+      "IExact.process_rhs"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11815": {
+    "instance_id": "django__django-11815",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/migrations/serializer.py"
+    ],
+    "gold_symbol_ids": [
+      5140
+    ],
+    "gold_symbol_names": [
+      "FloatSerializer.serialize"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11848": {
+    "instance_id": "django__django-11848",
+    "repo": "django/django",
+    "gold_files": [
+      "django/utils/http.py"
+    ],
+    "gold_symbol_ids": [
+      8993
+    ],
+    "gold_symbol_names": [
+      "parse_http_date"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11905": {
+    "instance_id": "django__django-11905",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/lookups.py"
+    ],
+    "gold_symbol_ids": [
+      6278,
+      6340
+    ],
+    "gold_symbol_names": [
+      "Lookup",
+      "Regex.as_sql"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11910": {
+    "instance_id": "django__django-11910",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/migrations/autodetector.py"
+    ],
+    "gold_symbol_ids": [
+      4781
+    ],
+    "gold_symbol_names": [
+      "MigrationAutodetector.generate_altered_fields"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-11964": {
+    "instance_id": "django__django-11964",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/enums.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "django__django-11999": {
+    "instance_id": "django__django-11999",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/fields/__init__.py"
+    ],
+    "gold_symbol_ids": [
+      5646
+    ],
+    "gold_symbol_names": [
+      "Field.get_internal_type"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-12113": {
+    "instance_id": "django__django-12113",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/backends/sqlite3/creation.py"
+    ],
+    "gold_symbol_ids": [
+      4662
+    ],
+    "gold_symbol_names": [
+      "DatabaseCreation.test_db_signature"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-12125": {
+    "instance_id": "django__django-12125",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/migrations/serializer.py"
+    ],
+    "gold_symbol_ids": [
+      5168
+    ],
+    "gold_symbol_names": [
+      "UUIDSerializer.serialize"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-12184": {
+    "instance_id": "django__django-12184",
+    "repo": "django/django",
+    "gold_files": [
+      "django/urls/resolvers.py"
+    ],
+    "gold_symbol_ids": [
+      8546
+    ],
+    "gold_symbol_names": [
+      "RegexPattern.check"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-12284": {
+    "instance_id": "django__django-12284",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/fields/__init__.py"
+    ],
+    "gold_symbol_ids": [
+      5646
+    ],
+    "gold_symbol_names": [
+      "Field.get_internal_type"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-12286": {
+    "instance_id": "django__django-12286",
+    "repo": "django/django",
+    "gold_files": [
+      "django/core/checks/translation.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "django__django-12308": {
+    "instance_id": "django__django-12308",
+    "repo": "django/django",
+    "gold_files": [
+      "django/contrib/admin/utils.py"
+    ],
+    "gold_symbol_ids": [
+      476
+    ],
+    "gold_symbol_names": [
+      "display_for_value"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-12453": {
+    "instance_id": "django__django-12453",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/backends/base/creation.py"
+    ],
+    "gold_symbol_ids": [
+      4052
+    ],
+    "gold_symbol_names": [
+      "BaseDatabaseCreation.deserialize_db_from_string"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-12470": {
+    "instance_id": "django__django-12470",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/sql/compiler.py"
+    ],
+    "gold_symbol_ids": [
+      6615
+    ],
+    "gold_symbol_names": [
+      "SQLCompiler.find_ordering_name"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-12497": {
+    "instance_id": "django__django-12497",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/fields/related.py"
+    ],
+    "gold_symbol_ids": [
+      5973
+    ],
+    "gold_symbol_names": [
+      "ManyToManyField._check_relationship_model"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-12589": {
+    "instance_id": "django__django-12589",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/sql/query.py"
+    ],
+    "gold_symbol_ids": [
+      6754,
+      6755
+    ],
+    "gold_symbol_names": [
+      "Query.get_loaded_field_names",
+      "Query.get_loaded_field_names_cb"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-12700": {
+    "instance_id": "django__django-12700",
+    "repo": "django/django",
+    "gold_files": [
+      "django/views/debug.py"
+    ],
+    "gold_symbol_ids": [
+      9248
+    ],
+    "gold_symbol_names": [
+      "technical_500_response"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-12708": {
+    "instance_id": "django__django-12708",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/backends/base/schema.py"
+    ],
+    "gold_symbol_ids": [
+      4179
+    ],
+    "gold_symbol_names": [
+      "BaseDatabaseSchemaEditor._delete_composed_index"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-12747": {
+    "instance_id": "django__django-12747",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/deletion.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "django__django-12856": {
+    "instance_id": "django__django-12856",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/base.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "django__django-12908": {
+    "instance_id": "django__django-12908",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/query.py"
+    ],
+    "gold_symbol_ids": [
+      6507
+    ],
+    "gold_symbol_names": [
+      "QuerySet.ordered"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-12915": {
+    "instance_id": "django__django-12915",
+    "repo": "django/django",
+    "gold_files": [
+      "django/contrib/staticfiles/handlers.py"
+    ],
+    "gold_symbol_ids": [
+      2988
+    ],
+    "gold_symbol_names": [
+      "StaticFilesHandler.get_response"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-12983": {
+    "instance_id": "django__django-12983",
+    "repo": "django/django",
+    "gold_files": [
+      "django/utils/text.py"
+    ],
+    "gold_symbol_ids": [
+      9099
+    ],
+    "gold_symbol_names": [
+      "camel_case_to_spaces"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13028": {
+    "instance_id": "django__django-13028",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/sql/query.py"
+    ],
+    "gold_symbol_ids": [
+      6720
+    ],
+    "gold_symbol_names": [
+      "Query.try_transform"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13033": {
+    "instance_id": "django__django-13033",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/sql/compiler.py"
+    ],
+    "gold_symbol_ids": [
+      6616
+    ],
+    "gold_symbol_names": [
+      "SQLCompiler._setup_joins"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13158": {
+    "instance_id": "django__django-13158",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/sql/query.py"
+    ],
+    "gold_symbol_ids": [
+      6688,
+      6746
+    ],
+    "gold_symbol_names": [
+      "Query.add_ordering",
+      "Query.clone"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13220": {
+    "instance_id": "django__django-13220",
+    "repo": "django/django",
+    "gold_files": [
+      "django/core/exceptions.py"
+    ],
+    "gold_symbol_ids": [
+      3260,
+      3284
+    ],
+    "gold_symbol_names": [
+      "EmptyResultSet",
+      "FieldDoesNotExist"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13230": {
+    "instance_id": "django__django-13230",
+    "repo": "django/django",
+    "gold_files": [
+      "django/contrib/syndication/views.py"
+    ],
+    "gold_symbol_ids": [
+      3069
+    ],
+    "gold_symbol_names": [
+      "Feed.get_feed"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13265": {
+    "instance_id": "django__django-13265",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/migrations/autodetector.py"
+    ],
+    "gold_symbol_ids": [
+      4761,
+      4772
+    ],
+    "gold_symbol_names": [
+      "MigrationAutodetector._detect_changes",
+      "MigrationAutodetector.generate_created_models"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13315": {
+    "instance_id": "django__django-13315",
+    "repo": "django/django",
+    "gold_files": [
+      "django/forms/models.py"
+    ],
+    "gold_symbol_ids": [
+      7107
+    ],
+    "gold_symbol_names": [
+      "apply_limit_choices_to_to_formfield"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13321": {
+    "instance_id": "django__django-13321",
+    "repo": "django/django",
+    "gold_files": [
+      "django/contrib/sessions/backends/base.py"
+    ],
+    "gold_symbol_ids": [
+      2801
+    ],
+    "gold_symbol_names": [
+      "SessionBase.has_key"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13401": {
+    "instance_id": "django__django-13401",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/fields/__init__.py"
+    ],
+    "gold_symbol_ids": [
+      5623
+    ],
+    "gold_symbol_names": [
+      "Field.__copy__"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13447": {
+    "instance_id": "django__django-13447",
+    "repo": "django/django",
+    "gold_files": [
+      "django/contrib/admin/sites.py"
+    ],
+    "gold_symbol_ids": [
+      387
+    ],
+    "gold_symbol_names": [
+      "AdminSite._build_app_dict"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13448": {
+    "instance_id": "django__django-13448",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/backends/base/creation.py"
+    ],
+    "gold_symbol_ids": [
+      4048
+    ],
+    "gold_symbol_names": [
+      "BaseDatabaseCreation.create_test_db"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13551": {
+    "instance_id": "django__django-13551",
+    "repo": "django/django",
+    "gold_files": [
+      "django/contrib/auth/tokens.py"
+    ],
+    "gold_symbol_ids": [
+      926
+    ],
+    "gold_symbol_names": [
+      "PasswordResetTokenGenerator._num_days"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13590": {
+    "instance_id": "django__django-13590",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/sql/query.py"
+    ],
+    "gold_symbol_ids": [
+      6719
+    ],
+    "gold_symbol_names": [
+      "Query.build_lookup"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13658": {
+    "instance_id": "django__django-13658",
+    "repo": "django/django",
+    "gold_files": [
+      "django/core/management/__init__.py"
+    ],
+    "gold_symbol_ids": [
+      3529
+    ],
+    "gold_symbol_names": [
+      "ManagementUtility.execute"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13660": {
+    "instance_id": "django__django-13660",
+    "repo": "django/django",
+    "gold_files": [
+      "django/core/management/commands/shell.py"
+    ],
+    "gold_symbol_ids": [
+      3685
+    ],
+    "gold_symbol_names": [
+      "Command.handle"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13710": {
+    "instance_id": "django__django-13710",
+    "repo": "django/django",
+    "gold_files": [
+      "django/contrib/admin/options.py"
+    ],
+    "gold_symbol_ids": [
+      347
+    ],
+    "gold_symbol_names": [
+      "InlineModelAdmin.get_formset"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13757": {
+    "instance_id": "django__django-13757",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/fields/json.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "django__django-13768": {
+    "instance_id": "django__django-13768",
+    "repo": "django/django",
+    "gold_files": [
+      "django/dispatch/dispatcher.py"
+    ],
+    "gold_symbol_ids": [
+      6871,
+      6878
+    ],
+    "gold_symbol_names": [
+      "Signal.send_robust",
+      "_make_id"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13925": {
+    "instance_id": "django__django-13925",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/base.py"
+    ],
+    "gold_symbol_ids": [
+      5312
+    ],
+    "gold_symbol_names": [
+      "Model._check_managers"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13933": {
+    "instance_id": "django__django-13933",
+    "repo": "django/django",
+    "gold_files": [
+      "django/forms/models.py"
+    ],
+    "gold_symbol_ids": [
+      7181
+    ],
+    "gold_symbol_names": [
+      "ModelMultipleChoiceField.clean"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-13964": {
+    "instance_id": "django__django-13964",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/base.py"
+    ],
+    "gold_symbol_ids": [
+      5298
+    ],
+    "gold_symbol_names": [
+      "Model._get_next_or_previous_in_order"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-14016": {
+    "instance_id": "django__django-14016",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/query_utils.py"
+    ],
+    "gold_symbol_ids": [
+      6564
+    ],
+    "gold_symbol_names": [
+      "Q"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-14017": {
+    "instance_id": "django__django-14017",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/query_utils.py"
+    ],
+    "gold_symbol_ids": [
+      6562
+    ],
+    "gold_symbol_names": [
+      "QueryWrapper.__init__"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-14155": {
+    "instance_id": "django__django-14155",
+    "repo": "django/django",
+    "gold_files": [
+      "django/urls/resolvers.py"
+    ],
+    "gold_symbol_ids": [
+      8534
+    ],
+    "gold_symbol_names": [
+      "ResolverMatch.__repr__"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-14238": {
+    "instance_id": "django__django-14238",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/fields/__init__.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "django__django-14382": {
+    "instance_id": "django__django-14382",
+    "repo": "django/django",
+    "gold_files": [
+      "django/core/management/templates.py"
+    ],
+    "gold_symbol_ids": [
+      3723
+    ],
+    "gold_symbol_names": [
+      "TemplateCommand.handle"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-14411": {
+    "instance_id": "django__django-14411",
+    "repo": "django/django",
+    "gold_files": [
+      "django/contrib/auth/forms.py"
+    ],
+    "gold_symbol_ids": [
+      688
+    ],
+    "gold_symbol_names": [
+      "ReadOnlyPasswordHashField.bound_data"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-14534": {
+    "instance_id": "django__django-14534",
+    "repo": "django/django",
+    "gold_files": [
+      "django/forms/boundfield.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "django__django-14580": {
+    "instance_id": "django__django-14580",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/migrations/serializer.py"
+    ],
+    "gold_symbol_ids": [
+      5169
+    ],
+    "gold_symbol_names": [
+      "Serializer"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-14608": {
+    "instance_id": "django__django-14608",
+    "repo": "django/django",
+    "gold_files": [
+      "django/forms/formsets.py"
+    ],
+    "gold_symbol_ids": [
+      7093,
+      7098
+    ],
+    "gold_symbol_names": [
+      "BaseFormSet.full_clean",
+      "BaseFormSet.is_multipart"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-14667": {
+    "instance_id": "django__django-14667",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/sql/query.py"
+    ],
+    "gold_symbol_ids": [
+      6762
+    ],
+    "gold_symbol_names": [
+      "Query.trim_start"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-14672": {
+    "instance_id": "django__django-14672",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/fields/reverse_related.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "django__django-14730": {
+    "instance_id": "django__django-14730",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/fields/related.py"
+    ],
+    "gold_symbol_ids": [
+      5973
+    ],
+    "gold_symbol_names": [
+      "ManyToManyField._check_relationship_model"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-14752": {
+    "instance_id": "django__django-14752",
+    "repo": "django/django",
+    "gold_files": [
+      "django/contrib/admin/views/autocomplete.py"
+    ],
+    "gold_symbol_ids": [
+      483
+    ],
+    "gold_symbol_names": [
+      "AutocompleteJsonView.get"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-14787": {
+    "instance_id": "django__django-14787",
+    "repo": "django/django",
+    "gold_files": [
+      "django/utils/decorators.py"
+    ],
+    "gold_symbol_ids": [
+      8821
+    ],
+    "gold_symbol_names": [
+      "_wrapper"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-14855": {
+    "instance_id": "django__django-14855",
+    "repo": "django/django",
+    "gold_files": [
+      "django/contrib/admin/helpers.py"
+    ],
+    "gold_symbol_ids": [
+      204
+    ],
+    "gold_symbol_names": [
+      "AdminReadonlyField.contents"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-14915": {
+    "instance_id": "django__django-14915",
+    "repo": "django/django",
+    "gold_files": [
+      "django/forms/models.py"
+    ],
+    "gold_symbol_ids": [
+      7167
+    ],
+    "gold_symbol_names": [
+      "ModelChoiceField.__init__"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-14997": {
+    "instance_id": "django__django-14997",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/backends/ddl_references.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "django__django-14999": {
+    "instance_id": "django__django-14999",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/migrations/operations/models.py"
+    ],
+    "gold_symbol_ids": [
+      4967
+    ],
+    "gold_symbol_names": [
+      "RenameModel.state_forwards"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-15061": {
+    "instance_id": "django__django-15061",
+    "repo": "django/django",
+    "gold_files": [
+      "django/forms/widgets.py"
+    ],
+    "gold_symbol_ids": [
+      7329
+    ],
+    "gold_symbol_names": [
+      "MultiWidget.decompress"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-15202": {
+    "instance_id": "django__django-15202",
+    "repo": "django/django",
+    "gold_files": [
+      "django/core/validators.py"
+    ],
+    "gold_symbol_ids": [
+      3933,
+      3934
+    ],
+    "gold_symbol_names": [
+      "URLValidator.__call__",
+      "URLValidator.__init__"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-15213": {
+    "instance_id": "django__django-15213",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/fields/__init__.py"
+    ],
+    "gold_symbol_ids": [
+      5677
+    ],
+    "gold_symbol_names": [
+      "BooleanField.get_internal_type"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-15252": {
+    "instance_id": "django__django-15252",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/migrations/executor.py"
+    ],
+    "gold_symbol_ids": [
+      4816
+    ],
+    "gold_symbol_names": [
+      "MigrationExecutor.migrate"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-15320": {
+    "instance_id": "django__django-15320",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/expressions.py"
+    ],
+    "gold_symbol_ids": [
+      5566
+    ],
+    "gold_symbol_names": [
+      "OrderBy.as_sql"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-15347": {
+    "instance_id": "django__django-15347",
+    "repo": "django/django",
+    "gold_files": [
+      "django/contrib/messages/storage/cookie.py"
+    ],
+    "gold_symbol_ids": [
+      2407
+    ],
+    "gold_symbol_names": [
+      "MessageEncoder.default"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-15388": {
+    "instance_id": "django__django-15388",
+    "repo": "django/django",
+    "gold_files": [
+      "django/template/autoreload.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "django__django-15400": {
+    "instance_id": "django__django-15400",
+    "repo": "django/django",
+    "gold_files": [
+      "django/utils/functional.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "django__django-15498": {
+    "instance_id": "django__django-15498",
+    "repo": "django/django",
+    "gold_files": [
+      "django/views/static.py"
+    ],
+    "gold_symbol_ids": [
+      9484
+    ],
+    "gold_symbol_names": [
+      "was_modified_since"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-15695": {
+    "instance_id": "django__django-15695",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/migrations/operations/models.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "django__django-15738": {
+    "instance_id": "django__django-15738",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/migrations/autodetector.py"
+    ],
+    "gold_symbol_ids": [
+      4785
+    ],
+    "gold_symbol_names": [
+      "MigrationAutodetector.create_altered_constraints"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-15781": {
+    "instance_id": "django__django-15781",
+    "repo": "django/django",
+    "gold_files": [
+      "django/core/management/base.py"
+    ],
+    "gold_symbol_ids": [
+      3555
+    ],
+    "gold_symbol_names": [
+      "BaseCommand.add_arguments"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-15789": {
+    "instance_id": "django__django-15789",
+    "repo": "django/django",
+    "gold_files": [
+      "django/utils/html.py"
+    ],
+    "gold_symbol_ids": [
+      8963
+    ],
+    "gold_symbol_names": [
+      "escapejs"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-15790": {
+    "instance_id": "django__django-15790",
+    "repo": "django/django",
+    "gold_files": [
+      "django/core/checks/templates.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "django__django-15814": {
+    "instance_id": "django__django-15814",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/sql/query.py"
+    ],
+    "gold_symbol_ids": [
+      6702
+    ],
+    "gold_symbol_names": [
+      "Query.promote_joins"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-15819": {
+    "instance_id": "django__django-15819",
+    "repo": "django/django",
+    "gold_files": [
+      "django/core/management/commands/inspectdb.py"
+    ],
+    "gold_symbol_ids": [
+      3610,
+      3612
+    ],
+    "gold_symbol_names": [
+      "Command.handle_inspection",
+      "Command.normalize_col_name"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-15851": {
+    "instance_id": "django__django-15851",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/backends/postgresql/client.py"
+    ],
+    "gold_symbol_ids": [
+      4553
+    ],
+    "gold_symbol_names": [
+      "DatabaseClient.runshell_db"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-15902": {
+    "instance_id": "django__django-15902",
+    "repo": "django/django",
+    "gold_files": [
+      "django/forms/formsets.py"
+    ],
+    "gold_symbol_ids": [
+      7066
+    ],
+    "gold_symbol_names": [
+      "ManagementForm.__init__"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-15996": {
+    "instance_id": "django__django-15996",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/migrations/serializer.py"
+    ],
+    "gold_symbol_ids": [
+      5118,
+      5142
+    ],
+    "gold_symbol_names": [
+      "BaseSerializer.__init__",
+      "FrozensetSerializer._format"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-16041": {
+    "instance_id": "django__django-16041",
+    "repo": "django/django",
+    "gold_files": [
+      "django/forms/formsets.py"
+    ],
+    "gold_symbol_ids": [
+      7087
+    ],
+    "gold_symbol_names": [
+      "BaseFormSet.get_default_prefix"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-16046": {
+    "instance_id": "django__django-16046",
+    "repo": "django/django",
+    "gold_files": [
+      "django/utils/numberformat.py"
+    ],
+    "gold_symbol_ids": [
+      9054
+    ],
+    "gold_symbol_names": [
+      "format"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-16139": {
+    "instance_id": "django__django-16139",
+    "repo": "django/django",
+    "gold_files": [
+      "django/contrib/auth/forms.py"
+    ],
+    "gold_symbol_ids": [
+      702
+    ],
+    "gold_symbol_names": [
+      "AuthenticationForm"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-16229": {
+    "instance_id": "django__django-16229",
+    "repo": "django/django",
+    "gold_files": [
+      "django/forms/boundfield.py"
+    ],
+    "gold_symbol_ids": [
+      6895
+    ],
+    "gold_symbol_names": [
+      "BoundField.as_textarea"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-16255": {
+    "instance_id": "django__django-16255",
+    "repo": "django/django",
+    "gold_files": [
+      "django/contrib/sitemaps/__init__.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "django__django-16379": {
+    "instance_id": "django__django-16379",
+    "repo": "django/django",
+    "gold_files": [
+      "django/core/cache/backends/filebased.py"
+    ],
+    "gold_symbol_ids": [
+      3144
+    ],
+    "gold_symbol_names": [
+      "FileBasedCache.has_key"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-16400": {
+    "instance_id": "django__django-16400",
+    "repo": "django/django",
+    "gold_files": [
+      "django/contrib/auth/management/__init__.py"
+    ],
+    "gold_symbol_ids": [
+      795
+    ],
+    "gold_symbol_names": [
+      "get_system_username"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-16408": {
+    "instance_id": "django__django-16408",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/sql/compiler.py"
+    ],
+    "gold_symbol_ids": [
+      6638
+    ],
+    "gold_symbol_names": [
+      "SQLInsertCompiler.as_sql"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-16527": {
+    "instance_id": "django__django-16527",
+    "repo": "django/django",
+    "gold_files": [
+      "django/contrib/admin/templatetags/admin_modify.py"
+    ],
+    "gold_symbol_ids": [
+      422
+    ],
+    "gold_symbol_names": [
+      "cell_count"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-16595": {
+    "instance_id": "django__django-16595",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/migrations/operations/fields.py"
+    ],
+    "gold_symbol_ids": [
+      4926
+    ],
+    "gold_symbol_names": [
+      "AlterField.database_backwards"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-16816": {
+    "instance_id": "django__django-16816",
+    "repo": "django/django",
+    "gold_files": [
+      "django/contrib/admin/checks.py"
+    ],
+    "gold_symbol_ids": [
+      117
+    ],
+    "gold_symbol_names": [
+      "ModelAdminChecks._check_date_hierarchy"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-16820": {
+    "instance_id": "django__django-16820",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/migrations/operations/models.py"
+    ],
+    "gold_symbol_ids": [
+      4967
+    ],
+    "gold_symbol_names": [
+      "RenameModel.state_forwards"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-16873": {
+    "instance_id": "django__django-16873",
+    "repo": "django/django",
+    "gold_files": [
+      "django/template/defaultfilters.py"
+    ],
+    "gold_symbol_ids": [
+      7776
+    ],
+    "gold_symbol_names": [
+      "unordered_list"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-16910": {
+    "instance_id": "django__django-16910",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/sql/query.py"
+    ],
+    "gold_symbol_ids": [
+      6703
+    ],
+    "gold_symbol_names": [
+      "Query.demote_joins"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-17051": {
+    "instance_id": "django__django-17051",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/query.py"
+    ],
+    "gold_symbol_ids": [
+      6556
+    ],
+    "gold_symbol_names": [
+      "RelatedPopulator.__init__"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "django__django-17087": {
+    "instance_id": "django__django-17087",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/migrations/serializer.py"
+    ],
+    "gold_symbol_ids": [
+      5146
+    ],
+    "gold_symbol_names": [
+      "FunctoolsPartialSerializer.serialize"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-18869": {
+    "instance_id": "matplotlib__matplotlib-18869",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/__init__.py"
+    ],
+    "gold_symbol_ids": [
+      758
+    ],
+    "gold_symbol_names": [
+      "__getattr__"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-22711": {
+    "instance_id": "matplotlib__matplotlib-22711",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/widgets.py"
+    ],
+    "gold_symbol_ids": [
+      8982,
+      8983,
+      8987
+    ],
+    "gold_symbol_names": [
+      "RangeSlider._update",
+      "RangeSlider._update_val_from_pos",
+      "RangeSlider.set_val"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-22835": {
+    "instance_id": "matplotlib__matplotlib-22835",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/artist.py"
+    ],
+    "gold_symbol_ids": [
+      1368
+    ],
+    "gold_symbol_names": [
+      "ArtistInspector.__init__"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-23299": {
+    "instance_id": "matplotlib__matplotlib-23299",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/__init__.py"
+    ],
+    "gold_symbol_ids": [
+      797
+    ],
+    "gold_symbol_names": [
+      "use"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-23314": {
+    "instance_id": "matplotlib__matplotlib-23314",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/mpl_toolkits/mplot3d/axes3d.py"
+    ],
+    "gold_symbol_ids": [
+      9727
+    ],
+    "gold_symbol_names": [
+      "Axes3D.draw"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-23476": {
+    "instance_id": "matplotlib__matplotlib-23476",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/figure.py"
+    ],
+    "gold_symbol_ids": [
+      4129
+    ],
+    "gold_symbol_names": [
+      "Figure.handler"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-23562": {
+    "instance_id": "matplotlib__matplotlib-23562",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/mpl_toolkits/mplot3d/art3d.py"
+    ],
+    "gold_symbol_ids": [
+      9706
+    ],
+    "gold_symbol_names": [
+      "Poly3DCollection.set_alpha"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-23563": {
+    "instance_id": "matplotlib__matplotlib-23563",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/mpl_toolkits/mplot3d/art3d.py"
+    ],
+    "gold_symbol_ids": [
+      9644
+    ],
+    "gold_symbol_names": [
+      "Line3D.set_3d_properties"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-23913": {
+    "instance_id": "matplotlib__matplotlib-23913",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/legend.py"
+    ],
+    "gold_symbol_ids": [
+      4366,
+      4367
+    ],
+    "gold_symbol_names": [
+      "Legend.__init__",
+      "Legend.__str__"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-23964": {
+    "instance_id": "matplotlib__matplotlib-23964",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/backends/backend_ps.py"
+    ],
+    "gold_symbol_ids": [
+      2791
+    ],
+    "gold_symbol_names": [
+      "RendererPS.draw_mathtext"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-23987": {
+    "instance_id": "matplotlib__matplotlib-23987",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/figure.py"
+    ],
+    "gold_symbol_ids": [
+      4107
+    ],
+    "gold_symbol_names": [
+      "Figure.set_constrained_layout_pads"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-24149": {
+    "instance_id": "matplotlib__matplotlib-24149",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/axes/_axes.py"
+    ],
+    "gold_symbol_ids": [
+      1413
+    ],
+    "gold_symbol_names": [
+      "Axes._convert_dx"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-24265": {
+    "instance_id": "matplotlib__matplotlib-24265",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/style/core.py"
+    ],
+    "gold_symbol_ids": [
+      5828,
+      5831
+    ],
+    "gold_symbol_names": [
+      "_remove_blacklisted_style_params",
+      "context"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-24334": {
+    "instance_id": "matplotlib__matplotlib-24334",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/axis.py"
+    ],
+    "gold_symbol_ids": [
+      1842
+    ],
+    "gold_symbol_names": [
+      "XAxis.contains"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-24970": {
+    "instance_id": "matplotlib__matplotlib-24970",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/colors.py"
+    ],
+    "gold_symbol_ids": [
+      3691
+    ],
+    "gold_symbol_names": [
+      "Colormap.set_over"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-25079": {
+    "instance_id": "matplotlib__matplotlib-25079",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/colors.py"
+    ],
+    "gold_symbol_ids": [
+      3731
+    ],
+    "gold_symbol_names": [
+      "CenteredNorm._set_vmin_vmax"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-25311": {
+    "instance_id": "matplotlib__matplotlib-25311",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/offsetbox.py"
+    ],
+    "gold_symbol_ids": [
+      4780
+    ],
+    "gold_symbol_names": [
+      "AnnotationBbox._update_position_xybox"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-25332": {
+    "instance_id": "matplotlib__matplotlib-25332",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/cbook.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "matplotlib__matplotlib-25433": {
+    "instance_id": "matplotlib__matplotlib-25433",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/figure.py"
+    ],
+    "gold_symbol_ids": [
+      4061
+    ],
+    "gold_symbol_names": [
+      "FigureBase.delaxes"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-25442": {
+    "instance_id": "matplotlib__matplotlib-25442",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/offsetbox.py"
+    ],
+    "gold_symbol_ids": [
+      4780,
+      4781,
+      4782
+    ],
+    "gold_symbol_names": [
+      "AnnotationBbox._update_position_xybox",
+      "AnnotationBbox.draw",
+      "DraggableBase"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-25498": {
+    "instance_id": "matplotlib__matplotlib-25498",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/colorbar.py"
+    ],
+    "gold_symbol_ids": [
+      3625,
+      3649
+    ],
+    "gold_symbol_names": [
+      "Colorbar",
+      "Colorbar._reset_locator_formatter_scale"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-26011": {
+    "instance_id": "matplotlib__matplotlib-26011",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/axis.py"
+    ],
+    "gold_symbol_ids": [
+      1792
+    ],
+    "gold_symbol_names": [
+      "Axis.get_majorticklines"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "matplotlib__matplotlib-26020": {
+    "instance_id": "matplotlib__matplotlib-26020",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/mpl_toolkits/axes_grid1/axes_grid.py"
+    ],
+    "gold_symbol_ids": [
+      9196
+    ],
+    "gold_symbol_names": [
+      "_tick_only"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "mwaskom__seaborn-2848": {
+    "instance_id": "mwaskom__seaborn-2848",
+    "repo": "mwaskom/seaborn",
+    "gold_files": [
+      "seaborn/_oldcore.py"
+    ],
+    "gold_symbol_ids": [
+      317
+    ],
+    "gold_symbol_names": [
+      "HueMapping._lookup_single"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "mwaskom__seaborn-3010": {
+    "instance_id": "mwaskom__seaborn-3010",
+    "repo": "mwaskom/seaborn",
+    "gold_files": [
+      "seaborn/_stats/regression.py"
+    ],
+    "gold_symbol_ids": [
+      403
+    ],
+    "gold_symbol_names": [
+      "PolyFit.__call__"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "mwaskom__seaborn-3190": {
+    "instance_id": "mwaskom__seaborn-3190",
+    "repo": "mwaskom/seaborn",
+    "gold_files": [
+      "seaborn/_core/scales.py"
+    ],
+    "gold_symbol_ids": [
+      208
+    ],
+    "gold_symbol_names": [
+      "Continuous.tick"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "mwaskom__seaborn-3407": {
+    "instance_id": "mwaskom__seaborn-3407",
+    "repo": "mwaskom/seaborn",
+    "gold_files": [
+      "seaborn/axisgrid.py"
+    ],
+    "gold_symbol_ids": [
+      457
+    ],
+    "gold_symbol_names": [
+      "PairGrid._map_diag_iter_hue"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pallets__flask-4045": {
+    "instance_id": "pallets__flask-4045",
+    "repo": "pallets/flask",
+    "gold_files": [
+      "src/flask/blueprints.py"
+    ],
+    "gold_symbol_ids": [
+      128,
+      138
+    ],
+    "gold_symbol_names": [
+      "Blueprint.__init__",
+      "Blueprint.app_template_filter"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pallets__flask-4992": {
+    "instance_id": "pallets__flask-4992",
+    "repo": "pallets/flask",
+    "gold_files": [
+      "src/flask/config.py"
+    ],
+    "gold_symbol_ids": [
+      213,
+      214
+    ],
+    "gold_symbol_names": [
+      "Config.__repr__",
+      "Config.get_namespace"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pallets__flask-5063": {
+    "instance_id": "pallets__flask-5063",
+    "repo": "pallets/flask",
+    "gold_files": [
+      "src/flask/cli.py"
+    ],
+    "gold_symbol_ids": [
+      201
+    ],
+    "gold_symbol_names": [
+      "main"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "psf__requests-1963": {
+    "instance_id": "psf__requests-1963",
+    "repo": "psf/requests",
+    "gold_files": [
+      "requests/sessions.py"
+    ],
+    "gold_symbol_ids": [
+      198
+    ],
+    "gold_symbol_names": [
+      "SessionRedirectMixin.resolve_redirects"
+    ],
+    "is_hub_gold": true,
+    "has_function_target": true
+  },
+  "psf__requests-2148": {
+    "instance_id": "psf__requests-2148",
+    "repo": "psf/requests",
+    "gold_files": [
+      "requests/models.py"
+    ],
+    "gold_symbol_ids": [
+      169
+    ],
+    "gold_symbol_names": [
+      "Response"
+    ],
+    "is_hub_gold": true,
+    "has_function_target": true
+  },
+  "psf__requests-2317": {
+    "instance_id": "psf__requests-2317",
+    "repo": "psf/requests",
+    "gold_files": [
+      "requests/sessions.py"
+    ],
+    "gold_symbol_ids": [
+      203
+    ],
+    "gold_symbol_names": [
+      "Session.__init__"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "psf__requests-2674": {
+    "instance_id": "psf__requests-2674",
+    "repo": "psf/requests",
+    "gold_files": [
+      "requests/adapters.py"
+    ],
+    "gold_symbol_ids": [
+      19
+    ],
+    "gold_symbol_names": [
+      "HTTPAdapter.get_connection_with_tls_context"
+    ],
+    "is_hub_gold": true,
+    "has_function_target": true
+  },
+  "psf__requests-3362": {
+    "instance_id": "psf__requests-3362",
+    "repo": "psf/requests",
+    "gold_files": [
+      "requests/utils.py"
+    ],
+    "gold_symbol_ids": [
+      250
+    ],
+    "gold_symbol_names": [
+      "to_key_val_list"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "psf__requests-863": {
+    "instance_id": "psf__requests-863",
+    "repo": "psf/requests",
+    "gold_files": [
+      "requests/models.py"
+    ],
+    "gold_symbol_ids": [
+      162
+    ],
+    "gold_symbol_names": [
+      "PreparedRequest.prepare_url"
+    ],
+    "is_hub_gold": true,
+    "has_function_target": true
+  },
+  "pydata__xarray-3364": {
+    "instance_id": "pydata__xarray-3364",
+    "repo": "pydata/xarray",
+    "gold_files": [
+      "xarray/core/concat.py"
+    ],
+    "gold_symbol_ids": [
+      942
+    ],
+    "gold_symbol_names": [
+      "_dataset_concat"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pydata__xarray-4094": {
+    "instance_id": "pydata__xarray-4094",
+    "repo": "pydata/xarray",
+    "gold_files": [
+      "xarray/core/dataarray.py"
+    ],
+    "gold_symbol_ids": [
+      1086
+    ],
+    "gold_symbol_names": [
+      "DataArray.fillna"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pydata__xarray-4248": {
+    "instance_id": "pydata__xarray-4248",
+    "repo": "pydata/xarray",
+    "gold_files": [
+      "xarray/core/formatting.py"
+    ],
+    "gold_symbol_ids": [
+      1370
+    ],
+    "gold_symbol_names": [
+      "summarize_variable"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pydata__xarray-4493": {
+    "instance_id": "pydata__xarray-4493",
+    "repo": "pydata/xarray",
+    "gold_files": [
+      "xarray/core/variable.py"
+    ],
+    "gold_symbol_ids": [
+      1827
+    ],
+    "gold_symbol_names": [
+      "as_variable"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pydata__xarray-5131": {
+    "instance_id": "pydata__xarray-5131",
+    "repo": "pydata/xarray",
+    "gold_files": [
+      "xarray/core/groupby.py"
+    ],
+    "gold_symbol_ids": [
+      1417
+    ],
+    "gold_symbol_names": [
+      "GroupBy._iter_grouped"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pylint-dev__pylint-5859": {
+    "instance_id": "pylint-dev__pylint-5859",
+    "repo": "pylint-dev/pylint",
+    "gold_files": [
+      "pylint/checkers/misc.py"
+    ],
+    "gold_symbol_ids": [
+      424
+    ],
+    "gold_symbol_names": [
+      "EncodingChecker.open"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pylint-dev__pylint-6506": {
+    "instance_id": "pylint-dev__pylint-6506",
+    "repo": "pylint-dev/pylint",
+    "gold_files": [
+      "pylint/config/config_initialization.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "pylint-dev__pylint-7080": {
+    "instance_id": "pylint-dev__pylint-7080",
+    "repo": "pylint-dev/pylint",
+    "gold_files": [
+      "pylint/lint/expand_modules.py"
+    ],
+    "gold_symbol_ids": [
+      1314
+    ],
+    "gold_symbol_names": [
+      "expand_modules"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pylint-dev__pylint-7114": {
+    "instance_id": "pylint-dev__pylint-7114",
+    "repo": "pylint-dev/pylint",
+    "gold_files": [
+      "pylint/lint/expand_modules.py"
+    ],
+    "gold_symbol_ids": [
+      1314
+    ],
+    "gold_symbol_names": [
+      "expand_modules"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pylint-dev__pylint-7228": {
+    "instance_id": "pylint-dev__pylint-7228",
+    "repo": "pylint-dev/pylint",
+    "gold_files": [
+      "pylint/config/argument.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "pylint-dev__pylint-7993": {
+    "instance_id": "pylint-dev__pylint-7993",
+    "repo": "pylint-dev/pylint",
+    "gold_files": [
+      "pylint/reporters/text.py"
+    ],
+    "gold_symbol_ids": [
+      1649
+    ],
+    "gold_symbol_names": [
+      "TextReporter"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pytest-dev__pytest-11143": {
+    "instance_id": "pytest-dev__pytest-11143",
+    "repo": "pytest-dev/pytest",
+    "gold_files": [
+      "src/_pytest/assertion/rewrite.py"
+    ],
+    "gold_symbol_ids": [
+      535
+    ],
+    "gold_symbol_names": [
+      "AssertionRewriter.run"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pytest-dev__pytest-11148": {
+    "instance_id": "pytest-dev__pytest-11148",
+    "repo": "pytest-dev/pytest",
+    "gold_files": [
+      "src/_pytest/pathlib.py"
+    ],
+    "gold_symbol_ids": [
+      1603
+    ],
+    "gold_symbol_names": [
+      "import_path"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pytest-dev__pytest-5103": {
+    "instance_id": "pytest-dev__pytest-5103",
+    "repo": "pytest-dev/pytest",
+    "gold_files": [
+      "src/_pytest/assertion/rewrite.py"
+    ],
+    "gold_symbol_ids": [
+      548,
+      549
+    ],
+    "gold_symbol_names": [
+      "AssertionRewriter.visit_BoolOp",
+      "AssertionRewriter.visit_Name"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pytest-dev__pytest-5221": {
+    "instance_id": "pytest-dev__pytest-5221",
+    "repo": "pytest-dev/pytest",
+    "gold_files": [
+      "src/_pytest/python.py"
+    ],
+    "gold_symbol_ids": [
+      1823
+    ],
+    "gold_symbol_names": [
+      "Metafunc.parametrize"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pytest-dev__pytest-5227": {
+    "instance_id": "pytest-dev__pytest-5227",
+    "repo": "pytest-dev/pytest",
+    "gold_files": [
+      "src/_pytest/logging.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "pytest-dev__pytest-5413": {
+    "instance_id": "pytest-dev__pytest-5413",
+    "repo": "pytest-dev/pytest",
+    "gold_files": [
+      "src/_pytest/_code/code.py"
+    ],
+    "gold_symbol_ids": [
+      251
+    ],
+    "gold_symbol_names": [
+      "ExceptionInfo.for_later"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pytest-dev__pytest-5495": {
+    "instance_id": "pytest-dev__pytest-5495",
+    "repo": "pytest-dev/pytest",
+    "gold_files": [
+      "src/_pytest/assertion/util.py"
+    ],
+    "gold_symbol_ids": [
+      576
+    ],
+    "gold_symbol_names": [
+      "_diff_text"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pytest-dev__pytest-5692": {
+    "instance_id": "pytest-dev__pytest-5692",
+    "repo": "pytest-dev/pytest",
+    "gold_files": [
+      "src/_pytest/junitxml.py"
+    ],
+    "gold_symbol_ids": [
+      1209
+    ],
+    "gold_symbol_names": [
+      "LogXML.pytest_sessionfinish"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pytest-dev__pytest-6116": {
+    "instance_id": "pytest-dev__pytest-6116",
+    "repo": "pytest-dev/pytest",
+    "gold_files": [
+      "src/_pytest/main.py"
+    ],
+    "gold_symbol_ids": [
+      1351
+    ],
+    "gold_symbol_names": [
+      "pytest_addoption"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pytest-dev__pytest-7168": {
+    "instance_id": "pytest-dev__pytest-7168",
+    "repo": "pytest-dev/pytest",
+    "gold_files": [
+      "src/_pytest/_io/saferepr.py"
+    ],
+    "gold_symbol_ids": [
+      328
+    ],
+    "gold_symbol_names": [
+      "_format_repr_exception"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pytest-dev__pytest-7220": {
+    "instance_id": "pytest-dev__pytest-7220",
+    "repo": "pytest-dev/pytest",
+    "gold_files": [
+      "src/_pytest/nodes.py"
+    ],
+    "gold_symbol_ids": [
+      1516
+    ],
+    "gold_symbol_names": [
+      "Node.iter_markers"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pytest-dev__pytest-7373": {
+    "instance_id": "pytest-dev__pytest-7373",
+    "repo": "pytest-dev/pytest",
+    "gold_files": [
+      "src/_pytest/mark/evaluate.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "pytest-dev__pytest-7432": {
+    "instance_id": "pytest-dev__pytest-7432",
+    "repo": "pytest-dev/pytest",
+    "gold_files": [
+      "src/_pytest/skipping.py"
+    ],
+    "gold_symbol_ids": [
+      2018
+    ],
+    "gold_symbol_names": [
+      "pytest_report_teststatus"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pytest-dev__pytest-7490": {
+    "instance_id": "pytest-dev__pytest-7490",
+    "repo": "pytest-dev/pytest",
+    "gold_files": [
+      "src/_pytest/skipping.py"
+    ],
+    "gold_symbol_ids": [
+      2015,
+      2016
+    ],
+    "gold_symbol_names": [
+      "pytest_runtest_call",
+      "pytest_runtest_setup"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pytest-dev__pytest-8365": {
+    "instance_id": "pytest-dev__pytest-8365",
+    "repo": "pytest-dev/pytest",
+    "gold_files": [
+      "src/_pytest/tmpdir.py"
+    ],
+    "gold_symbol_ids": [
+      2145
+    ],
+    "gold_symbol_names": [
+      "TempPathFactory.mktemp"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pytest-dev__pytest-8906": {
+    "instance_id": "pytest-dev__pytest-8906",
+    "repo": "pytest-dev/pytest",
+    "gold_files": [
+      "src/_pytest/python.py"
+    ],
+    "gold_symbol_ids": [
+      1786
+    ],
+    "gold_symbol_names": [
+      "Module.xunit_setup_function_fixture"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "pytest-dev__pytest-9359": {
+    "instance_id": "pytest-dev__pytest-9359",
+    "repo": "pytest-dev/pytest",
+    "gold_files": [
+      "src/_pytest/_code/source.py"
+    ],
+    "gold_symbol_ids": [
+      325
+    ],
+    "gold_symbol_names": [
+      "get_statement_startend2"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "scikit-learn__scikit-learn-10297": {
+    "instance_id": "scikit-learn__scikit-learn-10297",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/linear_model/ridge.py"
+    ],
+    "gold_symbol_ids": [
+      3378,
+      3379,
+      3380
+    ],
+    "gold_symbol_names": [
+      "RidgeCV",
+      "RidgeClassifierCV",
+      "RidgeClassifierCV.__init__"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "scikit-learn__scikit-learn-10508": {
+    "instance_id": "scikit-learn__scikit-learn-10508",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/preprocessing/label.py"
+    ],
+    "gold_symbol_ids": [
+      5513,
+      5514
+    ],
+    "gold_symbol_names": [
+      "LabelEncoder.inverse_transform",
+      "LabelEncoder.transform"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "scikit-learn__scikit-learn-10949": {
+    "instance_id": "scikit-learn__scikit-learn-10949",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/utils/validation.py"
+    ],
+    "gold_symbol_ids": [
+      7056,
+      7057
+    ],
+    "gold_symbol_names": [
+      "check_X_y",
+      "check_array"
+    ],
+    "is_hub_gold": true,
+    "has_function_target": true
+  },
+  "scikit-learn__scikit-learn-11040": {
+    "instance_id": "scikit-learn__scikit-learn-11040",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/neighbors/base.py"
+    ],
+    "gold_symbol_ids": [
+      5046,
+      5049
+    ],
+    "gold_symbol_names": [
+      "KNeighborsMixin.kneighbors",
+      "NeighborsBase._fit"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "scikit-learn__scikit-learn-11281": {
+    "instance_id": "scikit-learn__scikit-learn-11281",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/mixture/base.py"
+    ],
+    "gold_symbol_ids": [
+      4326,
+      4327
+    ],
+    "gold_symbol_names": [
+      "BaseMixture._e_step",
+      "BaseMixture.fit"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "scikit-learn__scikit-learn-12471": {
+    "instance_id": "scikit-learn__scikit-learn-12471",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/preprocessing/_encoders.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "scikit-learn__scikit-learn-13142": {
+    "instance_id": "scikit-learn__scikit-learn-13142",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/mixture/base.py"
+    ],
+    "gold_symbol_ids": [
+      4328,
+      4329
+    ],
+    "gold_symbol_names": [
+      "BaseMixture._check_is_fitted",
+      "BaseMixture._m_step"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "scikit-learn__scikit-learn-13241": {
+    "instance_id": "scikit-learn__scikit-learn-13241",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/decomposition/kernel_pca.py"
+    ],
+    "gold_symbol_ids": [
+      1412
+    ],
+    "gold_symbol_names": [
+      "KernelPCA._fit_inverse_transform"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "scikit-learn__scikit-learn-13439": {
+    "instance_id": "scikit-learn__scikit-learn-13439",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/pipeline.py"
+    ],
+    "gold_symbol_ids": [
+      5371
+    ],
+    "gold_symbol_names": [
+      "Pipeline._fit"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "scikit-learn__scikit-learn-13496": {
+    "instance_id": "scikit-learn__scikit-learn-13496",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/ensemble/iforest.py"
+    ],
+    "gold_symbol_ids": [
+      1867,
+      1870
+    ],
+    "gold_symbol_names": [
+      "IsolationForest",
+      "IsolationForest.fit"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "scikit-learn__scikit-learn-13497": {
+    "instance_id": "scikit-learn__scikit-learn-13497",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/feature_selection/mutual_info_.py"
+    ],
+    "gold_symbol_ids": [
+      2752
+    ],
+    "gold_symbol_names": [
+      "_estimate_mi"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "scikit-learn__scikit-learn-13584": {
+    "instance_id": "scikit-learn__scikit-learn-13584",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/utils/_pprint.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "scikit-learn__scikit-learn-13779": {
+    "instance_id": "scikit-learn__scikit-learn-13779",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/ensemble/voting.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "scikit-learn__scikit-learn-14087": {
+    "instance_id": "scikit-learn__scikit-learn-14087",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/linear_model/logistic.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "scikit-learn__scikit-learn-14092": {
+    "instance_id": "scikit-learn__scikit-learn-14092",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/neighbors/nca.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "scikit-learn__scikit-learn-14894": {
+    "instance_id": "scikit-learn__scikit-learn-14894",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/svm/base.py"
+    ],
+    "gold_symbol_ids": [
+      5740
+    ],
+    "gold_symbol_names": [
+      "BaseLibSVM.predict"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "scikit-learn__scikit-learn-14983": {
+    "instance_id": "scikit-learn__scikit-learn-14983",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/model_selection/_split.py"
+    ],
+    "gold_symbol_ids": [
+      4649
+    ],
+    "gold_symbol_names": [
+      "BaseShuffleSplit.__init__"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "scikit-learn__scikit-learn-15512": {
+    "instance_id": "scikit-learn__scikit-learn-15512",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/cluster/_affinity_propagation.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "scikit-learn__scikit-learn-15535": {
+    "instance_id": "scikit-learn__scikit-learn-15535",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/metrics/cluster/_supervised.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "scikit-learn__scikit-learn-25500": {
+    "instance_id": "scikit-learn__scikit-learn-25500",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/isotonic.py"
+    ],
+    "gold_symbol_ids": [
+      3162,
+      3163,
+      3164
+    ],
+    "gold_symbol_names": [
+      "IsotonicRegression.__getstate__",
+      "IsotonicRegression.predict",
+      "IsotonicRegression.transform"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "scikit-learn__scikit-learn-25570": {
+    "instance_id": "scikit-learn__scikit-learn-25570",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/compose/_column_transformer.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "scikit-learn__scikit-learn-25638": {
+    "instance_id": "scikit-learn__scikit-learn-25638",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/utils/multiclass.py"
+    ],
+    "gold_symbol_ids": [
+      6705,
+      6707
+    ],
+    "gold_symbol_names": [
+      "_check_partial_fit_first_call",
+      "check_classification_targets"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "scikit-learn__scikit-learn-25747": {
+    "instance_id": "scikit-learn__scikit-learn-25747",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/utils/_set_output.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sphinx-doc__sphinx-10325": {
+    "instance_id": "sphinx-doc__sphinx-10325",
+    "repo": "sphinx-doc/sphinx",
+    "gold_files": [
+      "sphinx/ext/autodoc/__init__.py"
+    ],
+    "gold_symbol_ids": [
+      2285,
+      2325
+    ],
+    "gold_symbol_names": [
+      "Documenter.is_filtered_inherited_member",
+      "exclude_members_option"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sphinx-doc__sphinx-10451": {
+    "instance_id": "sphinx-doc__sphinx-10451",
+    "repo": "sphinx-doc/sphinx",
+    "gold_files": [
+      "sphinx/ext/autodoc/typehints.py"
+    ],
+    "gold_symbol_ids": [
+      2547,
+      2549
+    ],
+    "gold_symbol_names": [
+      "modify_field_list",
+      "setup"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sphinx-doc__sphinx-11445": {
+    "instance_id": "sphinx-doc__sphinx-11445",
+    "repo": "sphinx-doc/sphinx",
+    "gold_files": [
+      "sphinx/util/rst.py"
+    ],
+    "gold_symbol_ids": [
+      3988
+    ],
+    "gold_symbol_names": [
+      "prepend_prolog"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sphinx-doc__sphinx-7686": {
+    "instance_id": "sphinx-doc__sphinx-7686",
+    "repo": "sphinx-doc/sphinx",
+    "gold_files": [
+      "sphinx/ext/autosummary/generate.py"
+    ],
+    "gold_symbol_ids": [
+      2604,
+      2609
+    ],
+    "gold_symbol_names": [
+      "ModuleScanner.get_object_type",
+      "skip_member"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sphinx-doc__sphinx-7738": {
+    "instance_id": "sphinx-doc__sphinx-7738",
+    "repo": "sphinx-doc/sphinx",
+    "gold_files": [
+      "sphinx/ext/napoleon/docstring.py"
+    ],
+    "gold_symbol_ids": [
+      2827
+    ],
+    "gold_symbol_names": [
+      "GoogleDocstring._consume_usage_section"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sphinx-doc__sphinx-7975": {
+    "instance_id": "sphinx-doc__sphinx-7975",
+    "repo": "sphinx-doc/sphinx",
+    "gold_files": [
+      "sphinx/environment/adapters/indexentries.py"
+    ],
+    "gold_symbol_ids": [
+      2170
+    ],
+    "gold_symbol_names": [
+      "IndexEntries.keyfunc"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sphinx-doc__sphinx-8273": {
+    "instance_id": "sphinx-doc__sphinx-8273",
+    "repo": "sphinx-doc/sphinx",
+    "gold_files": [
+      "sphinx/builders/manpage.py"
+    ],
+    "gold_symbol_ids": [
+      564,
+      568,
+      571
+    ],
+    "gold_symbol_names": [
+      "ManualPageBuilder",
+      "ManualPageBuilder.write",
+      "setup"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sphinx-doc__sphinx-8282": {
+    "instance_id": "sphinx-doc__sphinx-8282",
+    "repo": "sphinx-doc/sphinx",
+    "gold_files": [
+      "sphinx/ext/autodoc/__init__.py"
+    ],
+    "gold_symbol_ids": [
+      2347,
+      2365,
+      2390
+    ],
+    "gold_symbol_names": [
+      "ClassDocumenter.import_object",
+      "DocstringSignatureMixin.get_doc",
+      "NewTypeMixin.should_suppress_directive_header"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sphinx-doc__sphinx-8435": {
+    "instance_id": "sphinx-doc__sphinx-8435",
+    "repo": "sphinx-doc/sphinx",
+    "gold_files": [
+      "sphinx/ext/autodoc/__init__.py"
+    ],
+    "gold_symbol_ids": [
+      2374,
+      2410
+    ],
+    "gold_symbol_names": [
+      "ClassDocumenter.get_object_members",
+      "DataDocumenter.add_content"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sphinx-doc__sphinx-8474": {
+    "instance_id": "sphinx-doc__sphinx-8474",
+    "repo": "sphinx-doc/sphinx",
+    "gold_files": [
+      "sphinx/domains/std.py"
+    ],
+    "gold_symbol_ids": [
+      2113
+    ],
+    "gold_symbol_names": [
+      "StandardDomain._resolve_numref_xref"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sphinx-doc__sphinx-8506": {
+    "instance_id": "sphinx-doc__sphinx-8506",
+    "repo": "sphinx-doc/sphinx",
+    "gold_files": [
+      "sphinx/domains/std.py"
+    ],
+    "gold_symbol_ids": [
+      2069,
+      2079
+    ],
+    "gold_symbol_names": [
+      "Cmdoption.handle_signature",
+      "GenericObject.handle_signature"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sphinx-doc__sphinx-8595": {
+    "instance_id": "sphinx-doc__sphinx-8595",
+    "repo": "sphinx-doc/sphinx",
+    "gold_files": [
+      "sphinx/ext/autodoc/__init__.py"
+    ],
+    "gold_symbol_ids": [
+      2337
+    ],
+    "gold_symbol_names": [
+      "ModuleDocumenter.get_module_members"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sphinx-doc__sphinx-8627": {
+    "instance_id": "sphinx-doc__sphinx-8627",
+    "repo": "sphinx-doc/sphinx",
+    "gold_files": [
+      "sphinx/util/typing.py"
+    ],
+    "gold_symbol_ids": [
+      4052,
+      4056
+    ],
+    "gold_symbol_names": [
+      "_restify_py36",
+      "get_type_hints"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sphinx-doc__sphinx-8713": {
+    "instance_id": "sphinx-doc__sphinx-8713",
+    "repo": "sphinx-doc/sphinx",
+    "gold_files": [
+      "sphinx/ext/napoleon/docstring.py"
+    ],
+    "gold_symbol_ids": [
+      2859
+    ],
+    "gold_symbol_names": [
+      "GoogleDocstring._parse_keyword_arguments_section"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sphinx-doc__sphinx-8721": {
+    "instance_id": "sphinx-doc__sphinx-8721",
+    "repo": "sphinx-doc/sphinx",
+    "gold_files": [
+      "sphinx/ext/viewcode.py"
+    ],
+    "gold_symbol_ids": [
+      2940
+    ],
+    "gold_symbol_names": [
+      "ViewcodeAnchorTransform.remove_viewcode_anchors"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sphinx-doc__sphinx-8801": {
+    "instance_id": "sphinx-doc__sphinx-8801",
+    "repo": "sphinx-doc/sphinx",
+    "gold_files": [
+      "sphinx/ext/autodoc/importer.py"
+    ],
+    "gold_symbol_ids": [
+      2503
+    ],
+    "gold_symbol_names": [
+      "get_class_members"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-11400": {
+    "instance_id": "sympy__sympy-11400",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/printing/ccode.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-11870": {
+    "instance_id": "sympy__sympy-11870",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/functions/elementary/trigonometric.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-11897": {
+    "instance_id": "sympy__sympy-11897",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/printing/latex.py"
+    ],
+    "gold_symbol_ids": [
+      372
+    ],
+    "gold_symbol_names": [
+      "LatexPrinter._add_parens"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-12171": {
+    "instance_id": "sympy__sympy-12171",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/printing/mathematica.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-12236": {
+    "instance_id": "sympy__sympy-12236",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/polys/domains/polynomialring.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-12419": {
+    "instance_id": "sympy__sympy-12419",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/matrices/expressions/matexpr.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-12454": {
+    "instance_id": "sympy__sympy-12454",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/matrices/matrices.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-12481": {
+    "instance_id": "sympy__sympy-12481",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/combinatorics/permutations.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-13031": {
+    "instance_id": "sympy__sympy-13031",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/matrices/sparse.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-13043": {
+    "instance_id": "sympy__sympy-13043",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/integrals/intpoly.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-13146": {
+    "instance_id": "sympy__sympy-13146",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/core/operations.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-13177": {
+    "instance_id": "sympy__sympy-13177",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/core/mod.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-13437": {
+    "instance_id": "sympy__sympy-13437",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/functions/combinatorial/numbers.py"
+    ],
+    "gold_symbol_ids": [
+      2605
+    ],
+    "gold_symbol_names": [
+      "bernoulli"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-13471": {
+    "instance_id": "sympy__sympy-13471",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/core/numbers.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-13480": {
+    "instance_id": "sympy__sympy-13480",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/functions/elementary/hyperbolic.py"
+    ],
+    "gold_symbol_ids": [
+      3002
+    ],
+    "gold_symbol_names": [
+      "cosh._eval_is_nonnegative"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-13647": {
+    "instance_id": "sympy__sympy-13647",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/matrices/common.py"
+    ],
+    "gold_symbol_ids": [
+      1977
+    ],
+    "gold_symbol_names": [
+      "_MatrixDeprecatedMeta.__instancecheck__"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-13773": {
+    "instance_id": "sympy__sympy-13773",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/matrices/common.py"
+    ],
+    "gold_symbol_ids": [
+      2080,
+      2095
+    ],
+    "gold_symbol_names": [
+      "MatrixOperations.applyfunc",
+      "MatrixProperties.is_upper"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-13895": {
+    "instance_id": "sympy__sympy-13895",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/core/numbers.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-13915": {
+    "instance_id": "sympy__sympy-13915",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/core/mul.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-13971": {
+    "instance_id": "sympy__sympy-13971",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/printing/latex.py"
+    ],
+    "gold_symbol_ids": [
+      509
+    ],
+    "gold_symbol_names": [
+      "LatexPrinter._deal_with_super_sub"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-14024": {
+    "instance_id": "sympy__sympy-14024",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/core/numbers.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-14308": {
+    "instance_id": "sympy__sympy-14308",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/printing/pretty/pretty.py"
+    ],
+    "gold_symbol_ids": [
+      1175
+    ],
+    "gold_symbol_names": [
+      "PrettyPrinter._print_DotProduct"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-14317": {
+    "instance_id": "sympy__sympy-14317",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/printing/latex.py"
+    ],
+    "gold_symbol_ids": [
+      524
+    ],
+    "gold_symbol_names": [
+      "LatexPrinter._print_Mod"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-14396": {
+    "instance_id": "sympy__sympy-14396",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/polys/polyoptions.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-14774": {
+    "instance_id": "sympy__sympy-14774",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/printing/latex.py"
+    ],
+    "gold_symbol_ids": [
+      408
+    ],
+    "gold_symbol_names": [
+      "LatexPrinter._print_Product"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-14817": {
+    "instance_id": "sympy__sympy-14817",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/printing/pretty/pretty.py"
+    ],
+    "gold_symbol_ids": [
+      1165
+    ],
+    "gold_symbol_names": [
+      "PrettyPrinter._print_MatrixSlice"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-15011": {
+    "instance_id": "sympy__sympy-15011",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/utilities/lambdify.py"
+    ],
+    "gold_symbol_ids": [
+      4767
+    ],
+    "gold_symbol_names": [
+      "lambdify"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-15308": {
+    "instance_id": "sympy__sympy-15308",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/printing/latex.py"
+    ],
+    "gold_symbol_ids": [
+      378,
+      484
+    ],
+    "gold_symbol_names": [
+      "LatexPrinter._needs_function_brackets",
+      "LatexPrinter._print_dirichlet_eta"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-15345": {
+    "instance_id": "sympy__sympy-15345",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/printing/mathematica.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-15346": {
+    "instance_id": "sympy__sympy-15346",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/simplify/trigsimp.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-15609": {
+    "instance_id": "sympy__sympy-15609",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/printing/latex.py"
+    ],
+    "gold_symbol_ids": [
+      481
+    ],
+    "gold_symbol_names": [
+      "LatexPrinter._print_airybiprime"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-15678": {
+    "instance_id": "sympy__sympy-15678",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/geometry/util.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-16106": {
+    "instance_id": "sympy__sympy-16106",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/printing/mathml.py"
+    ],
+    "gold_symbol_ids": [
+      891
+    ],
+    "gold_symbol_names": [
+      "MathMLPresentationPrinter._print_Interval"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-16281": {
+    "instance_id": "sympy__sympy-16281",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/printing/pretty/pretty.py"
+    ],
+    "gold_symbol_ids": [
+      1150
+    ],
+    "gold_symbol_names": [
+      "PrettyPrinter._print_Integral"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-16503": {
+    "instance_id": "sympy__sympy-16503",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/printing/pretty/pretty.py"
+    ],
+    "gold_symbol_ids": [
+      1152,
+      1154
+    ],
+    "gold_symbol_names": [
+      "PrettyPrinter.__print_SumProduct_Limits",
+      "PrettyPrinter._print_Sum"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-16792": {
+    "instance_id": "sympy__sympy-16792",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/utilities/codegen.py"
+    ],
+    "gold_symbol_ids": [
+      4557,
+      4558
+    ],
+    "gold_symbol_names": [
+      "CodeGen.dimensions",
+      "CodeGen.routine"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-16988": {
+    "instance_id": "sympy__sympy-16988",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/sets/sets.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-17022": {
+    "instance_id": "sympy__sympy-17022",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/printing/pycode.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-17139": {
+    "instance_id": "sympy__sympy-17139",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/simplify/fu.py"
+    ],
+    "gold_symbol_ids": [
+      4926
+    ],
+    "gold_symbol_names": [
+      "TR9"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-17630": {
+    "instance_id": "sympy__sympy-17630",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/matrices/expressions/matexpr.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-17655": {
+    "instance_id": "sympy__sympy-17655",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/geometry/point.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-18057": {
+    "instance_id": "sympy__sympy-18057",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/core/expr.py"
+    ],
+    "gold_symbol_ids": [
+      1731
+    ],
+    "gold_symbol_names": [
+      "Expr._diff_wrt"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-18087": {
+    "instance_id": "sympy__sympy-18087",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/core/exprtools.py"
+    ],
+    "gold_symbol_ids": [
+      1893,
+      1898
+    ],
+    "gold_symbol_names": [
+      "Factors.__init__",
+      "Factors.as_expr"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-18189": {
+    "instance_id": "sympy__sympy-18189",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/solvers/diophantine.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-18199": {
+    "instance_id": "sympy__sympy-18199",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/ntheory/residue_ntheory.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-18532": {
+    "instance_id": "sympy__sympy-18532",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/core/basic.py"
+    ],
+    "gold_symbol_ids": [
+      1464
+    ],
+    "gold_symbol_names": [
+      "Basic.__eq__"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-18621": {
+    "instance_id": "sympy__sympy-18621",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/matrices/expressions/blockmatrix.py"
+    ],
+    "gold_symbol_ids": [
+      2331
+    ],
+    "gold_symbol_names": [
+      "BlockMatrix.schur"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-18698": {
+    "instance_id": "sympy__sympy-18698",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/polys/polytools.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-18835": {
+    "instance_id": "sympy__sympy-18835",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/utilities/iterables.py"
+    ],
+    "gold_symbol_ids": [
+      4736
+    ],
+    "gold_symbol_names": [
+      "generate_bell"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-19007": {
+    "instance_id": "sympy__sympy-19007",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/matrices/expressions/blockmatrix.py"
+    ],
+    "gold_symbol_ids": [
+      2330
+    ],
+    "gold_symbol_names": [
+      "BlockMatrix.transpose"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-19254": {
+    "instance_id": "sympy__sympy-19254",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/polys/factortools.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-19487": {
+    "instance_id": "sympy__sympy-19487",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/functions/elementary/complexes.py"
+    ],
+    "gold_symbol_ids": [
+      2805
+    ],
+    "gold_symbol_names": [
+      "sign._eval_is_nonnegative"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-20049": {
+    "instance_id": "sympy__sympy-20049",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/physics/vector/point.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-20154": {
+    "instance_id": "sympy__sympy-20154",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/utilities/iterables.py"
+    ],
+    "gold_symbol_ids": [
+      4730
+    ],
+    "gold_symbol_names": [
+      "ordered_partitions"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-20212": {
+    "instance_id": "sympy__sympy-20212",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/core/power.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-20322": {
+    "instance_id": "sympy__sympy-20322",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/core/mul.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-20442": {
+    "instance_id": "sympy__sympy-20442",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/physics/units/util.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-20590": {
+    "instance_id": "sympy__sympy-20590",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/core/_print_helpers.py"
+    ],
+    "gold_symbol_ids": [
+      1370
+    ],
+    "gold_symbol_names": [
+      "Printable"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-20639": {
+    "instance_id": "sympy__sympy-20639",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/printing/pretty/pretty.py"
+    ],
+    "gold_symbol_ids": [
+      1252,
+      1253,
+      1254
+    ],
+    "gold_symbol_names": [
+      "PrettyPrinter._print_Add",
+      "PrettyPrinter._print_Mod",
+      "PrettyPrinter.pretty_negative"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-21055": {
+    "instance_id": "sympy__sympy-21055",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/assumptions/refine.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-21171": {
+    "instance_id": "sympy__sympy-21171",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/printing/latex.py"
+    ],
+    "gold_symbol_ids": [
+      536
+    ],
+    "gold_symbol_names": [
+      "LatexPrinter._print_Tensor"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-21379": {
+    "instance_id": "sympy__sympy-21379",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/core/mod.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-21612": {
+    "instance_id": "sympy__sympy-21612",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/printing/str.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-21614": {
+    "instance_id": "sympy__sympy-21614",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/core/function.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-21627": {
+    "instance_id": "sympy__sympy-21627",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/functions/elementary/complexes.py"
+    ],
+    "gold_symbol_ids": [
+      2818
+    ],
+    "gold_symbol_names": [
+      "Abs.eval"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-21847": {
+    "instance_id": "sympy__sympy-21847",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/polys/monomials.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-22005": {
+    "instance_id": "sympy__sympy-22005",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/solvers/polysys.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-22714": {
+    "instance_id": "sympy__sympy-22714",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/geometry/point.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-22840": {
+    "instance_id": "sympy__sympy-22840",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/simplify/cse_main.py"
+    ],
+    "gold_symbol_ids": [
+      4885,
+      4887
+    ],
+    "gold_symbol_names": [
+      "opt_cse",
+      "tree_cse"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-23117": {
+    "instance_id": "sympy__sympy-23117",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/tensor/array/ndim_array.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-23191": {
+    "instance_id": "sympy__sympy-23191",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/printing/pretty/pretty.py"
+    ],
+    "gold_symbol_ids": [
+      1190
+    ],
+    "gold_symbol_names": [
+      "PrettyPrinter._print_BasisDependent"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-23262": {
+    "instance_id": "sympy__sympy-23262",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/utilities/lambdify.py"
+    ],
+    "gold_symbol_ids": [
+      4770
+    ],
+    "gold_symbol_names": [
+      "_module_present"
+    ],
+    "is_hub_gold": false,
+    "has_function_target": true
+  },
+  "sympy__sympy-24066": {
+    "instance_id": "sympy__sympy-24066",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/physics/units/unitsystem.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-24102": {
+    "instance_id": "sympy__sympy-24102",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/parsing/mathematica.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-24152": {
+    "instance_id": "sympy__sympy-24152",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/physics/quantum/tensorproduct.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-24213": {
+    "instance_id": "sympy__sympy-24213",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/physics/units/unitsystem.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  },
+  "sympy__sympy-24909": {
+    "instance_id": "sympy__sympy-24909",
+    "repo": "sympy/sympy",
+    "gold_files": [
+      "sympy/physics/units/prefixes.py"
+    ],
+    "gold_symbol_ids": [],
+    "gold_symbol_names": [],
+    "is_hub_gold": false,
+    "has_function_target": false
+  }
+}

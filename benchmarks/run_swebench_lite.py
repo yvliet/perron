@@ -30,6 +30,10 @@ def load_benchmark_manifest(manifest_path: Path) -> List[Dict[str, Any]]:
     if manifest_path.exists():
         with open(manifest_path, "r", encoding="utf-8") as f:
             return json.load(f)
+    cache_file = REPO_ROOT / "data" / "swebench_lite_cache.jsonl"
+    if cache_file.exists():
+        from benchmarks.swebench_loader import load_cached_swebench_lite
+        return load_cached_swebench_lite(cache_file)
     print(f"[*] Task manifest not found at {manifest_path}; defaulting to {len(BENCHMARK_CASES)} representative defect archetypes.")
     return list(BENCHMARK_CASES)
 
@@ -69,12 +73,11 @@ def evaluate_batch(
 
 def main():
     parser = argparse.ArgumentParser(description="Perron Automated SWE-bench Lite Batch Evaluator")
-    parser.add_argument("--manifest", type=Path, default=REPO_ROOT / "data/swebench_lite_tasks.json", help="Task manifest path")
+    parser.add_argument("--manifest", type=Path, default=REPO_ROOT / "data/swebench_lite_cache.jsonl", help="Task manifest path")
     parser.add_argument("--output", type=Path, default=REPO_ROOT / "telemetry/swebench_batch_results.json", help="Output telemetry path")
     parser.add_argument("--mode", "--backend", dest="mode", type=str, default="replay", choices=["replay", "transformers", "vllm"], help="Execution mode / backend")
     parser.add_argument("--limit", type=int, default=10, help="Max instances to evaluate")
     parser.add_argument("--repo-dir", type=Path, default=REPO_ROOT, help="Base repository directory")
-    parser.add_argument("--no-worktree", action="store_true", help="Disable ephemeral worktree isolation")
     args = parser.parse_args()
 
     instances = load_benchmark_manifest(args.manifest)
@@ -84,7 +87,7 @@ def main():
         mode=args.mode,
         base_repo_dir=args.repo_dir,
         limit=args.limit,
-        use_worktree=not args.no_worktree,
+        use_worktree=True,
     )
 
 

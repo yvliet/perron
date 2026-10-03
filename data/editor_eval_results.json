@@ -1,0 +1,49 @@
+{
+  "benchmark_metadata": {
+    "num_cases": 30,
+    "archetypes": [
+      "clean_standard",
+      "indentation_trap",
+      "hunk_drift",
+      "syntax_corruption"
+    ]
+  },
+  "raw_counts": {
+    "git_apply": {
+      "total": 30,
+      "applied": 24,
+      "syntax_valid": 9,
+      "hunk_rejected": 6
+    },
+    "sed_replace": {
+      "total": 30,
+      "applied": 30,
+      "syntax_valid": 16,
+      "syntax_errors": 14
+    },
+    "perron_ast": {
+      "total": 30,
+      "applied": 23,
+      "syntax_valid": 23,
+      "rollback_protected": 7
+    }
+  },
+  "percentages": {
+    "git_apply": {
+      "apply_rate": 80.0,
+      "syntax_valid_rate": 30.0,
+      "hunk_rejection_rate": 20.0
+    },
+    "sed_replace": {
+      "apply_rate": 100.0,
+      "syntax_valid_rate": 53.3,
+      "syntax_error_rate": 46.7
+    },
+    "perron_ast": {
+      "apply_rate": 76.7,
+      "syntax_valid_rate": 76.7,
+      "syntax_error_rate": 0.0,
+      "rollback_rate": 23.3
+    }
+  }
+}

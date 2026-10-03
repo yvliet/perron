@@ -1,0 +1,29 @@
+{
+  "host_hardware": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "cpu_architecture": "AMD64",
+    "cpu_count": 12,
+    "total_physical_ram_gb": 15.68,
+    "available_physical_ram_gb": 10.37,
+    "python_version": "3.13.3"
+  },
+  "measured_runtime_rss": {
+    "base_process_rss_mb": 51.56,
+    "mmap_csr_rss_delta_mb": 1.12,
+    "mmap_cold_start_ms": 44.289,
+    "retrieval_query_ms": 29.32
+  },
+  "model_architecture_accounting": {
+    "target_model": "Gemma 4 E4B (PLE Dense)",
+    "parameter_count": "4.0B active parameters",
+    "quantization": "INT4 (W4A16 QAT / AWQ)",
+    "weights_footprint_gb": 2.4,
+    "kv_cache_windowed_gb": 0.4,
+    "compute_buffers_gb": 0.8,
+    "isolated_engine_footprint_gb": 3.6,
+    "developer_workstation_environment_gb": 6.8,
+    "total_resident_ram_gb": 10.4,
+    "free_ram_headroom_gb": 5.28,
+    "fits_16gb_laptop": true
+  }
+}

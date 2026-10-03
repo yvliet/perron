@@ -1,0 +1,674 @@
+[
+  {
+    "instance_id": "astropy__astropy-14995",
+    "repo": "astropy/astropy",
+    "gold_files": [
+      "astropy/nddata/mixins/ndarithmetic.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 9440,
+        "identifier": "NDArithmeticMixin.subtract",
+        "type": "method",
+        "lines": [
+          521,
+          525
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "astropy__astropy-14182",
+    "repo": "astropy/astropy",
+    "gold_files": [
+      "astropy/io/ascii/rst.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 3597,
+        "identifier": "SimpleRSTData",
+        "type": "class",
+        "lines": [
+          27,
+          30
+        ]
+      },
+      {
+        "id": 3598,
+        "identifier": "RST",
+        "type": "class",
+        "lines": [
+          33,
+          63
+        ]
+      },
+      {
+        "id": 3599,
+        "identifier": "RST.__init__",
+        "type": "method",
+        "lines": [
+          57,
+          58
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "django__django-15790",
+    "repo": "django/django",
+    "gold_files": [
+      "django/core/checks/templates.py"
+    ],
+    "gold_symbols": [],
+    "has_function_target": false,
+    "category": "module_level_diff",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "django__django-14382",
+    "repo": "django/django",
+    "gold_files": [
+      "django/core/management/templates.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 3723,
+        "identifier": "TemplateCommand.handle",
+        "type": "method",
+        "lines": [
+          59,
+          177
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "django__django-15814",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/sql/query.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 6702,
+        "identifier": "Query.promote_joins",
+        "type": "method",
+        "lines": [
+          735,
+          767
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "django__django-12708",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/backends/base/schema.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 4179,
+        "identifier": "BaseDatabaseSchemaEditor._delete_composed_index",
+        "type": "method",
+        "lines": [
+          386,
+          395
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "django__django-11797",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/lookups.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 6312,
+        "identifier": "IExact.process_rhs",
+        "type": "method",
+        "lines": [
+          268,
+          272
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "django__django-12589",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/sql/query.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 6754,
+        "identifier": "Query.get_loaded_field_names",
+        "type": "method",
+        "lines": [
+          1922,
+          1939
+        ]
+      },
+      {
+        "id": 6755,
+        "identifier": "Query.get_loaded_field_names_cb",
+        "type": "method",
+        "lines": [
+          1941,
+          1943
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "django__django-14999",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/migrations/operations/models.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 4967,
+        "identifier": "RenameModel.state_forwards",
+        "type": "method",
+        "lines": [
+          304,
+          343
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "django__django-13933",
+    "repo": "django/django",
+    "gold_files": [
+      "django/forms/models.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 7181,
+        "identifier": "ModelMultipleChoiceField.clean",
+        "type": "method",
+        "lines": [
+          1281,
+          1293
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "django__django-15213",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/fields/__init__.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 5677,
+        "identifier": "BooleanField.get_internal_type",
+        "type": "method",
+        "lines": [
+          997,
+          998
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "django__django-15902",
+    "repo": "django/django",
+    "gold_files": [
+      "django/forms/formsets.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 7066,
+        "identifier": "ManagementForm.__init__",
+        "type": "method",
+        "lines": [
+          34,
+          42
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "django__django-12470",
+    "repo": "django/django",
+    "gold_files": [
+      "django/db/models/sql/compiler.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 6615,
+        "identifier": "SQLCompiler.find_ordering_name",
+        "type": "method",
+        "lines": [
+          687,
+          716
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-26011",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/axis.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 1792,
+        "identifier": "Axis.get_majorticklines",
+        "type": "method",
+        "lines": [
+          1244,
+          1251
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "matplotlib__matplotlib-25332",
+    "repo": "matplotlib/matplotlib",
+    "gold_files": [
+      "lib/matplotlib/cbook.py"
+    ],
+    "gold_symbols": [],
+    "has_function_target": false,
+    "category": "module_level_diff",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "mwaskom__seaborn-3010",
+    "repo": "mwaskom/seaborn",
+    "gold_files": [
+      "seaborn/_stats/regression.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 403,
+        "identifier": "PolyFit.__call__",
+        "type": "method",
+        "lines": [
+          39,
+          41
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "mwaskom__seaborn-3407",
+    "repo": "mwaskom/seaborn",
+    "gold_files": [
+      "seaborn/axisgrid.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 457,
+        "identifier": "PairGrid._map_diag_iter_hue",
+        "type": "method",
+        "lines": [
+          1476,
+          1513
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "pallets__flask-4045",
+    "repo": "pallets/flask",
+    "gold_files": [
+      "src/flask/blueprints.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 128,
+        "identifier": "Blueprint.__init__",
+        "type": "method",
+        "lines": [
+          171,
+          201
+        ]
+      },
+      {
+        "id": 138,
+        "identifier": "Blueprint.app_template_filter",
+        "type": "method",
+        "lines": [
+          371,
+          383
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "pallets__flask-4992",
+    "repo": "pallets/flask",
+    "gold_files": [
+      "src/flask/config.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 213,
+        "identifier": "Config.get_namespace",
+        "type": "method",
+        "lines": [
+          222,
+          263
+        ]
+      },
+      {
+        "id": 214,
+        "identifier": "Config.__repr__",
+        "type": "method",
+        "lines": [
+          265,
+          266
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "psf__requests-2674",
+    "repo": "psf/requests",
+    "gold_files": [
+      "requests/adapters.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 19,
+        "identifier": "HTTPAdapter.get_connection_with_tls_context",
+        "type": "method",
+        "lines": [
+          423,
+          470
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "psf__requests-3362",
+    "repo": "psf/requests",
+    "gold_files": [
+      "requests/utils.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 250,
+        "identifier": "to_key_val_list",
+        "type": "function",
+        "lines": [
+          335,
+          361
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "pydata__xarray-4248",
+    "repo": "pydata/xarray",
+    "gold_files": [
+      "xarray/core/formatting.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 1370,
+        "identifier": "summarize_variable",
+        "type": "function",
+        "lines": [
+          261,
+          275
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "pydata__xarray-5131",
+    "repo": "pydata/xarray",
+    "gold_files": [
+      "xarray/core/groupby.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 1417,
+        "identifier": "GroupBy._iter_grouped",
+        "type": "method",
+        "lines": [
+          441,
+          444
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "pylint-dev__pylint-7114",
+    "repo": "pylint-dev/pylint",
+    "gold_files": [
+      "pylint/lint/expand_modules.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 1314,
+        "identifier": "expand_modules",
+        "type": "function",
+        "lines": [
+          40,
+          140
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "pylint-dev__pylint-7993",
+    "repo": "pylint-dev/pylint",
+    "gold_files": [
+      "pylint/reporters/text.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 1649,
+        "identifier": "TextReporter",
+        "type": "class",
+        "lines": [
+          175,
+          233
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "pytest-dev__pytest-8906",
+    "repo": "pytest-dev/pytest",
+    "gold_files": [
+      "src/_pytest/python.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 1786,
+        "identifier": "Module.xunit_setup_function_fixture",
+        "type": "method",
+        "lines": [
+          593,
+          609
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "pytest-dev__pytest-5227",
+    "repo": "pytest-dev/pytest",
+    "gold_files": [
+      "src/_pytest/logging.py"
+    ],
+    "gold_symbols": [],
+    "has_function_target": false,
+    "category": "module_level_diff",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-10297",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/linear_model/ridge.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 3378,
+        "identifier": "RidgeCV",
+        "type": "class",
+        "lines": [
+          1147,
+          1244
+        ]
+      },
+      {
+        "id": 3379,
+        "identifier": "RidgeClassifierCV",
+        "type": "class",
+        "lines": [
+          1247,
+          1381
+        ]
+      },
+      {
+        "id": 3380,
+        "identifier": "RidgeClassifierCV.__init__",
+        "type": "method",
+        "lines": [
+          1335,
+          1340
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "scikit-learn__scikit-learn-11040",
+    "repo": "scikit-learn/scikit-learn",
+    "gold_files": [
+      "sklearn/neighbors/base.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 5046,
+        "identifier": "NeighborsBase._fit",
+        "type": "method",
+        "lines": [
+          157,
+          262
+        ]
+      },
+      {
+        "id": 5049,
+        "identifier": "KNeighborsMixin.kneighbors",
+        "type": "method",
+        "lines": [
+          273,
+          421
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  },
+  {
+    "instance_id": "sphinx-doc__sphinx-8474",
+    "repo": "sphinx-doc/sphinx",
+    "gold_files": [
+      "sphinx/domains/std.py"
+    ],
+    "gold_symbols": [
+      {
+        "id": 2113,
+        "identifier": "StandardDomain._resolve_numref_xref",
+        "type": "method",
+        "lines": [
+          829,
+          890
+        ]
+      }
+    ],
+    "has_function_target": true,
+    "category": "callable_function",
+    "audit_status": "verified_correct"
+  }
+]

@@ -86,6 +86,7 @@ def export_repo_graph(
     base_commit: str,
     work_dir: Path,
     output_dir: Path,
+    cleanup_clone: bool = False,
 ) -> None:
     """Clone repo at commit, compile graph, and export .npz + .json assets."""
     slug = repo_name.replace("/", "__")
@@ -191,6 +192,9 @@ def export_repo_graph(
 
     close_mmap_csr(t_matrix)
     shutil.rmtree(cache_dir, ignore_errors=True)
+    if cleanup_clone and repo_dir.exists():
+        logger.info(f"Cleaning up clone at {repo_dir} to reclaim disk space...")
+        shutil.rmtree(repo_dir, ignore_errors=True)
     logger.info(f"Successfully exported {slug} ({len(symbols)} symbols, {csr_standalone.nnz} edges)")
 
 
@@ -198,6 +202,7 @@ def main():
     parser = argparse.ArgumentParser(description="Export SWE-bench Lite call graphs.")
     parser.add_argument("--output-dir", type=Path, default=REPO_ROOT / "artifacts" / "swebench_graphs")
     parser.add_argument("--work-dir", type=Path, default=REPO_ROOT / "artifacts" / "clones")
+    parser.add_argument("--cleanup-clones", action="store_true", help="Remove cloned repo working directory after successful export to save disk.")
     parser.add_argument("--dry-run", action="store_true", help="Only verify existing cache and repo list.")
     args = parser.parse_args()
 
@@ -225,7 +230,7 @@ def main():
         if repo in SWE_BENCH_REPOS:
             url = SWE_BENCH_REPOS[repo]
             try:
-                export_repo_graph(repo, url, commit, args.work_dir, args.output_dir)
+                export_repo_graph(repo, url, commit, args.work_dir, args.output_dir, cleanup_clone=args.cleanup_clones)
             except Exception as e:
                 logger.error(f"Failed exporting {repo}: {e}")
         else:
