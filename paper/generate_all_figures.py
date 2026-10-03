@@ -437,9 +437,9 @@ def generate_figure3_action_and_failure():
     ax1.legend(loc='upper right', frameon=True, facecolor='#f8fafc', edgecolor='#cbd5e1', fontsize=8.0, ncol=2)
     ax1.set_title('(a) Action Invocations by Turn (Empirical N=10)', fontsize=10.5, fontweight='bold', pad=10)
 
-    # Panel (b): Failure Mode Breakdown (Horizontal Bar Plot)
+    # Panel (b): Failure Mode Breakdown (Structured Architectural Taxonomy)
     failure_labels = [
-        'Premature Search Termination',
+        'Premature Search Cutoff',
         'Harness Timeout / Deadlock',
         'Underspecified Issue Text',
         'Dynamic Reflection / Patch',
@@ -449,12 +449,19 @@ def generate_figure3_action_and_failure():
     bar_colors = [OKABE_ITO[1], OKABE_ITO[3], OKABE_ITO[0], OKABE_ITO[5], OKABE_ITO[4]]
 
     bars = ax2.barh(failure_labels, failure_counts, color=bar_colors, height=0.55, edgecolor='none', alpha=0.85)
-    for bar in bars:
+    tier_tags = [
+        "20.0% [Budget Limit]",
+        "20.0% [Harness Timeout]",
+        "20.0% [Spec Ambiguity]",
+        "20.0% [Static AST Limit]",
+        "20.0% [Static AST Limit]"
+    ]
+    for bar, tag in zip(bars, tier_tags):
         w = bar.get_width()
-        ax2.text(w + 0.6, bar.get_y() + bar.get_height() / 2, "20.0% (n=1/5)",
-                 va='center', ha='left', fontsize=8.2, fontweight='bold', color='#222222')
+        ax2.text(w + 0.6, bar.get_y() + bar.get_height() / 2, tag,
+                 va='center', ha='left', fontsize=8.0, fontweight='bold', color='#334155')
 
-    ax2.set_xlim(0, 32)
+    ax2.set_xlim(0, 36)
     ax2.set_xlabel('Unresolved Defect Share (%)', fontsize=9.5, fontweight='bold')
     ax2.set_title('(b) Unresolved Failure Breakdown (N=5)', fontsize=10.5, fontweight='bold', pad=10)
     ax2.set_axisbelow(True)
@@ -521,22 +528,26 @@ def generate_figure4_specificity_sweep():
     ax2.set_ylim(-1.0, 20.0)
     ax2.tick_params(axis='y', labelcolor=OKABE_ITO[2], labelsize=8.0)
 
-    # Highlight optimal gamma = 0.70
-    ax1.annotate(r'$\mathbf{\gamma=0.70}$' + '\nHSI: 92.3%\nFn: 13.0%', xy=(0.70, 92.3), xytext=(0.42, 94.0),
-                 arrowprops=dict(arrowstyle='->', lw=1.2, color=OKABE_ITO[0]),
-                 fontsize=7.8, fontweight='bold', color=OKABE_ITO[0], ha='center',
-                 bbox=dict(boxstyle='round,pad=0.2', facecolor='#f0f9ff', edgecolor=OKABE_ITO[0], lw=0.8, zorder=10),
-                 zorder=10)
-    
-    # Highlight unweighted baseline gamma = 0.00
-    ax1.annotate(r'$\mathbf{\gamma=0.00}$ (Unweighted)' + '\nHSI: 60.0%\nFn: 2.0%', xy=(0.0, 60.0), xytext=(0.20, 68.0),
-                 arrowprops=dict(arrowstyle='->', lw=1.2, color='#666666'),
-                 fontsize=7.6, fontweight='bold', color='#444444', ha='center',
-                 bbox=dict(boxstyle='round,pad=0.2', facecolor='#f8fafc', edgecolor='#94a3b8', lw=0.8, zorder=10),
-                 zorder=10)
+    # Vertical guideline for optimal operating point gamma = 0.70
+    ax1.axvline(0.70, color=OKABE_ITO[0], linestyle=':', linewidth=1.2, alpha=0.6, zorder=1)
 
-    # Invert z-order so ax1 annotations layer above ax2 plot elements
-    ax1.set_zorder(ax2.get_zorder() + 1)
+    # Highlight optimal gamma = 0.70 from open sky above trajectory
+    ax1.annotate(r'$\mathbf{\gamma=0.70}$ (Resonance Basin)' + '\nHSI: 92.3%  |  Fn: 13.0%',
+                 xy=(0.70, 92.3), xytext=(0.42, 100.5),
+                 arrowprops=dict(arrowstyle='->', lw=1.2, color=OKABE_ITO[0], connectionstyle='arc3,rad=-0.12'),
+                 fontsize=7.8, fontweight='bold', color=OKABE_ITO[0], ha='center', va='center',
+                 bbox=dict(boxstyle='round,pad=0.25', facecolor='#f0f9ff', edgecolor=OKABE_ITO[0], lw=0.9, alpha=0.95, zorder=6),
+                 zorder=6)
+    
+    # Highlight unweighted baseline gamma = 0.00 in upper-left open negative space
+    ax1.annotate(r'$\mathbf{\gamma=0.00}$ (Unweighted)' + '\nHSI: 60.0%  |  Fn: 2.0%',
+                 xy=(0.0, 60.0), xytext=(0.02, 79.0),
+                 arrowprops=dict(arrowstyle='->', lw=1.1, color='#475569', connectionstyle='arc3,rad=0.0'),
+                 fontsize=7.8, fontweight='bold', color='#334155', ha='left', va='center',
+                 bbox=dict(boxstyle='round,pad=0.25', facecolor='white', edgecolor='#94a3b8', lw=0.8, alpha=0.95, zorder=6),
+                 zorder=6)
+
+    # Allow clean transparent layering without masking ax2 data
     ax1.patch.set_visible(False)
 
     lines = l1 + l2

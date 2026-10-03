@@ -18,6 +18,8 @@ Empirical Pareto Frontier and Sensitivity Surface Generator for Perron.
 
 from __future__ import annotations
 
+import os
+import datetime
 import json
 import sys
 import time
@@ -265,7 +267,7 @@ def plot_pareto_and_sensitivity(pareto_data: Dict, gamma_vals: np.ndarray, beta_
     ax1.set_xlabel("Context Token Budget ($K$)")
     ax1.set_ylabel("Controlled Topological Recall (%)")
     ax1.set_title(r"(a) Context Budget Pareto Frontier", pad=10, weight="bold")
-    ax1.set_ylim(0, 105)
+    ax1.set_ylim(-2, 110)
     ax1.set_xlim(400, 4200)
     ax1.grid(True, linestyle="--", alpha=0.5)
     # Legend in upper left: unoccludes all curves and Gemma 4 line

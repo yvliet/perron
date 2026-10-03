@@ -488,7 +488,8 @@ def generate_rigorous_evaluation_artifacts():
     # 2. GENERATE PUBLICATION-GRADE COMPOSITE VISUALIZATION
     # -------------------------------------------------------------
     plt.rcParams.update({
-        "font.family": "sans-serif",
+        "font.family": "serif",
+        "font.serif": ["DejaVu Serif", "Times New Roman", "Times", "Computer Modern Roman"],
         "font.size": 8.5,
         "axes.labelsize": 9.5,
         "axes.titlesize": 10.0,
