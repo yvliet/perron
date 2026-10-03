@@ -73,10 +73,21 @@ def check_manifest_and_macros():
 
 
 def check_figures():
-    fig_pdf = REPO_ROOT / "paper" / "figures" / "benchmark_statistical_evaluation.pdf"
-    fig_png = REPO_ROOT / "paper" / "figures" / "benchmark_statistical_evaluation.png"
-    assert fig_pdf.is_file(), f"Missing figure: {fig_pdf}"
-    assert fig_png.is_file(), f"Missing figure: {fig_png}"
+    fig_dir = REPO_ROOT / "paper" / "figures"
+    expected_figures = [
+        "perron_pipeline",
+        "comparative_edit_interfaces",
+        "action_and_failure_distribution",
+        "pass_at_k_scaling",
+        "benchmark_statistical_evaluation",
+    ]
+    for fig_name in expected_figures:
+        fig_pdf = fig_dir / f"{fig_name}.pdf"
+        fig_png = fig_dir / f"{fig_name}.png"
+        assert fig_pdf.is_file(), f"Missing figure PDF: {fig_pdf}"
+        assert fig_png.is_file(), f"Missing figure PNG: {fig_png}"
+        assert fig_pdf.stat().st_size > 1000, f"Figure PDF suspiciously small: {fig_pdf}"
+        assert fig_png.stat().st_size > 1000, f"Figure PNG suspiciously small: {fig_png}"
 
 
 def check_paper_pdf():
@@ -98,8 +109,10 @@ def check_writeup_word_count():
 
 
 def check_notebook_execution():
-    nb_file = REPO_ROOT / "perron_showcase.ipynb"
+    nb_file = REPO_ROOT / "notebooks" / "perron_showcase.ipynb"
     assert nb_file.is_file(), f"Missing notebook: {nb_file}"
+    quickstart_file = REPO_ROOT / "notebooks" / "perron_quickstart.ipynb"
+    assert quickstart_file.is_file(), f"Missing quickstart notebook: {quickstart_file}"
     with open(nb_file, "r", encoding="utf-8") as f:
         nb = json.load(f)
 
@@ -108,6 +121,26 @@ def check_notebook_execution():
         if cell["cell_type"] == "code":
             code = "".join(cell["source"])
             exec(code, global_ns)
+
+
+def check_facts_and_claims():
+    from scripts.check_facts import check_facts
+    ret = check_facts()
+    assert ret == 0, "Automated fact-checker failed on paper claims"
+
+
+def check_privacy_and_links():
+    import re
+    writeup = REPO_ROOT / "paper" / "paper_writeup.md"
+    text = writeup.read_text(encoding="utf-8")
+    assert "C:\\Users\\" not in text, "Local Windows user path leaked in writeup"
+    assert "/home/" not in text, "Local Unix user path leaked in writeup"
+
+    # Extract clean URLs (stripping trailing punctuation)
+    urls = re.findall(r'https?://[^\s\)\>\]]+', text)
+    cleaned_urls = [re.sub(r'[\.,;:]$', '', u) for u in urls]
+    for url in cleaned_urls:
+        assert url.startswith("https://github.com/yvliet"), f"Unexpected external URL: {url}"
 
 
 def check_unit_tests():
@@ -151,6 +184,8 @@ def main():
         ("LaTeX Manuscript Compilation", check_paper_pdf),
         ("Research Writeup Word Count (<= 3,000 words)", check_writeup_word_count),
         ("Showcase Notebook Execution", check_notebook_execution),
+        ("Automated Empirical Facts & Claims", check_facts_and_claims),
+        ("Privacy & Hyperlink Integrity", check_privacy_and_links),
         ("Core Unit Test Battery", check_unit_tests),
         ("Turnkey Agent Runner CLI & Manifest Verification", check_runner_cli),
     ]
