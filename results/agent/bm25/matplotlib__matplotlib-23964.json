@@ -1,0 +1,18 @@
+{
+  "instance_id": "matplotlib__matplotlib-23964",
+  "arm": "bm25",
+  "problem_statement_chars": 4307,
+  "context_tokens": 2842,
+  "retrieved_symbols": 99,
+  "prompt_chars": 16130,
+  "raw_model_output": null,
+  "patch_produced": false,
+  "patch_applies": false,
+  "touches_gold_file": true,
+  "touches_gold_function": false,
+  "tests_pass": null,
+  "wall_seconds": 0.0609,
+  "peak_rss_mb": 144.33,
+  "timestamp": "2026-10-03T07:45:00Z",
+  "status": "offline_probe_verified"
+}

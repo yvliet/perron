@@ -1,0 +1,18 @@
+{
+  "instance_id": "django__django-11099",
+  "arm": "perron",
+  "problem_statement_chars": 764,
+  "context_tokens": 986,
+  "retrieved_symbols": 27,
+  "prompt_chars": 5165,
+  "raw_model_output": null,
+  "patch_produced": false,
+  "patch_applies": false,
+  "touches_gold_file": true,
+  "touches_gold_function": false,
+  "tests_pass": null,
+  "wall_seconds": 0.2746,
+  "peak_rss_mb": 148.01,
+  "timestamp": "2026-10-03T07:46:14Z",
+  "status": "offline_probe_verified"
+}

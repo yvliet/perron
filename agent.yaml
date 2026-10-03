@@ -4,7 +4,7 @@
 # ==============================================================================
 
 name: perron-developer-agent
-version: 1.1.0
+version: 0.2.0
 author: Sultan Haikal (@yvliet)
 entrypoint: python -m perron.runner
 license: Apache-2.0
@@ -15,8 +15,8 @@ runtime:
   offline_mode: true
 
 model:
-  # Edge Tier (16GB Laptops): Gemma 4 E2B / E4B INT4 (6.8 GB RAM footprint)
-  base: google/gemma-4/transformers/gemma-4-e2b-it-qat-mobile-transformers
+  # Edge Tier (16GB Laptops): Gemma 4 E4B INT4 (6.8 GB RAM footprint)
+  base: google/gemma-4/transformers/gemma-4-e4b-it
   # Workstation Tier (24GB GPUs): Gemma 4 26B A4B / 31B INT4
   scaled_base: google/gemma-4/transformers/gemma-4-26b-a4b-it
   backend: transformers
@@ -31,7 +31,7 @@ model:
 diffusion:
   beta: 0.85
   gamma: 0.70
-  tau: 0.05
+  tau: 0.15
   top_k_teleport: 25
 
 tools:

@@ -1,0 +1,12 @@
+<start_of_turn>user
+You are an expert autonomous software engineering developer agent powered by Gemma 4.
+Your task is to analyze the issue statement and the provided repository context to resolve the reported defect.
+
+### PROBLEM STATEMENT:
+{problem_statement}
+
+### CODEBASE CONTEXT:
+{context_block}
+
+Formulate your step-by-step reasoning within <|think|>...</|think|> tags, then produce the precise bugfix patch within ```python or ```diff code blocks.<end_of_turn>
+<start_of_turn>model

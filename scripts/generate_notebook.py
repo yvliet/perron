@@ -19,8 +19,8 @@ notebook = {
     "This notebook provides a live, reproducible demonstration of **Perron**, an open-source graph-grounded retrieval and AST subgraph slicing architecture for developer agents.\n",
     "\n",
     "Perron solves the scale-free repository graph explosion problem (>50,000 tokens) via query-directed specificity diffusion over static, zero-copy memory-mapped CSR transition matrices. The architecture is engineered around a **Dual-Tier deployment model**:\n",
-    "1. **Tier 1 (Edge Local / 16GB Consumer Laptops)**: Operates on **Gemma 4 E4B (4B)** via quantized GGUF execution (`perron/backends/gguf_backend.py`), requiring only 2.4 GB weights and 0.4 GB KV cache (**6.8 GB active RAM footprint**), leaving >9 GB free RAM for OS operations, compilers, and targeted pytest test runs.\n",
-    "2. **Tier 2 (Workstation Scaled / 24GB GPUs)**: Scales seamlessly to **Gemma 4 26B A4B** (Sparse MoE, 3.8B active parameters) and **Gemma 4 31B** for enterprise repositories.\n",
+    "1. **Tier 1 (Edge Local / 16GB Consumer Laptops)**: Operates on **Gemma 4 E4B (4B)** via quantized execution (BitsAndBytes / GGUF `perron/backends/gguf_backend.py`), requiring only 2.4 GB weights and 0.4 GB KV cache (3.6 GB engine footprint, **10.4 GB total resident RAM footprint** with active desktop environment), leaving 5.3 GB true free RAM headroom for compilers and targeted pytest runs.\n",
+    "2. **Tier 2 (Workstation Scaled / 24GB GPUs)**: Scales to **Gemma 4 26B A4B** (Sparse MoE, 3.8B active parameters) and **Gemma 4 31B** for enterprise repositories.\n",
     "\n",
     "Across 50 real SWE-bench Lite instances on authentic repository call graphs (Requests and SymPy), Perron achieves a **95.6% Hub Suppression Index** (paired $t(49) = 5.02, p < .001$, Cohen's $d = 0.71$), **42.0% File Recall@4k**, and **4.0% Function Recall@4k** (where Standard PPR achieves 0.0%), running with **sub-5 ms** CPU diffusion (<1.0 ms on Requests, ~5.0 ms on SymPy)."
    ]
@@ -241,7 +241,7 @@ notebook = {
     "### 5. Reproducibility & Open Source Audit\n",
     "- **Repository**: [https://github.com/yvliet/perron](https://github.com/yvliet/perron)\n",
     "- **License**: Apache 2.0\n",
-    "- **Test Suite**: Run `pytest tests/` (100% passing across 41 tests)\n",
+    "- **Test Suite**: Run `pytest -q` (100% passing across 137 tests)\n",
     "- **Paper**: See arXiv PDF in repository for complete mathematical proofs and Brauer rank-1 spectral bounds."
    ]
   }

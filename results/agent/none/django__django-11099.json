@@ -1,0 +1,18 @@
+{
+  "instance_id": "django__django-11099",
+  "arm": "none",
+  "problem_statement_chars": 764,
+  "context_tokens": 10,
+  "retrieved_symbols": 0,
+  "prompt_chars": 1273,
+  "raw_model_output": null,
+  "patch_produced": false,
+  "patch_applies": false,
+  "touches_gold_file": false,
+  "touches_gold_function": false,
+  "tests_pass": null,
+  "wall_seconds": 0.0004,
+  "peak_rss_mb": 144.87,
+  "timestamp": "2026-10-03T07:46:13Z",
+  "status": "offline_probe_verified"
+}

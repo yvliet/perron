@@ -1,0 +1,350 @@
+{
+  "git_sha": "aa83255ab563d276de5872d5acfbcbc0eef5fe43",
+  "python_version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
+  "package_versions": {
+    "perron-core": "0.2.1",
+    "perron": "0.1.0",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "pytest": "9.1.1",
+    "torch": "2.14.0",
+    "transformers": "5.17.0",
+    "tree-sitter": "0.25.2",
+    "psutil": "7.2.2"
+  },
+  "seed": 20261003,
+  "split_name": "dev_val",
+  "hardware": {
+    "cpu": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+    "ram": 16831815680,
+    "gpu": "NVIDIA GeForce MX550",
+    "CPU": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+    "RAM": 16831815680,
+    "GPU": "NVIDIA GeForce MX550"
+  },
+  "utc_timestamp": "2026-10-03T07:45:02.846501+00:00",
+  "git sha": "aa83255ab563d276de5872d5acfbcbc0eef5fe43",
+  "python version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
+  "package versions": {
+    "perron-core": "0.2.1",
+    "perron": "0.1.0",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "pytest": "9.1.1",
+    "torch": "2.14.0",
+    "transformers": "5.17.0",
+    "tree-sitter": "0.25.2",
+    "psutil": "7.2.2"
+  },
+  "split name": "dev_val",
+  "UTC timestamp": "2026-10-03T07:45:02.846501+00:00",
+  "metadata": {
+    "git_sha": "aa83255ab563d276de5872d5acfbcbc0eef5fe43",
+    "python_version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
+    "package_versions": {
+      "perron-core": "0.2.1",
+      "perron": "0.1.0",
+      "numpy": "2.5.2",
+      "scipy": "1.18.1",
+      "pytest": "9.1.1",
+      "torch": "2.14.0",
+      "transformers": "5.17.0",
+      "tree-sitter": "0.25.2",
+      "psutil": "7.2.2"
+    },
+    "seed": 20261003,
+    "split_name": "dev_val",
+    "hardware": {
+      "cpu": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+      "ram": 16831815680,
+      "gpu": "NVIDIA GeForce MX550",
+      "CPU": "Intel64 Family 6 Model 154 Stepping 4, GenuineIntel",
+      "RAM": 16831815680,
+      "GPU": "NVIDIA GeForce MX550"
+    },
+    "utc_timestamp": "2026-10-03T07:45:02.846501+00:00",
+    "git sha": "aa83255ab563d276de5872d5acfbcbc0eef5fe43",
+    "python version": "3.13.3 (tags/v3.13.3:6280bb5, Apr  8 2025, 14:47:33) [MSC v.1943 64 bit (AMD64)]",
+    "package versions": {
+      "perron-core": "0.2.1",
+      "perron": "0.1.0",
+      "numpy": "2.5.2",
+      "scipy": "1.18.1",
+      "pytest": "9.1.1",
+      "torch": "2.14.0",
+      "transformers": "5.17.0",
+      "tree-sitter": "0.25.2",
+      "psutil": "7.2.2"
+    },
+    "split name": "dev_val",
+    "UTC timestamp": "2026-10-03T07:45:02.846501+00:00"
+  },
+  "status": "complete",
+  "evaluation_partition": "dev_val",
+  "sample_size": 3,
+  "evaluated_instances": [
+    "django__django-11099",
+    "django__django-11179",
+    "matplotlib__matplotlib-23964"
+  ],
+  "arms": {
+    "none": {
+      "n": 3,
+      "patch_produced_count": 0,
+      "patch_applies_count": 0,
+      "patch_applies_rate": 0.0,
+      "patch_applies_wilson_95": [
+        0.0,
+        0.5615
+      ],
+      "touches_gold_file_count": 0,
+      "touches_gold_file_rate": 0.0,
+      "touches_gold_file_wilson_95": [
+        0.0,
+        0.5615
+      ],
+      "touches_gold_function_count": 0,
+      "touches_gold_function_rate": 0.0,
+      "touches_gold_function_wilson_95": [
+        0.0,
+        0.5615
+      ],
+      "tests_pass": null,
+      "mean_context_tokens": 10.0,
+      "mean_wall_seconds": 0.0002
+    },
+    "bm25": {
+      "n": 3,
+      "patch_produced_count": 0,
+      "patch_applies_count": 0,
+      "patch_applies_rate": 0.0,
+      "patch_applies_wilson_95": [
+        0.0,
+        0.5615
+      ],
+      "touches_gold_file_count": 3,
+      "touches_gold_file_rate": 1.0,
+      "touches_gold_file_wilson_95": [
+        0.4385,
+        1.0
+      ],
+      "touches_gold_function_count": 0,
+      "touches_gold_function_rate": 0.0,
+      "touches_gold_function_wilson_95": [
+        0.0,
+        0.5615
+      ],
+      "tests_pass": null,
+      "mean_context_tokens": 3795.7,
+      "mean_wall_seconds": 0.0722
+    },
+    "perron": {
+      "n": 3,
+      "patch_produced_count": 0,
+      "patch_applies_count": 0,
+      "patch_applies_rate": 0.0,
+      "patch_applies_wilson_95": [
+        0.0,
+        0.5615
+      ],
+      "touches_gold_file_count": 3,
+      "touches_gold_file_rate": 1.0,
+      "touches_gold_file_wilson_95": [
+        0.4385,
+        1.0
+      ],
+      "touches_gold_function_count": 0,
+      "touches_gold_function_rate": 0.0,
+      "touches_gold_function_wilson_95": [
+        0.0,
+        0.5615
+      ],
+      "tests_pass": null,
+      "mean_context_tokens": 2818.3,
+      "mean_wall_seconds": 0.1439
+    }
+  },
+  "gate_b_enforced": true,
+  "container_execution": "offline_host_decoupled",
+  "note": "tests_pass is explicitly null under Gate B because container execution is decoupled on Windows host",
+  "results": {
+    "status": "complete",
+    "evaluation_partition": "dev_val",
+    "sample_size": 3,
+    "evaluated_instances": [
+      "django__django-11099",
+      "django__django-11179",
+      "matplotlib__matplotlib-23964"
+    ],
+    "arms": {
+      "none": {
+        "n": 3,
+        "patch_produced_count": 0,
+        "patch_applies_count": 0,
+        "patch_applies_rate": 0.0,
+        "patch_applies_wilson_95": [
+          0.0,
+          0.5615
+        ],
+        "touches_gold_file_count": 0,
+        "touches_gold_file_rate": 0.0,
+        "touches_gold_file_wilson_95": [
+          0.0,
+          0.5615
+        ],
+        "touches_gold_function_count": 0,
+        "touches_gold_function_rate": 0.0,
+        "touches_gold_function_wilson_95": [
+          0.0,
+          0.5615
+        ],
+        "tests_pass": null,
+        "mean_context_tokens": 10.0,
+        "mean_wall_seconds": 0.0002
+      },
+      "bm25": {
+        "n": 3,
+        "patch_produced_count": 0,
+        "patch_applies_count": 0,
+        "patch_applies_rate": 0.0,
+        "patch_applies_wilson_95": [
+          0.0,
+          0.5615
+        ],
+        "touches_gold_file_count": 3,
+        "touches_gold_file_rate": 1.0,
+        "touches_gold_file_wilson_95": [
+          0.4385,
+          1.0
+        ],
+        "touches_gold_function_count": 0,
+        "touches_gold_function_rate": 0.0,
+        "touches_gold_function_wilson_95": [
+          0.0,
+          0.5615
+        ],
+        "tests_pass": null,
+        "mean_context_tokens": 3795.7,
+        "mean_wall_seconds": 0.0722
+      },
+      "perron": {
+        "n": 3,
+        "patch_produced_count": 0,
+        "patch_applies_count": 0,
+        "patch_applies_rate": 0.0,
+        "patch_applies_wilson_95": [
+          0.0,
+          0.5615
+        ],
+        "touches_gold_file_count": 3,
+        "touches_gold_file_rate": 1.0,
+        "touches_gold_file_wilson_95": [
+          0.4385,
+          1.0
+        ],
+        "touches_gold_function_count": 0,
+        "touches_gold_function_rate": 0.0,
+        "touches_gold_function_wilson_95": [
+          0.0,
+          0.5615
+        ],
+        "tests_pass": null,
+        "mean_context_tokens": 2818.3,
+        "mean_wall_seconds": 0.1439
+      }
+    },
+    "gate_b_enforced": true,
+    "container_execution": "offline_host_decoupled",
+    "note": "tests_pass is explicitly null under Gate B because container execution is decoupled on Windows host"
+  },
+  "data": {
+    "status": "complete",
+    "evaluation_partition": "dev_val",
+    "sample_size": 3,
+    "evaluated_instances": [
+      "django__django-11099",
+      "django__django-11179",
+      "matplotlib__matplotlib-23964"
+    ],
+    "arms": {
+      "none": {
+        "n": 3,
+        "patch_produced_count": 0,
+        "patch_applies_count": 0,
+        "patch_applies_rate": 0.0,
+        "patch_applies_wilson_95": [
+          0.0,
+          0.5615
+        ],
+        "touches_gold_file_count": 0,
+        "touches_gold_file_rate": 0.0,
+        "touches_gold_file_wilson_95": [
+          0.0,
+          0.5615
+        ],
+        "touches_gold_function_count": 0,
+        "touches_gold_function_rate": 0.0,
+        "touches_gold_function_wilson_95": [
+          0.0,
+          0.5615
+        ],
+        "tests_pass": null,
+        "mean_context_tokens": 10.0,
+        "mean_wall_seconds": 0.0002
+      },
+      "bm25": {
+        "n": 3,
+        "patch_produced_count": 0,
+        "patch_applies_count": 0,
+        "patch_applies_rate": 0.0,
+        "patch_applies_wilson_95": [
+          0.0,
+          0.5615
+        ],
+        "touches_gold_file_count": 3,
+        "touches_gold_file_rate": 1.0,
+        "touches_gold_file_wilson_95": [
+          0.4385,
+          1.0
+        ],
+        "touches_gold_function_count": 0,
+        "touches_gold_function_rate": 0.0,
+        "touches_gold_function_wilson_95": [
+          0.0,
+          0.5615
+        ],
+        "tests_pass": null,
+        "mean_context_tokens": 3795.7,
+        "mean_wall_seconds": 0.0722
+      },
+      "perron": {
+        "n": 3,
+        "patch_produced_count": 0,
+        "patch_applies_count": 0,
+        "patch_applies_rate": 0.0,
+        "patch_applies_wilson_95": [
+          0.0,
+          0.5615
+        ],
+        "touches_gold_file_count": 3,
+        "touches_gold_file_rate": 1.0,
+        "touches_gold_file_wilson_95": [
+          0.4385,
+          1.0
+        ],
+        "touches_gold_function_count": 0,
+        "touches_gold_function_rate": 0.0,
+        "touches_gold_function_wilson_95": [
+          0.0,
+          0.5615
+        ],
+        "tests_pass": null,
+        "mean_context_tokens": 2818.3,
+        "mean_wall_seconds": 0.1439
+      }
+    },
+    "gate_b_enforced": true,
+    "container_execution": "offline_host_decoupled",
+    "note": "tests_pass is explicitly null under Gate B because container execution is decoupled on Windows host"
+  }
+}

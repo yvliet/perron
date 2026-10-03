@@ -3,73 +3,73 @@
   "hub_suppression_index": {
     "bi_encoder": {
       "mean": 97.8,
-      "std": 7.365113574085852,
+      "std": 7.082603003566023,
       "iqm": 100.0,
       "ci_95": [
         95.6,
-        99.6
+        99.4
       ]
     },
     "bfs_2hop": {
-      "mean": 94.4,
-      "std": 11.277573917708885,
+      "mean": 95.0,
+      "std": 9.741558354989897,
       "iqm": 98.37209302325581,
       "ci_95": [
-        91.2,
-        97.2
+        92.2,
+        97.4
       ]
     },
     "standard_ppr": {
-      "mean": 87.2,
-      "std": 16.16749068662298,
-      "iqm": 94.25,
+      "mean": 87.6,
+      "std": 16.106786502234748,
+      "iqm": 93.57142857142857,
       "ci_95": [
-        82.4,
-        91.20499999999997
+        82.8,
+        91.6
       ]
     },
     "perron": {
-      "mean": 95.6,
-      "std": 10.720950308167838,
+      "mean": 95.8,
+      "std": 9.91597350804473,
       "iqm": 100.0,
       "ci_95": [
-        92.4,
-        98.4
+        93.0,
+        98.2
       ]
     },
     "comparison": {
       "test_type": "Paired Samples Evaluation",
       "primary_test": "Paired Student's t-test",
-      "statistic": 5.015575275421813,
+      "statistic": 4.8728130188457905,
       "df": 49,
-      "p_value": 7.333501979870912e-06,
+      "p_value": 1.1949453955351603e-05,
       "wilcoxon_w": 0.0,
-      "wilcoxon_p": 3.4068799859959287e-06,
-      "mean_diff": 8.4,
+      "wilcoxon_p": 5.473010198635973e-06,
+      "mean_diff": 8.2,
       "ci_diff_95": [
-        3.0,
-        13.599999999999994
+        2.799999999999997,
+        13.200000000000003
       ],
-      "effect_size_cohen_d": 0.7093094577604698,
-      "effect_size_cliffs_delta": 0.378,
+      "effect_size_cohen_d": 0.6891198258159902,
+      "effect_size_cliffs_delta": 0.3716,
       "n_a": 50,
       "n_b": 50,
-      "mean_a": 87.2,
-      "std_a": 16.16749068662298,
+      "mean_a": 87.6,
+      "std_a": 16.106786502234748,
       "median_a": 90.0,
       "iqr_a": 20.0,
-      "iqm_a": 94.25,
-      "mean_b": 95.6,
-      "std_b": 10.720950308167838,
+      "iqm_a": 93.57142857142857,
+      "mean_b": 95.8,
+      "std_b": 9.91597350804473,
       "median_b": 100.0,
       "iqr_b": 0.0,
       "iqm_b": 100.0,
       "diagnostics": {
-        "p_norm_a": 0.0005274392715849186,
-        "p_norm_b": 4.696444641451595e-10,
-        "p_levene": 0.0033896042249890145
+        "p_norm_a": 2.4354860918872542e-05,
+        "p_norm_b": 6.327174025303643e-10,
+        "p_levene": 0.0035921215974291363
       },
-      "academic_prose": "A statistical comparison demonstrated a statistically significant difference between Perron (M = 95.60, SD = 10.72, IQM = 100.00) and StandardPPR (M = 87.20, SD = 16.17, IQM = 94.25), t(49) = 5.02, p < .001, mean difference = 8.40 (95% CI [3.00, 13.60]), Cohen's d = 0.71, Cliff's delta = 0.38."
+      "academic_prose": "A statistical comparison demonstrated a statistically significant difference between Perron (M = 95.80, SD = 9.92, IQM = 100.00) and StandardPPR (M = 87.60, SD = 16.11, IQM = 93.57), t(49) = 4.87, p < .001, mean difference = 8.20 (95% CI [2.80, 13.20]), Cohen's d = 0.69, Cliff's delta = 0.37."
     }
   },
   "mean_reciprocal_rank": {
@@ -81,74 +81,74 @@
       ]
     },
     "bfs_2hop": {
-      "mean": 0.02559812815771895,
+      "mean": 0.025290453654004844,
       "ci_95": [
-        0.00982849453615438,
-        0.04530403385333052
+        0.009808523039004669,
+        0.04460504401877751
       ]
     },
     "standard_ppr": {
-      "mean": 0.1619193000817125,
+      "mean": 0.1524184982210324,
       "ci_95": [
-        0.07360805128069794,
-        0.27064536151374485
+        0.07056033467127623,
+        0.25470062836988344
       ]
     },
     "perron": {
-      "mean": 0.04166723943983036,
+      "mean": 0.04212437524201596,
       "ci_95": [
-        0.011260755666038099,
-        0.09381780075840973
+        0.011592455601298289,
+        0.09470434433461168
       ]
     },
     "comparison": {
       "test_type": "Paired Samples Evaluation",
       "primary_test": "Paired Student's t-test",
-      "statistic": -2.8972313971768044,
+      "statistic": -2.548738587400096,
       "df": 49,
-      "p_value": 0.005614022165238419,
-      "wilcoxon_w": 23.0,
-      "wilcoxon_p": 6.659060245127125e-05,
-      "mean_diff": -0.12025206064188218,
+      "p_value": 0.013994615868226059,
+      "wilcoxon_w": 36.0,
+      "wilcoxon_p": 0.00014305384791016862,
+      "mean_diff": -0.11029412297901643,
       "ci_diff_95": [
-        -0.2339498193755125,
-        -0.02316755299706385
+        -0.21372153132783725,
+        -0.016990847315186543
       ],
-      "effect_size_cohen_d": -0.4097303935220588,
-      "effect_size_cliffs_delta": -0.0424,
+      "effect_size_cohen_d": -0.36044606772448595,
+      "effect_size_cliffs_delta": -0.0652,
       "n_a": 50,
       "n_b": 50,
-      "mean_a": 0.1619193000817125,
-      "std_a": 0.34832791507361655,
-      "median_a": 0.0008338627424433359,
-      "iqr_a": 0.03601364932587099,
-      "iqm_a": 0.004411831410826818,
-      "mean_b": 0.04166723943983036,
-      "std_b": 0.1498804040028142,
-      "median_b": 0.0008338627424433359,
-      "iqr_b": 0.014302632530393983,
-      "iqm_b": 0.0022361394778542525,
+      "mean_a": 0.1524184982210324,
+      "std_a": 0.3303146161240414,
+      "median_a": 0.0013386975343497084,
+      "iqr_a": 0.03263706029936777,
+      "iqm_a": 0.004929880324813362,
+      "mean_b": 0.04212437524201596,
+      "std_b": 0.14979820797689816,
+      "median_b": 0.0013386975343497084,
+      "iqr_b": 0.016471031146047515,
+      "iqm_b": 0.002743900838891583,
       "diagnostics": {
-        "p_norm_a": 1.981585852465437e-06,
-        "p_norm_b": 8.18550360198694e-22,
-        "p_levene": 0.027065437613835053
+        "p_norm_a": 4.281690983043882e-07,
+        "p_norm_b": 8.162608900737116e-22,
+        "p_levene": 0.0337185779193989
       },
-      "academic_prose": "A statistical comparison demonstrated a statistically significant difference between PerronMRR (M = 0.04, SD = 0.15, IQM = 0.00) and StandardPPRMRR (M = 0.16, SD = 0.35, IQM = 0.00), t(49) = -2.90, p = 0.006, mean difference = -0.12 (95% CI [-0.23, -0.02]), Cohen's d = -0.41, Cliff's delta = -0.04."
+      "academic_prose": "A statistical comparison demonstrated a statistically significant difference between PerronMRR (M = 0.04, SD = 0.15, IQM = 0.00) and StandardPPRMRR (M = 0.15, SD = 0.33, IQM = 0.00), t(49) = -2.55, p = 0.014, mean difference = -0.11 (95% CI [-0.21, -0.02]), Cohen's d = -0.36, Cliff's delta = -0.07."
     }
   },
   "function_recall": {
     "bi_encoder_2k": {
-      "mean": 0.0,
+      "mean": 0.06,
       "ci_95": [
         0.0,
-        0.0
+        0.14
       ]
     },
     "bi_encoder_4k": {
-      "mean": 0.0,
+      "mean": 0.06,
       "ci_95": [
         0.0,
-        0.0
+        0.14
       ]
     },
     "bfs_2hop_2k": {
@@ -196,38 +196,38 @@
   },
   "file_recall": {
     "bi_encoder_2k": {
-      "mean": 0.4,
+      "mean": 0.54,
       "ci_95": [
-        0.2795000000000009,
-        0.54
+        0.4,
+        0.68
       ]
     },
     "bi_encoder_4k": {
-      "mean": 0.42,
+      "mean": 0.56,
       "ci_95": [
-        0.3,
-        0.56
+        0.42,
+        0.7
       ]
     },
     "bfs_2hop_2k": {
-      "mean": 0.32,
+      "mean": 0.3,
       "ci_95": [
-        0.2,
-        0.46
+        0.18,
+        0.44
       ]
     },
     "bfs_2hop_4k": {
-      "mean": 0.32,
+      "mean": 0.34,
       "ci_95": [
-        0.2,
-        0.46
+        0.22,
+        0.48
       ]
     },
     "standard_ppr_2k": {
-      "mean": 0.42,
+      "mean": 0.4,
       "ci_95": [
         0.28,
-        0.56
+        0.54
       ]
     },
     "standard_ppr_4k": {
@@ -238,17 +238,17 @@
       ]
     },
     "perron_2k": {
-      "mean": 0.42,
+      "mean": 0.4,
       "ci_95": [
-        0.28,
-        0.56
+        0.26,
+        0.54
       ]
     },
     "perron_4k": {
-      "mean": 0.42,
+      "mean": 0.44,
       "ci_95": [
-        0.28,
-        0.56
+        0.3,
+        0.58
       ]
     }
   }
