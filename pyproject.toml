@@ -67,6 +67,7 @@ perron-mcp = "perron.mcp_server:main"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["perron*"]
+exclude = ["perron.scratch*", "perron.scratch", "scratch*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

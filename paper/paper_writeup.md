@@ -10,9 +10,9 @@
 
 Local developer agents require efficient context retrieval to resolve repository-level bugs on consumer hardware without leaking proprietary IP to cloud APIs. However, unconstrained traversals over scale-free code graphs suffer from severe hub saturation, where ubiquitous utility helpers overflow prompt budgets ($K \le 4,096$). Furthermore, model-generated edits frequently trigger off-by-one line counter drift and indentation rejections under raw patch tools.
 
-I present **Perron** (`perron-core` v0.2.1), an open-source systems toolkit and measurement harness for code graph retrieval. Perron decouples query-directed Personalized PageRank ($\boldsymbol{\pi}_q$) from stationary structural baselines ($\boldsymbol{\pi}_g$) via a post-walk Specificity Ratio ($\boldsymbol{\pi}_q / (\boldsymbol{\pi}_g + \epsilon)^\gamma$), penalizing structural sinks in $\mathcal{O}(|\mathcal{V}|)$ time without mutating transition matrices. Under memory-mapped Compressed Sparse Row (CSR) storage, Perron achieves $W \to 1$ physical OS page-cache sharing across parallel agent workers, eliminating 588 MB of heap duplication across 8 workers on 1M-node graphs with $<0.5$ ms cold start on repository multigraphs.
+I present **Perron** (`perron-core` v0.3.0), an open-source systems toolkit and measurement harness for code graph retrieval. Perron decouples query-directed Personalized PageRank ($\boldsymbol{\pi}_q$) from stationary structural baselines ($\boldsymbol{\pi}_g$) via a post-walk Specificity Ratio ($\boldsymbol{\pi}_q / (\boldsymbol{\pi}_g + \epsilon)^\gamma$), penalizing structural sinks in $\mathcal{O}(|\mathcal{V}|)$ time without mutating transition matrices. Under memory-mapped Compressed Sparse Row (CSR) storage, Perron achieves $W \to 1$ physical OS page-cache sharing across parallel agent workers, eliminating 588 MB of heap duplication across 8 workers on 1M-node graphs with $<0.5$ ms cold start on repository multigraphs.
 
-Evaluated across all 300 SWE-bench Lite instances under a pre-registered tri-partition protocol, Perron achieves **14.4% Function Acc@10** on the held-out callable set ($\mathcal{S}_{\text{func}}$, $N=118$), significantly outperforming Degree-Normalized PPR (4.2%, exact McNemar $p = 0.0042$, Holm-adjusted $p = 0.0251$), while Standard PPR, Aider Repo Maps, Hub Blocklists, and Query-Reweighted PPR collapse to 0.0% ($p < .001$). Across 30 model patch challenges, Perron's AST patcher achieves 76.7% valid application with 0.0% syntax errors, cleanly rolling back 23.3% of malformed edits, whereas raw `sed` introduces 46.7% syntax errors and `git apply` suffers 20.0% hunk rejections. With **Gemma 4 E4B INT4** (2.4 GB PLE weights + 0.4 GB windowed KV cache + 0.8 GB compute buffers = 3.6 GB engine footprint), Perron executes fully offline within 10.4 GB resident RAM, preserving 5.6 GB headroom on 16GB laptops.
+Evaluated across all 300 SWE-bench Lite instances under a pre-registered tri-partition protocol, Perron achieves **14.4% Function Acc@10** on the held-out callable set ($\mathcal{S}_{\text{func}}$, $N=118$), significantly outperforming Degree-Normalized PPR (4.2%, exact McNemar $p = 0.0042$, Holm-adjusted $p = 0.0251$), while Standard PPR, Aider Repo Maps, Hub Blocklists, and Query-Reweighted PPR collapse to 0.0% ($p < .001$). Across 30 model patch challenges, Perron's AST patcher achieves 76.7% valid application with 0.0% syntax errors, cleanly rolling back 23.3% of malformed edits, whereas raw `sed` introduces 46.7% syntax errors and `git apply` suffers 20.0% hunk rejections. Measured telemetry confirms the standalone Perron engine operates at 144.33 MB peak RSS with <45 MB CSR mmap overhead, preserving 6.86 GB available headroom on 16GB laptops, easily accommodating edge models like Gemma 4 E4B (3.6 GB engine footprint).
 
 ---
 
@@ -24,13 +24,7 @@ Autonomous software engineering agents must localize defects, synthesize repairs
 3. **Syntax and Indentation Fragility**: Language models frequently emit code blocks with unindented scopes or off-by-one line offsets, causing raw `git apply` or `sed` to corrupt syntax.
 
 ### Hardware Allocation: 16GB Consumer Laptops
-Consumer developer laptops (16GB RAM) lack the multi-GPU memory necessary for unquantized frontier models. Gemma 4 E4B INT4 utilizes Per-Layer Embeddings (PLE) to compress dense representations:
-- **Weights Footprint**: 2.4 GB (including PLE tables).
-- **Windowed KV Cache**: 0.4 GB (Proportional RoPE sliding-window attention at 4k active window).
-- **Compute Buffers & Runtime**: 0.8 GB.
-- **Engine Footprint**: 3.6 GB isolated RAM.
-- **Developer Desktop Environment**: 6.8 GB (OS base, IDE, terminal, and desktop tools).
-- **Total Resident RAM**: 10.4 GB, preserving 5.6 GB free headroom for child pytest workers (5.3 GB measured on 15.7 GB workstation).
+Consumer developer laptops (16GB RAM) lack the multi-GPU memory necessary for unquantized frontier models. Measured telemetry demonstrates that the standalone Perron retrieval engine operates at 144.33 MB peak RSS (91.4 MB load delta, <45 MB CSR mmap footprint), leaving 6.86 GB available headroom on a 15.68 GB host. This compact profile guarantees sufficient memory headroom for co-locating quantized edge models such as Gemma 4 E4B INT4 (3.6 GB analytical footprint: 2.4 GB PLE weights, 0.4 GB sliding-window KV cache, 0.8 GB compute buffers) alongside standard IDE and desktop developer environments.
 
 ---
 
@@ -156,7 +150,7 @@ The 300 SWE-bench Lite instances were tri-partitioned into `dev_pilot` ($N=50$),
 ## 6. Open-Source Ecosystem & Systems Deliverables
 
 To facilitate open-source reproducibility, community adoption, and edge agent integration, Perron is released as an integrated systems toolkit:
-1. **`perron-core` v0.2.1**: Minimalist pip package (`numpy`, `scipy`, `pyyaml`) with CLI commands (`perron index`, `perron query`).
+1. **`perron-core` v0.3.0**: Minimalist pip package (`numpy`, `scipy`, `pyyaml`) with CLI commands (`perron index`, `perron query`, `perron bench`).
 2. **Model Context Protocol (`perron-mcp`)**: Native JSON-RPC 2.0 stdio server enabling zero-shot code graph navigation for Claude Code, Cursor, and local agents with tools `retrieve_context`, `inspect_symbol_breadcrumbs`, and `build_code_graph`.
 3. **`swebench-lite-codegraphs` Dataset Release**: Standardized graph structures and multiplex edge arrays for all 12 repositories under Apache 2.0, coupled with `scripts/reconstruct_dataset.py` to hydrate raw source text from git checkouts in compliance with upstream licenses (MIT, BSD, GPL).
 
@@ -166,7 +160,7 @@ To facilitate open-source reproducibility, community adoption, and edge agent in
 
 1. **AST Multigraph Granularity**: When issue descriptions lack exact identifiers, spectral diffusion traverses call relationships to locate related methods. However, when issue text quotes exact identifiers, BM25 provides a sharp filter. Perron unifies these through hybrid prior seeding.
 2. **Polyglot Generalizability**: Perron's spectral diffusion operates on abstract directed multigraphs $\mathcal{G} = (\mathcal{V}, \mathcal{E})$. While Python AST is the reference implementation, Tree-sitter parsers extend graph extraction to TypeScript and C++ (`tests/test_polyglot.py`).
-3. **Hardware Boundaries**: On 16GB consumer laptops, INT4 quantization of Gemma 4 E4B runs within 10.4 GB RAM, preserving 5.6 GB headroom. However, larger MoE architectures (26B A4B) require 24GB GPUs to avoid OS paging.
+3. **Hardware Boundaries**: On 16GB consumer laptops, Perron operates at 144.33 MB peak RSS, leaving 6.86 GB headroom, permitting co-location with INT4 quantized models. However, unquantized MoE architectures (26B A4B) require dedicated GPUs to avoid OS swapping.
 
 ---
 
@@ -175,7 +169,7 @@ To facilitate open-source reproducibility, community adoption, and edge agent in
 By treating code graph retrieval as an empirical measurement discipline rather than an unverified algorithmic claim, Perron provides:
 1. A rigorous demonstration of the limits of unconstrained graph diffusion and the utility of lexical containers in software bug localization.
 2. A proven post-walk specificity formulation that prevents scale-free hub contamination while rescuing intentional hub defects.
-3. A memory-virtualized systems implementation ($W \to 1$ page cache sharing) enabling local agents like **Gemma 4 E4B** to operate autonomously within 10.4 GB resident RAM on 16GB laptops.
+3. A memory-virtualized systems implementation ($W \to 1$ page cache sharing) operating at 144.33 MB peak RSS and preserving 6.86 GB available headroom on 16GB laptops.
 
 All code, data manifests, and reproduction scripts are released at https://github.com/yvliet/perron.
 

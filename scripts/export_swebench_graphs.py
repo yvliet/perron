@@ -421,10 +421,12 @@ def export_all_instance_graphs(
             logger.warning(f"Failed exporting graph for {instance_id}: {err_msg}")
             failures.append({"instance_id": instance_id, "error": err_msg})
 
-    if failures or not failures_file.exists():
+    if failures:
         with open(failures_file, "w", encoding="utf-8") as f:
             for fail in failures:
                 f.write(json.dumps(fail) + "\n")
+    elif failures_file.exists():
+        failures_file.unlink()
 
     return success_count, failure_count
 

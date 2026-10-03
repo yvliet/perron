@@ -63,9 +63,17 @@
       "@id": "gold-jsonl",
       "name": "gold.jsonl",
       "description": "Ground-truth patch targets and hub percentiles across all 300 SWE-bench Lite tasks.",
-      "contentUrl": "data_release/gold.jsonl",
+      "contentUrl": "gold.jsonl",
       "encodingFormat": "application/jsonlines",
       "sha256": "29a3a88b95ea6e7272e212d1b8d232f7c3b8b40390f3a67a44dc2b47cd9cccdd"
+    },
+    {
+      "@type": "cr:FileSet",
+      "@id": "graph-files",
+      "name": "graph-files",
+      "description": "Compressed Sparse Row (CSR) matrices and AST symbol nodes across 300 instances.",
+      "includes": "graphs/*/*",
+      "encodingFormat": "application/octet-stream"
     }
   ],
   "recordSet": [
@@ -86,7 +94,7 @@
               "@id": "gold-jsonl"
             },
             "extract": {
-              "jsonPath": "$.instance_id"
+              "column": "instance_id"
             }
           }
         },
@@ -101,7 +109,7 @@
               "@id": "gold-jsonl"
             },
             "extract": {
-              "jsonPath": "$.repo"
+              "column": "repo"
             }
           }
         },
@@ -116,7 +124,7 @@
               "@id": "gold-jsonl"
             },
             "extract": {
-              "jsonPath": "$.gold_in_degree_percentile"
+              "column": "gold_in_degree_percentile"
             }
           }
         },
@@ -131,7 +139,7 @@
               "@id": "gold-jsonl"
             },
             "extract": {
-              "jsonPath": "$.is_hub_gold"
+              "column": "is_hub_gold"
             }
           }
         },
@@ -146,7 +154,7 @@
               "@id": "gold-jsonl"
             },
             "extract": {
-              "jsonPath": "$.stratum"
+              "column": "stratum"
             }
           }
         },
@@ -161,7 +169,7 @@
               "@id": "gold-jsonl"
             },
             "extract": {
-              "jsonPath": "$.split"
+              "column": "split"
             }
           }
         }

@@ -82,7 +82,7 @@ def pack_context_subgraphs(
             else:
                 symbols_dict[i] = ASTContextSymbol(
                     node_id=getattr(s, "node_id", i),
-                    name=getattr(s, "identifier", getattr(s, "name", str(s))),
+                    name=getattr(s, "qualified_name", getattr(s, "identifier", getattr(s, "name", str(s)))),
                     file_path=getattr(s, "file_path", ""),
                     start_line=getattr(s, "line_start", getattr(s, "start_line", 1)),
                     end_line=getattr(s, "line_end", getattr(s, "end_line", 1)),

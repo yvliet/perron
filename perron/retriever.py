@@ -370,22 +370,40 @@ class CodeGraph:
 
     def __init__(
         self,
-        cache_dir: Path,
-        nodes: List[ASTSymbolNode],
-        t_matrix,
-        symbols,
-        metadata: dict,
+        cache_dir: Optional[Path] = None,
+        nodes: Optional[List[Any]] = None,
+        t_matrix: Any = None,
+        symbols: Optional[Sequence[Any]] = None,
+        metadata: Optional[dict] = None,
         dangling: Optional[np.ndarray] = None,
         pi_global: Optional[np.ndarray] = None,
+        symbol_index: Optional[dict] = None,
+        **kwargs,
     ):
         self.cache_dir = cache_dir
-        self.nodes = nodes
+        if nodes is not None:
+            self.nodes = list(nodes)
+        elif symbols is not None:
+            self.nodes = list(symbols)
+        else:
+            self.nodes = []
+
         self.t_matrix = t_matrix
-        self.symbols = symbols
-        self.metadata = metadata
+        self.symbols = list(symbols) if symbols is not None else self.nodes
+        self.metadata = metadata if metadata is not None else {}
         self.dangling = dangling
         self.pi_global = pi_global
+        self.symbol_index = (
+            symbol_index
+            if symbol_index is not None
+            else {
+                getattr(s, "qualified_name", getattr(s, "name", str(s))): i
+                for i, s in enumerate(self.symbols)
+            }
+        )
         self.n_symbols = len(self.symbols)
+        for k, v in kwargs.items():
+            setattr(self, k, v)
 
     @classmethod
     def from_directory(

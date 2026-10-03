@@ -111,9 +111,8 @@ def test_mcp_stdio_lifecycle_and_tools(tmp_path: Path):
         proc.stdin.close()
         proc.wait(timeout=5)
 
-    # Save transcript
-    transcript_file = REPO_ROOT / "docs" / "mcp_transcript.json"
-    transcript_file.parent.mkdir(parents=True, exist_ok=True)
+    # Save transcript to isolated temporary fixture to prevent git tree pollution (EPITAPH-103)
+    transcript_file = tmp_path / "mcp_transcript.json"
     with open(transcript_file, "w", encoding="utf-8") as f:
         json.dump(transcript, f, indent=2)
     assert transcript_file.exists()
