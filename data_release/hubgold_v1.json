@@ -1,0 +1,116 @@
+{
+  "dev_val": {
+    "bm25": {
+      "method": "bm25",
+      "split": "dev_val",
+      "acc_h": 33.33,
+      "acc_n": 19.59,
+      "hsi": 99.7,
+      "headline": 26.46,
+      "count_h": 3,
+      "count_n": 97,
+      "count_total": 100
+    },
+    "standard_ppr": {
+      "method": "standard_ppr",
+      "split": "dev_val",
+      "acc_h": 33.33,
+      "acc_n": 1.03,
+      "hsi": 60.0,
+      "headline": 17.18,
+      "count_h": 3,
+      "count_n": 97,
+      "count_total": 100
+    },
+    "deg_ppr": {
+      "method": "deg_ppr",
+      "split": "dev_val",
+      "acc_h": 0.0,
+      "acc_n": 3.09,
+      "hsi": 97.1,
+      "headline": 1.55,
+      "count_h": 3,
+      "count_n": 97,
+      "count_total": 100
+    },
+    "perron_static": {
+      "method": "perron_static",
+      "split": "dev_val",
+      "acc_h": 0.0,
+      "acc_n": 13.4,
+      "hsi": 92.3,
+      "headline": 6.7,
+      "count_h": 3,
+      "count_n": 97,
+      "count_total": 100
+    },
+    "perron": {
+      "method": "perron",
+      "split": "dev_val",
+      "acc_h": 33.33,
+      "acc_n": 7.22,
+      "hsi": 82.4,
+      "headline": 20.27,
+      "count_h": 3,
+      "count_n": 97,
+      "count_total": 100
+    }
+  },
+  "heldout": {
+    "bm25": {
+      "method": "bm25",
+      "split": "heldout",
+      "acc_h": 0.0,
+      "acc_n": 18.12,
+      "hsi": 99.93,
+      "headline": 9.06,
+      "count_h": 1,
+      "count_n": 149,
+      "count_total": 150
+    },
+    "standard_ppr": {
+      "method": "standard_ppr",
+      "split": "heldout",
+      "acc_h": 0.0,
+      "acc_n": 0.0,
+      "hsi": 59.0,
+      "headline": 0.0,
+      "count_h": 1,
+      "count_n": 149,
+      "count_total": 150
+    },
+    "deg_ppr": {
+      "method": "deg_ppr",
+      "split": "heldout",
+      "acc_h": 0.0,
+      "acc_n": 3.36,
+      "hsi": 96.93,
+      "headline": 1.68,
+      "count_h": 1,
+      "count_n": 149,
+      "count_total": 150
+    },
+    "perron_static": {
+      "method": "perron_static",
+      "split": "heldout",
+      "acc_h": 0.0,
+      "acc_n": 11.41,
+      "hsi": 93.2,
+      "headline": 5.7,
+      "count_h": 1,
+      "count_n": 149,
+      "count_total": 150
+    },
+    "perron": {
+      "method": "perron",
+      "split": "heldout",
+      "acc_h": 0.0,
+      "acc_n": 9.4,
+      "hsi": 82.2,
+      "headline": 4.7,
+      "count_h": 1,
+      "count_n": 149,
+      "count_total": 150
+    }
+  }
+}

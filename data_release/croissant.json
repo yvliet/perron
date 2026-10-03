@@ -1,0 +1,173 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "equivalentProperty": "cr:equivalentProperty",
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileProperty": "cr:fileProperty",
+    "fileObject": "cr:fileObject",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "samplingRate": "cr:samplingRate",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform"
+  },
+  "@type": "sc:Dataset",
+  "name": "perron-swebench-graphs",
+  "description": "Derived Compressed Sparse Row (CSR) AST multigraphs and gold patch targets for 300 SWE-bench Lite task instances.",
+  "url": "https://github.com/yvliet/perron",
+  "license": "https://spdx.org/licenses/Apache-2.0.html",
+  "version": "1.0.0",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": {
+    "@type": "Person",
+    "name": "Sultan Haikal"
+  },
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "gold-jsonl",
+      "name": "gold.jsonl",
+      "description": "Ground-truth patch targets and hub percentiles across all 300 SWE-bench Lite tasks.",
+      "contentUrl": "data_release/gold.jsonl",
+      "encodingFormat": "application/jsonlines",
+      "sha256": "29a3a88b95ea6e7272e212d1b8d232f7c3b8b40390f3a67a44dc2b47cd9cccdd"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "gold_targets",
+      "name": "gold_targets",
+      "description": "Ground truth task localization targets.",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "gold_targets/instance_id",
+          "name": "instance_id",
+          "description": "SWE-bench Lite task instance identifier.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "gold-jsonl"
+            },
+            "extract": {
+              "jsonPath": "$.instance_id"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "gold_targets/repo",
+          "name": "repo",
+          "description": "Target repository.",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "gold-jsonl"
+            },
+            "extract": {
+              "jsonPath": "$.repo"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "gold_targets/gold_in_degree_percentile",
+          "name": "gold_in_degree_percentile",
+          "description": "In-degree percentile within repository graph.",
+          "dataType": "sc:Float",
+          "source": {
+            "fileObject": {
+              "@id": "gold-jsonl"
+            },
+            "extract": {
+              "jsonPath": "$.gold_in_degree_percentile"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "gold_targets/is_hub_gold",
+          "name": "is_hub_gold",
+          "description": "Flag indicating if target is a high-degree hub.",
+          "dataType": "sc:Boolean",
+          "source": {
+            "fileObject": {
+              "@id": "gold-jsonl"
+            },
+            "extract": {
+              "jsonPath": "$.is_hub_gold"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "gold_targets/stratum",
+          "name": "stratum",
+          "description": "Lexical target difficulty stratum (A/B/C).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "gold-jsonl"
+            },
+            "extract": {
+              "jsonPath": "$.stratum"
+            }
+          }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "gold_targets/split",
+          "name": "split",
+          "description": "Dataset partition (pilot, dev_val, heldout).",
+          "dataType": "sc:Text",
+          "source": {
+            "fileObject": {
+              "@id": "gold-jsonl"
+            },
+            "extract": {
+              "jsonPath": "$.split"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "citeAs": "@article{haikal2026perron, title={Perron: Scale-Free Spectral Code Graph Diffusion for Autonomous Developer Agents}, author={Haikal, Sultan}, year={2026}}",
+  "datePublished": "2026-10-03"
+}

@@ -1,0 +1,15 @@
+{
+  "instance_id": "django__django-11964",
+  "repo": "django/django",
+  "base_commit": "fc2b1cc926e34041953738e58fa6ad3053059b22",
+  "perron_version": "0.3.0",
+  "node_count": 31705,
+  "edge_count": 331849,
+  "sha256": {
+    "csr_data.npy": "ca7f8ed1db12f34f22b3fecb228eed142b37a98c708def233fde13a35370a333",
+    "csr_indices.npy": "683d8aa523fc905883d54bc6415099fef61aeb2f8311401e9544a77276396844",
+    "csr_indptr.npy": "ef6ece1be15d273c11e045c847ba82269ab0adba2046837f4b20fc7583953a38",
+    "csr_dangling.npy": "d2a5e42323e44af8052bb785a78ba40bfcbbc545fc81c004b1963a2ee824678e",
+    "nodes.parquet": "2891d56c7c2d365ff9df788c032de06344f3a410866c92585437a6e1dbf0dac7"
+  }
+}

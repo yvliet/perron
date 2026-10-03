@@ -1,0 +1,15 @@
+{
+  "instance_id": "psf__requests-2148",
+  "repo": "psf/requests",
+  "base_commit": "fe693c492242ae532211e0c173324f09ca8cf227",
+  "perron_version": "0.3.0",
+  "node_count": 284,
+  "edge_count": 770,
+  "sha256": {
+    "csr_data.npy": "5657c22b114ae5c4a7629d4ced219ee2d04607efa9f98f9edc751d68ddac5d6c",
+    "csr_indices.npy": "90287d6ea2d968a9910e03a2411dc7447bfc905e177c822e06a6946737fd5e36",
+    "csr_indptr.npy": "3e04df95f111bd72fb471a84acd6901661056c5459e93c0062646636a648fd76",
+    "csr_dangling.npy": "4a559cb0aa4ad066edb6112a5157f2e19d627df0bbdd809bedbbd4da90a33ab1",
+    "nodes.parquet": "3510fff4c42c202989bc880fd751910d6eb29d28d83ef466cf9668ee1f53969c"
+  }
+}

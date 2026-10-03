@@ -1,0 +1,15 @@
+{
+  "instance_id": "pylint-dev__pylint-6506",
+  "repo": "pylint-dev/pylint",
+  "base_commit": "0a4204fd7555cfedd43f43017c94d24ef48244a5",
+  "perron_version": "0.3.0",
+  "node_count": 7010,
+  "edge_count": 13416,
+  "sha256": {
+    "csr_data.npy": "49916caac084ee67361af4ff099d67018a2a47f9a8b7f329e79877cc5b5ede58",
+    "csr_indices.npy": "68baa0c689a9bd8155f454362e8489a5d263e2cfa7c41f7034397d4d2213ad69",
+    "csr_indptr.npy": "29779af30385a41a8081d7ec704e314a32e2d104b789d716742ba0a0efe96c77",
+    "csr_dangling.npy": "db30dfeab8986452797e1767437f5552435a77fc937aa2656fa160163bdd11d2",
+    "nodes.parquet": "6d5d9705d719251357f53b77af000b34d8d7a1c2680c0c705c6c0c6e298840b0"
+  }
+}

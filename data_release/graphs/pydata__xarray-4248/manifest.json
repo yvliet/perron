@@ -1,0 +1,15 @@
+{
+  "instance_id": "pydata__xarray-4248",
+  "repo": "pydata/xarray",
+  "base_commit": "98dc1f4ea18738492e074e9e51ddfed5cd30ab94",
+  "perron_version": "0.3.0",
+  "node_count": 4243,
+  "edge_count": 17310,
+  "sha256": {
+    "csr_data.npy": "68f5f7c3e0c478d11700166a039dd8dae3c08ac1f97c68e00955955551d01028",
+    "csr_indices.npy": "2da7f7fe1d6c0dbce3ed1d20cadfba404bcc7aff7e999e6a75d47be90239ed7d",
+    "csr_indptr.npy": "4fc550b7775bcbecc9c7ac7efd13953994796e61bbfa37f9efc74d2ed58eedaa",
+    "csr_dangling.npy": "7031516c92c562a71f6bfa4487a5f845e34d2d9beef30a72f064b8a55c3767a5",
+    "nodes.parquet": "8106dc1eda2f34a8c06c7b9e8bf66df16dd637caf0dd17d3f2c90bc0b6ca1f2f"
+  }
+}

@@ -11,41 +11,67 @@ Perron is a high-throughput AST subgraph slicing and graph retrieval engine desi
 
 ## Quickstart
 
-### Installation
-```bash
-pip install perron-core
+### 5-Line Python Quickstart
+```python
+import perron
+from perron.loaders import load_instance_graph
+
+# Load pre-indexed zero-copy CSR multigraph and query localized context
+graph = load_instance_graph("data_release/graphs/django__django-11099")
+retriever = perron.PerronRetriever(graph.t_matrix, dangling=graph.dangling, symbols=graph.nodes_df)
+context = retriever.query("Fix username validation regex boundary condition", max_tokens=4096)
 ```
 
-Or install from source with polyglot support:
+### Installation
+```bash
+# Standard library install
+pip install perron-core
+
+# Full suite with graph loaders and dataset tools
+pip install "perron-core[data,dev]"
+```
+
+Or install locally from source:
 ```bash
 git clone https://github.com/yvliet/perron.git
 cd perron
-pip install -e .[polyglot]
+pip install -e .[data]
 ```
 
-### Python API (3-Line Quickstart)
-```python
-from perron import CodeGraph, PerronRetriever
+### Model Context Protocol (MCP) Integration
+Perron provides a turnkey JSON-RPC 2.0 stdio MCP server for Cursor, Claude Desktop, and autonomous agents:
 
-# 1. Index codebase into an AST multigraph and zero-copy CSR transition matrix
-graph = CodeGraph.from_directory("./my_project")
-
-# 2. Instantiate specificity-directed diffusion retriever
-retriever = PerronRetriever(graph)
-
-# 3. Retrieve context slice packed within token budget
-results = retriever.retrieve("Fix AttributeError in session token validation", max_tokens=4096)
-for sym in results:
-    print(f"-> {sym.identifier} ({sym.file_path}:{sym.line_start}-{sym.line_end})")
+```json
+{
+  "mcpServers": {
+    "perron": {
+      "command": "perron-mcp",
+      "args": ["--repo", "${workspaceFolder}"]
+    }
+  }
+}
 ```
 
-### CLI Interface
+Exposed tools:
+- `retrieve_context`: Queries repository context using spectral diffusion and specificity hub-suppression.
+- `inspect_symbol_breadcrumbs`: Navigates caller/callee hierarchical neighborhoods and PageRank breadcrumbs.
+- `build_code_graph`: Compiles AST multigraphs into zero-copy CSR transition matrices.
+
+### Dataset Resource Access
+The release bundle contains 300 pre-indexed SWE-bench Lite instance multigraphs (4.8M nodes, 41.5M edges):
+- Local directory: `data_release/graphs/<instance_id>/`
+- Kaggle Dataset: [`yvliet/perron-swebench-graphs`](https://www.kaggle.com/datasets/yvliet/perron-swebench-graphs)
+- Croissant 1.0 Metadata: [`data_release/croissant.json`](data_release/croissant.json)
+- Dataset Datasheet: [`data_release/DATASHEET.md`](data_release/DATASHEET.md)
+
+### Empirical Reproduction & Benchmarking
 ```bash
-# Index codebase
-perron index ./my_project -o ./my_project/.perron
+# Reproduce Table 2 Dev-Val Benchmark (14 Baselines)
+perron eval --suite table2 --split dev_val
 
-# Query candidate symbols
-perron query ./my_project "Fix AttributeError in session token validation" --budget 4096
+# Run Hub-Gold Dissection Benchmark
+perron bench --method perron --split dev_val
+perron bench --method bm25 --split heldout
 ```
 
 ---
@@ -321,3 +347,18 @@ python scripts/verify_paper.py               # Verify quality gates (figures, ci
 
 - **Author**: Sultan Haikal (GitHub: [@yvliet](https://github.com/yvliet))
 - **License**: Apache License, Version 2.0 (see [LICENSE](LICENSE))
+
+---
+
+## 8. Citation
+
+If you use Perron or the SWE-bench Lite Multigraph Resource in your research, please cite:
+
+```bibtex
+@article{haikal2026perron,
+  title={Perron: Scale-Free Spectral Code Graph Diffusion for Autonomous Developer Agents},
+  author={Haikal, Sultan},
+  year={2026},
+  url={https://github.com/yvliet/perron}
+}
+```

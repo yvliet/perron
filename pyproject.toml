@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "perron-core"
-version = "0.2.1"
+version = "0.3.0"
 description = "Context-Bounded Repository Navigation via Query-Directed Spectral Hub Suppression for Edge Developer Agents"
 authors = [
     { name = "Sultan Haikal", email = "yvliet@users.noreply.github.com" }
@@ -27,6 +27,11 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+data = [
+    "pyarrow>=14.0.0",
+    "networkx>=3.0",
+    "mlcroissant>=1.0.0",
+]
 polyglot = [
     "tree-sitter>=0.22.0",
     "tree-sitter-typescript>=0.21.0",

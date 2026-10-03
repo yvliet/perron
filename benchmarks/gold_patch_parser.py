@@ -175,6 +175,73 @@ class GoldPatchParser:
             json.dump(labels, f, indent=2)
         print(f"Saved {len(labels)} gold labels to {out_p}")
 
+    def export_gold_jsonl(
+        self,
+        out_path: str | Path = "data_release/gold.jsonl",
+        strata_file: str | Path = "data/strata.json",
+        split_file: str | Path = "data/swebench_lite_split.json",
+    ) -> None:
+        """
+        Export authoritative gold labels to data_release/gold.jsonl with:
+        instance_id, repo, gold_files, gold_functions, gold_in_degree_percentile,
+        is_hub_gold, stratum, and split.
+        """
+        out_p = Path(out_path)
+        out_p.parent.mkdir(parents=True, exist_ok=True)
+
+        strata_map: Dict[str, str] = {}
+        strata_p = Path(strata_file)
+        if strata_p.exists():
+            with open(strata_p, "r", encoding="utf-8") as f:
+                strata_map = json.load(f)
+
+        split_map: Dict[str, str] = {}
+        split_p = Path(split_file)
+        if split_p.exists():
+            with open(split_p, "r", encoding="utf-8") as f:
+                split_data = json.load(f)
+            for iid in split_data.get("dev_pilot_instances", []):
+                split_map[iid] = "pilot"
+            for iid in split_data.get("dev_val_instances", []):
+                split_map[iid] = "dev_val"
+            for iid in split_data.get("heldout_instances", []):
+                split_map[iid] = "heldout"
+
+        labels = self.build_all_gold_labels()
+
+        repo_degrees: Dict[str, List[int]] = {}
+        repo_sym_by_id: Dict[str, Dict[int, Dict[str, Any]]] = {}
+        for slug, syms in self.repo_symbols.items():
+            repo_degrees[slug] = sorted(s.get("degree", 0) for s in syms)
+            repo_sym_by_id[slug] = {s["id"]: s for s in syms}
+
+        with open(out_p, "w", encoding="utf-8") as f:
+            for instance_id, info in sorted(labels.items()):
+                repo = info.get("repo", "")
+                slug = get_repo_slug(repo)
+                gold_sym_ids = info.get("gold_symbol_ids", [])
+
+                degs = repo_degrees.get(slug, [])
+                sym_map = repo_sym_by_id.get(slug, {})
+                if gold_sym_ids and degs:
+                    max_gold_deg = max(sym_map.get(sid, {}).get("degree", 0) for sid in gold_sym_ids)
+                    pct = round((sum(1 for d in degs if d <= max_gold_deg) / len(degs)) * 100.0, 2)
+                else:
+                    pct = 0.0
+
+                record = {
+                    "instance_id": instance_id,
+                    "repo": repo,
+                    "gold_files": info.get("gold_files", []),
+                    "gold_functions": info.get("gold_symbol_names", []),
+                    "gold_in_degree_percentile": pct,
+                    "is_hub_gold": bool(info.get("is_hub_gold", False) or pct >= 99.0),
+                    "stratum": strata_map.get(instance_id, "C"),
+                    "split": split_map.get(instance_id, "heldout"),
+                }
+                f.write(json.dumps(record) + "\n")
+        print(f"Exported {len(labels)} gold records to {out_p}")
+
 
 def build_tri_partition_split(
     tasks_file: str | Path = "data/swebench_lite_cache.jsonl",

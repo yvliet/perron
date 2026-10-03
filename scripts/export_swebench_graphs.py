@@ -198,11 +198,244 @@ def export_repo_graph(
     logger.info(f"Successfully exported {slug} ({len(symbols)} symbols, {csr_standalone.nnz} edges)")
 
 
+def compute_file_sha256(path: Path) -> str:
+    """Compute hex SHA-256 hash of a file."""
+    import hashlib
+
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        while chunk := f.read(65536):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+_REPO_CACHE: Dict[str, Tuple[sp.csr_matrix, List[Dict]]] = {}
+
+
+def load_cached_repo_graph(repo_name: str, repo_graphs_dir: Path) -> Tuple[sp.csr_matrix, List[Dict]]:
+    """Load and cache repository CSR matrix and symbol records."""
+    slug = repo_name.replace("/", "__")
+    if slug in _REPO_CACHE:
+        return _REPO_CACHE[slug]
+
+    target_npz = repo_graphs_dir / f"{slug}_graph.npz"
+    target_symbols = repo_graphs_dir / f"{slug}_symbols.json"
+
+    if not target_npz.exists() or not target_symbols.exists():
+        raise FileNotFoundError(f"Missing precompiled graph for repository {repo_name} at {target_npz}")
+
+    csr = sp.load_npz(target_npz)
+    with open(target_symbols, "r", encoding="utf-8") as f:
+        symbols = json.load(f)
+
+    _REPO_CACHE[slug] = (csr, symbols)
+    return csr, symbols
+
+
+def build_instance_graph(
+    instance: Dict,
+    repo_graphs_dir: Path,
+    target_dir: Path,
+) -> None:
+    """
+    Build per-instance graph directory:
+    csr_data.npy, csr_indices.npy, csr_indptr.npy, csr_dangling.npy,
+    nodes.parquet, manifest.json.
+    """
+    import pyarrow as pa
+    import pyarrow.parquet as pq
+
+    target_dir.mkdir(parents=True, exist_ok=True)
+
+    repo_name = instance.get("repo", "")
+    instance_id = instance.get("instance_id", "")
+    base_commit = instance.get("base_commit", "HEAD")
+
+    csr, symbols = load_cached_repo_graph(repo_name, repo_graphs_dir)
+    num_nodes = len(symbols)
+
+    data = csr.data.astype(np.float32)
+    indices = csr.indices.astype(np.int32)
+    indptr = csr.indptr.astype(np.int32)
+
+    row_sums = np.diff(indptr)
+    dangling = (row_sums == 0).astype(np.float32)
+
+    in_degrees = np.bincount(indices, minlength=num_nodes).astype(np.int64)
+    out_degrees = row_sums.astype(np.int64)
+
+    if num_nodes > 0:
+        k_top = min(25, num_nodes)
+        top25_thresh = np.partition(in_degrees, -k_top)[-k_top]
+        p99_thresh = np.percentile(in_degrees, 99.0)
+    else:
+        top25_thresh = 0
+        p99_thresh = 0
+
+    # Write CSR components
+    np.save(target_dir / "csr_data.npy", data)
+    np.save(target_dir / "csr_indices.npy", indices)
+    np.save(target_dir / "csr_indptr.npy", indptr)
+    np.save(target_dir / "csr_dangling.npy", dangling)
+
+    # Build Parquet table for nodes
+    ids: List[int] = []
+    kinds: List[str] = []
+    names: List[str] = []
+    files: List[str] = []
+    start_lines: List[int] = []
+    end_lines: List[int] = []
+    is_tests: List[bool] = []
+    is_hub_top25s: List[bool] = []
+    is_hub_p99s: List[bool] = []
+
+    for i, s in enumerate(symbols):
+        fpath = str(s.get("file_path", ""))
+        qname = str(s.get("identifier", s.get("qualified_name", s.get("name", ""))))
+        kind = str(s.get("symbol_type", "function"))
+
+        s_val = s.get("line_start")
+        if s_val is None:
+            s_val = s.get("start_line")
+        sline = int(s_val) if s_val is not None else 1
+
+        e_val = s.get("line_end")
+        if e_val is None:
+            e_val = s.get("end_line")
+        eline = int(e_val) if e_val is not None else sline
+
+        in_deg = int(in_degrees[i])
+
+        f_lower = fpath.lower()
+        is_test = bool(
+            "test" in f_lower or f_lower.startswith("tests/") or f_lower.startswith("test_")
+        )
+
+        ids.append(int(s.get("id", i)))
+        kinds.append(kind)
+        names.append(qname)
+        files.append(fpath)
+        start_lines.append(sline)
+        end_lines.append(eline)
+        is_tests.append(is_test)
+        is_hub_top25s.append(bool(in_deg >= top25_thresh and top25_thresh > 0))
+        is_hub_p99s.append(bool(in_deg >= p99_thresh and p99_thresh > 0))
+
+    table = pa.Table.from_arrays(
+        [
+            pa.array(ids, type=pa.int64()),
+            pa.array(kinds, type=pa.string()),
+            pa.array(names, type=pa.string()),
+            pa.array(files, type=pa.string()),
+            pa.array(start_lines, type=pa.int64()),
+            pa.array(end_lines, type=pa.int64()),
+            pa.array(in_degrees, type=pa.int64()),
+            pa.array(out_degrees, type=pa.int64()),
+            pa.array(is_tests, type=pa.bool_()),
+            pa.array(is_hub_top25s, type=pa.bool_()),
+            pa.array(is_hub_p99s, type=pa.bool_()),
+        ],
+        names=[
+            "id",
+            "kind",
+            "qualified_name",
+            "file",
+            "start_line",
+            "end_line",
+            "in_degree",
+            "out_degree",
+            "is_test",
+            "is_hub_top25",
+            "is_hub_p99",
+        ],
+    )
+    pq.write_table(table, target_dir / "nodes.parquet")
+
+    # Compute SHA256 hashes
+    hashes = {
+        "csr_data.npy": compute_file_sha256(target_dir / "csr_data.npy"),
+        "csr_indices.npy": compute_file_sha256(target_dir / "csr_indices.npy"),
+        "csr_indptr.npy": compute_file_sha256(target_dir / "csr_indptr.npy"),
+        "csr_dangling.npy": compute_file_sha256(target_dir / "csr_dangling.npy"),
+        "nodes.parquet": compute_file_sha256(target_dir / "nodes.parquet"),
+    }
+
+    manifest = {
+        "instance_id": instance_id,
+        "repo": repo_name,
+        "base_commit": base_commit,
+        "perron_version": "0.3.0",
+        "node_count": num_nodes,
+        "edge_count": len(indices),
+        "sha256": hashes,
+    }
+
+    with open(target_dir / "manifest.json", "w", encoding="utf-8") as f:
+        json.dump(manifest, f, indent=2)
+
+
+def export_all_instance_graphs(
+    instances: List[Dict],
+    repo_graphs_dir: Path,
+    data_release_dir: Path,
+    resume: bool = True,
+) -> Tuple[int, int]:
+    """
+    Export all per-instance graphs into data_release/graphs/<instance_id>/.
+    Handles resume and logs failures to data_release/failures.jsonl.
+    """
+    graphs_dir = data_release_dir / "graphs"
+    graphs_dir.mkdir(parents=True, exist_ok=True)
+    failures_file = data_release_dir / "failures.jsonl"
+
+    success_count = 0
+    failure_count = 0
+    failures: List[Dict] = []
+
+    required_files = [
+        "csr_data.npy",
+        "csr_indices.npy",
+        "csr_indptr.npy",
+        "csr_dangling.npy",
+        "nodes.parquet",
+        "manifest.json",
+    ]
+
+    for inst in instances:
+        instance_id = inst.get("instance_id", "")
+        if not instance_id:
+            continue
+
+        target_dir = graphs_dir / instance_id
+        if resume and target_dir.exists():
+            if all((target_dir / f).exists() for f in required_files):
+                success_count += 1
+                continue
+
+        try:
+            build_instance_graph(inst, repo_graphs_dir, target_dir)
+            success_count += 1
+        except Exception as e:
+            failure_count += 1
+            err_msg = f"{type(e).__name__}: {str(e)}"
+            logger.warning(f"Failed exporting graph for {instance_id}: {err_msg}")
+            failures.append({"instance_id": instance_id, "error": err_msg})
+
+    if failures or not failures_file.exists():
+        with open(failures_file, "w", encoding="utf-8") as f:
+            for fail in failures:
+                f.write(json.dumps(fail) + "\n")
+
+    return success_count, failure_count
+
+
 def main():
     parser = argparse.ArgumentParser(description="Export SWE-bench Lite call graphs.")
     parser.add_argument("--output-dir", type=Path, default=REPO_ROOT / "artifacts" / "swebench_graphs")
     parser.add_argument("--work-dir", type=Path, default=REPO_ROOT / "artifacts" / "clones")
     parser.add_argument("--cleanup-clones", action="store_true", help="Remove cloned repo working directory after successful export to save disk.")
+    parser.add_argument("--export-instances", action="store_true", help="Export per-instance graphs into data_release/graphs/.")
+    parser.add_argument("--data-release-dir", type=Path, default=REPO_ROOT / "data_release")
     parser.add_argument("--dry-run", action="store_true", help="Only verify existing cache and repo list.")
     args = parser.parse_args()
 
@@ -212,6 +445,17 @@ def main():
     cache_file = REPO_ROOT / "benchmarks" / "data" / "swebench_lite_cached.json"
     instances = load_swebench_instances(cache_file)
     logger.info(f"Loaded {len(instances)} tasks across repositories.")
+
+    if args.export_instances:
+        logger.info(f"Exporting per-instance graphs for {len(instances)} instances to {args.data_release_dir / 'graphs'}...")
+        succ, fail = export_all_instance_graphs(
+            instances,
+            repo_graphs_dir=args.output_dir,
+            data_release_dir=args.data_release_dir,
+            resume=True,
+        )
+        logger.info(f"Per-instance export complete: {succ} succeeded, {fail} failed.")
+        return
 
     repo_commits: Dict[str, str] = {}
     for inst in instances:
@@ -241,3 +485,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

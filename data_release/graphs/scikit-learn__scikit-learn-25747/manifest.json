@@ -1,0 +1,15 @@
+{
+  "instance_id": "scikit-learn__scikit-learn-25747",
+  "repo": "scikit-learn/scikit-learn",
+  "base_commit": "2c867b8f822eb7a684f0d5c4359e4426e1c9cfe0",
+  "perron_version": "0.3.0",
+  "node_count": 7064,
+  "edge_count": 23129,
+  "sha256": {
+    "csr_data.npy": "ed53840fa9642a5b666002aa66bb2c2e2315567cfc898757e18889e91058ea8f",
+    "csr_indices.npy": "1cd304af28517cd9279b2b5f11705affa82b7d9574e861535493eb1abd273e84",
+    "csr_indptr.npy": "407c8866521430ce916987d4fc59b801471f91dd074274c142c46f5202135c2d",
+    "csr_dangling.npy": "e648f4a38534113d5af8bb1a7aeb31f3bdee55cfad4a6669d40dc0936e8d5d3b",
+    "nodes.parquet": "df877902db4f57aa5e172e67d6e6d726e358f2df296e5ae1dd7bb059cc16dedc"
+  }
+}

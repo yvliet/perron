@@ -1,0 +1,15 @@
+{
+  "instance_id": "pytest-dev__pytest-9359",
+  "repo": "pytest-dev/pytest",
+  "base_commit": "e2ee3144ed6e241dea8d96215fcdca18b3892551",
+  "perron_version": "0.3.0",
+  "node_count": 5868,
+  "edge_count": 14340,
+  "sha256": {
+    "csr_data.npy": "c7eb98828eca36c1b5e2129ffd5b91df52d127ac74fcc4221b6a8e10e3ef34bb",
+    "csr_indices.npy": "671071e48fee0f2b200109f36957e9c7ce5771d5c4fffa7e31daaf458273276d",
+    "csr_indptr.npy": "ce6e0ed98d2c99684b2f4494d614969a159f64d4b11906c99e180dc0497ed8c0",
+    "csr_dangling.npy": "d77241d52fed6ebe3091be5b1561685dc4d1fe12004feb877f9e586fb196f068",
+    "nodes.parquet": "88990c2ef3806302bb0a3db76e6e11e029d149312a8723addf8401f94a636b57"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "instance_id": "mwaskom__seaborn-3407",
+  "repo": "mwaskom/seaborn",
+  "base_commit": "515286e02be3e4c0ff2ef4addb34a53c4a676ee4",
+  "perron_version": "0.3.0",
+  "node_count": 2452,
+  "edge_count": 8640,
+  "sha256": {
+    "csr_data.npy": "04b97ff6d212146ec54f83e9f639e89cfa200f7d5fa5ca258bc20cdfe2ddf8d9",
+    "csr_indices.npy": "550b0925252f8def04471a7f815e60078a4a697f1659027cb78eb0cb0dd57a21",
+    "csr_indptr.npy": "92915c94c7a23f82b2037d32b18ac2cf62067b4edbe5e58d3d87496a79ca35e6",
+    "csr_dangling.npy": "17278ad8ac7252a50447e463d52d229696047a6b2e66a972cefd083ad307c134",
+    "nodes.parquet": "92be0dbd46c3a4db5e2e40db10d823408bb15126814fac42f2e21c6d24df6956"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "instance_id": "astropy__astropy-14365",
+  "repo": "astropy/astropy",
+  "base_commit": "7269fa3e33e8d02485a647da91a5a2a60a06af61",
+  "perron_version": "0.3.0",
+  "node_count": 17854,
+  "edge_count": 53621,
+  "sha256": {
+    "csr_data.npy": "638c94d25597bc0fc1e69ccc219504091de20d5b42bbbcf9848ebc3676a88e58",
+    "csr_indices.npy": "93731ed40479d3b169aa92908767afc6e55a2ca72432651d8487ca9abf3b23a6",
+    "csr_indptr.npy": "1bfe28c5e971e877fe3b91775bb213a2f9000d6a15152b9ad0b0cea2bea3603c",
+    "csr_dangling.npy": "5099cb6e3461cb273a0bdba29b33827d176a3d43a890cb3b6c9345c48c818182",
+    "nodes.parquet": "9965d1a4728b9fb8eea4dc15759aeddd9c9af0862aa3734e2f054a75242c1225"
+  }
+}

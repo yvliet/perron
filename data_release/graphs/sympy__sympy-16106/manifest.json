@@ -1,0 +1,15 @@
+{
+  "instance_id": "sympy__sympy-16106",
+  "repo": "sympy/sympy",
+  "base_commit": "0e987498b00167fdd4a08a41c852a97cb70ce8f2",
+  "perron_version": "0.3.0",
+  "node_count": 6033,
+  "edge_count": 17938,
+  "sha256": {
+    "csr_data.npy": "d3c702a43e26a6fcbd09290b939583968fed6ab23231ae74869bd6dd74ab71ed",
+    "csr_indices.npy": "8a42450ec809f4e8c69ee58a9e1315f1622902e21aa904b4f583811f2ec6697c",
+    "csr_indptr.npy": "9b8074f97669189f146a3b4b6d2c0b6b24cffae01f16e8b14232fc06e49bd695",
+    "csr_dangling.npy": "a5ee9c9a93200bebccd6f15cd02d80064dabad44f728289c8a33c12cd4b98b20",
+    "nodes.parquet": "8803878f3d90b4a7c97e50a571b44d6b026ad2e8d8f0415e4ca2429ce9ac7144"
+  }
+}

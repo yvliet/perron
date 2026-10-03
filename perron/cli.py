@@ -53,6 +53,29 @@ def cmd_query(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_bench(args: argparse.Namespace) -> int:
+    from perron.bench import format_benchmark_report, run_benchmark
+
+    try:
+        res = run_benchmark(method=args.method, split=args.split)
+        print("\n" + format_benchmark_report(res) + "\n")
+        return 0
+    except Exception as e:
+        print(f"[ERROR] Benchmark failed: {e}", file=sys.stderr)
+        return 1
+
+
+def cmd_eval(args: argparse.Namespace) -> int:
+    """Run evaluation suite across registered baselines (e.g. table2 on dev_val)."""
+    suite = getattr(args, "suite", "table2")
+    split = getattr(args, "split", "dev_val")
+    print(f"Running Perron Evaluation Suite: {suite} on split: {split}")
+    import subprocess
+    cmd = [sys.executable, "scripts/run_suite.py", "--split", split]
+    ret = subprocess.run(cmd)
+    return ret.returncode
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         prog="perron",
@@ -83,6 +106,18 @@ def main() -> None:
     p_query.add_argument("--beta", type=float, default=0.85, help="Teleport damping factor.")
     p_query.add_argument("--cache", "-c", help="Custom cache path.")
     p_query.set_defaults(func=cmd_query)
+
+    # Subcommand: bench
+    p_bench = subparsers.add_parser("bench", help="Run the Hub-Gold vs Non-Hub-Gold ablation benchmark.")
+    p_bench.add_argument("--method", "-m", default="perron", help="Retrieval method (bm25, std_ppr, deg_ppr, perron).")
+    p_bench.add_argument("--split", "-s", default="dev_val", choices=["dev_val", "heldout", "dev", "full"], help="Dataset split.")
+    p_bench.set_defaults(func=cmd_bench)
+
+    # Subcommand: eval
+    p_eval = subparsers.add_parser("eval", help="Regenerate evaluation benchmark suite.")
+    p_eval.add_argument("--suite", default="table2", help="Benchmark suite name.")
+    p_eval.add_argument("--split", "-s", default="dev_val", choices=["dev_val", "heldout"], help="Dataset split.")
+    p_eval.set_defaults(func=cmd_eval)
 
     args = parser.parse_args()
     sys.exit(args.func(args))

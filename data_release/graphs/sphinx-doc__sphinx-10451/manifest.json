@@ -1,0 +1,15 @@
+{
+  "instance_id": "sphinx-doc__sphinx-10451",
+  "repo": "sphinx-doc/sphinx",
+  "base_commit": "195e911f1dab04b8ddeacbe04b7d214aaf81bb0b",
+  "perron_version": "0.3.0",
+  "node_count": 7202,
+  "edge_count": 18961,
+  "sha256": {
+    "csr_data.npy": "930291e1ad045f51232c4120dac4189bf3dcadc3552aa8be9da0fcd1faca1a1c",
+    "csr_indices.npy": "5807c884ba38a23cfefee3cfc184d77830777a3fac34a39d893de51e7e50197f",
+    "csr_indptr.npy": "d2699e5416dc586edf366990569422d438e82074c5fb2cef32ccf4747c3f4877",
+    "csr_dangling.npy": "5240033dc3dbc6543feb486dc90bf350a3b2f48a1ae0434909a7ef60f9e59907",
+    "nodes.parquet": "6874092ee0ffe905c26867f9f54e3b4db829fce76f6454e5cd0deed777dc1b17"
+  }
+}

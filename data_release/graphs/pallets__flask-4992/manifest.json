@@ -1,0 +1,15 @@
+{
+  "instance_id": "pallets__flask-4992",
+  "repo": "pallets/flask",
+  "base_commit": "4c288bc97ea371817199908d0d9b12de9dae327e",
+  "perron_version": "0.3.0",
+  "node_count": 1506,
+  "edge_count": 2080,
+  "sha256": {
+    "csr_data.npy": "3f65159572e30af1c9b1d12118e581d0bb8b7ec24cf66b8fe8e18bedf960d66d",
+    "csr_indices.npy": "4bd2ce8d3d4044ff951c37927372ed96bb009c9562476f854b9cd656b462d065",
+    "csr_indptr.npy": "9b75d38a6296f2c7c013a545ee39b0468201bc15b6787b90a989f2aca1f89844",
+    "csr_dangling.npy": "df3ba3f1f327168fbab1956dfd3d3229e39d75ee8ab87873acc12261bf370c98",
+    "nodes.parquet": "39505ff1cfce599b76eccfc1d816927bb3ed53153ee3a86ccaa6f7294e3c1892"
+  }
+}

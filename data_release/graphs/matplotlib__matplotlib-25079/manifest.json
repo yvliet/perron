@@ -1,0 +1,15 @@
+{
+  "instance_id": "matplotlib__matplotlib-25079",
+  "repo": "matplotlib/matplotlib",
+  "base_commit": "66f7956984cbfc3647e867c6e5fde889a89c64ef",
+  "perron_version": "0.3.0",
+  "node_count": 10176,
+  "edge_count": 33323,
+  "sha256": {
+    "csr_data.npy": "95b1b1c5abbdce34765230896a555db22c436469d3d7989a3a7e964e45cd0aef",
+    "csr_indices.npy": "a9872c5b0a4c5010e5697f2c8161e886207a7b93a707675612f2aa334f55c610",
+    "csr_indptr.npy": "5cfc4fd162285203efbb603769f9722a710b52c0cbc5ba5254274f5b9584e032",
+    "csr_dangling.npy": "f29aa1f3be7d0fd8085d14cf5f842c576ce6a6e240863d421ef92ac2c21e22f9",
+    "nodes.parquet": "d9203b4e920b00f9b26b3f93339d9b5108567ce350a962d631f7fb362f0f7bbf"
+  }
+}

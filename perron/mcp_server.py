@@ -162,7 +162,7 @@ class PerronMCPServer:
     # -------------------------------------------------------------------------
 
     def tool_retrieve_context(self, arguments: Dict[str, Any]) -> str:
-        repo_path = arguments.get("repo_path")
+        repo_path = arguments.get("repo_path") or (str(self.default_repo) if self.default_repo else None)
         query = arguments.get("query")
         if not repo_path or not query:
             raise ValueError("Arguments 'repo_path' and 'query' are required.")
@@ -182,7 +182,7 @@ class PerronMCPServer:
         return header + context
 
     def tool_inspect_symbol_breadcrumbs(self, arguments: Dict[str, Any]) -> str:
-        repo_path = arguments.get("repo_path")
+        repo_path = arguments.get("repo_path") or (str(self.default_repo) if self.default_repo else None)
         if not repo_path:
             raise ValueError("Argument 'repo_path' is required.")
 
@@ -273,7 +273,7 @@ class PerronMCPServer:
         return "\n".join(lines)
 
     def tool_build_code_graph(self, arguments: Dict[str, Any]) -> str:
-        repo_path = arguments.get("repo_path")
+        repo_path = arguments.get("repo_path") or (str(self.default_repo) if self.default_repo else None)
         if not repo_path:
             raise ValueError("Argument 'repo_path' is required.")
 
