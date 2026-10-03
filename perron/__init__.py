@@ -4,6 +4,8 @@ Perron: Context-Budgeted AST Subgraph Slicing and Graph Retrieval for Developer 
 
 from __future__ import annotations
 
+__version__ = "0.2.1"
+
 from perron.matrix import (
     build_static_transition_matrix,
     load_mmap_csr,
@@ -74,5 +76,6 @@ __all__ = [
     "TurnTelemetry",
     "CodeGraph",
     "PerronRetriever",
+    "__version__",
 ]
 

@@ -17,7 +17,7 @@ def compute_softmax_teleport_prior(
     similarities: Sequence[float] | np.ndarray,
     node_indices: Sequence[int] | np.ndarray,
     num_nodes: int,
-    tau: float = 0.05,
+    tau: float = 0.15,
     top_k: Optional[int] = 20,
 ) -> np.ndarray:
     """

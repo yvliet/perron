@@ -47,14 +47,16 @@ def calculate_specificity_scores(
     is_test_node: Optional[Sequence[bool] | np.ndarray] = None,
     filter_test_nodes: bool = True,
     query_prior: Optional[np.ndarray] = None,
+    hub_indices: Optional[Sequence[int] | np.ndarray] = None,
 ) -> np.ndarray:
     """
     Compute post-walk Specificity scores:
-        Specificity(v) = pi_query(v) / (pi_global(v) + epsilon)^gamma(v)
+        Specificity(v) = pi_query(v) / (pi_global(v) + epsilon)^gamma_q
 
     Suppress ubiquitous hub nodes (high pi_global) while amplifying query-specific paths.
-    If query_prior is supplied, adapts gamma(v) = gamma * (1 - 0.5 * clip(p_0(v) * |V|, 0, 1))
-    to avoid penalizing central architectural hubs when the query explicitly targets them.
+    If query_prior is supplied, adapts scalar gamma_q = gamma * (1 - 0.5 * clip(hub_prior_mass, 0, 1))
+    via Query-Level Hub Adaptivity to avoid penalizing central architectural hubs when the
+    query explicitly targets them.
     Test nodes serve as bipartite routing bridges during diffusion, but are excluded
     from code context packing when filter_test_nodes is True.
     """
@@ -75,13 +77,28 @@ def calculate_specificity_scores(
 
     if query_prior is not None and len(query_prior) == len(pi_query):
         p_0_safe = np.nan_to_num(np.maximum(np.asarray(query_prior, dtype=np.float64), 0.0), nan=0.0)
-        num_v = max(1, len(pi_query))
-        prior_boost = np.clip(p_0_safe * (num_v / 5.0), 0.0, 1.0)
-        effective_gamma = gamma * (1.0 - 0.50 * prior_boost)
+        max_p0 = float(np.max(p_0_safe))
+        if max_p0 > 1e-8:
+            if hub_indices is not None and len(hub_indices) > 0:
+                h_idx = np.asarray(hub_indices, dtype=int)
+            else:
+                k_hubs = min(25, len(pi_global_safe))
+                h_idx = np.argsort(pi_global_safe)[-k_hubs:]
+            max_hub_p0 = float(np.max(p_0_safe[h_idx])) if len(h_idx) > 0 else 0.0
+            # Scale-invariant relative prominence: ratio of peak hub prior to peak overall prior
+            eta_q = max_hub_p0 / max_p0
+            tau_lex = 0.20
+            if eta_q >= tau_lex:
+                # Query-Level Hub Adaptivity: relax gamma when query strongly targets a hub
+                gamma_q = float(gamma * (1.0 - 0.50 * min(1.0, eta_q)))
+            else:
+                gamma_q = float(gamma)
+        else:
+            gamma_q = float(gamma)
     else:
-        effective_gamma = gamma
+        gamma_q = float(gamma)
 
-    denom = (pi_global_safe + epsilon) ** effective_gamma
+    denom = (pi_global_safe + epsilon) ** gamma_q
     specificity = np.nan_to_num(pi_query_safe / denom, nan=0.0, posinf=0.0, neginf=0.0)
 
     if filter_test_nodes and is_test_node is not None:

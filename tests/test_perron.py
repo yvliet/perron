@@ -434,6 +434,30 @@ def test_specificity_numerical_underflow_and_validation():
         calculate_specificity_scores(pi_q, pi_q, is_test_node=[True])
 
 
+def test_query_level_hub_adaptivity():
+    # Node 1 is a ubiquitous structural hub (high pi_global)
+    pi_q = np.array([0.05, 0.40, 0.55], dtype=np.float32)
+    pi_g = np.array([0.001, 0.25, 0.005], dtype=np.float32)
+
+    # 1. Unseeded query targeting domain node 0
+    p0_domain = np.array([1.0, 0.0, 0.0], dtype=np.float32)
+    scores_domain = calculate_specificity_scores(
+        pi_q, pi_g, gamma=0.70, query_prior=p0_domain, hub_indices=[1]
+    )
+    # The unseeded hub (node 1) is strongly suppressed
+    assert scores_domain[2] > scores_domain[1]
+
+    # 2. Query explicitly targeting structural hub (node 1)
+    p0_hub = np.array([0.0, 1.0, 0.0], dtype=np.float32)
+    scores_hub = calculate_specificity_scores(
+        pi_q, pi_g, gamma=0.70, query_prior=p0_hub, hub_indices=[1]
+    )
+    # Query-level hub adaptivity relaxes gamma across the graph, preserving the intentional hub
+    assert scores_hub[1] > scores_hub[0]
+    # Verify that intentional hub's relative standing over unseeded nodes is dramatically amplified
+    assert (scores_hub[1] / scores_hub[0]) > (scores_domain[1] / scores_domain[0])
+
+
 def test_diffusion_validation_and_sanitization():
     import pytest
 

@@ -10,6 +10,7 @@ import sys
 import time
 from pathlib import Path
 
+from perron import __version__
 from perron.retriever import CodeGraph, PerronRetriever
 
 
@@ -56,6 +57,13 @@ def main() -> None:
     parser = argparse.ArgumentParser(
         prog="perron",
         description="Perron: High-Throughput Spectral Code Graph Retrieval for Developer Agents",
+    )
+    parser.add_argument(
+        "--version",
+        "-v",
+        action="version",
+        version=f"perron-core {__version__}",
+        help="Show program's version number and exit.",
     )
     subparsers = parser.add_subparsers(dest="subcommand", required=True)
 

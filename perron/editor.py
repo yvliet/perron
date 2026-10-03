@@ -481,7 +481,8 @@ def apply_multi_file_patch(
     for p, text in staged_contents.items():
         if p.suffix == ".py":
             try:
-                ast.parse(text)
+                tree = ast.parse(text)
+                compile(tree, filename=str(p), mode="exec")
             except SyntaxError as e:
                 return False, f"Transaction aborted: AST syntax error in {p.name}: {e.msg} at line {e.lineno}", []
 

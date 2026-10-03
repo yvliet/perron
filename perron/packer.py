@@ -107,7 +107,7 @@ def pack_context_subgraphs(
         raise ValueError(f"top_candidates_limit must be strictly positive, got {top_candidates_limit}.")
 
     # Filter candidates to positive specificity in symbols
-    candidate_indices = np.argsort(specificity_scores)[::-1][:top_candidates_limit]
+    candidate_indices = np.argsort(-specificity_scores, kind="stable")[:top_candidates_limit]
     candidate_indices = [
         int(idx)
         for idx in candidate_indices
