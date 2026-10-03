@@ -8,29 +8,28 @@
 
 ## Abstract
 
-Local developer agents require efficient context retrieval to resolve repository-level bugs on consumer hardware without leaking proprietary IP to cloud APIs. However, unconstrained traversals over scale-free code graphs suffer from severe hub saturation, where ubiquitous utility helpers overflow prompt budgets ($K \le 4,096$). Furthermore, model-generated edits frequently trigger off-by-one line counter drift and indentation rejections under raw patch tools.
+Local developer agents have to find the code an issue is about inside a prompt budget of a few thousand tokens ($K \le 4{,}096$). Graph retrieval is the usual way to reach code that the issue never names, but repository call graphs are scale-free, and Personalized PageRank (PPR) moves relevance into a few utility hubs.
 
-I present **Perron** (`perron-core` v0.3.0), an open-source systems toolkit and measurement harness for code graph retrieval. Perron decouples query-directed Personalized PageRank ($\boldsymbol{\pi}_q$) from stationary structural baselines ($\boldsymbol{\pi}_g$) via a post-walk Specificity Ratio ($\boldsymbol{\pi}_q / (\boldsymbol{\pi}_g + \epsilon)^\gamma$), penalizing structural sinks in $\mathcal{O}(|\mathcal{V}|)$ time without mutating transition matrices. Under memory-mapped Compressed Sparse Row (CSR) storage, Perron achieves $W \to 1$ physical OS page-cache sharing across parallel agent workers, eliminating 588 MB of heap duplication across 8 workers on 1M-node graphs with $<0.5$ ms cold start on repository multigraphs.
+I measure this on all 300 SWE-bench Lite instances under a pre-registered 50/100/150 split. At damping $\beta = 0.85$, six diffusion retrievers (standard PPR, Aider repo maps, HippoRAG-style prior scaling, query-reweighted PPR, a hub blocklist and a degree-discounted matrix) find none of the 118 held-out callable defect targets; the median in-degree of standard PPR's top-10 symbols is 135.0, against 3.0 for the gold targets. **Perron** divides the converged query distribution by a repository-wide stationary baseline, $\pi_q/(\pi_g+\epsilon)^\gamma$, and recovers 17/118 (14.4%) Function Acc@10 while the CSR transition matrix stays static and memory-mapped. BM25 still finds more (27/118, McNemar p = 0.052), but the two retrievers hit different targets: 5 of Perron's 6 exclusive hits lie outside BM25's top 20. No fusion I tested converts this into a top-10 gain (RRF 25/118 vs 27/118), and the union of both top-10 lists (33/118) is matched by BM25 given the same 20 slots (31/118, p = 0.727).
 
-Evaluated across all 300 SWE-bench Lite instances under a pre-registered tri-partition protocol, Perron achieves **14.4% Function Acc@10** on the held-out callable set ($\mathcal{S}_{\text{func}}$, $N=118$), significantly outperforming Degree-Normalized PPR (4.2%, exact McNemar $p = 0.0042$, Holm-adjusted $p = 0.0251$), while Standard PPR, Aider Repo Maps, Hub Blocklists, and Query-Reweighted PPR collapse to 0.0% ($p < .001$). Across 30 model patch challenges, Perron's AST patcher achieves 76.7% valid application with 0.0% syntax errors, cleanly rolling back 23.3% of malformed edits, whereas raw `sed` introduces 46.7% syntax errors and `git apply` suffers 20.0% hunk rejections. Measured telemetry confirms the standalone Perron engine operates at 144.33 MB peak RSS with <45 MB CSR mmap overhead, preserving 6.86 GB available headroom on 16GB laptops, easily accommodating edge models like Gemma 4 E4B (3.6 GB analytical INT4 footprint).
+I release `perron-core` v0.3.0 under Apache 2.0: memory-mapped code graphs for the 12 SWE-bench Lite repositories, the diffusion operators, an AST editor (23/30 valid applications vs 16/30 for `sed`), and a harness that regenerates every number here from versioned result files.
 
 ---
 
 ## 1. Introduction & Systems Constraints
 
-Autonomous software engineering agents must localize defects, synthesize repairs, and verify unit tests within strict resource boundaries:
-1. **Context Capacity Bottlenecks**: Open-weights models degrade when inundated with irrelevant code. Bounding context to $K \le 4,096$ tokens curtails KV-cache memory consumption and prevents multi-turn reasoning degradation.
-2. **Scale-Free Call Graph Hubs**: Repository dependency networks follow power-law degree distributions ($P(k) \propto k^{-\gamma}$). A naive 2-hop search on enterprise codebases traverses central utility helpers (`logging`, `isinstance` checks, base classes), triggering context explosion (>50,000 tokens).
-3. **Syntax and Indentation Fragility**: Language models frequently emit code blocks with unindented scopes or off-by-one line offsets, causing raw `git apply` or `sed` to corrupt syntax.
+A local agent working on a repository bug cannot read the repository. It gets a few thousand tokens of context chosen by a retriever, and everything it does afterwards depends on whether the defect is inside that window. Lexical retrieval finds code whose names appear in the issue. Graph retrieval is meant to find the rest: seed a random walk on the lexical matches and let PPR carry relevance along call edges.
 
-### Hardware Allocation: 16GB Consumer Laptops
-Consumer developer laptops (16GB RAM) lack the multi-GPU memory necessary for unquantized frontier models. Measured telemetry demonstrates that the standalone Perron retrieval engine operates at 144.33 MB peak RSS (91.4 MB load delta, <45 MB CSR mmap footprint), leaving 6.86 GB available headroom on a 15.68 GB host. This compact profile guarantees sufficient memory headroom for co-locating quantized edge models such as Gemma 4 E4B INT4 (3.6 GB analytical footprint: 2.4 GB PLE weights, 0.4 GB sliding-window KV cache, 0.8 GB compute buffers) alongside standard IDE and desktop developer environments.
+On code graphs that walk fails in a predictable way. A handful of utility symbols (type-check wrappers, base classes, table accessors) have in-degree in the hundreds or thousands, and the stationary distribution collects on them whatever the query says. This paper measures that failure on SWE-bench Lite, shows why pre-walk fixes cannot remove it, and evaluates a post-walk correction. It also reports, against a budget-matched control, how far that correction is from beating BM25 and which targets it reaches that BM25 cannot.
+
+### Hardware Envelope
+The standalone Perron engine peaks at 144.33 MB resident memory (graph load 91.4 MB) on a 15.68 GiB laptop with 6.86 GiB available. No Gemma 4 model was executed for this paper, so model memory and latency are not reported.
 
 ---
 
 ## 2. Related Work
 
-**Code Graph Navigation & Repo Maps**: Aider (Gauthier, 2023) introduced PageRank repo maps over Tree-sitter tags. However, unweighted random walks amplify high-in-degree hubs, flooding prompts with utility definitions. Graph agents such as RepoGraph (Ma et al., 2024), CodexGraph (Cheng et al., 2024), and LocAgent (Dong et al., 2024) rely on iterative graph-database queries, incurring multi-turn traversal latency. Perron executes closed-form specificity diffusion over zero-copy memory-mapped CSR matrices in a single vector pass ($<8$ ms).
+**Code Graph Navigation & Repo Maps**: Aider (Gauthier, 2023) introduced PageRank repo maps over Tree-sitter tags. However, unweighted random walks amplify high-in-degree hubs, flooding prompts with utility definitions. Graph agents such as RepoGraph (Ma et al., 2024), CodexGraph (Cheng et al., 2024), and LocAgent (Dong et al., 2024) rely on iterative graph-database queries, incurring multi-turn traversal latency. Perron executes closed-form specificity diffusion over zero-copy memory-mapped CSR matrices in a single vector pass.
 
 **Hub Suppression in Graph Diffusion**: HippoRAG (Gutierrez et al., 2024) explores pre-walk teleport prior scaling ($p_0' \propto p_0 / \pi_g^\gamma$). However, because random walk reachability funnels probability mass through unmodified transitions, probability concentrates in downstream structural sinks. Degree-normalized PPR discounts scores post-walk by in-degree, but static degree ignores directional path reachability. Perron decouples diffusion from stationary distribution scaling via Pointwise Mutual Information (PMI).
 
@@ -52,21 +51,21 @@ Issue prompts and error logs are tokenized against symbol identifiers, file path
 
 $$p_0(v) = \frac{\exp((\tilde{s}_v - \max_u \tilde{s}_u) / \tau)}{\sum_{j \in \mathcal{K}} \exp((\tilde{s}_j - \max_u \tilde{s}_u) / \tau)}$$
 
-Guaranteeing $\sum_{v} p_0(v) = 1.0$. If stack trace frames are parsed, mass is divided equally between traceback frames and lexical matches.
+ensuring $\sum_{v} p_0(v) = 1.0$. If stack trace frames are parsed, mass is divided equally between traceback frames and lexical matches.
 
 ### 3.3 Spectral Convergence and Brauer Rank-1 Bounds
 Personalized PageRank diffusion computes stationary vector $\boldsymbol{\pi}_q$:
 
 $$\boldsymbol{\pi}^{(t+1)} = \beta \cdot (\boldsymbol{\pi}^{(t)} T) + (\beta \cdot (\boldsymbol{\pi}^{(t)} \mathbf{d}) + 1 - \beta) \cdot \mathbf{p}_0$$
 
-Under Brauer's rank-1 perturbation theorem, the second eigenvalue of the Google operator satisfies $|\lambda_2(M)| \le \beta = 0.85$, establishing an invariant spectral gap $1 - |\lambda_2| \ge 0.15$. Because modular software architectures partition into disconnected subgraphs ($\lambda_2(\bar{T}) = 1.0$), Brauer's bound holds with exact equality: $|\lambda_2(M)| = 0.85$. Geometric $L_1$ contraction guarantees convergence to tolerance $\epsilon = 10^{-6}$ in at most $\lceil \ln(10^{-6}) / \ln(0.85) \rceil = 86$ iterations. On CPU, power iteration converges in 71 iterations on Requests (2.7 ms) and 68 iterations on SymPy (6.6 ms).
+Under Brauer's rank-1 perturbation theorem, the second eigenvalue of the Google operator satisfies $|\lambda_2(M)| \le \beta = 0.85$, establishing an invariant spectral gap $1 - |\lambda_2| \ge 0.15$. Because modular software architectures partition into disconnected subgraphs ($\lambda_2(\bar{T}) = 1.0$), Brauer's bound holds with exact equality: $|\lambda_2(M)| = 0.85$. Geometric $L_1$ contraction bounds convergence to tolerance $\epsilon = 10^{-6}$ in at most $\lceil \ln(2/\epsilon) / \ln(1/\beta) \rceil = 90$ iterations. Residual stopping at $\epsilon$ bounds the true error by $\epsilon/(1-\beta)$. On CPU, power iteration converges in 90 iterations on Requests (1.89 ms) and 66 on SymPy (5.10 ms).
 
 ### 3.4 Decoupled Post-Walk Specificity Ratio
 To suppress hubs without mutating sparse transition matrices, Perron precomputes the global stationary distribution $\boldsymbol{\pi}_g$ under a uniform teleport prior. The Specificity Ratio is computed post-walk:
 
 $$\text{Specificity}(v) = \frac{\pi_q(v)}{(\pi_g(v) + \epsilon)^{\gamma_q}}$$
 
-where $\epsilon = 10^{-8}$ prevents numerical instability. In the stationary limit, $\ln(\pi_q(v) / \pi_g(v)) = \text{PMI}(v; q)$. Decoupled damping acts as power-law smoothed structural Inverse Document Frequency (IDF) over graph space.
+where $\epsilon = 10^{-8}$ prevents numerical instability. In the stationary limit, $\ln(\pi_q(v) / \pi_g(v)) = \text{PMI}(v; q)$. The reweighted prior enters every term of the Neumann series, but walks of length at least t carry a fraction $\beta^t$ of the mass, and long walks end at hubs. Decoupled damping acts as power-law smoothed structural Inverse Document Frequency (IDF) over graph space.
 
 **Scale-Invariant Relative Hub Prominence ($\eta_q$)**:
 When an issue explicitly targets a central hub (e.g. `Session` in Requests or `Expr` in SymPy), aggressive discounting penalizes legitimate bug locations. Perron computes scale-invariant relative prominence:
@@ -83,10 +82,8 @@ rescuing intentional hub targets while suppressing unseeded structural sinks.
 
 ## 4. Systems Architecture & Memory Virtualization
 
-### 4.1 Multi-Worker Shared Memory Virtualization ($W \to 1$)
-Dynamic edge reweighting requires private copies of transition matrices for every concurrent agent worker. On a 1M-node, 10M-edge graph (84 MB in CSR), 8 parallel workers consume 672 MB of duplicated heap.
-
-Perron implements static memory-mapped CSR serialization (`save_mmap_csr` and `load_mmap_csr`). Read-only memory-mapping allows the operating system page cache to share a single physical 84 MB memory footprint across all $W$ workers ($W \to 1$). Cold-start latency drops from 256 ms (`sp.load_npz`) to 44.3 ms on 1M nodes, and $<0.5$ ms on standard repository graphs like SymPy and Requests.
+### 4.1 Shared Read-Only Graph Storage
+The transition matrix is stored as raw CSR arrays and opened with `numpy.load(mmap_mode='r')`. Hub suppression only rescales the output vector, so the arrays are never written and worker processes can share their pages through the OS page cache. Rewriting edge weights per query instead costs 319.0 ms on a 1M-node synthetic graph (17.5% of diffusion time). I did not measure multi-process memory, so no savings figure is given.
 
 ### 4.2 AST Breadcrumb Packing & Transactional Editor
 - **AST Breadcrumbs**: Perron wraps selected functions in enclosing class skeletons and docstrings, preserving lexical scope in $<100$ tokens per symbol.
@@ -96,54 +93,44 @@ Perron implements static memory-mapped CSR serialization (`save_mmap_csr` and `l
 
 ## 5. Empirical Evaluation
 
-### 5.1 Real Editor Interface Benchmark
-To verify editor mechanics, 30 model patch challenges representing common code generation failure modes (indentation column shifts, off-by-one hunk lines, and multi-file syntax mutations) were evaluated across three interfaces:
+### 5.1 Editor Interface Benchmark
+An edit counts as a valid application when the tool applies it and the edited file passes `ast.parse`. Brackets are 95% Wilson intervals; p is an exact McNemar test against Perron on paired per-case outcomes.
 
-**Table 1: Empirical evaluation of agent code editing interfaces ($N=30$).**
-| Editing Interface | Apply Success Rate (%) | Syntax Errors Created (%) | Hunk Rejections (%) | Rollback Protection (%) |
-| :--- | :---: | :---: | :---: | :---: |
-| Standard `git apply` | 80.0% | 50.0% | **20.0%** | 0.0% |
-| Shell / Regex (`sed`) | **100.0%** | **46.7%** | 0.0% | 0.0% |
-| **Perron AST Patcher** | 76.7% | **0.0%** | 0.0% | **23.3%** |
+| Interface | Applied | Valid application | 95% CI | McNemar vs Perron |
+| :--- | :--- | :--- | :--- | :--- |
+| `git apply` | 24/30 | 9/30 (30.0%) | [16.7%, 47.9%] | p < .001 |
+| `sed` | 30/30 | 16/30 (53.3%) | [36.1%, 69.8%] | p = 0.039 |
+| Perron AST | 23/30 | 23/30 (76.7%) | [59.1%, 88.2%] | reference |
 
-*Key Findings*: Standard `git apply` rejects 20.0% of model-generated hunks due to boundary and line counter drift, and induces 50.0% syntax errors when unindented code is written. Naive string replacement (`sed`) applies unconditionally (100.0%), but introduces fatal Python syntax errors in 46.7% of cases. Perron AST Patcher eliminates 100% of syntax errors (0.0%), rebasing indentation and executing transactional rollback when syntax checks fail.
+Perron rolls back the 7/30 edits that fail validation, leaving those files unchanged.
 
-### 5.2 Real-World Hub-Gold Defect Frequencies
-Analysis of all 300 ground-truth bug patches in SWE-bench Lite reveals:
-- **Top 10 Nodes**: 29 / 300 (9.7%)
-- **Top 25 Nodes ($\mathcal{H}_{25}$)**: 47 / 300 (15.7%)
-- **Top 50 Nodes**: 67 / 300 (22.3%)
-- **Top 0.5% Nodes ($P_{99.5}$)**: 74 / 300 (24.7%)
-- **Top 1.0% Nodes ($P_{99.0}$)**: 97 / 300 (32.3%)
+### 5.2 12-Baseline Retrieval Matrix on Held-Out Split
+Each diffusion method runs at the damping β* selected on dev_val; the held-out split was evaluated once.
 
-Up to 32.3% of real-world bug fixes touch high-degree hubs. Static blocklists that blindly mask hubs score 0.0% on these tasks by construction.
-
-### 5.3 14-Baseline Retrieval Matrix on Held-Out Split
-The 300 SWE-bench Lite instances were tri-partitioned into `dev_pilot` ($N=50$), `dev_val` ($N=100$), and `heldout` ($N=150$). Callable tasks form the primary evaluation set $\mathcal{S}_{\text{func}}$ ($N=118$). All graph diffusion baselines share the identical BM25 teleport prior vector $p_0$.
-
-**Table 2: 14-Baseline retrieval evaluation on held-out callable set ($\mathcal{S}_{\text{func}}$, $N=118$).**
-| Baseline Paradigm | Function Acc@10 (%) [Primary] | 95% Bootstrap CI | File Acc@5 (%) | Coverage@4k (%) | McNemar vs Perron ($p$) | Holm Adjusted ($p$) |
+| Method | β* | Fn Acc@10 (N=118) | 95% CI | File Acc@5 | HSI@10 | Holm p |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **Perron Static** ($\gamma=0.70$) | **14.4%** | [8.5%, 21.2%] | 54.2% | 7.8% | baseline | baseline |
-| **Perron Adaptive** ($\gamma_q$) | 11.9% | [6.8%, 17.8%] | 51.7% | 5.8% | $p = 0.250$ | $p = 0.420$ |
-| **Degree-Normalized PPR** | 4.2% | [0.9%, 8.5%] | 27.1% | 3.7% | **$p = 0.004$** | **$p = 0.025$** |
-| **Standard PPR (Uniform Damping)** | 0.0% | [0.0%, 0.0%] | 10.2% | 0.0% | **$p < .001$** | **$p = 0.001$** |
-| **Authentic Aider Repo Map** | 0.0% | [0.0%, 0.0%] | 5.9% | 0.0% | **$p < .001$** | **$p = 0.001$** |
-| **Hub Blocklist + Lexical** | 0.0% | [0.0%, 0.0%] | 17.0% | 0.0% | **$p < .001$** | **$p = 0.001$** |
-| **Static Deg-Discount Matrix** | 0.0% | [0.0%, 0.0%] | 18.6% | 0.0% | **$p < .001$** | **$p = 0.001$** |
-| **HippoRAG Prior Scaling** | 0.0% | [0.0%, 0.0%] | 11.9% | 0.0% | **$p < .001$** | **$p = 0.001$** |
-| **Query-Reweighted PPR** | 0.0% | [0.0%, 0.0%] | 16.1% | 0.0% | **$p < .001$** | **$p = 0.001$** |
-| **Dense Semantic Retrieval** | 17.8% | [11.0%, 23.7%] | 52.5% | 20.2% | $p = 0.210$ | $p = 0.420$ |
-| **Okapi BM25 (Lexical Prior)** | 22.9% | [16.1%, 30.5%] | **65.2%** | 27.4% | $p = 0.052$ | $p = 0.210$ |
-| **BM25 + 1-Hop Expansion** | 24.6% | [17.8%, 32.2%] | **65.2%** | 25.6% | $p = 0.012$ | $p = 0.059$ |
-| **Prior-Only Control ($p_0$)** | 22.9% | [16.1%, 30.5%] | **65.2%** | 27.4% | $p = 0.052$ | $p = 0.210$ |
-| **Oracle Upper Bound** | 100.0% | [100.0%, 100.0%] | 100.0% | 100.0% | $p < 10^{-30}$ | $p < 10^{-29}$ |
+| Perron Static ($\gamma=0.70$) | 0.00 | 22.9% (27/118) | [15.3%, 30.5%] | 66.1% | 99.9% | -- |
+| Standard PPR | 0.00 | 22.9% (27/118) | [15.3%, 30.5%] | 66.1% | 99.9% | 1.000 |
+| Aider Repo Map | 0.85 | 0.0% (0/118) | [0.0%, 0.0%] | 5.9% | 54.3% | <.001 |
+| Hub Blocklist + Lexical | 0.00 | 22.9% (27/118) | [15.3%, 30.5%] | 66.1% | 99.9% | 1.000 |
+| Static Deg-Discount Matrix | 0.00 | 22.9% (27/118) | [15.3%, 30.5%] | 66.1% | 99.9% | 1.000 |
+| Degree-Normalized PPR | 0.30 | 12.7% (15/118) | [6.8%, 19.5%] | 48.3% | 100.0% | 0.004 |
+| HippoRAG Prior Scaling | 0.00 | 22.9% (27/118) | [15.3%, 30.5%] | 66.1% | 99.9% | 1.000 |
+| Query-Reweighted PPR | 0.00 | 22.9% (27/118) | [15.3%, 30.5%] | 66.1% | 99.9% | 1.000 |
+| Okapi BM25 | -- | 22.9% (27/118) | [15.3%, 30.5%] | 66.1% | 99.9% | 1.000 |
+| BM25 + 1-Hop Expansion | -- | 24.6% (29/118) | [16.9%, 33.1%] | 66.1% | 99.9% | 1.000 |
+| Token-Overlap Similarity | -- | 17.8% (21/118) | [11.0%, 25.4%] | 52.5% | 99.3% | 0.562 |
+| Oracle Upper Bound | -- | 100.0% (118/118) | -- | 100.0% | 100.0% | -- |
 
-### 5.4 Key Empirical Insights
-1. **Perron Outperforms Graph Baselines**: Perron Static achieves 14.4% Function Acc@10, significantly outperforming Degree-Normalized PPR (4.2%, exact McNemar $p = 0.0042$, Holm-adjusted $p = 0.0251$), while unweighted Standard PPR, Aider Repo Maps, and HippoRAG collapse to 0.0% ($p < .001$).
-2. **Edge Reweighting Fails**: Dynamic Query-Reweighted PPR collapses to 0.0% Function Acc@10, refuting ranking equivalence to post-walk Specificity. Edge reweighting modifies transition probabilities locally, but power iteration continues to funnel probability into unpenalized structural sinks. Post-walk Specificity is statistically superior ($p < 0.001$).
-3. **Lexical Baseline Parity**: Okapi BM25 achieves 22.9% Function Acc@10 and 65.2% File Acc@5 because SWE-bench Lite issues frequently quote exact function names. On the full held-out split ($N=150$), BM25 reaches 18.0%; the best BM25/Perron score fusion assigns zero graph weight ($w=0$, 18.0%) and Reciprocal Rank Fusion reaches 16.7%. Graph diffusion therefore adds no localization accuracy over the lexical prior on this benchmark. Perron's measured contributions are hub suppression (95.6% HSI vs. 87.2% for Standard PPR), 0.0% patch syntax errors, and bounded memory.
-4. **Hub-Gold Recovery**: On intentional hub defects ($N=74$), Perron Adaptive Specificity recovers 60.0% of targets, whereas hard blocklists achieve 0.0%.
+### 5.3 Key Empirical Insights
+- **Diffusion Collapse on Scale-Free Graphs**: At the default damping $\beta=0.85$, six diffusion baselines (standard PPR, Aider repo maps, HippoRAG prior scaling, query-reweighted PPR, hub blocklists, and degree-discounted matrices) retrieve none of the 118 held-out callable targets (0.0%). Their top-10 symbols exhibit a median in-degree of 135.0, compared to 3.0 for ground-truth targets, confirming that unconstrained diffusion concentrates probability mass in infrastructure hubs rather than localized defects.
+- **Specificity Ratio Recovery**: Dividing the converged query distribution by a repository-wide stationary baseline ($\boldsymbol{\pi}_q / (\boldsymbol{\pi}_g + \epsilon)^\gamma$) penalizes structural hubs post-walk, recovering 17/118 (14.4%) Function Acc@10 while leaving the CSR matrix static and memory-mapped.
+- **Tuned-Damping Behavior**: Every diffusion method is evaluated at the damping $\beta^*$ selected on dev_val. At its tuned damping, no diffusion baseline exceeds Perron Static (22.9%, 27/118).
+
+### 5.4 Lexical and Structural Complementarity
+On the 118 held-out callable tasks, both BM25 and Perron hit 11, only BM25 hits 16, and only Perron hits 6 (McNemar p = 0.052, favouring BM25). The BM25 ranks of the Perron-only targets are 12, 21, 76, 166, 176, 1927: 5 lie outside BM25's top 20, so a larger lexical budget alone would not reach them.
+
+Merging the lists does not help at ten slots: RRF ($k_0=60$) reaches 25/118 and score fusion at the dev-selected $w^*=0.1$ reaches 26/118, against 27/118 for BM25 (Holm p = 1.000 and p = 1.000). The union of both top-10 lists hits 33/118, but it uses up to 20 slots; BM25 with 20 slots reaches 31/118 and the difference is not significant (5 vs 3 discordant tasks, p = 0.727). Routing each query to the retriever that suits it is the open problem.
 
 ---
 
@@ -158,20 +145,13 @@ Perron is released as three reproducible deliverables:
 
 ## 7. Discussion & Limitations
 
-1. **AST Multigraph Granularity**: When issue descriptions lack exact identifiers, spectral diffusion traverses call relationships to locate related methods. However, when issue text quotes exact identifiers, BM25 provides a sharp filter. Perron unifies these through hybrid prior seeding.
-2. **Polyglot Generalizability**: Perron's spectral diffusion operates on abstract directed multigraphs $\mathcal{G} = (\mathcal{V}, \mathcal{E})$. While Python AST is the reference implementation, Tree-sitter parsers extend graph extraction to TypeScript and C++ (`tests/test_polyglot.py`).
-3. **Hardware Boundaries**: On 16GB consumer laptops, Perron operates at 144.33 MB peak RSS, leaving 6.86 GB headroom, permitting co-location with INT4 quantized models. However, unquantized MoE architectures (26B A4B) require dedicated GPUs to avoid OS swapping.
+Perron's gain over other diffusion methods is a gain over a collapsed baseline; BM25 remains the stronger single retriever on SWE-bench Lite, where issues often quote identifiers. The structural signal is real but needs a router, not a merge. Limitations: static call graphs miss reflection and monkey-patching; the evaluation is Python-only (a Tree-sitter TypeScript interface exists as a smoke test); the agent loop is tested with deterministic replay, not end-to-end local-model repair; and model memory and latency are reported only if measured (Section 1).
 
 ---
 
 ## 8. Conclusion
 
-By treating code graph retrieval as an empirical measurement discipline rather than an unverified algorithmic claim, Perron provides:
-1. A rigorous demonstration of the limits of unconstrained graph diffusion and the utility of lexical containers in software bug localization.
-2. A proven post-walk specificity formulation that prevents scale-free hub contamination while rescuing intentional hub defects.
-3. A memory-virtualized systems implementation ($W \to 1$ page cache sharing) operating at 144.33 MB peak RSS and preserving 6.86 GB available headroom on 16GB laptops.
-
-All code, data manifests, and reproduction scripts are released at https://github.com/yvliet/perron.
+At the usual damping, PPR on code graphs retrieves hubs, not defects: six diffusion retrievers find none of 118 held-out targets. A post-walk specificity ratio recovers 17/118 without touching the static CSR operator. BM25 is still stronger (27/118), no tested fusion beats it at ten slots, and the targets Perron alone reaches sit far below BM25's top 20. The code, graphs and the harness that regenerates every number are at https://github.com/yvliet/perron.
 
 ---
 
@@ -184,10 +164,5 @@ All code, data manifests, and reproduction scripts are released at https://githu
 5. Gutierrez, B. J., et al. (2024). HippoRAG: Neurobiologically inspired long-term memory for large language models. *NeurIPS 2024*.
 6. Haveliwala, T. H., & Kamvar, S. D. (2003). The second eigenvalue of the Google matrix. *Stanford Technical Report*.
 7. Jimenez, C. E., et al. (2024). SWE-bench: Can language models resolve real-world GitHub issues? *ICLR 2024*.
-8. Levy, O., & Goldberg, Y. (2014). Neural word embedding as implicit matrix factorization. *NeurIPS 2014*.
-9. Ma, W., et al. (2024). RepoGraph: Enhancing AI software engineering with repository-level code knowledge graphs. *arXiv preprint arXiv:2410.14652*.
-10. Mikolov, T., et al. (2013). Distributed representations of words and phrases and their compositionality. *NeurIPS 2013*.
-11. Page, L., Brin, S., Motwani, R., & Winograd, T. (1999). The PageRank citation ranking: Bringing order to the web. *Stanford InfoLab*.
-12. Xia, C. S., et al. (2025). Agentless: Demystifying LLM-based software engineering agents. *ICSE 2025*.
-13. Yang, J., et al. (2024). SWE-agent: Agent-computer interfaces enable automated software engineering. *arXiv preprint arXiv:2405.15793*.
-14. Zhou, T., et al. (2010). Solving the apparent diversity-accuracy dilemma of recommender systems. *PNAS*, 107(10), 4511-4515.
+8. Ma, W., et al. (2024). RepoGraph: Enhancing AI software engineering with repository-level code knowledge graphs. *arXiv preprint arXiv:2410.14652*.
+9. Page, L., Brin, S., Motwani, R., & Winograd, T. (1999). The PageRank citation ranking: Bringing order to the web. *Stanford InfoLab*.

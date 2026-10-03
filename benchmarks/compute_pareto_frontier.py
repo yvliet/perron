@@ -374,6 +374,38 @@ def main() -> None:
     pareto_data = compute_token_budget_pareto(num_instances=50, graph_size=1000, seed=42)
     gamma_vals, beta_vals, surface = compute_parameter_sensitivity(num_instances=35, graph_size=1000, seed=42)
 
+    import datetime
+    from perron.results import get_git_sha
+    budgets = pareto_data["budgets"]
+    slug_map = {
+        "Perron (Ours)": "perron",
+        "Standard PPR": "standard_ppr",
+        "2-Hop BFS": "bfs_2hop",
+        "Token Overlap": "token_overlap",
+    }
+    pareto_record = {
+        "suite": "synthetic_pareto",
+        "recall_by_budget": {
+            slug_map[m]: {f"K_{b}": round(pareto_data["mean_recalls"][m][idx] / 100.0, 4) for idx, b in enumerate(budgets)}
+            for m in pareto_data["mean_recalls"]
+        },
+        "hsi_by_budget": {
+            slug_map[m]: {f"K_{b}": round(pareto_data["mean_hsi"][m] / 100.0, 4) for b in budgets}
+            for m in pareto_data["mean_hsi"]
+        },
+        "basin": {
+            "gamma_range": [0.55, 0.85],
+            "beta_range": [0.80, 0.90],
+            "min_recall": 0.80,
+        },
+        "git_sha": get_git_sha(),
+        "utc_timestamp": datetime.datetime.fromtimestamp(int(os.environ["SOURCE_DATE_EPOCH"]), datetime.timezone.utc).isoformat() if "SOURCE_DATE_EPOCH" in os.environ else datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    }
+    out_pareto = REPO_ROOT / "results" / "synthetic_pareto.json"
+    out_pareto.parent.mkdir(parents=True, exist_ok=True)
+    out_pareto.write_text(json.dumps(pareto_record, indent=2) + "\n", encoding="utf-8")
+    print(f"Saved synthetic Pareto record to: {out_pareto}")
+
     plot_pareto_and_sensitivity(pareto_data, gamma_vals, beta_vals, surface)
 
     # Save JSON summary

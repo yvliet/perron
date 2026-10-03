@@ -119,7 +119,7 @@ Stationary probability distribution $\boldsymbol{\pi}_{\text{query}}$ (the Perro
 
 $$\boldsymbol{\pi}^{(t+1)} = \beta \cdot (\boldsymbol{\pi}^{(t)} T) + \left(\beta \cdot (\boldsymbol{\pi}^{(t)} \mathbf{d}) + 1 - \beta\right) \cdot \mathbf{p}_0$$
 
-With damping factor $\beta = 0.85$, the spectral gap $1 - \beta = 0.15$ guarantees geometric convergence within 80-100 iterations (< 3.0 ms on CPU).
+With damping factor $\beta = 0.85$, the spectral gap $1 - \beta = 0.15$ ensures geometric convergence within 80-100 iterations (< 3.0 ms on CPU).
 
 ### D. Specificity Ratio Hub-Damping
 To suppress ubiquitous hub nodes without altering static matrix entries, Perron compares $\boldsymbol{\pi}_{\text{query}}$ against a precomputed repository-wide stationary baseline $\boldsymbol{\pi}_{\text{global}}$ (obtained via uniform prior $\mathbf{p}_0 = \frac{1}{|V|} \mathbf{1}$):
@@ -294,8 +294,8 @@ Contrasting unconstrained data center cloud APIs against Perron's local consumer
 | AutoCodeRover (Zhang et al.) | GPT-4 (Cloud API) | $0.65 | 22.0% (Pass@1) |
 | SWE-agent (Yang et al.) | GPT-4 (Cloud API) | $2.14 | 18.0% (Pass@1) |
 | BM25 + RAG (Yang et al.) | GPT-4 (Cloud API) | $0.05 | 3.8% (Pass@1) |
-| *Local Consumer Offline Models (<=16GB RAM, $0.00 Cost, Offline Workstation)* | | | |
-| **Perron (Diagnostic Scaffold)** | **Gemma 4 E4B / Deterministic Replay** | **$0.00 (Local)** | **5/5 Solvable (5/5 Boundary Handled)** |
+| *Local Consumer Offline Models (<=16GB RAM, No API Cost, Offline Workstation)* | | | |
+| **Perron (Diagnostic Scaffold)** | **Gemma 4 E4B / Deterministic Replay** | **No API fee (Local)** | **5/5 Solvable (5/5 Boundary Handled)** |
 
 *Note: Data Center Cloud APIs report published Pass@1 on full SWE-bench Lite (N=300) running across multi-GPU data center clusters. Local Consumer Offline Models evaluate issues on air-gapped consumer laptop hardware (<=16GB RAM). Evaluating all 300 instances locally with un-sharded weights requires ~150-300 GPU-hours, establishing a concrete computational boundary for offline workstation execution.*
 

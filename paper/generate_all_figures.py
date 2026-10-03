@@ -9,7 +9,7 @@ import numpy as np
 # SOURCE_DATE_EPOCH is set. Pinning it keeps every vector figure byte-identical
 # across reruns, so regenerated PDFs produce zero git diff when the inputs are
 # unchanged. A caller-provided value still takes precedence.
-os.environ.setdefault('SOURCE_DATE_EPOCH', '0')
+os.environ.setdefault('SOURCE_DATE_EPOCH', '1790812800')
 
 import matplotlib
 matplotlib.use('Agg')
@@ -333,7 +333,7 @@ def draw_figure2_diffs(out_pdf, out_png):
         ax.text(c3_x, y_pos, ltext, fontsize=8.0, fontfamily='monospace', color=lcol, fontweight='bold' if 'PASSED' in ltext or 'Syntax OK' in ltext else 'normal')
         y_pos -= 2.1
 
-    ax.text(c3_x, 12.5, "Verification Guarantee: Bounded AST search & pre-commit\nlinting mathematically guarantee 0.0% syntax errors.", fontsize=8.0, color=OKABE_ITO_DICT['green'], style='italic')
+    ax.text(c3_x, 12.5, "Verification: bounded AST search and pre-commit\nparsing reject edits that do not parse", fontsize=8.0, color=OKABE_ITO_DICT['green'], style='italic')
 
     # Vertical Column Separators (subtle thin lines)
     ax.plot([45.5, 45.5], [10.0, 44.5], color='#e2e8f0', lw=1.0)
@@ -488,64 +488,58 @@ def generate_figure4_specificity_sweep():
 
     fig, ax1 = plt.subplots(figsize=(4.7, 3.2), dpi=300)
     
-    sweep_path = os.path.join(REPO_ROOT, 'benchmarks', 'data', 'specificity_sweep_results.json')
-    if os.path.isfile(sweep_path):
-        with open(sweep_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        gammas = np.array(data['gammas'])
-        post_hsi = np.array(data['post_walk_hsi_mean'])
-        post_f4k = np.array(data['post_walk_f4k_mean'])
-        pre_gammas = np.array(data['pre_walk_gammas'])
-        pre_hsi = np.array(data['pre_walk_hsi_mean'])
-    else:
-        gammas = np.linspace(0.0, 1.0, 21)
-        post_hsi = np.array([87.2, 87.8, 88.6, 89.4, 89.8, 90.2, 90.8, 91.6, 92.2, 93.0, 93.4, 93.6, 94.8, 95.2, 95.6, 95.8, 96.2, 96.4, 96.4, 96.8, 97.0])
-        post_f4k = np.array([0.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 0.0, 2.0, 2.0, 2.0, 4.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0])
-        pre_gammas = np.array([0.0, 0.3, 0.5, 0.7, 1.0])
-        pre_hsi = np.array([87.2, 87.0, 86.8, 86.8, 86.6])
+    sweep = json.loads((REPO_ROOT / "results" / "dev_val_gamma_sweep.json").read_text(encoding="utf-8"))
+    gammas = [float(g) for g in sweep["gammas"]]
+    cells = [sweep["sweep"][f"gamma_{g:.2f}"] for g in gammas]
+    fn = [100.0 * c["fn_acc_10"]["mean"] for c in cells]
+    fn_lo = [100.0 * c["fn_acc_10"]["ci_lower"] for c in cells]
+    fn_hi = [100.0 * c["fn_acc_10"]["ci_upper"] for c in cells]
+    hsi = [100.0 * c["hsi_10"]["mean"] for c in cells]
+    hsi_lo = [100.0 * c["hsi_10"]["ci_lower"] for c in cells]
+    hsi_hi = [100.0 * c["hsi_10"]["ci_upper"] for c in cells]
 
     # Shaded optimal parameter basin / resonance corridor
     ax1.axvspan(0.65, 0.75, color=OKABE_ITO[0], alpha=0.06, zorder=0)
 
-    # Left Axis: Hub Suppression Index (HSI, %)
-    l1 = ax1.plot(gammas, post_hsi, marker='o', markersize=4.5, linewidth=2.0, linestyle='-', color=OKABE_ITO[0], label=r'Perron Post-Walk ($\pi_q / \pi_g^\gamma$)')
-    l2 = ax1.plot(pre_gammas, pre_hsi, marker='s', markersize=5.0, linewidth=1.8, linestyle='--', color=OKABE_ITO[1], label=r'HippoRAG Pre-Walk ($p_0 / \pi_g^\gamma$)')
-    l3 = ax1.axhline(87.2, color='#666666', linestyle=':', linewidth=1.4, label='Standard PPR Baseline (87.2%)')
+    # Left Axis: Hub Suppression Index (HSI@10, %)
+    l1 = ax1.plot(gammas, hsi, marker='o', markersize=4.5, linewidth=2.0, linestyle='-', color=OKABE_ITO[0], label=r'Hub Suppression Index (HSI@10)')
+    ax1.fill_between(gammas, hsi_lo, hsi_hi, color=OKABE_ITO[0], alpha=0.15)
 
     ax1.set_xlabel(r'Specificity Damping Exponent $\gamma$', fontsize=9.2, fontweight='bold')
     ax1.set_ylabel('Hub Suppression Index (%)', fontsize=9.2, fontweight='bold', color=OKABE_ITO[0])
-    ax1.set_ylim(84, 99)
+    ax1.set_ylim(50, 105)
     ax1.tick_params(axis='y', labelcolor=OKABE_ITO[0], labelsize=8.0)
     ax1.tick_params(axis='x', labelsize=8.0)
     ax1.set_xticks(np.arange(0.0, 1.05, 0.2))
 
-    # Right Axis: Function Recall@4k (%)
+    # Right Axis: Function Acc@10 (%)
     ax2 = ax1.twinx()
     ax2.spines['top'].set_visible(False)
-    l4 = ax2.plot(gammas, post_f4k, marker='^', markersize=4.5, linewidth=1.5, linestyle='-.', color=OKABE_ITO[2], label='Function Recall@4k (Right Axis)')
-    ax2.set_ylabel('Function Recall@4k (%)', fontsize=9.2, fontweight='bold', color=OKABE_ITO[2])
-    ax2.set_ylim(-0.5, 6.0)
+    l2 = ax2.plot(gammas, fn, marker='^', markersize=4.5, linewidth=1.5, linestyle='-.', color=OKABE_ITO[2], label='Function Acc@10')
+    ax2.fill_between(gammas, fn_lo, fn_hi, color=OKABE_ITO[2], alpha=0.15)
+    ax2.set_ylabel('Function Acc@10 (%)', fontsize=9.2, fontweight='bold', color=OKABE_ITO[2])
+    ax2.set_ylim(-1.0, 20.0)
     ax2.tick_params(axis='y', labelcolor=OKABE_ITO[2], labelsize=8.0)
 
-    # Highlight optimal gamma = 0.70 (Callout 1)
-    ax1.annotate(r'$\mathbf{\gamma=0.70}$' + '\nHSI: 95.6%\nF@4k: 4.0%', xy=(0.70, 95.6), xytext=(0.38, 96.8),
+    # Highlight optimal gamma = 0.70
+    ax1.annotate(r'$\mathbf{\gamma=0.70}$' + '\nHSI: 92.3%\nFn: 13.0%', xy=(0.70, 92.3), xytext=(0.42, 94.0),
                  arrowprops=dict(arrowstyle='->', lw=1.2, color=OKABE_ITO[0]),
                  fontsize=7.8, fontweight='bold', color=OKABE_ITO[0], ha='center',
                  bbox=dict(boxstyle='round,pad=0.2', facecolor='#f0f9ff', edgecolor=OKABE_ITO[0], lw=0.8, zorder=10),
                  zorder=10)
     
-    # Highlight pre-walk hub re-accumulation (Callout 2)
-    ax1.annotate('Pre-Walk Hub\nRe-Accumulation\n(HSI: 86.8%)', xy=(0.70, 86.8), xytext=(0.76, 84.7),
-                 arrowprops=dict(arrowstyle='->', lw=1.2, color=OKABE_ITO[1]),
-                 fontsize=7.6, fontweight='bold', color=OKABE_ITO[1], ha='center',
-                 bbox=dict(boxstyle='round,pad=0.2', facecolor='#fff7ed', edgecolor=OKABE_ITO[1], lw=0.8, zorder=10),
+    # Highlight unweighted baseline gamma = 0.00
+    ax1.annotate(r'$\mathbf{\gamma=0.00}$ (Unweighted)' + '\nHSI: 60.0%\nFn: 2.0%', xy=(0.0, 60.0), xytext=(0.20, 68.0),
+                 arrowprops=dict(arrowstyle='->', lw=1.2, color='#666666'),
+                 fontsize=7.6, fontweight='bold', color='#444444', ha='center',
+                 bbox=dict(boxstyle='round,pad=0.2', facecolor='#f8fafc', edgecolor='#94a3b8', lw=0.8, zorder=10),
                  zorder=10)
 
     # Invert z-order so ax1 annotations layer above ax2 plot elements
     ax1.set_zorder(ax2.get_zorder() + 1)
     ax1.patch.set_visible(False)
 
-    lines = l1 + l2 + [l3] + l4
+    lines = l1 + l2
     labels = [l.get_label() for l in lines]
     ax1.legend(lines, labels, loc='lower center', bbox_to_anchor=(0.5, 1.03), ncol=2, frameon=False, fontsize=7.8, columnspacing=0.8, handletextpad=0.4)
 
@@ -560,7 +554,7 @@ def generate_figure4_specificity_sweep():
     plt.savefig(pdf_out2, format='pdf', bbox_inches='tight')
     plt.savefig(png_out2, format='png', dpi=300, bbox_inches='tight')
     plt.close()
-    print(f"Rendered empirical specificity sweep -> PDF ({os.path.getsize(pdf_out):,} B)")
+    print(f"Rendered empirical specificity sweep -> PDF ({os.path.getsize(pdf_out2):,} B)")
 
 # Backward-compatible alias
 generate_figure4_pass_at_k = generate_figure4_specificity_sweep

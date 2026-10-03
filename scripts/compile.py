@@ -54,7 +54,7 @@ def reproducible_env():
     SOURCE_DATE_EPOCH still takes precedence.
     """
     env = os.environ.copy()
-    env.setdefault("SOURCE_DATE_EPOCH", "0")
+    env.setdefault("SOURCE_DATE_EPOCH", "1790812800")
     env.setdefault("FORCE_SOURCE_DATE", "1")
     return env
 
@@ -82,7 +82,7 @@ def compile_document(target_tex="paper/main.tex"):
 
     env = reproducible_env()
     if compiler_type == "tectonic":
-        cmd = [compiler_bin, "-Z", "deterministic-mode", tex_filename]
+        cmd = [compiler_bin, "-Z", "deterministic-mode", "--keep-logs", tex_filename]
         ret, out = run_command(cmd, cwd=str(work_dir), env=env)
     elif compiler_type == "latexmk":
         cmd = [
