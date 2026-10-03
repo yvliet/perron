@@ -6,7 +6,7 @@ Evaluates systems performance on scale-free graphs (|V| = 1M, |E| = 10M):
 2. Multi-Worker Memory Scaling: Static mmap CSR (W -> 1 OS page cache sharing) vs Dynamic Reweighting (W x Copy-on-Write).
 3. Cold-Start Loading Latency: mmap vs np.load vs pickle.
 
-Saves benchmark results to data/csr_scaling_profile.json.
+Saves benchmark results to results/csr_scaling_profile.json.
 """
 
 from __future__ import annotations
@@ -239,7 +239,7 @@ def run_csr_profiling() -> Dict[str, Any]:
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
     }
 
-    out_p = Path("data/csr_scaling_profile.json")
+    out_p = Path("results/csr_scaling_profile.json")
     out_p.parent.mkdir(parents=True, exist_ok=True)
     with open(out_p, "w", encoding="utf-8") as f:
         json.dump(full_results, f, indent=2)

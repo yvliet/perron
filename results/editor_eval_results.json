@@ -1,0 +1,573 @@
+{
+  "benchmark_metadata": {
+    "num_cases": 30,
+    "archetypes": [
+      "clean_standard",
+      "indentation_trap",
+      "hunk_drift",
+      "syntax_corruption"
+    ]
+  },
+  "raw_counts": {
+    "git_apply": {
+      "total": 30,
+      "applied": 24,
+      "syntax_valid": 9,
+      "hunk_rejected": 6
+    },
+    "sed_replace": {
+      "total": 30,
+      "applied": 30,
+      "syntax_valid": 16,
+      "syntax_errors": 14
+    },
+    "perron_ast": {
+      "total": 30,
+      "applied": 23,
+      "syntax_valid": 23,
+      "rollback_protected": 7
+    }
+  },
+  "percentages": {
+    "git_apply": {
+      "apply_rate": 80.0,
+      "syntax_valid_rate": 30.0,
+      "hunk_rejection_rate": 20.0,
+      "syntax_error_rate": 50.0
+    },
+    "sed_replace": {
+      "apply_rate": 100.0,
+      "syntax_valid_rate": 53.3,
+      "syntax_error_rate": 46.7
+    },
+    "perron_ast": {
+      "apply_rate": 76.7,
+      "syntax_valid_rate": 76.7,
+      "syntax_error_rate": 0.0,
+      "rollback_rate": 23.3
+    }
+  },
+  "per_case": [
+    {
+      "id": "clean_single_method_fix",
+      "git_apply": {
+        "applied": true,
+        "valid": true
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": true
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "indentation_mismatch_unindented",
+      "git_apply": {
+        "applied": true,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": false
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "diff_header_off_by_one_drift",
+      "git_apply": {
+        "applied": true,
+        "valid": true
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": true
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "multi_file_syntax_rollback",
+      "git_apply": {
+        "applied": true,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": true
+      },
+      "perron_ast": {
+        "applied": false,
+        "valid": false,
+        "rolled_back": true
+      }
+    },
+    {
+      "id": "synthetic_case_5_clean_standard",
+      "git_apply": {
+        "applied": true,
+        "valid": true
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": true
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "synthetic_case_6_indentation_trap",
+      "git_apply": {
+        "applied": true,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": false
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "synthetic_case_7_hunk_drift",
+      "git_apply": {
+        "applied": false,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": true
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "synthetic_case_8_syntax_corruption",
+      "git_apply": {
+        "applied": true,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": false
+      },
+      "perron_ast": {
+        "applied": false,
+        "valid": false,
+        "rolled_back": true
+      }
+    },
+    {
+      "id": "synthetic_case_9_clean_standard",
+      "git_apply": {
+        "applied": true,
+        "valid": true
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": true
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "synthetic_case_10_indentation_trap",
+      "git_apply": {
+        "applied": true,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": false
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "synthetic_case_11_hunk_drift",
+      "git_apply": {
+        "applied": false,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": true
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "synthetic_case_12_syntax_corruption",
+      "git_apply": {
+        "applied": true,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": false
+      },
+      "perron_ast": {
+        "applied": false,
+        "valid": false,
+        "rolled_back": true
+      }
+    },
+    {
+      "id": "synthetic_case_13_clean_standard",
+      "git_apply": {
+        "applied": true,
+        "valid": true
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": true
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "synthetic_case_14_indentation_trap",
+      "git_apply": {
+        "applied": true,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": false
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "synthetic_case_15_hunk_drift",
+      "git_apply": {
+        "applied": false,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": true
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "synthetic_case_16_syntax_corruption",
+      "git_apply": {
+        "applied": true,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": false
+      },
+      "perron_ast": {
+        "applied": false,
+        "valid": false,
+        "rolled_back": true
+      }
+    },
+    {
+      "id": "synthetic_case_17_clean_standard",
+      "git_apply": {
+        "applied": true,
+        "valid": true
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": true
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "synthetic_case_18_indentation_trap",
+      "git_apply": {
+        "applied": true,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": false
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "synthetic_case_19_hunk_drift",
+      "git_apply": {
+        "applied": false,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": true
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "synthetic_case_20_syntax_corruption",
+      "git_apply": {
+        "applied": true,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": false
+      },
+      "perron_ast": {
+        "applied": false,
+        "valid": false,
+        "rolled_back": true
+      }
+    },
+    {
+      "id": "synthetic_case_21_clean_standard",
+      "git_apply": {
+        "applied": true,
+        "valid": true
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": true
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "synthetic_case_22_indentation_trap",
+      "git_apply": {
+        "applied": true,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": false
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "synthetic_case_23_hunk_drift",
+      "git_apply": {
+        "applied": false,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": true
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "synthetic_case_24_syntax_corruption",
+      "git_apply": {
+        "applied": true,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": false
+      },
+      "perron_ast": {
+        "applied": false,
+        "valid": false,
+        "rolled_back": true
+      }
+    },
+    {
+      "id": "synthetic_case_25_clean_standard",
+      "git_apply": {
+        "applied": true,
+        "valid": true
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": true
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "synthetic_case_26_indentation_trap",
+      "git_apply": {
+        "applied": true,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": false
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "synthetic_case_27_hunk_drift",
+      "git_apply": {
+        "applied": false,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": true
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "synthetic_case_28_syntax_corruption",
+      "git_apply": {
+        "applied": true,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": false
+      },
+      "perron_ast": {
+        "applied": false,
+        "valid": false,
+        "rolled_back": true
+      }
+    },
+    {
+      "id": "synthetic_case_29_clean_standard",
+      "git_apply": {
+        "applied": true,
+        "valid": true
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": true
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    },
+    {
+      "id": "synthetic_case_30_indentation_trap",
+      "git_apply": {
+        "applied": true,
+        "valid": false
+      },
+      "sed_replace": {
+        "applied": true,
+        "valid": false
+      },
+      "perron_ast": {
+        "applied": true,
+        "valid": true,
+        "rolled_back": false
+      }
+    }
+  ],
+  "valid_application": {
+    "git_apply": {
+      "k": 9,
+      "n": 30,
+      "rate": 0.3,
+      "wilson_lower": 0.16664748268243793,
+      "wilson_upper": 0.47875787458714947
+    },
+    "sed_replace": {
+      "k": 16,
+      "n": 30,
+      "rate": 0.5333333333333333,
+      "wilson_lower": 0.36142299619873297,
+      "wilson_upper": 0.6976761109230025
+    },
+    "perron_ast": {
+      "k": 23,
+      "n": 30,
+      "rate": 0.7666666666666667,
+      "wilson_lower": 0.5907167384187784,
+      "wilson_upper": 0.8820761185551049
+    }
+  },
+  "mcnemar_vs_perron": {
+    "git_apply": {
+      "n_target_wins": 14,
+      "n_baseline_wins": 0,
+      "n_both_hit": 9,
+      "n_both_miss": 7,
+      "n_discordant": 14,
+      "p_value": 0.0001220703125
+    },
+    "sed_replace": {
+      "n_target_wins": 8,
+      "n_baseline_wins": 1,
+      "n_both_hit": 15,
+      "n_both_miss": 6,
+      "n_discordant": 9,
+      "p_value": 0.0390625
+    }
+  }
+}

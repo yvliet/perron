@@ -1,0 +1,1411 @@
+{
+  "_doc": "Single source for paper numbers. Each macro maps to a numeric leaf under results/ via an RFC 6901 JSON Pointer. Rendered by scripts/generate_paper_macros.py; never edit paper/metrics_macros.tex by hand.",
+  "macros": {
+    "NumHeldout": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/num_instances",
+      "fmt": "int"
+    },
+    "NumCallable": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/num_callable_instances",
+      "fmt": "int"
+    },
+    "PerronPrimaryFnAccTen": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/perron_static/metrics/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "PerronPrimaryFnAccTenKN": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/perron_static/metrics/fn_acc_10/mean",
+      "fmt": "frac",
+      "n_ptr": "/num_callable_instances"
+    },
+    "PerronPrimaryCILow": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/perron_static/metrics/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "PerronPrimaryCIHigh": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/perron_static/metrics/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "DegNormPPRFnAccTen": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/deg_ppr/metrics/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "DegNormPPRCILow": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/deg_ppr/metrics/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "DegNormPPRCIHigh": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/deg_ppr/metrics/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "StandardPPRFnAccTen": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/standard_ppr/metrics/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "AiderFnAccTen": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/aider/metrics/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "HubBlocklistFnAccTen": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/blocklist_lex/metrics/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "StaticDegDiscountFnAccTen": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/deg_discount_matrix/metrics/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "HippoRAGFnAccTen": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/hipporag/metrics/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "QueryReweightedFnAccTen": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/query_reweighted_ppr/metrics/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "BMTwentyFiveFnAccTen": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/bm25/metrics/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "BMTwentyFiveFnAccTenKN": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/bm25/metrics/fn_acc_10/mean",
+      "fmt": "frac",
+      "n_ptr": "/num_callable_instances"
+    },
+    "BMTwentyFiveCILow": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/bm25/metrics/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "BMTwentyFiveCIHigh": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/bm25/metrics/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "BMTwentyFiveOneHopFnAccTen": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/bm25_1hop/metrics/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "DenseFnAccTen": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/dense/metrics/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "PerronPrimaryFileAccFive": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/perron_static/metrics/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "PerronPrimaryFileAccCILow": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/perron_static/metrics/file_acc_5/ci_lower",
+      "fmt": "pct1"
+    },
+    "PerronPrimaryFileAccCIHigh": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/perron_static/metrics/file_acc_5/ci_upper",
+      "fmt": "pct1"
+    },
+    "DegNormPPRFileAccFive": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/deg_ppr/metrics/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "StandardPPRFileAccFive": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/standard_ppr/metrics/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "AiderFileAccFive": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/aider/metrics/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "HubBlocklistFileAccFive": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/blocklist_lex/metrics/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "StaticDegDiscountFileAccFive": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/deg_discount_matrix/metrics/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "HippoRAGFileAccFive": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/hipporag/metrics/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "QueryReweightedFileAccFive": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/query_reweighted_ppr/metrics/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "BMTwentyFiveFileAccFive": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/bm25/metrics/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "BMTwentyFiveOneHopFileAccFive": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/bm25_1hop/metrics/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "McNemarPerronVsDegNormP": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/pairwise_vs_perron_static/deg_ppr/mcnemar/p_value",
+      "fmt": "pval"
+    },
+    "HolmPerronVsDegNormP": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/pairwise_vs_perron_static/deg_ppr/mcnemar/p_adjusted_holm",
+      "fmt": "pval"
+    },
+    "McNemarPerronVsQueryReweightedP": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/pairwise_vs_perron_static/query_reweighted_ppr/mcnemar/p_value",
+      "fmt": "pval"
+    },
+    "McNemarPerronVsStandardPPRP": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/pairwise_vs_perron_static/standard_ppr/mcnemar/p_value",
+      "fmt": "pval"
+    },
+    "McNemarPerronVsBMTwentyFiveP": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/pairwise_vs_perron_static/bm25/mcnemar/p_value",
+      "fmt": "pval"
+    },
+    "HolmPerronVsBMTwentyFiveP": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/pairwise_vs_perron_static/bm25/mcnemar/p_adjusted_holm",
+      "fmt": "pval"
+    },
+    "HSIPerronStatic": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/perron_static/metrics/hsi/mean",
+      "fmt": "pct1"
+    },
+    "HSIStandardPPR": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/standard_ppr/metrics/hsi/mean",
+      "fmt": "pct1"
+    },
+    "HSIAider": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/aider/metrics/hsi/mean",
+      "fmt": "pct1"
+    },
+    "HSIBlocklist": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/blocklist_lex/metrics/hsi/mean",
+      "fmt": "pct1"
+    },
+    "HSIDegDiscount": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/deg_discount_matrix/metrics/hsi/mean",
+      "fmt": "pct1"
+    },
+    "HSIDegPPR": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/deg_ppr/metrics/hsi/mean",
+      "fmt": "pct1"
+    },
+    "HSIHippoRAG": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/hipporag/metrics/hsi/mean",
+      "fmt": "pct1"
+    },
+    "HSIQueryRW": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/query_reweighted_ppr/metrics/hsi/mean",
+      "fmt": "pct1"
+    },
+    "HSIBMTwentyFive": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/bm25/metrics/hsi/mean",
+      "fmt": "pct1"
+    },
+    "HubContamPerronStatic": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/perron_static/metrics/hsi/mean",
+      "fmt": "pct1c"
+    },
+    "HubContamStandardPPR": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/standard_ppr/metrics/hsi/mean",
+      "fmt": "pct1c"
+    },
+    "HubContamHippoRAG": {
+      "file": "results/heldout_table2_v2_postaudit.json",
+      "ptr": "/summary_s_func/hipporag/metrics/hsi/mean",
+      "fmt": "pct1c"
+    },
+    "SpearmanRhoMin": {
+      "file": "results/pagerank_degree_spearman.json",
+      "ptr": "/min",
+      "fmt": "num3"
+    },
+    "SpearmanRhoMax": {
+      "file": "results/pagerank_degree_spearman.json",
+      "ptr": "/max",
+      "fmt": "num3"
+    },
+    "SpearmanRhoMean": {
+      "file": "results/pagerank_degree_spearman.json",
+      "ptr": "/mean",
+      "fmt": "num3"
+    },
+    "EditorNumCases": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/benchmark_metadata/num_cases",
+      "fmt": "int"
+    },
+    "GitApplyApplyRate": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/percentages/git_apply/apply_rate",
+      "fmt": "pct1_raw"
+    },
+    "GitApplyHunkRejectRate": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/percentages/git_apply/hunk_rejection_rate",
+      "fmt": "pct1_raw"
+    },
+    "GitApplySyntaxValidRate": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/percentages/git_apply/syntax_valid_rate",
+      "fmt": "pct1_raw"
+    },
+    "GitApplySyntaxErrorRate": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/percentages/git_apply/syntax_error_rate",
+      "fmt": "pct1_raw"
+    },
+    "SedApplyRate": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/percentages/sed_replace/apply_rate",
+      "fmt": "pct1_raw"
+    },
+    "SedSyntaxErrorRate": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/percentages/sed_replace/syntax_error_rate",
+      "fmt": "pct1_raw"
+    },
+    "SedSyntaxValidRate": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/percentages/sed_replace/syntax_valid_rate",
+      "fmt": "pct1_raw"
+    },
+    "PerronASTApplyRate": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/percentages/perron_ast/apply_rate",
+      "fmt": "pct1_raw"
+    },
+    "PerronASTSyntaxErrorRate": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/percentages/perron_ast/syntax_error_rate",
+      "fmt": "pct1_raw"
+    },
+    "PerronASTRollbackRate": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/percentages/perron_ast/rollback_rate",
+      "fmt": "pct1_raw"
+    },
+    "GitApplyAppliedKN": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/raw_counts/git_apply/applied",
+      "fmt": "kn",
+      "n_ptr": "/raw_counts/git_apply/total"
+    },
+    "SedAppliedKN": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/raw_counts/sed_replace/applied",
+      "fmt": "kn",
+      "n_ptr": "/raw_counts/sed_replace/total"
+    },
+    "PerronASTAppliedKN": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/raw_counts/perron_ast/applied",
+      "fmt": "kn",
+      "n_ptr": "/raw_counts/perron_ast/total"
+    },
+    "PerronASTRolledBackKN": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/raw_counts/perron_ast/rollback_protected",
+      "fmt": "kn",
+      "n_ptr": "/raw_counts/perron_ast/total"
+    },
+    "GitApplyVARKN": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/valid_application/git_apply/k",
+      "fmt": "kn",
+      "n_ptr": "/valid_application/git_apply/n"
+    },
+    "SedVARKN": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/valid_application/sed_replace/k",
+      "fmt": "kn",
+      "n_ptr": "/valid_application/sed_replace/n"
+    },
+    "PerronASTVARKN": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/valid_application/perron_ast/k",
+      "fmt": "kn",
+      "n_ptr": "/valid_application/perron_ast/n"
+    },
+    "GitApplyVAR": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/valid_application/git_apply/k",
+      "fmt": "pct_kn",
+      "n_ptr": "/valid_application/git_apply/n"
+    },
+    "SedVAR": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/valid_application/sed_replace/k",
+      "fmt": "pct_kn",
+      "n_ptr": "/valid_application/sed_replace/n"
+    },
+    "PerronASTVAR": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/valid_application/perron_ast/k",
+      "fmt": "pct_kn",
+      "n_ptr": "/valid_application/perron_ast/n"
+    },
+    "GitApplyVARLo": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/valid_application/git_apply/wilson_lower",
+      "fmt": "pct1"
+    },
+    "GitApplyVARHi": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/valid_application/git_apply/wilson_upper",
+      "fmt": "pct1"
+    },
+    "SedVARLo": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/valid_application/sed_replace/wilson_lower",
+      "fmt": "pct1"
+    },
+    "SedVARHi": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/valid_application/sed_replace/wilson_upper",
+      "fmt": "pct1"
+    },
+    "PerronASTVARLo": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/valid_application/perron_ast/wilson_lower",
+      "fmt": "pct1"
+    },
+    "PerronASTVARHi": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/valid_application/perron_ast/wilson_upper",
+      "fmt": "pct1"
+    },
+    "McNemarPerronVsGitApplyP": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/mcnemar_vs_perron/git_apply/p_value",
+      "fmt": "pval"
+    },
+    "McNemarPerronVsSedP": {
+      "file": "results/editor_eval_results.json",
+      "ptr": "/mcnemar_vs_perron/sed_replace/p_value",
+      "fmt": "pval"
+    },
+    "SpectralMaxIter": {
+      "file": "results/spectral_convergence.json",
+      "ptr": "/theoretical_bounds/theoretical_max_iterations",
+      "fmt": "int"
+    },
+    "ReqPowerIters": {
+      "file": "results/spectral_convergence.json",
+      "ptr": "/empirical_convergence/requests/power_iterations",
+      "fmt": "int"
+    },
+    "SymPowerIters": {
+      "file": "results/spectral_convergence.json",
+      "ptr": "/empirical_convergence/sympy/power_iterations",
+      "fmt": "int"
+    },
+    "ReqConvergeMs": {
+      "file": "results/spectral_convergence.json",
+      "ptr": "/empirical_convergence/requests/latency_ms",
+      "fmt": "ms2"
+    },
+    "SymConvergeMs": {
+      "file": "results/spectral_convergence.json",
+      "ptr": "/empirical_convergence/sympy/latency_ms",
+      "fmt": "ms2"
+    },
+    "ReweightMs": {
+      "file": "results/csr_scaling_profile.json",
+      "ptr": "/diffusion_vs_reweighting/mean_reweighting_time_ms",
+      "fmt": "ms1"
+    },
+    "ReweightOverheadPct": {
+      "file": "results/csr_scaling_profile.json",
+      "ptr": "/diffusion_vs_reweighting/reweighting_overhead_percentage",
+      "fmt": "pct1_raw"
+    },
+    "CsrBinarySizeMB": {
+      "file": "results/csr_scaling_profile.json",
+      "ptr": "/storage_and_cold_start/formats/mmap_csr/size_mb",
+      "fmt": "mb1"
+    },
+    "EnginePeakRSSMB": {
+      "file": "results/memory_measured.json",
+      "ptr": "/process_memory/peak_process_rss_mb",
+      "fmt": "mb2"
+    },
+    "EngineGraphLoadDeltaMB": {
+      "file": "results/memory_measured.json",
+      "ptr": "/component_memory_footprint/graph_load_delta_mb",
+      "fmt": "mb1"
+    },
+    "HostRAMGiB": {
+      "file": "results/memory_measured.json",
+      "ptr": "/hardware_host/total_system_ram_gb",
+      "fmt": "gib2"
+    },
+    "HostAvailGiB": {
+      "file": "results/memory_measured.json",
+      "ptr": "/hardware_host/available_system_ram_gb",
+      "fmt": "gib2"
+    },
+    "GammaSweepFnAtSeventy": {
+      "file": "results/dev_val_gamma_sweep.json",
+      "ptr": "/sweep/gamma_0.70/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "GammaSweepHSIAtSeventy": {
+      "file": "results/dev_val_gamma_sweep.json",
+      "ptr": "/sweep/gamma_0.70/hsi_10/mean",
+      "fmt": "pct1"
+    },
+    "GammaSweepFnAtZero": {
+      "file": "results/dev_val_gamma_sweep.json",
+      "ptr": "/sweep/gamma_0.00/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "GammaSweepHSIAtZero": {
+      "file": "results/dev_val_gamma_sweep.json",
+      "ptr": "/sweep/gamma_0.00/hsi_10/mean",
+      "fmt": "pct1"
+    },
+    "SyntheticParetoPerronTenTwentyFour": {
+      "file": "results/synthetic_pareto.json",
+      "ptr": "/recall_by_budget/perron/K_1024",
+      "fmt": "pct1"
+    },
+    "SyntheticParetoStdPPRTenTwentyFour": {
+      "file": "results/synthetic_pareto.json",
+      "ptr": "/recall_by_budget/standard_ppr/K_1024",
+      "fmt": "pct1"
+    },
+    "SyntheticParetoTokenOverlapTenTwentyFour": {
+      "file": "results/synthetic_pareto.json",
+      "ptr": "/recall_by_budget/token_overlap/K_1024",
+      "fmt": "pct1"
+    },
+    "SyntheticParetoBFSTenTwentyFour": {
+      "file": "results/synthetic_pareto.json",
+      "ptr": "/recall_by_budget/bfs_2hop/K_1024",
+      "fmt": "pct1"
+    },
+    "SyntheticParetoPerronThreeFourEightZero": {
+      "file": "results/synthetic_pareto.json",
+      "ptr": "/recall_by_budget/perron/K_3480",
+      "fmt": "pct1"
+    },
+    "SyntheticParetoPerronHSI": {
+      "file": "results/synthetic_pareto.json",
+      "ptr": "/hsi_by_budget/perron/K_3480",
+      "fmt": "pct1"
+    },
+    "SyntheticBasinMinRecall": {
+      "file": "results/synthetic_pareto.json",
+      "ptr": "/basin/min_recall",
+      "fmt": "pct1"
+    },
+    "TabFnPerronStatic": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/perron_static/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "TabFnLoPerronStatic": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/perron_static/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "TabFnHiPerronStatic": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/perron_static/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "TabFnKNPerronStatic": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/perron_static/fn_acc_10/k",
+      "fmt": "kn",
+      "n_ptr": "/summary_s_func/perron_static/fn_acc_10/n"
+    },
+    "TabFileFivePerronStatic": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/perron_static/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "TabHSIPerronStatic": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/perron_static/hsi/mean",
+      "fmt": "pct1"
+    },
+    "TabFnStandardPPR": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/standard_ppr/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "TabFnLoStandardPPR": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/standard_ppr/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "TabFnHiStandardPPR": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/standard_ppr/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "TabFnKNStandardPPR": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/standard_ppr/fn_acc_10/k",
+      "fmt": "kn",
+      "n_ptr": "/summary_s_func/standard_ppr/fn_acc_10/n"
+    },
+    "TabFileFiveStandardPPR": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/standard_ppr/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "TabHSIStandardPPR": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/standard_ppr/hsi/mean",
+      "fmt": "pct1"
+    },
+    "TabFnAider": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/aider/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "TabFnLoAider": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/aider/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "TabFnHiAider": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/aider/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "TabFnKNAider": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/aider/fn_acc_10/k",
+      "fmt": "kn",
+      "n_ptr": "/summary_s_func/aider/fn_acc_10/n"
+    },
+    "TabFileFiveAider": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/aider/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "TabHSIAider": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/aider/hsi/mean",
+      "fmt": "pct1"
+    },
+    "TabFnBlocklist": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/blocklist_lex/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "TabFnLoBlocklist": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/blocklist_lex/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "TabFnHiBlocklist": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/blocklist_lex/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "TabFnKNBlocklist": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/blocklist_lex/fn_acc_10/k",
+      "fmt": "kn",
+      "n_ptr": "/summary_s_func/blocklist_lex/fn_acc_10/n"
+    },
+    "TabFileFiveBlocklist": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/blocklist_lex/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "TabHSIBlocklist": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/blocklist_lex/hsi/mean",
+      "fmt": "pct1"
+    },
+    "TabFnDegDiscount": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/deg_discount_matrix/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "TabFnLoDegDiscount": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/deg_discount_matrix/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "TabFnHiDegDiscount": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/deg_discount_matrix/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "TabFnKNDegDiscount": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/deg_discount_matrix/fn_acc_10/k",
+      "fmt": "kn",
+      "n_ptr": "/summary_s_func/deg_discount_matrix/fn_acc_10/n"
+    },
+    "TabFileFiveDegDiscount": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/deg_discount_matrix/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "TabHSIDegDiscount": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/deg_discount_matrix/hsi/mean",
+      "fmt": "pct1"
+    },
+    "TabFnDegPPR": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/deg_ppr/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "TabFnLoDegPPR": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/deg_ppr/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "TabFnHiDegPPR": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/deg_ppr/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "TabFnKNDegPPR": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/deg_ppr/fn_acc_10/k",
+      "fmt": "kn",
+      "n_ptr": "/summary_s_func/deg_ppr/fn_acc_10/n"
+    },
+    "TabFileFiveDegPPR": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/deg_ppr/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "TabHSIDegPPR": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/deg_ppr/hsi/mean",
+      "fmt": "pct1"
+    },
+    "TabFnHippoRAG": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/hipporag/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "TabFnLoHippoRAG": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/hipporag/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "TabFnHiHippoRAG": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/hipporag/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "TabFnKNHippoRAG": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/hipporag/fn_acc_10/k",
+      "fmt": "kn",
+      "n_ptr": "/summary_s_func/hipporag/fn_acc_10/n"
+    },
+    "TabFileFiveHippoRAG": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/hipporag/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "TabHSIHippoRAG": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/hipporag/hsi/mean",
+      "fmt": "pct1"
+    },
+    "TabFnQueryRW": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/query_reweighted_ppr/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "TabFnLoQueryRW": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/query_reweighted_ppr/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "TabFnHiQueryRW": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/query_reweighted_ppr/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "TabFnKNQueryRW": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/query_reweighted_ppr/fn_acc_10/k",
+      "fmt": "kn",
+      "n_ptr": "/summary_s_func/query_reweighted_ppr/fn_acc_10/n"
+    },
+    "TabFileFiveQueryRW": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/query_reweighted_ppr/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "TabHSIQueryRW": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/query_reweighted_ppr/hsi/mean",
+      "fmt": "pct1"
+    },
+    "TabFnBMTwentyFive": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/bm25/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "TabFnLoBMTwentyFive": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/bm25/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "TabFnHiBMTwentyFive": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/bm25/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "TabFnKNBMTwentyFive": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/bm25/fn_acc_10/k",
+      "fmt": "kn",
+      "n_ptr": "/summary_s_func/bm25/fn_acc_10/n"
+    },
+    "TabFileFiveBMTwentyFive": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/bm25/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "TabHSIBMTwentyFive": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/bm25/hsi/mean",
+      "fmt": "pct1"
+    },
+    "TabFnBMOneHop": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/bm25_1hop/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "TabFnLoBMOneHop": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/bm25_1hop/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "TabFnHiBMOneHop": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/bm25_1hop/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "TabFnKNBMOneHop": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/bm25_1hop/fn_acc_10/k",
+      "fmt": "kn",
+      "n_ptr": "/summary_s_func/bm25_1hop/fn_acc_10/n"
+    },
+    "TabFileFiveBMOneHop": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/bm25_1hop/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "TabHSIBMOneHop": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/bm25_1hop/hsi/mean",
+      "fmt": "pct1"
+    },
+    "TabFnDense": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/dense/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "TabFnLoDense": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/dense/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "TabFnHiDense": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/dense/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "TabFnKNDense": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/dense/fn_acc_10/k",
+      "fmt": "kn",
+      "n_ptr": "/summary_s_func/dense/fn_acc_10/n"
+    },
+    "TabFileFiveDense": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/dense/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "TabHSIDense": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/dense/hsi/mean",
+      "fmt": "pct1"
+    },
+    "TabFnOracle": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/oracle/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "TabFnLoOracle": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/oracle/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "TabFnHiOracle": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/oracle/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "TabFnKNOracle": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/oracle/fn_acc_10/k",
+      "fmt": "kn",
+      "n_ptr": "/summary_s_func/oracle/fn_acc_10/n"
+    },
+    "TabFileFiveOracle": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/oracle/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "TabHSIOracle": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/summary_s_func/oracle/hsi/mean",
+      "fmt": "pct1"
+    },
+    "TabBetaPerronStatic": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/beta_star/perron_static",
+      "fmt": "num2"
+    },
+    "TabBetaStandardPPR": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/beta_star/standard_ppr",
+      "fmt": "num2"
+    },
+    "TabBetaAider": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/beta_star/aider",
+      "fmt": "num2"
+    },
+    "TabBetaBlocklist": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/beta_star/blocklist_lex",
+      "fmt": "num2"
+    },
+    "TabBetaDegDiscount": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/beta_star/deg_discount_matrix",
+      "fmt": "num2"
+    },
+    "TabBetaDegPPR": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/beta_star/deg_ppr",
+      "fmt": "num2"
+    },
+    "TabBetaHippoRAG": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/beta_star/hipporag",
+      "fmt": "num2"
+    },
+    "TabBetaQueryRW": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/beta_star/query_reweighted_ppr",
+      "fmt": "num2"
+    },
+    "TabMcNemarBMTwentyFive": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/bm25/mcnemar/p_value",
+      "fmt": "pcell"
+    },
+    "TabHolmBMTwentyFive": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/bm25/p_adjusted_holm",
+      "fmt": "pcell"
+    },
+    "TabMcNemarBMOneHop": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/bm25_1hop/mcnemar/p_value",
+      "fmt": "pcell"
+    },
+    "TabHolmBMOneHop": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/bm25_1hop/p_adjusted_holm",
+      "fmt": "pcell"
+    },
+    "TabMcNemarDense": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/dense/mcnemar/p_value",
+      "fmt": "pcell"
+    },
+    "TabHolmDense": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/dense/p_adjusted_holm",
+      "fmt": "pcell"
+    },
+    "TabMcNemarStandardPPR": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/standard_ppr/mcnemar/p_value",
+      "fmt": "pcell"
+    },
+    "TabHolmStandardPPR": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/standard_ppr/p_adjusted_holm",
+      "fmt": "pcell"
+    },
+    "TabMcNemarAider": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/aider/mcnemar/p_value",
+      "fmt": "pcell"
+    },
+    "TabHolmAider": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/aider/p_adjusted_holm",
+      "fmt": "pcell"
+    },
+    "TabMcNemarBlocklist": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/blocklist_lex/mcnemar/p_value",
+      "fmt": "pcell"
+    },
+    "TabHolmBlocklist": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/blocklist_lex/p_adjusted_holm",
+      "fmt": "pcell"
+    },
+    "TabMcNemarDegDiscount": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/deg_discount_matrix/mcnemar/p_value",
+      "fmt": "pcell"
+    },
+    "TabHolmDegDiscount": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/deg_discount_matrix/p_adjusted_holm",
+      "fmt": "pcell"
+    },
+    "TabMcNemarDegPPR": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/deg_ppr/mcnemar/p_value",
+      "fmt": "pcell"
+    },
+    "TabHolmDegPPR": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/deg_ppr/p_adjusted_holm",
+      "fmt": "pcell"
+    },
+    "TabMcNemarHippoRAG": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/hipporag/mcnemar/p_value",
+      "fmt": "pcell"
+    },
+    "TabHolmHippoRAG": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/hipporag/p_adjusted_holm",
+      "fmt": "pcell"
+    },
+    "TabMcNemarQueryRW": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/query_reweighted_ppr/mcnemar/p_value",
+      "fmt": "pcell"
+    },
+    "TabHolmQueryRW": {
+      "file": "results/heldout_tuned_baselines.json",
+      "ptr": "/pairwise_vs_perron_static/query_reweighted_ppr/p_adjusted_holm",
+      "fmt": "pcell"
+    },
+    "DiagMedianInDegStandardPPR": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/standard_ppr/median",
+      "fmt": "num1"
+    },
+    "DiagMeanInDegStandardPPR": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/standard_ppr/mean",
+      "fmt": "num1"
+    },
+    "DiagMaxInDegStandardPPR": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/standard_ppr/max",
+      "fmt": "int"
+    },
+    "DiagRBStandardPPR": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/standard_ppr/rank_biserial",
+      "fmt": "num2"
+    },
+    "DiagMWPStandardPPR": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/standard_ppr/mannwhitney_p",
+      "fmt": "pval"
+    },
+    "DiagMedianInDegAider": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/aider/median",
+      "fmt": "num1"
+    },
+    "DiagMeanInDegAider": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/aider/mean",
+      "fmt": "num1"
+    },
+    "DiagMaxInDegAider": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/aider/max",
+      "fmt": "int"
+    },
+    "DiagRBAider": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/aider/rank_biserial",
+      "fmt": "num2"
+    },
+    "DiagMWPAider": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/aider/mannwhitney_p",
+      "fmt": "pval"
+    },
+    "DiagMedianInDegBlocklist": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/blocklist_lex/median",
+      "fmt": "num1"
+    },
+    "DiagMeanInDegBlocklist": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/blocklist_lex/mean",
+      "fmt": "num1"
+    },
+    "DiagMaxInDegBlocklist": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/blocklist_lex/max",
+      "fmt": "int"
+    },
+    "DiagRBBlocklist": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/blocklist_lex/rank_biserial",
+      "fmt": "num2"
+    },
+    "DiagMWPBlocklist": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/blocklist_lex/mannwhitney_p",
+      "fmt": "pval"
+    },
+    "DiagMedianInDegDegDiscount": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/deg_discount_matrix/median",
+      "fmt": "num1"
+    },
+    "DiagMeanInDegDegDiscount": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/deg_discount_matrix/mean",
+      "fmt": "num1"
+    },
+    "DiagMaxInDegDegDiscount": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/deg_discount_matrix/max",
+      "fmt": "int"
+    },
+    "DiagRBDegDiscount": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/deg_discount_matrix/rank_biserial",
+      "fmt": "num2"
+    },
+    "DiagMWPDegDiscount": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/deg_discount_matrix/mannwhitney_p",
+      "fmt": "pval"
+    },
+    "DiagMedianInDegHippoRAG": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/hipporag/median",
+      "fmt": "num1"
+    },
+    "DiagMeanInDegHippoRAG": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/hipporag/mean",
+      "fmt": "num1"
+    },
+    "DiagMaxInDegHippoRAG": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/hipporag/max",
+      "fmt": "int"
+    },
+    "DiagRBHippoRAG": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/hipporag/rank_biserial",
+      "fmt": "num2"
+    },
+    "DiagMWPHippoRAG": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/hipporag/mannwhitney_p",
+      "fmt": "pval"
+    },
+    "DiagMedianInDegQueryRW": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/query_reweighted_ppr/median",
+      "fmt": "num1"
+    },
+    "DiagMeanInDegQueryRW": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/query_reweighted_ppr/mean",
+      "fmt": "num1"
+    },
+    "DiagMaxInDegQueryRW": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/query_reweighted_ppr/max",
+      "fmt": "int"
+    },
+    "DiagRBQueryRW": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/query_reweighted_ppr/rank_biserial",
+      "fmt": "num2"
+    },
+    "DiagMWPQueryRW": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/query_reweighted_ppr/mannwhitney_p",
+      "fmt": "pval"
+    },
+    "DiagMedianInDegPerronStatic": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/perron_static/median",
+      "fmt": "num1"
+    },
+    "DiagMeanInDegPerronStatic": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/perron_static/mean",
+      "fmt": "num1"
+    },
+    "DiagMaxInDegPerronStatic": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/perron_static/max",
+      "fmt": "int"
+    },
+    "DiagRBPerronStatic": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/perron_static/rank_biserial",
+      "fmt": "num2"
+    },
+    "DiagMWPPerronStatic": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/perron_static/mannwhitney_p",
+      "fmt": "pval"
+    },
+    "DiagMedianInDegBMTwentyFive": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/bm25/median",
+      "fmt": "num1"
+    },
+    "DiagMeanInDegBMTwentyFive": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/bm25/mean",
+      "fmt": "num1"
+    },
+    "DiagMaxInDegBMTwentyFive": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/bm25/max",
+      "fmt": "int"
+    },
+    "DiagRBBMTwentyFive": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/bm25/rank_biserial",
+      "fmt": "num2"
+    },
+    "DiagMWPBMTwentyFive": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/methods/bm25/mannwhitney_p",
+      "fmt": "pval"
+    },
+    "DiagMedianInDegGold": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/gold/median",
+      "fmt": "num1"
+    },
+    "DiagMeanInDegGold": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/gold/mean",
+      "fmt": "num2"
+    },
+    "DiagMaxInDegGold": {
+      "file": "results/heldout_top10_indegree.json",
+      "ptr": "/gold/max",
+      "fmt": "int"
+    },
+    "DevNumInstances": {
+      "file": "results/dev_val_beta_sweep.json",
+      "ptr": "/num_instances",
+      "fmt": "int"
+    },
+    "CompBoth": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/contingency_s_func/both",
+      "fmt": "int"
+    },
+    "CompBMOnly": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/contingency_s_func/bm25_only",
+      "fmt": "int"
+    },
+    "CompPerronOnly": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/contingency_s_func/perron_only",
+      "fmt": "int"
+    },
+    "PerronVsBMMcNemarP": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/tests/perron_vs_bm25_at10/p_value",
+      "fmt": "pval"
+    },
+    "PerronOnlyBMRanks": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/perron_only_bm25_ranks_sorted",
+      "fmt": "intlist"
+    },
+    "PerronOnlyBeyondTwenty": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/perron_only_beyond_bm25_top20",
+      "fmt": "int"
+    },
+    "HybWStar": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/selected_w",
+      "fmt": "num1"
+    },
+    "HybRRFHolmP": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/tests/rrf60_vs_bm25_at10/p_adjusted_holm",
+      "fmt": "pval"
+    },
+    "HybWeightedHolmP": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/tests/weighted_wstar_vs_bm25_at10/p_adjusted_holm",
+      "fmt": "pval"
+    },
+    "HybUnionWins": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/tests/union_vs_bm25_at20/n_target_wins",
+      "fmt": "int"
+    },
+    "HybBMTwentyWins": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/tests/union_vs_bm25_at20/n_baseline_wins",
+      "fmt": "int"
+    },
+    "HybUnionVsBMTwentyP": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/tests/union_vs_bm25_at20/p_value",
+      "fmt": "pval"
+    },
+    "HybBMTenKN": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/counts/bm25_at10/k",
+      "fmt": "kn",
+      "n_ptr": "/counts/bm25_at10/n_callable"
+    },
+    "HybBMTen": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/counts/bm25_at10/k",
+      "fmt": "pct_kn",
+      "n_ptr": "/counts/bm25_at10/n_callable"
+    },
+    "HybBMTwentyKN": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/counts/bm25_at20/k",
+      "fmt": "kn",
+      "n_ptr": "/counts/bm25_at20/n_callable"
+    },
+    "HybBMTwenty": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/counts/bm25_at20/k",
+      "fmt": "pct_kn",
+      "n_ptr": "/counts/bm25_at20/n_callable"
+    },
+    "HybPerronTenKN": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/counts/perron_at10/k",
+      "fmt": "kn",
+      "n_ptr": "/counts/perron_at10/n_callable"
+    },
+    "HybPerronTen": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/counts/perron_at10/k",
+      "fmt": "pct_kn",
+      "n_ptr": "/counts/perron_at10/n_callable"
+    },
+    "HybUnionKN": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/counts/union_at10x2/k",
+      "fmt": "kn",
+      "n_ptr": "/counts/union_at10x2/n_callable"
+    },
+    "HybUnion": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/counts/union_at10x2/k",
+      "fmt": "pct_kn",
+      "n_ptr": "/counts/union_at10x2/n_callable"
+    },
+    "HybRRFKN": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/counts/rrf60_at10/k",
+      "fmt": "kn",
+      "n_ptr": "/counts/rrf60_at10/n_callable"
+    },
+    "HybRRF": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/counts/rrf60_at10/k",
+      "fmt": "pct_kn",
+      "n_ptr": "/counts/rrf60_at10/n_callable"
+    },
+    "HybWeightedKN": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/counts/weighted_wstar_at10/k",
+      "fmt": "kn",
+      "n_ptr": "/counts/weighted_wstar_at10/n_callable"
+    },
+    "HybWeighted": {
+      "file": "results/heldout_hybrid_eval.json",
+      "ptr": "/counts/weighted_wstar_at10/k",
+      "fmt": "pct_kn",
+      "n_ptr": "/counts/weighted_wstar_at10/n_callable"
+    }
+  }
+}

@@ -7,7 +7,7 @@ editing paradigms on realistic model patch generation challenges:
 2. `sed`-style line/regex search-and-replace
 3. Perron AST Patcher (Anchor-bounded, indentation-rebased, syntax-validated transactional patching)
 
-Outputs verified metrics to `data/editor_eval_results.json`.
+Outputs verified metrics to `results/editor_eval_results.json`.
 """
 
 from __future__ import annotations
@@ -15,16 +15,35 @@ from __future__ import annotations
 import ast
 import json
 import logging
+import math
 import os
 import re
 import shutil
 import subprocess
 import sys
+import sys as _sys
 import tempfile
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(_PROJECT_ROOT) not in _sys.path:
+    _sys.path.insert(0, str(_PROJECT_ROOT))
+from benchmarks.eval_harness import compute_exact_mcnemar_test  # noqa: E402
+
 from perron.editor import apply_multi_file_patch, SymbolEditSpec
+
+
+def wilson_interval(k: int, n: int, z: float = 1.959963984540054) -> Tuple[float, float]:
+    """95% Wilson score interval for a binomial proportion k/n."""
+    if n == 0:
+        return 0.0, 0.0
+    p = k / n
+    z2 = z * z
+    denom = 1.0 + z2 / n
+    center = (p + z2 / (2.0 * n)) / denom
+    half = z * math.sqrt(p * (1.0 - p) / n + z2 / (4.0 * n * n)) / denom
+    return center - half, center + half
 
 logging.basicConfig(level=logging.INFO, format="[editor-eval] %(levelname)s: %(message)s")
 logger = logging.getLogger("editor-eval")
@@ -397,7 +416,9 @@ def run_editor_evaluation() -> Dict[str, Any]:
         "perron_ast": {"total": len(cases), "applied": 0, "syntax_valid": 0, "rollback_protected": 0},
     }
 
+    per_case: List[Dict[str, Any]] = []
     for case in cases:
+        rec: Dict[str, Any] = {"id": case["id"]}
         # 1. Test git apply
         with tempfile.TemporaryDirectory() as td:
             wdir = Path(td)
@@ -415,6 +436,7 @@ def run_editor_evaluation() -> Dict[str, Any]:
             subprocess.run(["git", "commit", "-m", "init"], cwd=str(wdir), capture_output=True)
 
             applied, syntax_ok, err = run_git_apply(wdir, case["unified_diff"])
+            rec["git_apply"] = {"applied": bool(applied), "valid": bool(applied and syntax_ok)}
             if applied:
                 results["git_apply"]["applied"] += 1
                 if syntax_ok:
@@ -428,6 +450,7 @@ def run_editor_evaluation() -> Dict[str, Any]:
             f_main = wdir / case["file"]
             f_main.write_text(case["base_code"], encoding="utf-8")
             applied, syntax_ok, err = run_sed_edit(wdir, case["file"], case["old_block"], case["new_block"])
+            rec["sed_replace"] = {"applied": bool(applied), "valid": bool(applied and syntax_ok)}
             if applied:
                 results["sed_replace"]["applied"] += 1
                 if syntax_ok:
@@ -445,12 +468,16 @@ def run_editor_evaluation() -> Dict[str, Any]:
 
             specs = case["perron_spec"] if isinstance(case["perron_spec"], list) else [case["perron_spec"]]
             applied, syntax_ok, msg = run_perron_ast_edit(wdir, specs)
+            rec["perron_ast"] = {"applied": bool(applied and syntax_ok), "valid": bool(applied and syntax_ok), "rolled_back": False}
             if applied and syntax_ok:
                 results["perron_ast"]["applied"] += 1
                 results["perron_ast"]["syntax_valid"] += 1
             else:
                 # Check clean rollback
                 results["perron_ast"]["rollback_protected"] += 1
+                rec["perron_ast"]["rolled_back"] = True
+
+        per_case.append(rec)
 
     n_total = len(cases)
     summary = {
@@ -478,8 +505,23 @@ def run_editor_evaluation() -> Dict[str, Any]:
             },
         },
     }
+    summary["percentages"]["git_apply"]["syntax_error_rate"] = round(
+        (results["git_apply"]["applied"] - results["git_apply"]["syntax_valid"]) / n_total * 100.0, 1
+    )
+    summary["per_case"] = per_case
+    summary["valid_application"] = {}
+    for editor in ("git_apply", "sed_replace", "perron_ast"):
+        k = sum(1 for r in per_case if r[editor]["valid"])
+        lo, hi = wilson_interval(k, n_total)
+        summary["valid_application"][editor] = {"k": k, "n": n_total, "rate": k / n_total,
+                                                "wilson_lower": lo, "wilson_upper": hi}
+    perron_valid = [int(r["perron_ast"]["valid"]) for r in per_case]
+    summary["mcnemar_vs_perron"] = {
+        editor: compute_exact_mcnemar_test(perron_valid, [int(r[editor]["valid"]) for r in per_case])
+        for editor in ("git_apply", "sed_replace")
+    }
 
-    out_file = Path(__file__).resolve().parent.parent / "data" / "editor_eval_results.json"
+    out_file = Path(__file__).resolve().parent.parent / "results" / "editor_eval_results.json"
     out_file.parent.mkdir(parents=True, exist_ok=True)
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(summary, f, indent=2)

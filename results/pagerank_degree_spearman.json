@@ -1,0 +1,25 @@
+{
+  "suite": "pagerank_degree_spearman",
+  "num_repositories": 12,
+  "per_repo": {
+    "astropy__astropy": 0.7551712857348056,
+    "django__django": 0.4580202970834062,
+    "matplotlib__matplotlib": 0.7431704546513843,
+    "mwaskom__seaborn": 0.4828379814987079,
+    "pallets__flask": 0.9209082883999437,
+    "psf__requests": 0.7002514664510132,
+    "pydata__xarray": 0.5831840345212004,
+    "pylint-dev__pylint": 0.7425831585698707,
+    "pytest-dev__pytest": 0.7737568462259716,
+    "scikit-learn__scikit-learn": 0.7669290680331757,
+    "sphinx-doc__sphinx": 0.7380041294441236,
+    "sympy__sympy": 0.7279174079348731
+  },
+  "min": 0.4580202970834062,
+  "max": 0.9209082883999437,
+  "mean": 0.6993945348790397,
+  "min_repo": "django__django",
+  "max_repo": "pallets__flask",
+  "git_sha": "d5f47bb2d048a82428c498c2af86bef1a841d894",
+  "utc_timestamp": "2026-10-03T16:18:48.597775+00:00"
+}

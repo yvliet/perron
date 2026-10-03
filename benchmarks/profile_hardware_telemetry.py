@@ -3,7 +3,7 @@ Hardware and Memory Telemetry Profiling for Gemma 4 & Perron.
 
 Measures actual system specifications, resident memory footprint (RSS),
 memory-mapped CSR virtualization efficiency, and retrieval latency on host hardware.
-Outputs verified telemetry to `data/hardware_telemetry.json`.
+Outputs verified telemetry to `results/hardware_telemetry_measured.json`.
 """
 
 from __future__ import annotations
@@ -58,16 +58,6 @@ def profile_hardware() -> Dict[str, Any]:
 
         graph.close()
 
-    # Gemma 4 Model Weight & KV-Cache Accounting (PLE Architecture)
-    # Gemma 4 E4B is a 4B Dense model with Per-Layer Embeddings (PLE)
-    # INT4 quantized weights: 4.0B * 0.5 bytes = 2.0 GB + 0.4 GB PLE tables = 2.4 GB
-    # Sliding window KV cache (p-RoPE, 128k context with 4k local window): 0.4 GB
-    # Compute buffers + PyTorch/runtime overhead: 0.8 GB
-    isolated_engine_footprint_gb = 3.6
-    desktop_background_tools_gb = 6.8
-    total_developer_workstation_rss_gb = isolated_engine_footprint_gb + desktop_background_tools_gb
-    free_headroom_on_16gb = total_ram_gb - total_developer_workstation_rss_gb
-
     telemetry = {
         "host_hardware": {
             "platform": platform.platform(),
@@ -83,27 +73,14 @@ def profile_hardware() -> Dict[str, Any]:
             "mmap_cold_start_ms": round(load_time_ms, 3),
             "retrieval_query_ms": round(query_time_ms, 2),
         },
-        "model_architecture_accounting": {
-            "target_model": "Gemma 4 E4B (PLE Dense)",
-            "parameter_count": "4.0B active parameters",
-            "quantization": "INT4 (W4A16 QAT / AWQ)",
-            "weights_footprint_gb": 2.4,  # Includes Per-Layer Embedding (PLE) tables
-            "kv_cache_windowed_gb": 0.4,  # p-RoPE sliding window attention
-            "compute_buffers_gb": 0.8,
-            "isolated_engine_footprint_gb": isolated_engine_footprint_gb,
-            "developer_workstation_environment_gb": desktop_background_tools_gb,
-            "total_resident_ram_gb": round(total_developer_workstation_rss_gb, 2),
-            "free_ram_headroom_gb": round(free_headroom_on_16gb, 2),
-            "fits_16gb_laptop": total_developer_workstation_rss_gb <= 16.0,
-        },
     }
 
-    out_file = Path(__file__).resolve().parent.parent / "data" / "hardware_telemetry.json"
+    out_file = Path(__file__).resolve().parent.parent / "results" / "hardware_telemetry_measured.json"
     out_file.parent.mkdir(parents=True, exist_ok=True)
     with open(out_file, "w", encoding="utf-8") as f:
         json.dump(telemetry, f, indent=2)
 
-    logger.info("Hardware telemetry recorded: %s", telemetry["model_architecture_accounting"])
+    logger.info("Hardware telemetry recorded: %s", telemetry["measured_runtime_rss"])
     return telemetry
 
 

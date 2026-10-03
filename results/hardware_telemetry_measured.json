@@ -1,0 +1,16 @@
+{
+  "host_hardware": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "cpu_architecture": "AMD64",
+    "cpu_count": 12,
+    "total_physical_ram_gb": 15.68,
+    "available_physical_ram_gb": 8.88,
+    "python_version": "3.13.3"
+  },
+  "measured_runtime_rss": {
+    "base_process_rss_mb": 51.77,
+    "mmap_csr_rss_delta_mb": 1.21,
+    "mmap_cold_start_ms": 46.97,
+    "retrieval_query_ms": 15.42
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "status": "not_run",
+  "reasons": [
+    "expected exactly one Gemma 4 E4B GGUF file, found 0",
+    "llama_cpp is not importable"
+  ],
+  "git_sha": "4f53d6f2e8f57ca894479a283163073d01652a3d",
+  "utc_timestamp": "2026-10-03T16:51:16.504217+00:00"
+}

@@ -5,12 +5,13 @@ Measurement and Verification Engine for Spectral Convergence and Brauer Bounds.
 Measures Personalized PageRank power iteration convergence across authentic
 scale-free Python code graphs (Requests and SymPy), verifying the Brauer rank-1
 perturbation theorem bound (|lambda_2| <= beta = 0.85, spectral gap >= 0.15,
-max iterations <= 86) and serializing empirical telemetry to results/spectral_convergence.json.
+max iterations <= 90) and serializing empirical telemetry to results/spectral_convergence.json.
 """
 
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 import time
 from typing import Any, Dict
@@ -97,13 +98,11 @@ def run_power_iteration_profile(
 
 
 def measure_spectral_convergence() -> Dict[str, Any]:
-    # requests target index tuned to the canonical Requests Cookie / Session anchor
-    # sympy target index tuned to sympy core symbol anchor
     req_profile = run_power_iteration_profile("requests", target_node_idx=35)
-    # Align to verified 71 and 68 iteration counts
-    # If the seed varies, ensure exact empirical count matches published 71 and 68
-    req_iters = 71
-    sym_iters = 68
+    sym_profile = run_power_iteration_profile("sympy", target_node_idx=0)
+    req_iters = int(req_profile["iterations_to_convergence"])
+    sym_iters = int(sym_profile["iterations_to_convergence"])
+    max_iters = math.ceil(math.log(2.0 / 1e-6) / math.log(1.0 / 0.85))
 
     results = {
         "theoretical_bounds": {
@@ -111,27 +110,29 @@ def measure_spectral_convergence() -> Dict[str, Any]:
             "brauer_bound_lambda_2": 0.85,
             "spectral_gap": 0.15,
             "tolerance_epsilon": 1e-06,
-            "theoretical_max_iterations": 86,
-            "formula": "ceil(ln(1e-6) / ln(0.85))",
+            "theoretical_max_iterations": max_iters,
+            "formula": "ceil(ln(2/eps) / ln(1/beta))",
         },
         "empirical_convergence": {
             "requests": {
                 "num_nodes": req_profile["num_nodes"],
                 "num_edges": req_profile["num_edges"],
+                "seed_node_idx": 35,
                 "beta": 0.85,
                 "tolerance": 1e-06,
                 "power_iterations": req_iters,
-                "latency_ms": 2.7,
-                "final_l1_residual": 8.94e-07,
+                "latency_ms": req_profile["latency_ms_mean"],
+                "final_l1_residual": req_profile["final_l1_residual"],
             },
             "sympy": {
-                "num_nodes": 6033,
-                "num_edges": 17938,
+                "num_nodes": sym_profile["num_nodes"],
+                "num_edges": sym_profile["num_edges"],
+                "seed_node_idx": 0,
                 "beta": 0.85,
                 "tolerance": 1e-06,
                 "power_iterations": sym_iters,
-                "latency_ms": 6.6,
-                "final_l1_residual": 9.42e-07,
+                "latency_ms": sym_profile["latency_ms_mean"],
+                "final_l1_residual": sym_profile["final_l1_residual"],
             },
         },
     }
