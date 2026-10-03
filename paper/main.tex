@@ -429,14 +429,14 @@ To evaluate repair efficacy, Perron was tested across SWE-bench Lite and represe
 \centering
 \small
 \setlength{\tabcolsep}{3.0pt}
-\caption{\textbf{Architectural capability profile and benchmark comparison on SWE-bench Lite.} Contrasting unconstrained data center cloud APIs against Perron's local consumer offline model execution profile under \$0.00 model API cost and $\le$16~GB RAM invariants.}
+\caption{\textbf{Architectural capability profile and benchmark comparison.} Contrasting unconstrained data center cloud APIs (evaluated on published SWE-bench splits) against Perron's local consumer offline model execution profile under \$0.00 model API cost and $\le$16~GB RAM invariants.}
 \label{tab:swebench_comparison}
 \begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}Xc>{\centering\arraybackslash}p{4.0cm}}
 \toprule
 \textbf{System / Architecture} & \textbf{Deployment / Model Class} & \textbf{Cost / Issue} & \textbf{Defect Resolution (Pass@1 / Diagnostic)} \\
 \midrule
 \multicolumn{4}{l}{\textit{Data Center Cloud APIs (Full SWE-bench Lite, N=300, Multi-GPU Cloud Clusters)}} \\
-Claude Fable 5 & Cloud Cluster API & \$2.00--\$5.00+ & 95.0\% (Pass@1) \\
+Claude Fable 5~\cite{anthropic2026claudefable}\textsuperscript{\textdaggerdbl} & Cloud Cluster API & \$2.00--\$5.00+ & 95.0\% (Pass@1)\textsuperscript{\textdaggerdbl} \\
 Agentless~\cite{xia2025agentless} & GPT-4o (Cloud API) & \$0.34 & 27.3\% (Pass@1) \\
 AutoCodeRover~\cite{zhang2024autocoderover} & GPT-4 (Cloud API) & \$0.65 & 22.0\% (Pass@1) \\
 SWE-agent~\cite{yang2024sweagent} & GPT-4 (Cloud API) & \$2.14 & 18.0\% (Pass@1) \\
@@ -445,7 +445,7 @@ BM25 + RAG~\cite{yang2024sweagent} & GPT-4 (Cloud API) & \$0.05 & 3.8\% (Pass@1)
 \multicolumn{4}{l}{\textit{Local Consumer Offline Models ($\le$16~GB RAM, \$0.00 Cost, Offline Workstation)}} \\
 \textbf{Perron (Diagnostic Scaffold)} & \textbf{Gemma 4 E4B / Deterministic Replay} & \textbf{\$0.00 (Local)} & \textbf{5/5 Solvable (5/5 Boundary Handled)\textsuperscript{\textdagger}} \\
 \bottomrule
-\multicolumn{4}{>{\raggedright\arraybackslash}p{0.96\linewidth}}{\footnotesize{\textsuperscript{\textdagger}Data Center Cloud APIs report published Pass@1 on full SWE-bench Lite ($N=300$) executed on massive multi-GPU data center clusters with continuous internet access. Local Consumer Offline Models evaluate issue resolution on air-gapped consumer laptop hardware ($\le$16~GB RAM). The diagnostic probe evaluates 10 canonical archetypes (Table~\ref{tab:repair_results}): 5/5 solvable scenarios pass unit test verification, and 5/5 boundary failure modes are cleanly intercepted without unhandled crashes. A full 300-instance local sweep on consumer hardware requires $\sim$150--300 GPU-hours, establishing a concrete computational resource boundary for offline workstation evaluation.}} \\
+\multicolumn{4}{>{\raggedright\arraybackslash}p{0.96\linewidth}}{\footnotesize{\textsuperscript{\textdaggerdbl}Claude Fable Pass@1 is evaluated on SWE-bench Verified ($N=500$), serving as an unconstrained data center frontier ceiling anchor; comparative literature baselines (Agentless, AutoCodeRover, SWE-agent) reflect published evaluations on full SWE-bench Lite ($N=300$). \textsuperscript{\textdagger}Local Consumer Offline Models evaluate issue resolution on air-gapped consumer laptop hardware ($\le$16~GB RAM). The diagnostic probe evaluates 10 canonical archetypes (Table~\ref{tab:repair_results}): 5/5 solvable scenarios pass unit test verification, and 5/5 boundary failure modes are cleanly intercepted without unhandled crashes. A full 300-instance local sweep on consumer hardware requires $\sim$150--300 GPU-hours, establishing a concrete computational resource boundary for offline workstation evaluation.}} \\
 \end{tabularx}
 \end{table}
 
