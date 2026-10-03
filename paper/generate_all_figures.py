@@ -4,6 +4,13 @@ import json
 import subprocess
 from pathlib import Path
 import numpy as np
+
+# Matplotlib's PDF backend stamps /CreationDate from the wall clock unless
+# SOURCE_DATE_EPOCH is set. Pinning it keeps every vector figure byte-identical
+# across reruns, so regenerated PDFs produce zero git diff when the inputs are
+# unchanged. A caller-provided value still takes precedence.
+os.environ.setdefault('SOURCE_DATE_EPOCH', '0')
+
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt

@@ -25,11 +25,12 @@ def find_compiler():
         return "pdflatex", "pdflatex"
     return None, None
 
-def run_command(cmd, cwd=None):
+def run_command(cmd, cwd=None, env=None):
     try:
         proc = subprocess.run(
             cmd,
             cwd=cwd,
+            env=env,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
@@ -39,6 +40,23 @@ def run_command(cmd, cwd=None):
         return proc.returncode, proc.stdout
     except Exception as e:
         return 1, str(e)
+
+
+def reproducible_env():
+    """
+    Environment for byte-identical PDF output across rebuilds.
+
+    Tectonic and pdfTeX stamp /CreationDate, /ModDate and a time-seeded
+    trailer /ID into every PDF. Pinning SOURCE_DATE_EPOCH (and FORCE_SOURCE_DATE
+    for pdfTeX) fixes those fields, so a rebuild from unchanged sources yields
+    zero git diff on the tracked paper/main.pdf. main.tex renders no \\today,
+    so the pinned epoch never reaches visible typeset text. A caller-provided
+    SOURCE_DATE_EPOCH still takes precedence.
+    """
+    env = os.environ.copy()
+    env.setdefault("SOURCE_DATE_EPOCH", "0")
+    env.setdefault("FORCE_SOURCE_DATE", "1")
+    return env
 
 def compile_document(target_tex="paper/main.tex"):
     target_path = Path(target_tex)
@@ -62,9 +80,10 @@ def compile_document(target_tex="paper/main.tex"):
 
     print(f"Compiling {tex_filename} via {compiler_type} ({compiler_bin})...")
 
+    env = reproducible_env()
     if compiler_type == "tectonic":
-        cmd = [compiler_bin, tex_filename]
-        ret, out = run_command(cmd, cwd=str(work_dir))
+        cmd = [compiler_bin, "-Z", "deterministic-mode", tex_filename]
+        ret, out = run_command(cmd, cwd=str(work_dir), env=env)
     elif compiler_type == "latexmk":
         cmd = [
             compiler_bin,
@@ -74,14 +93,14 @@ def compile_document(target_tex="paper/main.tex"):
             "-synctex=1",
             tex_filename
         ]
-        ret, out = run_command(cmd, cwd=str(work_dir))
+        ret, out = run_command(cmd, cwd=str(work_dir), env=env)
     else:  # pdflatex
         cmd = [compiler_bin, "-interaction=nonstopmode", "-file-line-error", tex_filename]
-        ret, out = run_command(cmd, cwd=str(work_dir))
+        ret, out = run_command(cmd, cwd=str(work_dir), env=env)
         if shutil.which("bibtex"):
-            run_command(["bibtex", base_name], cwd=str(work_dir))
-        run_command(cmd, cwd=str(work_dir))
-        ret, out = run_command(cmd, cwd=str(work_dir))
+            run_command(["bibtex", base_name], cwd=str(work_dir), env=env)
+        run_command(cmd, cwd=str(work_dir), env=env)
+        ret, out = run_command(cmd, cwd=str(work_dir), env=env)
 
     if ret == 0 and pdf_file.exists():
         size_kb = pdf_file.stat().st_size / 1024
