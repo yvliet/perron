@@ -95,7 +95,7 @@
   "spectral_convergence": {
     "brauer_bound_lambda_2": 0.85,
     "spectral_gap": 0.15,
-    "max_iterations_eps_1e_6": 85,
+    "max_iterations_eps_1e_6": 86,
     "requests_power_iterations": 71,
     "requests_latency_ms": 2.7,
     "sympy_power_iterations": 68,
