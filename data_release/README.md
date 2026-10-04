@@ -6,7 +6,7 @@ An open-source dataset of zero-copy Compressed Sparse Row (CSR) AST multigraphs 
 
 ## 1. Resource Overview
 
-Modern developer agents frequently saturate their context windows when navigating large codebases due to scale-free call graph hub explosion. The Perron Code Graph dataset provides canonical, pre-indexed topological representations of repositories, allowing researchers and agents to execute sub-millisecond spectral diffusion, personalized PageRank (PPR), and structural localization without runtime AST parsing overhead.
+Modern developer agents frequently saturate their context windows when navigating large codebases due to scale-free call graph hub explosion. The Perron Code Graph dataset provides canonical, pre-indexed topological representations of repositories, allowing researchers and agents to execute high-throughput spectral diffusion (1.89 ms on Requests, 5.10 ms on SymPy), personalized PageRank (PPR), and structural localization without runtime AST parsing overhead.
 
 - **Instances**: 300 SWE-bench Lite tasks across 12 canonical Python repositories.
 - **Topological Representation**: Directed multigraphs capturing `call`, `caller`, `inheritance`, and `import` relations.

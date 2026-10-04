@@ -145,3 +145,30 @@ def test_data_strata_json_generated_and_valid() -> None:
     assert counts[STRATUM_A] > 0
     assert counts[STRATUM_B] > 0
     assert counts[STRATUM_C] > 0
+
+
+def test_swebench_strata_annotations_jsonl_valid() -> None:
+    """Verify data/swebench_strata_annotations.jsonl exists and contains 800 valid records."""
+    annotations_file = PROJECT_ROOT / "data" / "swebench_strata_annotations.jsonl"
+    assert annotations_file.is_file(), "data/swebench_strata_annotations.jsonl was not found!"
+
+    records = []
+    with open(annotations_file, "r", encoding="utf-8") as f:
+        for line in f:
+            if line.strip():
+                records.append(json.loads(line))
+
+    assert len(records) == 800, f"Expected 800 records, got {len(records)}"
+
+    lite_records = [r for r in records if r.get("benchmark") == "lite"]
+    verif_records = [r for r in records if r.get("benchmark") == "verified"]
+
+    assert len(lite_records) == 300, f"Expected 300 Lite records, got {len(lite_records)}"
+    assert len(verif_records) == 500, f"Expected 500 Verified records, got {len(verif_records)}"
+
+    valid_strata = {STRATUM_A, STRATUM_B, STRATUM_C}
+    for r in records:
+        assert "instance_id" in r and r["instance_id"], f"Record missing instance_id: {r}"
+        assert r.get("stratum") in valid_strata, f"Invalid stratum: {r.get('stratum')}"
+        assert "gold_targets" in r and isinstance(r["gold_targets"], list), f"Invalid gold_targets: {r}"
+
