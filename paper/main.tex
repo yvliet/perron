@@ -146,6 +146,7 @@ Previous approaches that mitigate hub explosion through degree-weighted random w
 \textbf{AST Subgraph Slicing and Fault Localization}: Classical program slicing~\cite{weiser1984program} computes backward executable slices on statement-level Program Dependence Graphs (PDGs). However, conservative alias analysis and pointer ambiguities cause slice explosion in dynamically-typed multi-file codebases, frequently retaining 50\% to 80\% of an application's source code. Spectrum-Based Fault Localization (SBFL)~\cite{hemmati2022empirical} evaluates test coverage matrices to score suspiciousness (e.g., Ochiai, Tarantula). On 395 Defects4J bugs, Hemmati et al.~\cite{hemmati2022empirical} reported that SBFL requires executing hundreds of test cases (incurring multi-minute runtime) and produces tied suspiciousness ranks in over 40\% of localized statements due to identical coverage vectors along shared paths. Perron bypasses dynamic test execution during retrieval and implements context-budgeted AST subgraph slicing, extracting symbol-level multigraphs to pack causal execution scopes into tight prompt budgets ($K \le 4,096$) with sub-millisecond CPU diffusion.
 
 \FloatBarrier
+\pagebreak
 \section{Methodology}
 \label{sec:method}
 
@@ -172,7 +173,6 @@ W_{uv} = \omega_{\text{call}} A^{(\text{call})}_{uv} + \omega_{\text{inherit}} A
 \end{equation}
 where $\boldsymbol{\omega} = [0.50, 0.25, 0.15, 0.10]$ and $A^{(r)}_{uv} = \mathbb{I}((u, v) \in \mathcal{E}_r)$.
 
-\pagebreak
 Let $D_u = \sum_{v} W_{uv}$ be the out-degree sum. The row-stochastic transition matrix $T \in \mathbb{R}^{|\mathcal{V}| \times |\mathcal{V}|}$ and dangling indicator vector $\mathbf{d} \in \{0, 1\}^{|\mathcal{V}|}$ are defined in Eq.~(\ref{eq:stochastic_matrix}):
 \begin{equation}
 T_{uv} = \begin{cases} \frac{W_{uv}}{D_u}, & D_u > 0 \\ 0, & D_u = 0 \end{cases}, \quad d_u = \begin{cases} 1.0, & D_u = 0 \\ 0.0, & D_u > 0 \end{cases}.
@@ -288,6 +288,7 @@ The reweighted prior $\mathbf{p}_0'$ enters every term, but term $t$ is the dist
 \end{algorithmic}
 \end{algorithm}
 
+\pagebreak
 \section{Systems Engineering Implementation}
 \label{sec:system}
 
@@ -369,7 +370,6 @@ As illustrated in Figure~\ref{fig:comparative_interfaces} and quantified in Tabl
     \item \textbf{Pre-Commit AST Validation}: Validates modified source via \texttt{ast.parse()} prior to disk write, with atomic transactional rollback via \texttt{os.replace}, so an edit that does not parse never reaches disk.
 \end{itemize}
 
-\pagebreak
 \subsection{Cross-Platform Targeted Test Isolation}
 SWE-bench~\cite{jimenez2024swebench} evaluates patches against both defect-specific tests (\texttt{FAIL\_TO\_PASS}) and regression suites (\texttt{PASS\_TO\_PASS}, with a median of 51 tests per repository). Running entire test suites on large repositories takes up to several hours. Perron isolates targeted pytest runs (\texttt{pytest -k <test\_name>}) with platform-aware process-group timeout enforcement:
 \begin{itemize}
@@ -479,6 +479,7 @@ To evaluate the contribution of individual components, I ablate key mechanisms:
     \item \textbf{Without Specificity Ratio ($\gamma = 0$)}: Perron Static at $\gamma=0$ is Standard PPR. On held-out callable tasks HSI@10 falls from \HSIPerronStatic\ to \HSIStandardPPR\ and Function Acc@10 from \PerronPrimaryFnAccTen\ to \StandardPPRFnAccTen.
 \end{itemize}
 
+\pagebreak
 \section{Open-Source Ecosystem and Resource Deliverables}
 \label{sec:resources}
 To support developer agent democratization and satisfy reproducible code audit requirements, Perron is released as an open-source software and evaluation ecosystem:
@@ -488,7 +489,6 @@ To support developer agent democratization and satisfy reproducible code audit r
     \item \textbf{Dataset \path{swebench-lite-codegraphs}}: edge topologies, dangling indicators and stationary distributions for all 12 SWE-bench Lite repositories under Apache 2.0. Source text is excluded to respect upstream licenses (MIT, BSD, GPL) and is reconstructed locally from git commits by \path{scripts/reconstruct_dataset.py}.
 \end{itemize}
 
-\pagebreak
 \section{Discussion and Limitations}
 \label{sec:discussion}
 While Perron delivers substantial recall gains, several limitations remain: (1)~static call graphs miss dynamic reflection (\texttt{getattr}) or monkey-patching; (2)~across disconnected modules, diffusion relies entirely on the teleport prior; (3)~multi-turn agents require context compaction; (4)~I did not run end-to-end issue resolution with a local model; the agent loop is tested only with deterministic replay (Appendix~\ref{app:replay}); and (5)~the reference engine targets Python AST; while an initial polyglot Tree-sitter interface smoke test is implemented for TypeScript (\texttt{perron/polyglot/treesitter.py}) to verify CSR protocol extensibility, large-scale multilingual SWE-bench evaluation remains an open research direction.
