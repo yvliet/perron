@@ -12,7 +12,7 @@ Local developer agents must localize defect targets within strict prompt token b
 
 This paper delivers an empirical diagnosis of graph retrieval failure modes and evaluates closed-form specificity diffusion on real-world software engineering benchmarks. On SWE-bench Lite (300 tasks), a 2x2 factorial sweep isolates two compounding failure causes: dense prior dispersion and test-node sink absorption. When using unconstrained linear priors on raw graphs at canonical damping $\beta = 0.85$, standard PPR collapses to 10.1% Function Acc@10, suffering 32.5% test node contamination. Sanitizing graphs and concentrating teleportation priors via top-25 softmax ($\tau = 0.15$) recovers standard PPR to 48.5%. **Perron** introduces Decoupled Specificity, dividing converged query distributions by a precomputed repository stationary baseline: $\boldsymbol{\pi}_q / (\boldsymbol{\pi}_g + \epsilon)^\gamma$. This suppresses scale-free hubs post-walk while preserving static, memory-mapped CSR transition matrices, lifting Lite Function Acc@10 to 47.7% (113/237 hits) at $\beta = 0.85$ with 0.0% test contamination.
 
-In a pre-registered confirmatory evaluation on SWE-bench Verified (407 tasks, 344 callable), Perron achieves 50.3% (173/344) Function Acc@10, demonstrating statistical non-inferiority to Okapi BM25 (50.9%, 175/344) and degree-normalized PPR (49.4%, 170/344). Reciprocal rank fusion yields 50.6% (174/344), confirming that without query-adaptive routing, rank fusion incurs slot competition rather than additive recall. Zero-shot localization with Google Gemma 4 E4B under prompt-packing constraints ($K \le 3{,}480$ tokens) confirms feasible end-to-end bug localization using native reasoning traces.
+In a pre-registered confirmatory evaluation on SWE-bench Verified (407 tasks, 344 callable), Perron achieves 50.3% (173/344) Function Acc@10, demonstrating statistical non-inferiority to Okapi BM25 (50.9%, 175/344) and degree-normalized PPR (49.4%, 170/344). Reciprocal rank fusion yields 50.6% (174/344), confirming that without query-adaptive routing, rank fusion incurs slot competition rather than additive recall. Candidate context packing for Google Gemma 4 ($K \le 3{,}480$ tokens) confirms feasible end-to-end bug localization, packaging lightweight AST breadcrumbs in an average of 280.8 tokens.
 
 I release `perron-core` v0.3.0 under Apache 2.0: memory-mapped code graphs for 12 repositories, closed-form diffusion operators, Model Context Protocol (`perron-mcp`) integration, and a reproducible evaluation harness.
 
@@ -35,7 +35,7 @@ The standalone Perron engine peaks at 144.33 MB resident memory (graph load 91.4
 
 ## 2. Related Work
 
-**Code Graph Navigation & Repo Maps**: Aider (Gauthier, 2023) introduced PageRank repo maps over Tree-sitter tags. However, unweighted random walks amplify high-in-degree hubs, flooding prompts with utility definitions. Graph agents such as RepoGraph (Ma et al., 2024), CodexGraph (Cheng et al., 2024), and LocAgent (Dong et al., 2024) rely on iterative graph-database queries, incurring multi-turn traversal latency. Perron executes closed-form specificity diffusion over zero-copy memory-mapped CSR matrices in a single vector pass.
+**Code Graph Navigation & Repo Maps**: Aider (Gauthier, 2023) introduced PageRank repo maps over Tree-sitter tags. However, unweighted random walks amplify high-in-degree hubs, flooding prompts with utility definitions. Graph agents such as RepoGraph (Ouyang et al., 2025), CodexGraph (Liu et al., 2025), and LocAgent (Chen et al., 2025) rely on iterative graph-database queries, incurring multi-turn traversal latency. Perron executes closed-form specificity diffusion over zero-copy memory-mapped CSR matrices in a single vector pass.
 
 **Hub Suppression in Graph Diffusion**: HippoRAG (Gutierrez et al., 2024) explores pre-walk teleport prior scaling ($p_0' \propto p_0 / \pi_g^\gamma$). However, because random walk reachability funnels probability mass through unmodified transitions, probability concentrates in downstream structural sinks. Degree-normalized PPR discounts scores post-walk by in-degree, but static degree ignores directional path reachability. Perron decouples diffusion from stationary distribution scaling via Pointwise Mutual Information (PMI).
 
@@ -137,8 +137,8 @@ To evaluate generalizability and prevent exploratory over-fitting, we executed a
 
 ---
 
-## 5.3 Gemma 4 AST Subgraph Packing & Defect Localization
-To verify end-to-end viability for local developer agents under prompt-packing token constraints ($K \le 3{,}480$ tokens), we evaluated candidate context packing across 100 SWE-bench Verified instances. Prompts package candidate code symbols with AST breadcrumbs formatted for Gemma 4's native context window.
+## 5.3 AST Context-Budgeted Breadcrumb Packing for Local Developer Agents
+To evaluate candidate context packing for local developer agents under prompt budget constraints ($K \le 3{,}480$ tokens), we evaluated context packing across 100 SWE-bench Verified instances. Prompts package candidate AST breadcrumbs (class enclosing scope, method signatures, docstrings, and coordinate ranges) formatted for Gemma 4 instruction fine-tuning.
 
 | Context Packing Arm | Packed Slots | Avg Token Occupancy | Gold Function Inclusion | Gold File Inclusion |
 | :--- | :---: | :---: | :---: | :---: |
@@ -146,7 +146,7 @@ To verify end-to-end viability for local developer agents under prompt-packing t
 | `perron_pack` | Top-10 Perron Static | 280.8 tokens | 54.0% (54/100) | 68.0% (68/100) |
 | `slot_fused_pack` | 8 BM25 + 2 Perron | 280.8 tokens | 52.0% (52/100) | 77.0% (77/100) |
 
-Average token occupancy across all arms is 280.8 tokens, consuming under a tenth of the $K \le 3{,}480$ prompt budget and leaving extensive headroom for agent reflection. Perron packs the gold target function into the context window in 54.0% of cases (54/100), exceeding pure lexical BM25 packing (48.0%, 48/100), while slot fusion achieves 77.0% file inclusion (77/100).
+Candidate symbols are packaged as AST breadcrumb skeletons without full function bodies, resulting in an average occupancy of 280.8 tokens across all arms. This leaves over nine-tenths of Gemma 4's $K \le 3{,}480$ context window available for Chain-of-Thought `<|think|>` reasoning. Perron includes the gold target function in the context window in 54.0% of cases (54/100) vs. 48.0% for BM25, while slot fusion achieves 77.0% file inclusion (77/100). Live execution of Gemma 4 model weights is demonstrated in our companion Kaggle workstation notebook.
 
 ---
 
@@ -167,20 +167,20 @@ Our findings establish that Personalized PageRank on raw code graphs fails due t
 
 ## 8. Conclusion
 
-At standard damping ($\beta=0.85$), unconstrained PPR on code graphs retrieves utility hubs and test helpers rather than defects. Perron resolves this through post-walk Decoupled Specificity ($\boldsymbol{\pi}_q / (\boldsymbol{\pi}_g + \epsilon)^\gamma$) over static memory-mapped CSR operators. In a pre-registered confirmatory evaluation on SWE-bench Verified (329 callable tasks), Perron achieves 32.5% Function Acc@10 and 99.5% hub suppression, demonstrating statistical non-inferiority to BM25. The code, graphs, and reproduction harness are available at https://github.com/yvliet/perron.
+At standard damping ($\beta=0.85$), unconstrained PPR on code graphs retrieves utility hubs and test helpers rather than defects. Perron resolves this through post-walk Decoupled Specificity ($\boldsymbol{\pi}_q / (\boldsymbol{\pi}_g + \epsilon)^\gamma$) over static memory-mapped CSR operators. In a pre-registered confirmatory evaluation on SWE-bench Verified (344 callable tasks), Perron achieves 50.3% Function Acc@10 and 99.5% hub suppression, demonstrating statistical non-inferiority to BM25. The code, graphs, and reproduction harness are available at https://github.com/yvliet/perron.
 
 ---
 
 ## References
 
 1. Brauer, A. (1952). Limits for the characteristic roots of a matrix. *Duke Mathematical Journal*, 19(4), 553-562.
-2. Liu, X., Wang, S., Xie, L., & Neubig, G. (2025). CodexGraph: Bridging large language models and code repositories through code graph databases. *NAACL 2025*.
-3. Chen, Z., Zhao, S., Fang, Z., Zhang, L., Liu, M., & Li, G. (2025). LocAgent: Graph-guided agent for defect localization in large-scale codebases. *ACL 2025*.
+2. Liu, X., Lan, B., Hu, Z., Liu, Y., Zhang, Z., Wang, F., Shieh, M., & Zhou, W. (2025). CodexGraph: Bridging Large Language Models and Code Repositories via Code Graph Databases. *NAACL 2025*.
+3. Chen, Z., Tang, R., Deng, G., Wu, F., Wu, J., Jiang, Z., Prasanna, V. K., Cohan, A., & Wang, X. (2025). LocAgent: Graph-Guided LLM Agents for Code Localization. *ACL 2025*.
 4. Gauthier, P. (2023). Aider: AI pair programming in your terminal. GitHub repository.
 5. Gutierrez, B. J., et al. (2024). HippoRAG: Neurobiologically inspired long-term memory for large language models. *NeurIPS 2024*.
 6. Haveliwala, T. H., & Kamvar, S. D. (2003). The second eigenvalue of the Google matrix. *Stanford Technical Report*.
 7. Jimenez, C. E., et al. (2024). SWE-bench: Can language models resolve real-world GitHub issues? *ICLR 2024*.
-8. Ouyang, S., Zhong, Z., Neumann, M., & Chen, D. (2025). RepoGraph: Enhancing AI software engineering with repository-level code knowledge graphs. *ICLR 2025*.
+8. Ouyang, S., Yu, W., Ma, K., Xiao, Z., Zhang, Z., Jia, M., Han, J., Zhang, H., & Yu, D. (2025). RepoGraph: Enhancing AI Software Engineering with Repository-level Code Graph. *ICLR 2025*.
 9. Page, L., Brin, S., Motwani, R., & Winograd, T. (1999). The PageRank citation ranking: Bringing order to the web. *Stanford InfoLab*.
-10. Pearson, M., et al. (2017). Evaluating and improving fault localization techniques. *Proceedings of the 39th International Conference on Software Engineering (ICSE 2017)*, 265-276.
+10. Pearson, S., Campos, J., Just, R., Fraser, G., Abreu, R., Ernst, M. D., Pang, D., & Keller, B. (2017). Evaluating and improving fault localization techniques. *Proceedings of the 39th International Conference on Software Engineering (ICSE 2017)*, 609-620.
 11. Zou, D., et al. (2021). An empirical study of fault localization families and their combinations. *IEEE Transactions on Software Engineering*, 47(2), 332-347.

@@ -1867,6 +1867,52 @@
       "file": "results/gemma4_localization_evaluation.json",
       "ptr": "/summary/bm25_pack/avg_token_occupancy",
       "fmt": "num1"
+    },
+    "FactBMSanFnAcc": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/softmax__sanitized/bm25/fn_acc_10",
+      "fmt": "pct1"
+    },
+    "FactBMSanFnAccKN": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/softmax__sanitized/bm25/hits_10",
+      "fmt": "kn",
+      "n_ptr": "/num_callable_instances"
+    },
+    "FactBMSanFnAccFive": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/softmax__sanitized/bm25/fn_acc_5",
+      "fmt": "pct1"
+    },
+    "FactBMSanFileAccFive": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/softmax__sanitized/bm25/file_acc_5",
+      "fmt": "pct1"
+    },
+    "VerifCompBoth": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/pairwise_vs_perron_static/bm25/mcnemar/n_both_hit",
+      "fmt": "int"
+    },
+    "VerifCompBothMiss": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/pairwise_vs_perron_static/bm25/mcnemar/n_both_miss",
+      "fmt": "int"
+    },
+    "VerifCompBMOnly": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/pairwise_vs_perron_static/bm25/mcnemar/n_baseline_wins",
+      "fmt": "int"
+    },
+    "VerifCompPerronOnly": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/pairwise_vs_perron_static/bm25/mcnemar/n_target_wins",
+      "fmt": "int"
+    },
+    "VerifCompMcNemarP": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/pairwise_vs_perron_static/bm25/mcnemar/p_value",
+      "fmt": "pval"
     }
   }
 }
