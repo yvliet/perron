@@ -1,50 +1,365 @@
 {
   "suite": "optuna_bayesian_sweep",
   "seed": 20261003,
-  "n_trials": 5,
-  "num_tasks_evaluated": 9,
+  "n_trials": 50,
+  "num_tasks_evaluated": 83,
   "best_params": {
-    "beta": 0.8770164050218188,
-    "gamma": 0.7992764925862836
+    "beta": 0.8327645832358409,
+    "gamma": 0.8248432208892745
   },
-  "best_score": 33.33,
+  "best_score": 20.48,
   "trials": [
     {
       "trial_number": 0,
       "beta": 0.877,
       "gamma": 0.7993,
-      "fn_acc_10": 33.33,
-      "avg_latency_ms": 335.98
+      "fn_acc_10": 16.87,
+      "avg_latency_ms": 286.69
     },
     {
       "trial_number": 1,
       "beta": 0.888,
       "gamma": 0.8128,
-      "fn_acc_10": 33.33,
-      "avg_latency_ms": 405.72
+      "fn_acc_10": 15.66,
+      "avg_latency_ms": 480.27
     },
     {
       "trial_number": 2,
       "beta": 0.8136,
       "gamma": 0.7409,
-      "fn_acc_10": 33.33,
-      "avg_latency_ms": 422.43
+      "fn_acc_10": 19.28,
+      "avg_latency_ms": 277.91
     },
     {
       "trial_number": 3,
       "beta": 0.8546,
       "gamma": 0.8317,
-      "fn_acc_10": 33.33,
-      "avg_latency_ms": 477.06
+      "fn_acc_10": 19.28,
+      "avg_latency_ms": 339.22
     },
     {
       "trial_number": 4,
       "beta": 0.8977,
       "gamma": 0.7855,
-      "fn_acc_10": 11.11,
-      "avg_latency_ms": 486.66
+      "fn_acc_10": 10.84,
+      "avg_latency_ms": 395.99
+    },
+    {
+      "trial_number": 5,
+      "beta": 0.8526,
+      "gamma": 0.7579,
+      "fn_acc_10": 19.28,
+      "avg_latency_ms": 309.22
+    },
+    {
+      "trial_number": 6,
+      "beta": 0.8861,
+      "gamma": 0.6004,
+      "fn_acc_10": 8.43,
+      "avg_latency_ms": 315.31
+    },
+    {
+      "trial_number": 7,
+      "beta": 0.8647,
+      "gamma": 0.6124,
+      "fn_acc_10": 9.64,
+      "avg_latency_ms": 313.94
+    },
+    {
+      "trial_number": 8,
+      "beta": 0.8168,
+      "gamma": 0.5684,
+      "fn_acc_10": 12.05,
+      "avg_latency_ms": 294.29
+    },
+    {
+      "trial_number": 9,
+      "beta": 0.8471,
+      "gamma": 0.6515,
+      "fn_acc_10": 13.25,
+      "avg_latency_ms": 304.58
+    },
+    {
+      "trial_number": 10,
+      "beta": 0.8064,
+      "gamma": 0.7212,
+      "fn_acc_10": 18.07,
+      "avg_latency_ms": 296.85
+    },
+    {
+      "trial_number": 11,
+      "beta": 0.8328,
+      "gamma": 0.8248,
+      "fn_acc_10": 20.48,
+      "avg_latency_ms": 296.77
+    },
+    {
+      "trial_number": 12,
+      "beta": 0.8273,
+      "gamma": 0.807,
+      "fn_acc_10": 20.48,
+      "avg_latency_ms": 400.22
+    },
+    {
+      "trial_number": 13,
+      "beta": 0.8254,
+      "gamma": 0.8106,
+      "fn_acc_10": 20.48,
+      "avg_latency_ms": 344.37
+    },
+    {
+      "trial_number": 14,
+      "beta": 0.8305,
+      "gamma": 0.7613,
+      "fn_acc_10": 19.28,
+      "avg_latency_ms": 242.05
+    },
+    {
+      "trial_number": 15,
+      "beta": 0.8092,
+      "gamma": 0.8285,
+      "fn_acc_10": 18.07,
+      "avg_latency_ms": 275.02
+    },
+    {
+      "trial_number": 16,
+      "beta": 0.8271,
+      "gamma": 0.6983,
+      "fn_acc_10": 18.07,
+      "avg_latency_ms": 270.3
+    },
+    {
+      "trial_number": 17,
+      "beta": 0.8648,
+      "gamma": 0.7233,
+      "fn_acc_10": 13.25,
+      "avg_latency_ms": 307.25
+    },
+    {
+      "trial_number": 18,
+      "beta": 0.8001,
+      "gamma": 0.7982,
+      "fn_acc_10": 18.07,
+      "avg_latency_ms": 291.14
+    },
+    {
+      "trial_number": 19,
+      "beta": 0.8286,
+      "gamma": 0.8356,
+      "fn_acc_10": 19.28,
+      "avg_latency_ms": 308.13
+    },
+    {
+      "trial_number": 20,
+      "beta": 0.8355,
+      "gamma": 0.775,
+      "fn_acc_10": 18.07,
+      "avg_latency_ms": 272.46
+    },
+    {
+      "trial_number": 21,
+      "beta": 0.8349,
+      "gamma": 0.804,
+      "fn_acc_10": 19.28,
+      "avg_latency_ms": 324.85
+    },
+    {
+      "trial_number": 22,
+      "beta": 0.8183,
+      "gamma": 0.8002,
+      "fn_acc_10": 19.28,
+      "avg_latency_ms": 299.19
+    },
+    {
+      "trial_number": 23,
+      "beta": 0.8476,
+      "gamma": 0.8039,
+      "fn_acc_10": 19.28,
+      "avg_latency_ms": 290.26
+    },
+    {
+      "trial_number": 24,
+      "beta": 0.8445,
+      "gamma": 0.8323,
+      "fn_acc_10": 20.48,
+      "avg_latency_ms": 265.28
+    },
+    {
+      "trial_number": 25,
+      "beta": 0.8353,
+      "gamma": 0.7206,
+      "fn_acc_10": 19.28,
+      "avg_latency_ms": 314.22
+    },
+    {
+      "trial_number": 26,
+      "beta": 0.8004,
+      "gamma": 0.8359,
+      "fn_acc_10": 16.87,
+      "avg_latency_ms": 310.05
+    },
+    {
+      "trial_number": 27,
+      "beta": 0.8199,
+      "gamma": 0.8205,
+      "fn_acc_10": 18.07,
+      "avg_latency_ms": 362.45
+    },
+    {
+      "trial_number": 28,
+      "beta": 0.8042,
+      "gamma": 0.5546,
+      "fn_acc_10": 12.05,
+      "avg_latency_ms": 306.65
+    },
+    {
+      "trial_number": 29,
+      "beta": 0.8178,
+      "gamma": 0.8432,
+      "fn_acc_10": 16.87,
+      "avg_latency_ms": 346.1
+    },
+    {
+      "trial_number": 30,
+      "beta": 0.8065,
+      "gamma": 0.6753,
+      "fn_acc_10": 18.07,
+      "avg_latency_ms": 355.52
+    },
+    {
+      "trial_number": 31,
+      "beta": 0.84,
+      "gamma": 0.8406,
+      "fn_acc_10": 19.28,
+      "avg_latency_ms": 288.34
+    },
+    {
+      "trial_number": 32,
+      "beta": 0.8079,
+      "gamma": 0.771,
+      "fn_acc_10": 19.28,
+      "avg_latency_ms": 377.91
+    },
+    {
+      "trial_number": 33,
+      "beta": 0.8269,
+      "gamma": 0.6054,
+      "fn_acc_10": 12.05,
+      "avg_latency_ms": 466.33
+    },
+    {
+      "trial_number": 34,
+      "beta": 0.8233,
+      "gamma": 0.7739,
+      "fn_acc_10": 18.07,
+      "avg_latency_ms": 618.85
+    },
+    {
+      "trial_number": 35,
+      "beta": 0.8477,
+      "gamma": 0.7821,
+      "fn_acc_10": 18.07,
+      "avg_latency_ms": 318.31
+    },
+    {
+      "trial_number": 36,
+      "beta": 0.8023,
+      "gamma": 0.7484,
+      "fn_acc_10": 20.48,
+      "avg_latency_ms": 262.39
+    },
+    {
+      "trial_number": 37,
+      "beta": 0.8592,
+      "gamma": 0.8082,
+      "fn_acc_10": 18.07,
+      "avg_latency_ms": 325.8
+    },
+    {
+      "trial_number": 38,
+      "beta": 0.8347,
+      "gamma": 0.821,
+      "fn_acc_10": 20.48,
+      "avg_latency_ms": 271.97
+    },
+    {
+      "trial_number": 39,
+      "beta": 0.87,
+      "gamma": 0.7917,
+      "fn_acc_10": 16.87,
+      "avg_latency_ms": 308.44
+    },
+    {
+      "trial_number": 40,
+      "beta": 0.8682,
+      "gamma": 0.8252,
+      "fn_acc_10": 20.48,
+      "avg_latency_ms": 319.25
+    },
+    {
+      "trial_number": 41,
+      "beta": 0.8008,
+      "gamma": 0.7411,
+      "fn_acc_10": 20.48,
+      "avg_latency_ms": 351.59
+    },
+    {
+      "trial_number": 42,
+      "beta": 0.8197,
+      "gamma": 0.7354,
+      "fn_acc_10": 19.28,
+      "avg_latency_ms": 313.32
+    },
+    {
+      "trial_number": 43,
+      "beta": 0.8195,
+      "gamma": 0.6949,
+      "fn_acc_10": 18.07,
+      "avg_latency_ms": 257.29
+    },
+    {
+      "trial_number": 44,
+      "beta": 0.8131,
+      "gamma": 0.7827,
+      "fn_acc_10": 19.28,
+      "avg_latency_ms": 290.85
+    },
+    {
+      "trial_number": 45,
+      "beta": 0.841,
+      "gamma": 0.8018,
+      "fn_acc_10": 18.07,
+      "avg_latency_ms": 324.59
+    },
+    {
+      "trial_number": 46,
+      "beta": 0.8091,
+      "gamma": 0.8134,
+      "fn_acc_10": 16.87,
+      "avg_latency_ms": 307.7
+    },
+    {
+      "trial_number": 47,
+      "beta": 0.8271,
+      "gamma": 0.7958,
+      "fn_acc_10": 19.28,
+      "avg_latency_ms": 538.26
+    },
+    {
+      "trial_number": 48,
+      "beta": 0.8451,
+      "gamma": 0.829,
+      "fn_acc_10": 20.48,
+      "avg_latency_ms": 299.88
+    },
+    {
+      "trial_number": 49,
+      "beta": 0.8235,
+      "gamma": 0.8092,
+      "fn_acc_10": 20.48,
+      "avg_latency_ms": 288.09
     }
   ],
-  "git_sha": "74d26861c7ff3f49c273b47cfaaadf5760926ec6",
-  "utc_timestamp": "2026-10-04T13:54:09.692996+00:00"
+  "git_sha": "01a9e3c0edc78ec57571ee746238ea4031c6d03d",
+  "utc_timestamp": "2026-10-04T15:08:10.953317+00:00"
 }
