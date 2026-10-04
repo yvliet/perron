@@ -10,9 +10,9 @@
 
 Local developer agents localize defect targets under strict prompt token budgets ($K \le 4{,}096$). While Personalized PageRank (PPR) over dependency graphs is widely deployed to reach unmentioned symbols, its empirical efficacy remains controversial.
 
-Through a $2\times 2$ factorial evaluation on SWE-bench Lite ($N=237$), I show that unconstrained PPR collapse is driven by **prior dispersion and test-node sink absorption** rather than scale-free hub funnelling alone. Under diffuse linear priors, Standard PPR collapses to 10.1% Function Acc@10 with 32.5% test contamination. Concentrating priors via top-25 softmax ($\tau = 0.15$) rescues Standard PPR to 48.5%, while test sanitization adds +3.8 percentage points. **Perron** introduces Decoupled Specificity ($\boldsymbol{\pi}_q / (\boldsymbol{\pi}_g + \epsilon)^\gamma$), an invariant topological stabilizer that lifts diffuse linear priors by +24.1 pp (34.2% vs. 10.1%) while enforcing 99.5% hub suppression over static memory-mapped CSR transition matrices.
+Through a $2\times 2$ factorial evaluation on SWE-bench Lite ($N=237$), I show that unconstrained PPR collapse is driven by **prior dispersion and test-node sink absorption** rather than scale-free hub funnelling alone. Under diffuse linear priors, Standard PPR collapses to 10.1% Function Acc@10 with 32.5% test contamination. Concentrating priors via top-25 softmax ($\tau = 0.15$) rescues Standard PPR to 48.5%, while test sanitization adds +3.8 percentage points. **Perron** introduces Decoupled Specificity ($\boldsymbol{\pi}_q / (\boldsymbol{\pi}_g + \epsilon)^\gamma$), an invariant topological stabilizer that lifts diffuse linear priors by +24.1 pp (34.2% vs. 10.1%) while restoring hub suppression to 99.5% (matching BM25's 99.4% baseline) over static memory-mapped CSR transition matrices.
 
-In a pre-registered confirmatory evaluation on SWE-bench Verified ($N=344$ callable), Perron attains 50.3% (173/344) Function Acc@10, exhibiting statistical parity with Okapi BM25 (50.9%, 175/344; paired difference $[-3.5, +2.3]$ pp, rendering non-inferiority inconclusive against a $-2.0$ pp margin) while BM25 leads at top-5 (45.1% vs. 40.4%). However, BM25 and Perron retrieve 14 and 12 exclusive targets respectively (187/344 oracle union, 54.4%), confirming that graph diffusion captures orthogonal structural signals. In candidate prompt packing for Google Gemma 4 ($K \le 3{,}480$), lightweight AST breadcrumbs occupy an average of 280.8 tokens, preserving 91.9% of the context window for native Chain-of-Thought reasoning.
+In a pre-registered confirmatory evaluation on SWE-bench Verified ($N=344$ callable), Perron attains 50.3% (173/344) Function Acc@10, showing no detectable difference at top-10 (non-inferiority inconclusive against $-2.0$ pp margin), with disjoint hits reflecting top-10 boundary rank permutations. BM25 leads at top-5 (45.1% vs. 40.4%). In candidate prompt packing for Google Gemma 4, lightweight AST breadcrumbs occupy an average of 280.8 tokens, preserving 91.9% of the 3,480-token prompt budget for native Chain-of-Thought reasoning.
 
 I release `perron-core` v0.3.0, `perron-mcp`, and 12-repository CSR graphs under Apache 2.0.
 
@@ -115,7 +115,7 @@ To isolate the causes of graph diffusion failure, we conducted a $2\times 2$ fac
 ---
 
 ## 5.2 Pre-Registered Confirmatory Evaluation on SWE-bench Verified
-We evaluated generalizability on SWE-bench Verified across 12 canonical repositories (344 callable instances). Hyperparameters were frozen prior to evaluation ($\beta^*=0.85, \gamma^*=0.70, \tau=0.15, K=25$).
+We evaluated generalizability on SWE-bench Verified across 12 canonical repositories (344 callable instances). Hyperparameters were frozen prior to evaluation (default damping $\beta=0.85$, calibrated exponent $\gamma^*=0.70$, prior temperature $\tau=0.15$, seed cutoff $K=25$).
 
 | Method | Fn Acc@10 ($N=344$) | 95% Bootstrap CI | Fn Acc@5 | File Acc@5 | HSI@10 | Holm $p$ vs Perron |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -130,7 +130,7 @@ We evaluated generalizability on SWE-bench Verified across 12 canonical reposito
 **Hypotheses Outcomes**:
 - **P1 (Perron vs. Standard PPR)**: Difference $+0.3$ pp (173 vs 172 hits, paired bootstrap CI $[-4.7, +5.2]$, Holm $p = 1.000$). No statistically detectable accuracy difference exists once test nodes are isolated. Standard PPR exhibits 9.2% hub contamination (HSI@10 = 90.8%), whereas Perron sustains 99.5% hub suppression.
 - **P2 (Perron Parity to BM25)**: Difference $-0.6$ pp with paired bootstrap CI $[-3.5, +2.3]$ pp. Because the lower bound crosses the pre-registered $-2.0$ pp margin, strict non-inferiority is **statistically inconclusive**. Point estimates exhibit parity, while BM25 leads at top-5 (45.1% vs 40.4% Fn Acc@5, 59.5% vs 53.8% File Acc@5).
-- **P3 (Orthogonal Signal Space & Fusion)**: Rank fusion (RRF: 174 hits vs 175 for BM25) confirms slot competition under unrouted merging. Crucially, contingency analysis shows that BM25 and Perron retrieve 161 targets jointly, 14 exclusively by BM25, and 12 exclusively by Perron. The theoretical oracle union reaches **187/344 (54.4%, +3.5 pp over BM25)**, proving that graph diffusion captures orthogonal structural signals.
+- **P3 (Boundary Jitter & Fusion)**: Rank fusion (RRF: 174 hits vs 175 for BM25) confirms slot competition under unrouted merging. Crucially, contingency analysis shows that BM25 and Perron retrieve 161 targets jointly, 14 exclusively by BM25, and 12 exclusively by Perron. The theoretical oracle union reaches 187/344 (54.4%), but unrouted rank fusion fails to surpass standalone BM25, indicating that disjoint hits reflect rank permutations around the top-10 boundary rather than a demonstrable structural advantage over lexical search.
 
 ---
 
@@ -143,7 +143,7 @@ We evaluated candidate context packing under prompt budget constraints ($K \le 3
 | `perron_pack` | Top-10 Perron Static | 280.8 tokens | 54.0% (54/100) | 68.0% (68/100) |
 | `slot_fused_pack` | 8 BM25 + 2 Perron | 280.8 tokens | 52.0% (52/100) | 77.0% (77/100) |
 
-Candidate symbols are packaged as AST breadcrumbs without full function bodies, consuming an average of 280.8 tokens across all arms. This leaves 91.9% of Gemma 4's $K \le 3{,}480$ context window available for internal Chain-of-Thought `<|think|>` reasoning. Perron includes the gold function in 54.0% of cases vs. 48.0% for BM25, while BM25 leads on file inclusion (75.0% vs. 68.0%), and slot fusion achieves 77.0% file inclusion.
+Candidate symbols are packaged as AST breadcrumbs without full function bodies, consuming an average of 280.8 tokens across all arms. This leaves 91.9% of the 3,480-token prompt allocation available for internal Chain-of-Thought `<|think|>` reasoning. Perron includes the gold function in 54.0% of cases vs. 48.0% for BM25, while BM25 leads on file inclusion (75.0% vs. 68.0%), and slot fusion achieves 77.0% file inclusion.
 
 ---
 
@@ -158,13 +158,13 @@ Perron is released as three reproducible deliverables:
 
 ## 7. Discussion & Limitations
 
-Our findings establish that Personalized PageRank on code graphs fails primarily due to test node absorption and prior dispersion. Decoupled Specificity stabilizes diffusion under diffuse priors (+24.1 pp) and eliminates hub leakage (99.5% HSI) while preserving zero-copy memory-mapped CSR performance. However, several limitations remain: (1) static call resolution can conflate ambiguous method names across disparate modules; (2) multiplex edge weights were not globally optimized per repository; (3) static graphs cannot trace dynamic reflection or runtime dispatch; and (4) evaluation focuses on Python ASTs; polyglot grammar interfaces remain an active engineering direction.
+Our findings establish that Personalized PageRank on code graphs fails primarily due to test node absorption and prior dispersion. Decoupled Specificity stabilizes diffusion under diffuse priors (+24.1 pp) and suppresses scale-free hub accumulation (99.5% HSI vs. 90.8% in Standard PPR) while preserving zero-copy memory-mapped CSR performance. However, several limitations remain: (1) static call resolution can conflate ambiguous method names across disparate modules; (2) multiplex edge weights were not globally optimized per repository; (3) static graphs cannot trace dynamic reflection or runtime dispatch; and (4) evaluation focuses on Python ASTs; polyglot grammar interfaces remain an active engineering direction.
 
 ---
 
 ## 8. Conclusion
 
-On software code graphs, Personalized PageRank collapse under default damping ($\beta=0.85$) is driven by teleport prior dispersion and test-node sink absorption. When priors are focused via top-25 softmax on sanitized graphs, Standard PPR recovers to 48.5%, matching Perron Decoupled Specificity (47.7%). Perron serves as an invariant topological stabilizer under diffuse priors (+24.1 pp gain) and enforces 99.5% hub suppression. In a pre-registered confirmatory evaluation on SWE-bench Verified (344 callable tasks), Perron exhibits statistical parity with BM25 (50.3% vs. 50.9%), while their oracle union reaches 54.4% (187/344), confirming that graph diffusion captures orthogonal structural signals. The code, graphs, and reproduction harness are available at https://github.com/yvliet/perron.
+On software code graphs, Personalized PageRank collapse under default damping ($\beta=0.85$) is driven by teleport prior dispersion and test-node sink absorption. When priors are focused via top-25 softmax on sanitized graphs, Standard PPR recovers to 48.5%, matching Perron Decoupled Specificity (47.7%). Perron serves as an invariant topological stabilizer under diffuse priors (+24.1 pp gain) and restores hub suppression to 99.5%. In a pre-registered confirmatory evaluation on SWE-bench Verified (344 callable tasks), Perron shows no detectable difference at top-10 vs BM25, with disjoint hits reflecting boundary rank jitter. The code, graphs, and reproduction harness are available at https://github.com/yvliet/perron.
 
 ---
 

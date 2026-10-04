@@ -195,7 +195,7 @@ def draw_figure1_flowchart(out_pdf, out_png):
         ax.text(pt[0], pt[1] - 1.0, spec_lbl, fontsize=7.2, color=spec_col, ha='center', va='center', fontweight='bold', zorder=4)
 
     ax.text(80.5, 9.2, "Suppressed Hub (Spec < 1.0)", fontsize=7.2, color=OKABE_ITO_DICT['vermilion'], ha='center', va='top', fontweight='bold')
-    ax.text(80.5, 5.8, r"$\beta = 0.85$ spectral convergence" + "\n" + "95.60% Hub Suppression Index", fontsize=8.0, ha='center', va='top', color=OKABE_ITO_DICT['light_slate'], style='italic')
+    ax.text(80.5, 5.8, r"$\beta = 0.85$ spectral convergence" + "\n" + "99.5% Hub Suppression Index", fontsize=8.0, ha='center', va='top', color=OKABE_ITO_DICT['light_slate'], style='italic')
 
     # Flow Arrow 3 -> 4 (Generous balanced breathing room around Context Budget)
     arrow3 = FancyArrowPatch((96.0, 23.0), (105.5, 23.0), arrowstyle='->,head_width=4.5,head_length=6', color=OKABE_ITO_DICT['blue'], lw=2.0)
@@ -220,11 +220,11 @@ def draw_figure1_flowchart(out_pdf, out_png):
     ax.text(diff_x + 1.5, 26.5, "-   if key in clone.query:", fontsize=7.4, fontfamily='monospace', color=OKABE_ITO_DICT['vermilion'])
     ax.text(diff_x + 1.5, 23.5, "+   parts = key.split('__')", fontsize=7.4, fontfamily='monospace', color=OKABE_ITO_DICT['green'], fontweight='bold')
     ax.text(diff_x + 1.5, 20.5, "+   if parts[0] in clone.query:", fontsize=7.4, fontfamily='monospace', color=OKABE_ITO_DICT['green'], fontweight='bold')
-    ax.text(diff_x + 1.5, 16.5, ">> ast.parse() OK | pytest: PASSED", fontsize=7.2, fontfamily='monospace', color=OKABE_ITO_DICT['blue'], fontweight='bold')
+    ax.text(diff_x + 1.5, 16.5, ">> ast.parse() OK | Scope Validated", fontsize=7.2, fontfamily='monospace', color=OKABE_ITO_DICT['blue'], fontweight='bold')
 
     # Final Result Badge
-    ax.text(123.5, 9.2, r"$\mathbf{5/5}$ Solvable Pass  $\cdot$  $\mathbf{5/5}$ Boundary Handled", fontsize=8.8, ha='center', va='top', color=OKABE_ITO_DICT['green'], fontweight='bold')
-    ax.text(123.5, 5.8, "Deterministic AST validation ($0.00 cost)\n0.0% syntax errors in applied diffs via ast.parse", fontsize=8.0, ha='center', va='top', color=OKABE_ITO_DICT['light_slate'], style='italic')
+    ax.text(123.5, 9.2, r"AST Breadcrumb Packing  $\cdot$  Lexical Scope Preserved", fontsize=8.5, ha='center', va='top', color=OKABE_ITO_DICT['green'], fontweight='bold')
+    ax.text(123.5, 5.8, "Deterministic AST validation ($0.00 cost)\nBounded breadcrumb skeletons (<100 tokens/sym)", fontsize=8.0, ha='center', va='top', color=OKABE_ITO_DICT['light_slate'], style='italic')
 
     safe_savefig(fig, out_pdf, format='pdf', bbox_inches='tight')
     safe_savefig(fig, out_png, format='png', dpi=300, bbox_inches='tight')
