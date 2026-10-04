@@ -1,4 +1,4 @@
-# When and Why Does Personalized PageRank Fail on Code Graphs? Analyzing Seed Dispersion, Graph Resolution Artifacts, and Decoupled Specificity Damping
+# When and Why Does Personalized PageRank Fail on Code Graphs? Analyzing Seed Dispersion, Prior Calibration, and Decoupled Specificity Damping
 
 **Author**: Sultan Haikal (GitHub: [@yvliet](https://github.com/yvliet))  
 **Repository**: [https://github.com/yvliet/perron](https://github.com/yvliet/perron)  
@@ -29,7 +29,7 @@ Lexical search finds symbols whose identifiers appear in issue text. Graph retri
 This paper diagnoses these dynamics via a $2\times 2$ factorial sweep, characterizes spectral convergence via Brauer rank-1 bounds, and validates Decoupled Specificity on SWE-bench Verified.
 
 ### Systems Hardware Envelope
-The standalone Perron engine peaks at 144.33 MB resident memory (graph load 91.4 MB) on a 15.68 GiB laptop with 6.86 GiB available. Zero-copy memory-mapped CSR representations enable sub-millisecond spectral diffusion without graph mutation overhead, sharing physical memory across parallel worker threads via OS page caching ($W \rightarrow 1$).
+The standalone Perron engine peaks at 144.33 MB resident memory (graph load 91.4 MB) on a 15.68 GiB laptop with 6.86 GiB available. Zero-copy memory-mapped CSR representations enable high-throughput spectral diffusion (1.89 ms on Requests, 5.10 ms on SymPy) without graph mutation overhead, sharing physical memory across parallel worker threads via OS page caching ($W \rightarrow 1$).
 
 ---
 
@@ -37,7 +37,7 @@ The standalone Perron engine peaks at 144.33 MB resident memory (graph load 91.4
 
 **Code Graph Navigation & Repo Maps**: Aider (Gauthier, 2023) introduced PageRank repo maps over Tree-sitter tags. However, unweighted random walks amplify high-in-degree hubs. Graph agents including RepoGraph (Ouyang et al., 2025), CodexGraph (Liu et al., 2025), and LocAgent (Chen et al., 2025) rely on iterative graph-database queries, incurring multi-turn latency. Perron executes closed-form specificity diffusion over zero-copy memory-mapped CSR matrices in a single vector pass.
 
-**Hub Suppression in Graph Diffusion**: HippoRAG (Gutierrez et al., 2024) explores pre-walk teleport prior scaling ($p_0' \propto p_0 / \pi_g^\gamma$). However, unmodified transition walks funnel mass into downstream structural sinks. Degree-normalized PPR discounts post-walk by in-degree, but ignores path reachability. Perron decouples diffusion from stationary distribution scaling via Pointwise Mutual Information (PMI).
+**Hub Suppression in Graph Diffusion**: HippoRAG (Gutierrez et al., 2024) explores pre-walk teleport prior scaling via Inverse Passage Frequency ($s_i = |P_i|^{-1}$). However, unmodified transition walks funnel mass into downstream structural sinks. Degree-normalized PPR discounts post-walk by in-degree, but ignores path reachability. Perron decouples diffusion from stationary distribution scaling via Pointwise Mutual Information (PMI).
 
 **Fault Localization Benchmarks**: Pearson et al. (ICSE 2017) and Zou et al. (IEEE TSE 2021, evaluating 357 Defects4J faults) demonstrated that synthetic benchmarks produce conclusions that fail to transfer to real-world debugging. Following their recommendations, our evaluation relies on authentic human patches from SWE-bench Lite and SWE-bench Verified.
 
@@ -69,7 +69,7 @@ $$\boldsymbol{\pi}^{(t+1)} = \beta \cdot (\boldsymbol{\pi}^{(t)} T) + (\beta \cd
 **Proposition 1 (Spectral Gap & Geometric Convergence)**:  
 *Under Brauer's rank-1 perturbation theorem (Brauer, 1952), the Google operator $M = \beta T + (1-\beta) \mathbf{e} \mathbf{p}_0^T$ satisfies $|\lambda_2(M)| \le \beta = 0.85$, establishing an invariant spectral gap $1 - |\lambda_2| \ge 0.15$. Because modular software architectures partition into disconnected subgraphs ($\lambda_2(\bar{T}) = 1.0$), Brauer's bound holds with exact equality: $|\lambda_2(M)| = 0.85$.*
 
-*Proof Sketch*: Let $\bar{T} = T + \mathbf{d} \mathbf{p}_0^T$. Then $M = \beta \bar{T} + (1-\beta) \mathbf{e} \mathbf{p}_0^T$ is a rank-1 perturbation of $\beta \bar{T}$. By Brauer (1952), $\lambda_i(M) = \beta \lambda_i(\bar{T})$ for $i \ge 2$. Since software call graphs decompose into disconnected modules, $\bar{T}$ has unit eigenvalues, yielding $|\lambda_2(M)| = \beta$. Geometric $L_1$ contraction bounds convergence to tolerance $\epsilon = 10^{-6}$ in at most $\lceil \ln(\epsilon) / \ln(\beta) \rceil = 86$ iterations. On CPU, power iteration converges in 71 iterations on Requests (1.89 ms) and 63 on SymPy (5.10 ms).
+*Proof Sketch*: Let $\bar{T} = T + \mathbf{d} \mathbf{p}_0^T$. Then $M = \beta \bar{T} + (1-\beta) \mathbf{e} \mathbf{p}_0^T$ is a rank-1 perturbation of $\beta \bar{T}$. By Brauer (1952), $\lambda_i(M) = \beta \lambda_i(\bar{T})$ for $i \ge 2$. Since software call graphs decompose into disconnected modules, $\bar{T}$ has unit eigenvalues, yielding $|\lambda_2(M)| = \beta$. Geometric $L_1$ contraction bounds convergence to tolerance $\epsilon = 10^{-6}$ in at most $\lceil \ln(\epsilon) / \ln(\beta) \rceil = 86$ iterations. On CPU, power iteration converges in 90 iterations on Requests (1.89 ms) and 66 on SymPy (5.10 ms).
 
 ### 3.4 Decoupled Post-Walk Specificity Ratio
 To suppress hubs without mutating sparse transition matrices, Perron precomputes global stationary distribution $\boldsymbol{\pi}_g$ under uniform teleportation. Specificity is computed post-walk:
@@ -104,7 +104,7 @@ To isolate the causes of graph diffusion failure, we conducted a $2\times 2$ fac
 | Linear + Sanitized | Linear | True | 0.85 | 13.9% (33/237) | 36.7% (87/237) | 0.0% |
 | Softmax + Raw | Softmax | False | 0.85 | 46.0% (109/237) | 41.4% (98/237) | 18.6% |
 | Softmax + Sanitized | Softmax | True | 0.85 | **48.5%** (115/237) | 47.7% (113/237) | **0.0%** |
-| *Lexical Baseline (BM25)* | BM25 | True | — | 46.0% (109/237) | — | 0.0% |
+| *Lexical Baseline (BM25)* | BM25 | True | - | 46.0% (109/237) | - | 0.0% |
 
 **Key Findings**:
 - Under dense linear priors, standard PPR collapses to 10.1% on raw graphs, suffering 32.5% test contamination: mass dissipates across peripheral nodes.
@@ -141,9 +141,9 @@ We evaluated candidate context packing under prompt budget constraints ($K \le 3
 | :--- | :---: | :---: | :---: | :---: |
 | `bm25_pack` | Top-10 BM25 | 280.8 tokens | 48.0% (48/100) | 75.0% (75/100) |
 | `perron_pack` | Top-10 Perron Static | 280.8 tokens | 54.0% (54/100) | 68.0% (68/100) |
-| `slot_fused_pack` | 8 BM25 + 2 Perron | 280.8 tokens | 52.0% (52/100) | 77.0% (77/100) |
+| `slot_fused_pack` | 8 BM25 + 2 Perron | 280.8 tokens | 52.0% (52/100) | 76.0% (76/100) |
 
-Candidate symbols are packaged as AST breadcrumbs without full function bodies, consuming an average of 280.8 tokens across all arms. This leaves 91.9% of the 3,480-token prompt allocation available for internal Chain-of-Thought `<|think|>` reasoning. Perron includes the gold function in 54.0% of cases vs. 48.0% for BM25, while BM25 leads on file inclusion (75.0% vs. 68.0%), and slot fusion achieves 77.0% file inclusion.
+Candidate symbols are packaged as AST breadcrumbs without full function bodies, consuming an average of 280.8 tokens across all arms. This leaves 91.9% of the 3,480-token prompt allocation available for internal Chain-of-Thought `<|think|>` reasoning. Perron includes the gold function in 54.0% of cases vs. 48.0% for BM25, while BM25 leads on file inclusion (75.0% vs. 68.0%), and slot fusion achieves 76.0% file inclusion.
 
 ---
 

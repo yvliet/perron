@@ -1561,6 +1561,11 @@
       "ptr": "/summary_all/perron_static/hsi/mean",
       "fmt": "pct1"
     },
+    "VerifPerronStaticHubContam": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_all/perron_static/hsi/mean",
+      "fmt": "pct1c"
+    },
     "VerifPerronAdaptFnAcc": {
       "file": "results/verified_confirmatory_evaluation.json",
       "ptr": "/summary_callable/perron_adaptive/fn_acc_10/mean",
@@ -1784,12 +1789,12 @@
     },
     "PromptPackBMTwentyFiveTopFnAcc": {
       "file": "results/gemma4_localization_evaluation.json",
-      "ptr": "/summary/bm25_pack/top1_function_acc",
+      "ptr": "/summary/bm25_pack/gold_function_inclusion_rate",
       "fmt": "pct1_raw"
     },
     "PromptPackBMTwentyFiveTopFileAcc": {
       "file": "results/gemma4_localization_evaluation.json",
-      "ptr": "/summary/bm25_pack/top1_file_acc",
+      "ptr": "/summary/bm25_pack/gold_file_inclusion_rate",
       "fmt": "pct1_raw"
     },
     "PromptPackBMTwentyFiveFnHitsKN": {
@@ -1811,12 +1816,12 @@
     },
     "PromptPackPerronTopFnAcc": {
       "file": "results/gemma4_localization_evaluation.json",
-      "ptr": "/summary/perron_pack/top1_function_acc",
+      "ptr": "/summary/perron_pack/gold_function_inclusion_rate",
       "fmt": "pct1_raw"
     },
     "PromptPackPerronTopFileAcc": {
       "file": "results/gemma4_localization_evaluation.json",
-      "ptr": "/summary/perron_pack/top1_file_acc",
+      "ptr": "/summary/perron_pack/gold_file_inclusion_rate",
       "fmt": "pct1_raw"
     },
     "PromptPackPerronFnHitsKN": {
@@ -1838,12 +1843,12 @@
     },
     "PromptPackSlotTopFnAcc": {
       "file": "results/gemma4_localization_evaluation.json",
-      "ptr": "/summary/slot_fused_pack/top1_function_acc",
+      "ptr": "/summary/slot_fused_pack/gold_function_inclusion_rate",
       "fmt": "pct1_raw"
     },
     "PromptPackSlotTopFileAcc": {
       "file": "results/gemma4_localization_evaluation.json",
-      "ptr": "/summary/slot_fused_pack/top1_file_acc",
+      "ptr": "/summary/slot_fused_pack/gold_file_inclusion_rate",
       "fmt": "pct1_raw"
     },
     "PromptPackSlotFnHitsKN": {
@@ -1867,6 +1872,11 @@
       "file": "results/gemma4_localization_evaluation.json",
       "ptr": "/summary/bm25_pack/avg_token_occupancy",
       "fmt": "num1"
+    },
+    "PromptPackReasoningHeadroom": {
+      "file": "results/gemma4_localization_evaluation.json",
+      "ptr": "/summary/reasoning_headroom_pct",
+      "fmt": "pct1_raw"
     },
     "FactBMSanFnAcc": {
       "file": "results/exploratory_factorial_sweep.json",
@@ -1913,6 +1923,122 @@
       "file": "results/verified_confirmatory_evaluation.json",
       "ptr": "/pairwise_vs_perron_static/bm25/mcnemar/p_value",
       "fmt": "pval"
+    },
+    "VerifOracleFnAcc": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/oracle_union/rate",
+      "fmt": "pct1"
+    },
+    "VerifOracleFnAccKN": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/oracle_union/hits",
+      "fmt": "kn",
+      "n_ptr": "/oracle_union/n"
+    },
+    "StrataABM": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/A/bm25/rate",
+      "fmt": "pct1"
+    },
+    "StrataBBM": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/B/bm25/rate",
+      "fmt": "pct1"
+    },
+    "StrataCBM": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/C/bm25/rate",
+      "fmt": "pct1"
+    },
+    "StrataAStdPPR": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/A/standard_ppr/rate",
+      "fmt": "pct1"
+    },
+    "StrataBStdPPR": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/B/standard_ppr/rate",
+      "fmt": "pct1"
+    },
+    "StrataCStdPPR": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/C/standard_ppr/rate",
+      "fmt": "pct1"
+    },
+    "StrataADegPPR": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/A/deg_ppr/rate",
+      "fmt": "pct1"
+    },
+    "StrataBDegPPR": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/B/deg_ppr/rate",
+      "fmt": "pct1"
+    },
+    "StrataCDegPPR": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/C/deg_ppr/rate",
+      "fmt": "pct1"
+    },
+    "StrataAHippo": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/A/hipporag/rate",
+      "fmt": "pct1"
+    },
+    "StrataBHippo": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/B/hipporag/rate",
+      "fmt": "pct1"
+    },
+    "StrataCHippo": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/C/hipporag/rate",
+      "fmt": "pct1"
+    },
+    "StrataAPerron": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/A/perron_static/rate",
+      "fmt": "pct1"
+    },
+    "StrataBPerron": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/B/perron_static/rate",
+      "fmt": "pct1"
+    },
+    "StrataCPerron": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/C/perron_static/rate",
+      "fmt": "pct1"
+    },
+    "StrataAPerronAdapt": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/A/perron_adaptive/rate",
+      "fmt": "pct1"
+    },
+    "StrataBPerronAdapt": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/B/perron_adaptive/rate",
+      "fmt": "pct1"
+    },
+    "StrataCPerronAdapt": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/C/perron_adaptive/rate",
+      "fmt": "pct1"
+    },
+    "StrataARRF": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/A/rrf_fusion/rate",
+      "fmt": "pct1"
+    },
+    "StrataBRRF": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/B/rrf_fusion/rate",
+      "fmt": "pct1"
+    },
+    "StrataCRRF": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_results/C/rrf_fusion/rate",
+      "fmt": "pct1"
     }
   }
 }
