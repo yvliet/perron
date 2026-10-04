@@ -140,8 +140,15 @@ def check_privacy_and_links():
     # Extract clean URLs (stripping trailing punctuation)
     urls = re.findall(r'https?://[^\s\)\>\]]+', text)
     cleaned_urls = [re.sub(r'[\.,;:]$', '', u) for u in urls]
+    allowed_prefixes = (
+        "https://github.com/yvliet",
+        "https://raw.githubusercontent.com/yvliet",
+        "https://www.kaggle.com/code/yvliet",
+        "https://www.kaggle.com/datasets/yvliet",
+        "https://pypi.org/project/perron-core",
+    )
     for url in cleaned_urls:
-        assert url.startswith("https://github.com/yvliet") or url.startswith("https://www.kaggle.com/code/yvliet"), f"Unexpected external URL: {url}"
+        assert any(url.startswith(prefix) for prefix in allowed_prefixes), f"Unexpected external URL: {url}"
 
 
 def check_macro_idempotence():

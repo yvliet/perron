@@ -37,7 +37,7 @@ The standalone Perron engine peaks at 144.33 MB resident memory (graph load 91.4
 
 **Code Graph Navigation & Repo Maps**: Aider (Gauthier, 2023) introduced PageRank repo maps over Tree-sitter tags. However, unweighted random walks amplify high-in-degree hubs. Graph agents including RepoGraph (Ouyang et al., 2025), CodexGraph (Liu et al., 2025), and LocAgent (Chen et al., 2025) rely on iterative graph-database queries, incurring multi-turn latency. Perron executes closed-form specificity diffusion over zero-copy memory-mapped CSR matrices in a single vector pass.
 
-**Hub Suppression in Graph Diffusion**: HippoRAG (Gutierrez et al., 2024) explores pre-walk teleport prior scaling via Inverse Passage Frequency ($s_i = |P_i|^{-1}$). However, unmodified transition walks funnel mass into downstream structural sinks. Degree-normalized PPR discounts post-walk by in-degree, but ignores path reachability. Perron decouples diffusion from stationary distribution scaling via Pointwise Mutual Information (PMI).
+**Hub Suppression in Graph Diffusion**: HippoRAG (Gutierrez et al., 2024) scales pre-walk teleport priors via Inverse Passage Frequency ($s_i = |P_i|^{-1}$), but walks still funnel into structural sinks. Degree-normalized PPR discounts by in-degree post-walk, ignoring reachability. Perron decouples diffusion from stationary scaling via Pointwise Mutual Information (PMI).
 
 **Fault Localization Benchmarks**: Pearson et al. (ICSE 2017) and Zou et al. (IEEE TSE 2021, evaluating 357 Defects4J faults) demonstrated that synthetic benchmarks produce conclusions that fail to transfer to real-world debugging. Following their recommendations, our evaluation relies on authentic human patches from SWE-bench Lite and SWE-bench Verified.
 
@@ -80,9 +80,13 @@ where $\epsilon = 10^{-8}$. In the stationary limit, $\ln(\pi_q(v) / \pi_g(v)) =
 
 **Scale-Invariant Hub Prominence ($\eta_q$)**: When an issue explicitly names a central hub (`Session` in Requests, `Expr` in SymPy), aggressive discounting penalizes legitimate defect sites. Perron computes $\eta_q = \max_{h \in \mathcal{H}_{25}} p_0(h) / \max_v p_0(v)$. When $\eta_q \ge 0.20$, the exponent relaxes: $\gamma_q = \gamma \cdot (1 - \frac{1}{2} \mathbb{I}(\eta_q \ge 0.20))$, rescuing intentional targets.
 
+![Figure 2: Specificity Exponent Sweep](https://raw.githubusercontent.com/yvliet/perron/main/paper/figures/specificity_gamma_sweep.png)
+
 ---
 
 ## 4. Systems Architecture & Memory Virtualization
+
+![Figure 1: Perron Pipeline Architecture](https://raw.githubusercontent.com/yvliet/perron/main/paper/figures/perron_pipeline.png)
 
 ### 4.1 Shared Read-Only Graph Storage
 The transition matrix is stored as raw CSR arrays opened via `numpy.load(mmap_mode='r')`. Hub suppression only rescales the output vector, so arrays are never written and parallel workers share pages through the OS page cache. Rewriting edge weights per query instead costs 319.0 ms on a 1M-node synthetic graph (17.5% of diffusion time).
@@ -90,6 +94,8 @@ The transition matrix is stored as raw CSR arrays opened via `numpy.load(mmap_mo
 ### 4.2 AST Breadcrumbs & Transactional Patching
 - **AST Breadcrumbs**: Perron wraps candidate functions in enclosing class skeletons and docstrings, preserving scope in $<100$ tokens per symbol.
 - **Transactional Patching**: Edits apply bottom-to-top by start line to prevent offset drift. Modified files undergo mandatory `ast.parse()` validation. If syntax errors occur, atomic snapshots roll back all files (`os.replace`).
+
+![Figure 4: Comparative Edit Interfaces](https://raw.githubusercontent.com/yvliet/perron/main/paper/figures/comparative_edit_interfaces.png)
 
 ---
 
@@ -145,20 +151,24 @@ We evaluated candidate context packing under prompt budget constraints ($K \le 3
 
 Candidate symbols are packaged as AST breadcrumbs without full function bodies, consuming an average of 280.8 tokens across all arms. This leaves 91.9% of the 3,480-token prompt allocation available for internal Chain-of-Thought `<|think|>` reasoning. Perron includes the gold function in 54.0% of cases vs. 48.0% for BM25, while BM25 leads on file inclusion (75.0% vs. 68.0%), and slot fusion achieves 76.0% file inclusion.
 
+![Figure 3: Recall vs. Token Budget Curves](https://raw.githubusercontent.com/yvliet/perron/main/paper/figures/recall_vs_token_budget.png)
+
 ---
 
 ## 6. Open-Source Ecosystem & Systems Deliverables
 
-Perron is released as three reproducible deliverables:
-1. **`perron-core` v0.3.0**: Minimalist package (`numpy`, `scipy`, `pyyaml`) providing CLI commands (`perron index`, `perron query`, `perron bench`).
+Perron is released as five reproducible open-source deliverables:
+1. **`perron-core` v0.3.0**: Minimalist library (`numpy`, `scipy`, `pyyaml`) providing CLI commands (`perron index`, `perron query`, `perron bench`), published on PyPI at `https://pypi.org/project/perron-core/0.3.0/`.
 2. **Model Context Protocol (`perron-mcp`)**: JSON-RPC 2.0 stdio server enabling zero-shot code graph navigation for desktop agents with tools `retrieve_context`, `inspect_symbol_breadcrumbs`, and `build_code_graph`.
 3. **`swebench-lite-codegraphs` Dataset Release**: Standardized graph structures and multiplex edge arrays for all 12 repositories under Apache 2.0, coupled with `scripts/reconstruct_dataset.py` to hydrate source text from git checkouts in compliance with upstream licenses.
+4. **`swebench-strata-annotations` Dataset Release**: 801 per-instance lexical accessibility annotations across SWE-bench Lite and Verified under CC0-1.0, available on Kaggle Datasets at `https://www.kaggle.com/datasets/yvliet/swebench-strata-annotations`.
+5. **Kaggle Gemma 4 Workstation Kernel**: Interactive GPU notebook demonstrating zero-copy graph diffusion and local agent reasoning at `https://www.kaggle.com/code/yvliet/perron-gemma-4-workstation`.
 
 ---
 
 ## 7. Discussion & Limitations
 
-Our findings establish that Personalized PageRank on code graphs fails primarily due to test node absorption and prior dispersion. Decoupled Specificity stabilizes diffusion under diffuse priors (+24.1 pp) and suppresses scale-free hub accumulation (99.5% HSI vs. 90.8% in Standard PPR) while preserving zero-copy memory-mapped CSR performance. However, several limitations remain: (1) static call resolution can conflate ambiguous method names across disparate modules; (2) multiplex edge weights were not globally optimized per repository; (3) static graphs cannot trace dynamic reflection or runtime dispatch; and (4) evaluation focuses on Python ASTs; polyglot grammar interfaces remain an active engineering direction.
+Personalized PageRank fails on code graphs primarily from test node absorption and prior dispersion. Decoupled Specificity stabilizes diffuse priors (+24.1 pp) and suppresses hub accumulation (99.5% vs. 90.8% HSI) with zero-copy CSR efficiency. Four limitations remain: (1) static call resolution can conflate ambiguous method names; (2) multiplex edge weights are uniform; (3) static graphs miss dynamic reflection; and (4) evaluation focuses on Python ASTs; polyglot grammar interfaces remain an active direction.
 
 ---
 
