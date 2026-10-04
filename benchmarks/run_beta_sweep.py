@@ -17,9 +17,10 @@ import datetime
 import hashlib
 import json
 import sys
+import time
 from collections import defaultdict
 from pathlib import Path
-from typing import Any, Dict, List, Sequence
+from typing import Any, Dict, List, Optional, Sequence
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(PROJECT_ROOT) not in sys.path:
@@ -498,14 +499,105 @@ def run_factorial(
     return out
 
 
+def run_optuna_sweep(
+    n_trials: int = 5,
+    limit: Optional[int] = 20,
+    output_path: Path = PROJECT_ROOT / "results" / "optuna_beta_gamma_sweep.json",
+) -> Dict[str, Any]:
+    """
+    Optuna Bayesian parameter sweep over beta in [0.80, 0.90] and gamma in [0.55, 0.85] on CPU.
+    """
+    import optuna
+    optuna.logging.set_verbosity(optuna.logging.WARNING)
+
+    print(f"\n[OPTUNA BAYESIAN SWEEP] Running {n_trials} trials across beta in [0.80, 0.90] and gamma in [0.55, 0.85] on CPU...")
+    tasks, labels = load_split("dev_val")
+    if limit is not None:
+        tasks = tasks[:limit]
+    graphs = load_graphs()
+
+    callable_tasks = [t for t in tasks if labels.get(t["instance_id"], {}).get("gold_symbol_ids")]
+    print(f"Loaded {len(callable_tasks)} callable dev tasks across {len(graphs)} repository graphs.")
+
+    trial_records = []
+
+    def objective(trial: optuna.Trial) -> float:
+        beta = trial.suggest_float("beta", 0.80, 0.90)
+        gamma = trial.suggest_float("gamma", 0.55, 0.85)
+
+        engines = {
+            slug: RepositoryRetrievalEngine(g, syms, beta=beta, gamma=gamma, filter_test_nodes=True)
+            for slug, (g, syms) in graphs.items()
+        }
+
+        hits = 0
+        total = 0
+        latencies = []
+
+        for task in callable_tasks:
+            iid = task["instance_id"]
+            slug = get_repo_slug(task.get("repo", ""))
+            eng = engines.get(slug)
+            gold = labels.get(iid)
+            if not eng or not gold:
+                continue
+
+            q = query_text(task)
+            t0 = time.perf_counter()
+            ranked = eng.retrieve_perron(q)
+            lat = (time.perf_counter() - t0) * 1000.0
+            latencies.append(lat)
+
+            hit = function_acc_at_k(ranked, gold["gold_symbol_ids"], k=10)
+            hits += int(hit)
+            total += 1
+
+        acc = (hits / max(1, total)) * 100.0
+        avg_lat = float(np.mean(latencies)) if latencies else 0.0
+
+        trial_records.append({
+            "trial_number": trial.number,
+            "beta": round(beta, 4),
+            "gamma": round(gamma, 4),
+            "fn_acc_10": round(acc, 2),
+            "avg_latency_ms": round(avg_lat, 2),
+        })
+        return acc
+
+    study = optuna.create_study(direction="maximize", sampler=optuna.samplers.TPESampler(seed=SEED))
+    study.optimize(objective, n_trials=n_trials)
+
+    best = study.best_trial
+    print(f"[OPTUNA COMPLETE] Best Trial #{best.number}: Fn Acc@10 = {best.value:.2f}% | Params: beta = {best.params['beta']:.4f}, gamma = {best.params['gamma']:.4f}")
+
+    out = {
+        "suite": "optuna_bayesian_sweep",
+        "seed": SEED,
+        "n_trials": n_trials,
+        "num_tasks_evaluated": len(callable_tasks),
+        "best_params": best.params,
+        "best_score": round(best.value, 2),
+        "trials": trial_records,
+        "git_sha": get_git_sha(),
+        "utc_timestamp": now_utc(),
+    }
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
+    print(f"Saved Optuna sweep telemetry to {output_path}")
+    return out
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Perron dev damping sweep, held-out evaluation, and factorial sweep")
     parser.add_argument("--split", choices=["dev_val", "heldout", "factorial"], default=None)
     parser.add_argument("--factorial", action="store_true", help="Run 2x2 factorial exploratory sweep")
     parser.add_argument("--limit", type=int, default=None, help="Limit number of tasks for fast runs")
+    parser.add_argument("--trials", type=int, default=None, help="Run Optuna Bayesian sweep for N trials on CPU")
     args = parser.parse_args()
 
-    if args.factorial or args.split == "factorial":
+    if args.trials is not None:
+        run_optuna_sweep(n_trials=args.trials, limit=args.limit)
+    elif args.factorial or args.split == "factorial":
         run_factorial(limit=args.limit)
     elif args.split == "dev_val":
         run_dev()

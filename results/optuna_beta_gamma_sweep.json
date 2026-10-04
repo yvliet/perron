@@ -1,0 +1,50 @@
+{
+  "suite": "optuna_bayesian_sweep",
+  "seed": 20261003,
+  "n_trials": 5,
+  "num_tasks_evaluated": 9,
+  "best_params": {
+    "beta": 0.8770164050218188,
+    "gamma": 0.7992764925862836
+  },
+  "best_score": 33.33,
+  "trials": [
+    {
+      "trial_number": 0,
+      "beta": 0.877,
+      "gamma": 0.7993,
+      "fn_acc_10": 33.33,
+      "avg_latency_ms": 335.98
+    },
+    {
+      "trial_number": 1,
+      "beta": 0.888,
+      "gamma": 0.8128,
+      "fn_acc_10": 33.33,
+      "avg_latency_ms": 405.72
+    },
+    {
+      "trial_number": 2,
+      "beta": 0.8136,
+      "gamma": 0.7409,
+      "fn_acc_10": 33.33,
+      "avg_latency_ms": 422.43
+    },
+    {
+      "trial_number": 3,
+      "beta": 0.8546,
+      "gamma": 0.8317,
+      "fn_acc_10": 33.33,
+      "avg_latency_ms": 477.06
+    },
+    {
+      "trial_number": 4,
+      "beta": 0.8977,
+      "gamma": 0.7855,
+      "fn_acc_10": 11.11,
+      "avg_latency_ms": 486.66
+    }
+  ],
+  "git_sha": "74d26861c7ff3f49c273b47cfaaadf5760926ec6",
+  "utc_timestamp": "2026-10-04T13:54:09.692996+00:00"
+}

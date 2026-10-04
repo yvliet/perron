@@ -87,6 +87,7 @@ def run_packing_benchmark(
     n_instances: int = 100,
     model_name: str = "google/gemma-4-e4b-it",
     backend_type: str = "auto",
+    output_file: Optional[Path] = None,
 ) -> Dict[str, Any]:
     print("\n=======================================================")
     print("   Gemma 4 AST Subgraph Packing & Localization Gate   ")
@@ -151,6 +152,7 @@ def run_packing_benchmark(
             live_model = TransformersBackend(
                 model_name_or_path=model_name,
                 load_in_4bit=True,
+                local_files_only=True,
                 enable_thinking=True,
             )
         except Exception as e:
@@ -162,9 +164,13 @@ def run_packing_benchmark(
         arm: {
             "fn_inclusion_hits": 0,
             "file_inclusion_hits": 0,
+            "top1_fn_hits": 0,
+            "top1_file_hits": 0,
             "total": 0,
             "latencies_ms": [],
             "token_occupancies": [],
+            "thinking_tokens": [],
+            "completion_tokens": [],
         }
         for arm in arms
     }
@@ -245,19 +251,75 @@ def run_packing_benchmark(
                 if c_file in gold_files:
                     file_included = True
 
+            # Live model generation or deterministic top-1 candidate selection
+            pred_target = ""
+            thinking_token_count = 0
+            completion_token_count = 0
+            if live_model is not None:
+                try:
+                    resp = live_model.generate(prompt=prompt, max_tokens=512, temperature=0.1)
+                    completion_token_count = resp.completion_tokens or len(resp.content.split())
+                    match = re.search(r"<target>(.*?)</target>", resp.content, re.DOTALL | re.IGNORECASE)
+                    if match:
+                        pred_target = match.group(1).strip()
+                    else:
+                        for c in cands:
+                            c_id = c.get("identifier", "")
+                            if c_id and c_id in resp.content:
+                                pred_target = c_id
+                                break
+                    if resp.thinking_trace:
+                        thinking_token_count = len(resp.thinking_trace.split())
+                    else:
+                        think_m = re.search(r"<\|think\|>(.*?)(?:</\|think\|>|<\|/think\|>)", resp.content, re.DOTALL)
+                        if think_m:
+                            thinking_token_count = len(think_m.group(1).split())
+                except Exception as ex:
+                    print(f"Warning: Model generation failed for {iid} on {arm}: {ex}")
+                    pred_target = cands[0].get("identifier", "") if cands else ""
+            else:
+                if cands:
+                    pred_target = cands[0].get("identifier", "")
+
+            # Check Top-1 hits
+            top1_fn_hit = False
+            top1_file_hit = False
+            if pred_target:
+                if any(
+                    pred_target == g or pred_target.endswith("." + g) or g.endswith("." + pred_target)
+                    for g in gold_names
+                ):
+                    top1_fn_hit = True
+                for c in cands:
+                    c_id = c.get("identifier", "")
+                    if (c_id == pred_target or pred_target.endswith("." + c_id) or c_id.endswith("." + pred_target)) and c.get("file_path", "") in gold_files:
+                        top1_file_hit = True
+                        break
+
             results_by_arm[arm]["total"] += 1
             if fn_included:
                 results_by_arm[arm]["fn_inclusion_hits"] += 1
             if file_included:
                 results_by_arm[arm]["file_inclusion_hits"] += 1
+            if top1_fn_hit:
+                results_by_arm[arm]["top1_fn_hits"] += 1
+            if top1_file_hit:
+                results_by_arm[arm]["top1_file_hits"] += 1
 
             results_by_arm[arm]["latencies_ms"].append(extraction_latency_ms)
             results_by_arm[arm]["token_occupancies"].append(token_count)
+            results_by_arm[arm]["thinking_tokens"].append(thinking_token_count)
+            results_by_arm[arm]["completion_tokens"].append(completion_token_count)
 
             instance_eval[arm] = {
                 "fn_included": int(fn_included),
                 "file_included": int(file_included),
+                "top1_fn_hit": int(top1_fn_hit),
+                "top1_file_hit": int(top1_file_hit),
+                "predicted_target": pred_target,
                 "tokens": token_count,
+                "thinking_tokens": thinking_token_count,
+                "completion_tokens": completion_token_count,
             }
 
         per_instance_records.append(instance_eval)
@@ -269,20 +331,30 @@ def run_packing_benchmark(
         n = max(1, results_by_arm[arm]["total"])
         fn_inc_rate = results_by_arm[arm]["fn_inclusion_hits"] / n
         file_inc_rate = results_by_arm[arm]["file_inclusion_hits"] / n
+        top1_fn_rate = results_by_arm[arm]["top1_fn_hits"] / n
+        top1_file_rate = results_by_arm[arm]["top1_file_hits"] / n
         avg_tokens = float(np.mean(results_by_arm[arm]["token_occupancies"]))
         avg_lat = float(np.mean(results_by_arm[arm]["latencies_ms"]))
+        avg_thinking = float(np.mean(results_by_arm[arm]["thinking_tokens"])) if results_by_arm[arm]["thinking_tokens"] else 0.0
+        avg_completion = float(np.mean(results_by_arm[arm]["completion_tokens"])) if results_by_arm[arm]["completion_tokens"] else 0.0
         summary[arm] = {
             "gold_function_inclusion_rate": round(fn_inc_rate * 100.0, 2),
             "gold_file_inclusion_rate": round(file_inc_rate * 100.0, 2),
-            "top1_function_acc": round(fn_inc_rate * 100.0, 2),
-            "top1_file_acc": round(file_inc_rate * 100.0, 2),
+            "top1_function_acc": round(top1_fn_rate * 100.0, 2),
+            "top1_file_acc": round(top1_file_rate * 100.0, 2),
             "function_hits": results_by_arm[arm]["fn_inclusion_hits"],
             "file_hits": results_by_arm[arm]["file_inclusion_hits"],
+            "top1_function_hits": results_by_arm[arm]["top1_fn_hits"],
+            "top1_file_hits": results_by_arm[arm]["top1_file_hits"],
             "total_evaluated": n,
             "avg_token_occupancy": round(avg_tokens, 1),
             "avg_extraction_latency_ms": round(avg_lat, 2),
             "avg_latency_ms": round(avg_lat, 2),
+            "avg_thinking_tokens": round(avg_thinking, 1),
+            "avg_completion_tokens": round(avg_completion, 1),
         }
+
+    summary["reasoning_headroom_pct"] = round(100.0 * (1.0 - summary["bm25_pack"]["avg_token_occupancy"] / TOKEN_BUDGET), 1)
 
     out = {
         "suite": "gemma4_ast_context_packing_localization",
@@ -297,16 +369,17 @@ def run_packing_benchmark(
         "instances": per_instance_records,
     }
 
-    OUT_FILE.parent.mkdir(parents=True, exist_ok=True)
-    OUT_FILE.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
-    print(f"\n[PACKING BENCHMARK COMPLETE] Telemetry saved to {OUT_FILE}")
+    target_out = output_file if output_file is not None else OUT_FILE
+    target_out.parent.mkdir(parents=True, exist_ok=True)
+    target_out.write_text(json.dumps(out, indent=2) + "\n", encoding="utf-8")
+    print(f"\n[PACKING BENCHMARK COMPLETE] Telemetry saved to {target_out}")
 
     print("\n" + "=" * 76)
-    print(f"{'Context Packing Strategy':<22} | {'Fn Inclusion@K':<16} | {'File Inclusion@K':<16} | {'Avg Tokens':<10}")
+    print(f"{'Context Packing Strategy':<22} | {'Fn Inclusion@K':<16} | {'File Inclusion@K':<16} | {'Top-1 Fn Acc':<14} | {'Avg Tokens':<10}")
     print("-" * 76)
     for arm in arms:
         s = summary[arm]
-        print(f"{arm:<22} | {s['gold_function_inclusion_rate']:>6.2f}% ({s['function_hits']}/{s['total_evaluated']}) | {s['gold_file_inclusion_rate']:>6.2f}% ({s['file_hits']}/{s['total_evaluated']}) | {s['avg_token_occupancy']:>6.1f}")
+        print(f"{arm:<22} | {s['gold_function_inclusion_rate']:>6.2f}% ({s['function_hits']}/{s['total_evaluated']}) | {s['gold_file_inclusion_rate']:>6.2f}% ({s['file_hits']}/{s['total_evaluated']}) | {s['top1_function_acc']:>6.2f}% ({s['top1_function_hits']}/{s['total_evaluated']}) | {s['avg_token_occupancy']:>6.1f}")
     print("=" * 76)
 
     return out
@@ -317,12 +390,15 @@ def main() -> None:
     parser.add_argument("--instances", type=int, default=100, help="Number of instances to evaluate")
     parser.add_argument("--model", type=str, default="google/gemma-4-e4b-it", help="Gemma 4 model path or slug")
     parser.add_argument("--backend", type=str, choices=["auto", "transformers", "deterministic"], default="auto")
+    parser.add_argument("--dry-run", action="store_true", help="Run deterministic verification without loading weights")
     args = parser.parse_args()
+
+    backend_type = "deterministic" if args.dry_run else args.backend
 
     run_packing_benchmark(
         n_instances=args.instances,
         model_name=args.model,
-        backend_type=args.backend,
+        backend_type=backend_type,
     )
 
 

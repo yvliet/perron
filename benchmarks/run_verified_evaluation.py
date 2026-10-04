@@ -345,6 +345,13 @@ def run_verified_evaluation(limit: Optional[int] = None) -> Dict[str, Any]:
                 st_summary[m] = {"hits": int(hits), "rate": hits / n_st}
         strata_results[st] = st_summary
 
+    oracle_hits = sum(1 for i in callable_iids if per_task_results[i]["bm25"]["fn_acc_10"] or per_task_results[i]["perron_static"]["fn_acc_10"])
+    oracle_union = {
+        "hits": int(oracle_hits),
+        "n": n_callable,
+        "rate": oracle_hits / max(1, n_callable),
+    }
+
     out = {
         "suite": "verified_confirmatory_evaluation",
         "benchmark": "SWE-bench_Verified",
@@ -366,6 +373,7 @@ def run_verified_evaluation(limit: Optional[int] = None) -> Dict[str, Any]:
         "pairwise_vs_perron_static": pairwise_tests,
         "strata_counts": dict(strata_counts),
         "strata_results": strata_results,
+        "oracle_union": oracle_union,
     }
 
     OUT_FILE.parent.mkdir(parents=True, exist_ok=True)

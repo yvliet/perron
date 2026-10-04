@@ -3,2047 +3,3560 @@
   "evaluation_mode": "deterministic_context_packing",
   "target_model_family": "Google Gemma 4 (E4B / 26B A4B)",
   "token_budget": 3480,
-  "git_sha": "07b999d6f3a2eeb1e0b0b54606234d65f074b034",
-  "utc_timestamp": "2026-10-04T09:59:57.008588+00:00",
+  "git_sha": "74d26861c7ff3f49c273b47cfaaadf5760926ec6",
+  "utc_timestamp": "2026-10-04T14:06:20.876726+00:00",
   "seed": 20261003,
   "num_instances": 100,
   "summary": {
     "bm25_pack": {
       "gold_function_inclusion_rate": 48.0,
       "gold_file_inclusion_rate": 75.0,
-      "top1_function_acc": 48.0,
-      "top1_file_acc": 75.0,
+      "top1_function_acc": 30.0,
+      "top1_file_acc": 51.0,
       "function_hits": 48,
       "file_hits": 75,
+      "top1_function_hits": 30,
+      "top1_file_hits": 51,
       "total_evaluated": 100,
       "avg_token_occupancy": 280.8,
-      "avg_extraction_latency_ms": 354.87,
-      "avg_latency_ms": 354.87
+      "avg_extraction_latency_ms": 397.01,
+      "avg_latency_ms": 397.01,
+      "avg_thinking_tokens": 0.0,
+      "avg_completion_tokens": 0.0
     },
     "perron_pack": {
       "gold_function_inclusion_rate": 54.0,
       "gold_file_inclusion_rate": 68.0,
-      "top1_function_acc": 54.0,
-      "top1_file_acc": 68.0,
+      "top1_function_acc": 24.0,
+      "top1_file_acc": 37.0,
       "function_hits": 54,
       "file_hits": 68,
+      "top1_function_hits": 24,
+      "top1_file_hits": 37,
       "total_evaluated": 100,
       "avg_token_occupancy": 280.8,
-      "avg_extraction_latency_ms": 354.87,
-      "avg_latency_ms": 354.87
+      "avg_extraction_latency_ms": 397.01,
+      "avg_latency_ms": 397.01,
+      "avg_thinking_tokens": 0.0,
+      "avg_completion_tokens": 0.0
     },
     "slot_fused_pack": {
       "gold_function_inclusion_rate": 52.0,
-      "gold_file_inclusion_rate": 77.0,
-      "top1_function_acc": 52.0,
-      "top1_file_acc": 77.0,
+      "gold_file_inclusion_rate": 76.0,
+      "top1_function_acc": 30.0,
+      "top1_file_acc": 51.0,
       "function_hits": 52,
-      "file_hits": 77,
+      "file_hits": 76,
+      "top1_function_hits": 30,
+      "top1_file_hits": 51,
       "total_evaluated": 100,
       "avg_token_occupancy": 280.8,
-      "avg_extraction_latency_ms": 354.87,
-      "avg_latency_ms": 354.87
-    }
+      "avg_extraction_latency_ms": 397.01,
+      "avg_latency_ms": 397.01,
+      "avg_thinking_tokens": 0.0,
+      "avg_completion_tokens": 0.0
+    },
+    "reasoning_headroom_pct": 91.9
   },
   "instances": [
     {
       "instance_id": "astropy__astropy-14369",
       "repo": "astropy__astropy",
-      "extraction_latency_ms": 353.56,
+      "extraction_latency_ms": 292.16,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 324
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Generic.to_string",
+        "tokens": 324,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 324
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Generic.to_string",
+        "tokens": 324,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 324
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Generic.to_string",
+        "tokens": 324,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "astropy__astropy-14508",
       "repo": "astropy__astropy",
-      "extraction_latency_ms": 343.35,
+      "extraction_latency_ms": 277.09,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 368
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "_format_float",
+        "tokens": 368,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 368
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "_format_float",
+        "tokens": 368,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 368
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "_format_float",
+        "tokens": 368,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "astropy__astropy-7336",
       "repo": "astropy__astropy",
-      "extraction_latency_ms": 249.43,
+      "extraction_latency_ms": 180.91,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 344
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "make_function_with_signature",
+        "tokens": 344,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 344
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "make_function_with_signature",
+        "tokens": 344,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 344
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "make_function_with_signature",
+        "tokens": 344,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "astropy__astropy-7606",
       "repo": "astropy__astropy",
-      "extraction_latency_ms": 243.55,
+      "extraction_latency_ms": 138.69,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 259
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "UnrecognizedUnit.__eq__",
+        "tokens": 259,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 259
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "UnrecognizedUnit.__eq__",
+        "tokens": 259,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 259
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "UnrecognizedUnit.__eq__",
+        "tokens": 259,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "astropy__astropy-8872",
       "repo": "astropy__astropy",
-      "extraction_latency_ms": 168.58,
+      "extraction_latency_ms": 125.98,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 267
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "SAMPHubServer._create_secret_code",
+        "tokens": 267,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 267
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "SAMPHubServer._create_secret_code",
+        "tokens": 267,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 267
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "SAMPHubServer._create_secret_code",
+        "tokens": 267,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-10554",
       "repo": "django__django",
-      "extraction_latency_ms": 845.12,
+      "extraction_latency_ms": 620.12,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 294
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "QuerySet._fetch_all",
+        "tokens": 294,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 294
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "QuerySet._fetch_all",
+        "tokens": 294,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 294
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "QuerySet._fetch_all",
+        "tokens": 294,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-11119",
       "repo": "django__django",
-      "extraction_latency_ms": 276.49,
+      "extraction_latency_ms": 233.24,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 201
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "Engine.render_to_string",
+        "tokens": 201,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 201
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "Engine.render_to_string",
+        "tokens": 201,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 201
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "Engine.render_to_string",
+        "tokens": 201,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-11141",
       "repo": "django__django",
-      "extraction_latency_ms": 427.3,
+      "extraction_latency_ms": 364.16,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 275
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "iter_modules_and_files",
+        "tokens": 275,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 275
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "iter_modules_and_files",
+        "tokens": 275,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 275
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "iter_modules_and_files",
+        "tokens": 275,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-11239",
       "repo": "django__django",
-      "extraction_latency_ms": 434.31,
+      "extraction_latency_ms": 338.06,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 273
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "DatabaseWrapper.get_connection_params",
+        "tokens": 273,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 273
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "DatabaseWrapper.get_connection_params",
+        "tokens": 273,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 273
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "DatabaseWrapper.get_connection_params",
+        "tokens": 273,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-11292",
       "repo": "django__django",
-      "extraction_latency_ms": 235.61,
+      "extraction_latency_ms": 194.51,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 219
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "get_command_line_option",
+        "tokens": 219,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 219
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Command.add_arguments",
+        "tokens": 219,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 219
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "get_command_line_option",
+        "tokens": 219,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-11400",
       "repo": "django__django",
-      "extraction_latency_ms": 614.98,
+      "extraction_latency_ms": 495.95,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 244
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "RelatedOnlyFieldListFilter.field_choices",
+        "tokens": 244,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 244
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "RelatedOnlyFieldListFilter.field_choices",
+        "tokens": 244,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 244
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "RelatedOnlyFieldListFilter.field_choices",
+        "tokens": 244,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-11477",
       "repo": "django__django",
-      "extraction_latency_ms": 659.65,
+      "extraction_latency_ms": 509.54,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 191
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "URLResolver._reverse_with_prefix",
+        "tokens": 191,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 191
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "translate_url",
+        "tokens": 191,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 191
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "URLResolver._reverse_with_prefix",
+        "tokens": 191,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-11532",
       "repo": "django__django",
-      "extraction_latency_ms": 862.85,
+      "extraction_latency_ms": 751.79,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 326
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "forbid_multi_line_headers",
+        "tokens": 326,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 326
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "CachedDnsName.get_fqdn",
+        "tokens": 326,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 326
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "forbid_multi_line_headers",
+        "tokens": 326,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-11603",
       "repo": "django__django",
-      "extraction_latency_ms": 270.77,
+      "extraction_latency_ms": 286.11,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 218
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "Avg",
+        "tokens": 218,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 218
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "BoolAnd",
+        "tokens": 218,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 218
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "Avg",
+        "tokens": 218,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-11728",
       "repo": "django__django",
-      "extraction_latency_ms": 663.54,
+      "extraction_latency_ms": 770.93,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 225
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "replace_unnamed_groups",
+        "tokens": 225,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 225
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "simplify_regex",
+        "tokens": 225,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 225
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "replace_unnamed_groups",
+        "tokens": 225,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-11790",
       "repo": "django__django",
-      "extraction_latency_ms": 300.93,
+      "extraction_latency_ms": 269.93,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 183
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "CharField._check_max_length_attribute",
+        "tokens": 183,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 183
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "CharField._check_max_length_attribute",
+        "tokens": 183,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 183
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "CharField._check_max_length_attribute",
+        "tokens": 183,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-11820",
       "repo": "django__django",
-      "extraction_latency_ms": 242.79,
+      "extraction_latency_ms": 279.33,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 196
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Lookup.contains_aggregate",
+        "tokens": 196,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 196
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Lookup.contains_aggregate",
+        "tokens": 196,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 196
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Lookup.contains_aggregate",
+        "tokens": 196,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-11951",
       "repo": "django__django",
-      "extraction_latency_ms": 356.43,
+      "extraction_latency_ms": 358.07,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 222
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "QuerySet.bulk_update",
+        "tokens": 222,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 222
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "QuerySet.bulk_update",
+        "tokens": 222,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 222
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "QuerySet.bulk_update",
+        "tokens": 222,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-12143",
       "repo": "django__django",
-      "extraction_latency_ms": 557.6,
+      "extraction_latency_ms": 612.07,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 329
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "ModelAdmin.get_search_results",
+        "tokens": 329,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 329
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "ConditionalGetMiddleware",
+        "tokens": 329,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 329
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "ModelAdmin.get_search_results",
+        "tokens": 329,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-12193",
       "repo": "django__django",
-      "extraction_latency_ms": 384.61,
+      "extraction_latency_ms": 456.28,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 260
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "CheckboxInput.get_context",
+        "tokens": 260,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 260
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "CheckboxInput.get_context",
+        "tokens": 260,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 260
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "CheckboxInput.get_context",
+        "tokens": 260,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-12262",
       "repo": "django__django",
-      "extraction_latency_ms": 386.56,
+      "extraction_latency_ms": 535.91,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 300
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "Library.simple_tag",
+        "tokens": 300,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 300
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "ConditionalGetMiddleware",
+        "tokens": 300,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 300
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "Library.simple_tag",
+        "tokens": 300,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-12276",
       "repo": "django__django",
-      "extraction_latency_ms": 509.46,
+      "extraction_latency_ms": 637.36,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 229
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "ClearableFileInput.use_required_attribute",
+        "tokens": 229,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 229
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "ClearableFileInput.use_required_attribute",
+        "tokens": 229,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 229
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "ClearableFileInput.use_required_attribute",
+        "tokens": 229,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-12713",
       "repo": "django__django",
-      "extraction_latency_ms": 229.01,
+      "extraction_latency_ms": 233.25,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 186
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "BaseModelAdmin.formfield_for_manytomany",
+        "tokens": 186,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 186
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "GroupAdmin.formfield_for_manytomany",
+        "tokens": 186,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 186
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "BaseModelAdmin.formfield_for_manytomany",
+        "tokens": 186,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-12741",
       "repo": "django__django",
-      "extraction_latency_ms": 243.26,
+      "extraction_latency_ms": 267.07,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 196
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "BaseDatabaseOperations.execute_sql_flush",
+        "tokens": 196,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 196
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "BaseDatabaseOperations.execute_sql_flush",
+        "tokens": 196,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 196
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "BaseDatabaseOperations.execute_sql_flush",
+        "tokens": 196,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-13012",
       "repo": "django__django",
-      "extraction_latency_ms": 796.94,
+      "extraction_latency_ms": 733.12,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 320
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Aggregate.get_group_by_cols",
+        "tokens": 320,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 320
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "Col.get_group_by_cols",
+        "tokens": 320,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 320
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Aggregate.get_group_by_cols",
+        "tokens": 320,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-13089",
       "repo": "django__django",
-      "extraction_latency_ms": 548.56,
+      "extraction_latency_ms": 572.49,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 267
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "BaseDatabaseOperations.cache_key_culling_sql",
+        "tokens": 267,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 267
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "BaseDatabaseOperations.cache_key_culling_sql",
+        "tokens": 267,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 267
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "BaseDatabaseOperations.cache_key_culling_sql",
+        "tokens": 267,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-13112",
       "repo": "django__django",
-      "extraction_latency_ms": 863.1,
+      "extraction_latency_ms": 954.18,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 292
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "ForeignObjectRel.remote_field",
+        "tokens": 292,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 292
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "ForeignObjectRel.remote_field",
+        "tokens": 292,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 292
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "ForeignObjectRel.remote_field",
+        "tokens": 292,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-13121",
       "repo": "django__django",
-      "extraction_latency_ms": 502.46,
+      "extraction_latency_ms": 567.6,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 238
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "BaseDatabaseOperations.convert_durationfield_value",
+        "tokens": 238,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 238
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "SQLCompiler.apply_converters",
+        "tokens": 238,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 238
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "BaseDatabaseOperations.convert_durationfield_value",
+        "tokens": 238,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-13128",
       "repo": "django__django",
-      "extraction_latency_ms": 290.53,
+      "extraction_latency_ms": 323.56,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 192
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "FieldError",
+        "tokens": 192,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 192
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "RangeStartsWith.output_field",
+        "tokens": 192,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 192
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "FieldError",
+        "tokens": 192,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-13195",
       "repo": "django__django",
-      "extraction_latency_ms": 597.71,
+      "extraction_latency_ms": 619.66,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 375
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "HttpResponseBase.set_cookie",
+        "tokens": 375,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 375
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "HttpResponseBase.delete_cookie",
+        "tokens": 375,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 375
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "HttpResponseBase.set_cookie",
+        "tokens": 375,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-13212",
       "repo": "django__django",
-      "extraction_latency_ms": 725.23,
+      "extraction_latency_ms": 685.17,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 217
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "get_internal_wsgi_application",
+        "tokens": 217,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 217
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "get_internal_wsgi_application",
+        "tokens": 217,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 217
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "get_internal_wsgi_application",
+        "tokens": 217,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-13297",
       "repo": "django__django",
-      "extraction_latency_ms": 579.42,
+      "extraction_latency_ms": 653.69,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 315
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "DatabaseOperations._quote_params_for_last_executed_query",
+        "tokens": 315,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 315
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "DatabaseOperations._quote_params_for_last_executed_query",
+        "tokens": 315,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 315
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "DatabaseOperations._quote_params_for_last_executed_query",
+        "tokens": 315,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-13343",
       "repo": "django__django",
-      "extraction_latency_ms": 388.54,
+      "extraction_latency_ms": 464.06,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 326
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "FileField.deconstruct",
+        "tokens": 326,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 326
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "ChoiceField",
+        "tokens": 326,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 326
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "FileField.deconstruct",
+        "tokens": 326,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-13417",
       "repo": "django__django",
-      "extraction_latency_ms": 500.93,
+      "extraction_latency_ms": 608.72,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 290
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Query.clear_select_clause",
+        "tokens": 290,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 290
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Query.clear_select_clause",
+        "tokens": 290,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 290
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Query.clear_select_clause",
+        "tokens": 290,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-13512",
       "repo": "django__django",
-      "extraction_latency_ms": 623.21,
+      "extraction_latency_ms": 733.07,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 216
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "PreparedGeometry.contains_properly",
+        "tokens": 216,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 216
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "RegexField",
+        "tokens": 216,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 216
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "PreparedGeometry.contains_properly",
+        "tokens": 216,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-13820",
       "repo": "django__django",
-      "extraction_latency_ms": 584.18,
+      "extraction_latency_ms": 660.19,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 384
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "MigrationLoader.load_disk",
+        "tokens": 384,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 384
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "MigrationLoader.load_disk",
+        "tokens": 384,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 384
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "MigrationLoader.load_disk",
+        "tokens": 384,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-14089",
       "repo": "django__django",
-      "extraction_latency_ms": 223.01,
+      "extraction_latency_ms": 279.87,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 202
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "OrderedSet.add",
+        "tokens": 202,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 202
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "OrderedSet.add",
+        "tokens": 202,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 202
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "OrderedSet.add",
+        "tokens": 202,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-14122",
       "repo": "django__django",
-      "extraction_latency_ms": 318.88,
+      "extraction_latency_ms": 527.08,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 218
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "When.get_group_by_cols",
+        "tokens": 218,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 218
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Group.Meta",
+        "tokens": 218,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 218
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "When.get_group_by_cols",
+        "tokens": 218,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-14351",
       "repo": "django__django",
-      "extraction_latency_ms": 1548.19,
+      "extraction_latency_ms": 1778.55,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 326
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "WhereNode.contains_aggregate",
+        "tokens": 326,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 326
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "WhereNode.contains_aggregate",
+        "tokens": 326,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 326
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "WhereNode.contains_aggregate",
+        "tokens": 326,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-14493",
       "repo": "django__django",
-      "extraction_latency_ms": 495.26,
+      "extraction_latency_ms": 526.44,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 277
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "HashedFilesMixin.post_process",
+        "tokens": 277,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 277
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Command.is_local_storage",
+        "tokens": 277,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 277
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "HashedFilesMixin.post_process",
+        "tokens": 277,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-14725",
       "repo": "django__django",
-      "extraction_latency_ms": 818.92,
+      "extraction_latency_ms": 1177.17,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 222
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "BaseFormSet.initial_forms",
+        "tokens": 222,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 222
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "formset_factory",
+        "tokens": 222,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 222
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "BaseFormSet.initial_forms",
+        "tokens": 222,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-14771",
       "repo": "django__django",
-      "extraction_latency_ms": 425.93,
+      "extraction_latency_ms": 697.87,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 280
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Options.installed",
+        "tokens": 280,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 280
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Options.installed",
+        "tokens": 280,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 280
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Options.installed",
+        "tokens": 280,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-15104",
       "repo": "django__django",
-      "extraction_latency_ms": 1101.0,
+      "extraction_latency_ms": 1217.12,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 323
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "MigrationAutodetector.only_relation_agnostic_fields",
+        "tokens": 323,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 323
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "MigrationAutodetector.only_relation_agnostic_fields",
+        "tokens": 323,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 323
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "MigrationAutodetector.only_relation_agnostic_fields",
+        "tokens": 323,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-15128",
       "repo": "django__django",
-      "extraction_latency_ms": 1696.76,
+      "extraction_latency_ms": 1901.02,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 329
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "Query.bump_prefix",
+        "tokens": 329,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 329
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "Query.bump_prefix",
+        "tokens": 329,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 329
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "Query.bump_prefix",
+        "tokens": 329,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-15277",
       "repo": "django__django",
-      "extraction_latency_ms": 808.85,
+      "extraction_latency_ms": 910.57,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 350
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "CharField._check_max_length_attribute",
+        "tokens": 350,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 350
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "MaxLengthValidator.compare",
+        "tokens": 350,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 350
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "CharField._check_max_length_attribute",
+        "tokens": 350,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-15278",
       "repo": "django__django",
-      "extraction_latency_ms": 512.23,
+      "extraction_latency_ms": 514.4,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 268
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "SQLiteCursorWrapper.convert_query",
+        "tokens": 268,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 268
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "SQLiteCursorWrapper.convert_query",
+        "tokens": 268,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 268
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "SQLiteCursorWrapper.convert_query",
+        "tokens": 268,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-15375",
       "repo": "django__django",
-      "extraction_latency_ms": 789.96,
+      "extraction_latency_ms": 966.85,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 326
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "Aggregate.default_alias",
+        "tokens": 326,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 326
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "Aggregate.default_alias",
+        "tokens": 326,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 326
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "Aggregate.default_alias",
+        "tokens": 326,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-15563",
       "repo": "django__django",
-      "extraction_latency_ms": 587.28,
+      "extraction_latency_ms": 655.71,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 297
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "UpdateQuery.get_related_updates",
+        "tokens": 297,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 297
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "UpdateQuery.get_related_updates",
+        "tokens": 297,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 297
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "UpdateQuery.get_related_updates",
+        "tokens": 297,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-15916",
       "repo": "django__django",
-      "extraction_latency_ms": 696.67,
+      "extraction_latency_ms": 915.89,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 352
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "modelform_factory",
+        "tokens": 352,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 352
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "CharField._check_max_length_attribute",
+        "tokens": 352,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 352
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "modelform_factory",
+        "tokens": 352,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-15930",
       "repo": "django__django",
-      "extraction_latency_ms": 334.67,
+      "extraction_latency_ms": 427.79,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 245
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "BaseExpression.output_field",
+        "tokens": 245,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 245
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "RangeStartsWith.output_field",
+        "tokens": 245,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 245
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "BaseExpression.output_field",
+        "tokens": 245,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-15973",
       "repo": "django__django",
-      "extraction_latency_ms": 958.11,
+      "extraction_latency_ms": 1234.77,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 322
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "execute_from_command_line",
+        "tokens": 322,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 322
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "execute_from_command_line",
+        "tokens": 322,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 322
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "execute_from_command_line",
+        "tokens": 322,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-16032",
       "repo": "django__django",
-      "extraction_latency_ms": 1213.86,
+      "extraction_latency_ms": 1305.38,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 233
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "RelatedIn.get_prep_lookup",
+        "tokens": 233,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 233
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "RelatedIn.get_prep_lookup",
+        "tokens": 233,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 233
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "RelatedIn.get_prep_lookup",
+        "tokens": 233,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-16100",
       "repo": "django__django",
-      "extraction_latency_ms": 328.66,
+      "extraction_latency_ms": 361.71,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 198
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "ModelAdmin.changelist_view",
+        "tokens": 198,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 198
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "ModelAdmin.changelist_view",
+        "tokens": 198,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 198
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "ModelAdmin.changelist_view",
+        "tokens": 198,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-16145",
       "repo": "django__django",
-      "extraction_latency_ms": 586.07,
+      "extraction_latency_ms": 679.84,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 234
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Command.python",
+        "tokens": 234,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 234
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Command.python",
+        "tokens": 234,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
-        "file_included": 1,
-        "tokens": 234
+        "file_included": 0,
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Command.python",
+        "tokens": 234,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-16454",
       "repo": "django__django",
-      "extraction_latency_ms": 547.47,
+      "extraction_latency_ms": 636.45,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 320
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "BaseCommand.add_arguments",
+        "tokens": 320,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 320
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Command.add_arguments",
+        "tokens": 320,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 320
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "BaseCommand.add_arguments",
+        "tokens": 320,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-16569",
       "repo": "django__django",
-      "extraction_latency_ms": 508.83,
+      "extraction_latency_ms": 627.9,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 336
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "BaseFormSet.initial_form_count",
+        "tokens": 336,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 336
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "BaseFormSet.initial_form_count",
+        "tokens": 336,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 336
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "BaseFormSet.initial_form_count",
+        "tokens": 336,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-16631",
       "repo": "django__django",
-      "extraction_latency_ms": 723.47,
+      "extraction_latency_ms": 939.35,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 286
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "AbstractBaseUser.get_session_auth_hash",
+        "tokens": 286,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 286
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "AbstractBaseUser.get_session_auth_hash",
+        "tokens": 286,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 286
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "AbstractBaseUser.get_session_auth_hash",
+        "tokens": 286,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "django__django-16901",
       "repo": "django__django",
-      "extraction_latency_ms": 300.76,
+      "extraction_latency_ms": 392.31,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 305
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "When.as_sql",
+        "tokens": 305,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 305
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "When.as_sql",
+        "tokens": 305,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 305
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "When.as_sql",
+        "tokens": 305,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "matplotlib__matplotlib-14623",
       "repo": "matplotlib__matplotlib",
-      "extraction_latency_ms": 102.24,
+      "extraction_latency_ms": 135.88,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 282
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "PolarAxes.set_ylim",
+        "tokens": 282,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 282
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "PolarAxes.set_ylim",
+        "tokens": 282,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 282
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "PolarAxes.set_ylim",
+        "tokens": 282,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "matplotlib__matplotlib-20826",
       "repo": "matplotlib__matplotlib",
-      "extraction_latency_ms": 156.01,
+      "extraction_latency_ms": 193.53,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 370
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "iter_user_libraries",
+        "tokens": 370,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 370
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "iter_user_libraries",
+        "tokens": 370,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 370
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "iter_user_libraries",
+        "tokens": 370,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "matplotlib__matplotlib-22719",
       "repo": "matplotlib__matplotlib",
-      "extraction_latency_ms": 275.32,
+      "extraction_latency_ms": 404.01,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 312
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "UnitData._str_is_convertible",
+        "tokens": 312,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 312
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "UnitData._str_is_convertible",
+        "tokens": 312,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 312
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "UnitData._str_is_convertible",
+        "tokens": 312,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "matplotlib__matplotlib-22865",
       "repo": "matplotlib__matplotlib",
-      "extraction_latency_ms": 103.86,
+      "extraction_latency_ms": 139.7,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 312
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "subplots_adjust",
+        "tokens": 312,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 312
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "from_levels_and_colors",
+        "tokens": 312,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 312
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "subplots_adjust",
+        "tokens": 312,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "matplotlib__matplotlib-24570",
       "repo": "matplotlib__matplotlib",
-      "extraction_latency_ms": 247.11,
+      "extraction_latency_ms": 306.66,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 292
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "_get_aligned_offsets",
+        "tokens": 292,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 292
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "_get_aligned_offsets",
+        "tokens": 292,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 292
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "_get_aligned_offsets",
+        "tokens": 292,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "matplotlib__matplotlib-24627",
       "repo": "matplotlib__matplotlib",
-      "extraction_latency_ms": 53.37,
+      "extraction_latency_ms": 57.04,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 215
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Figure.clf",
+        "tokens": 215,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 215
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "_Unset",
+        "tokens": 215,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 215
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Figure.clf",
+        "tokens": 215,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "matplotlib__matplotlib-24637",
       "repo": "matplotlib__matplotlib",
-      "extraction_latency_ms": 174.26,
+      "extraction_latency_ms": 213.3,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 309
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "AngleAnnotation.draw",
+        "tokens": 309,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 309
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "AngleAnnotation",
+        "tokens": 309,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 309
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "AngleAnnotation.draw",
+        "tokens": 309,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "matplotlib__matplotlib-26208",
       "repo": "matplotlib__matplotlib",
-      "extraction_latency_ms": 112.47,
+      "extraction_latency_ms": 135.39,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 354
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "f",
+        "tokens": 354,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 0,
-        "tokens": 354
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "f",
+        "tokens": 354,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 354
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "f",
+        "tokens": 354,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "mwaskom__seaborn-3069",
       "repo": "mwaskom__seaborn",
-      "extraction_latency_ms": 13.83,
+      "extraction_latency_ms": 17.07,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 366
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "FacetGrid._finalize_grid",
+        "tokens": 366,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 366
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "FacetGrid._finalize_grid",
+        "tokens": 366,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 366
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "FacetGrid._finalize_grid",
+        "tokens": 366,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "mwaskom__seaborn-3187",
       "repo": "mwaskom__seaborn",
-      "extraction_latency_ms": 22.26,
+      "extraction_latency_ms": 26.97,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 311
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "load_dataset",
+        "tokens": 311,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 311
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "load_dataset",
+        "tokens": 311,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 311
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "load_dataset",
+        "tokens": 311,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "pallets__flask-5014",
       "repo": "pallets__flask",
-      "extraction_latency_ms": 3.35,
+      "extraction_latency_ms": 4.09,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 191
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "Blueprint",
+        "tokens": 191,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 191
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "Blueprint",
+        "tokens": 191,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 191
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "Blueprint",
+        "tokens": 191,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "psf__requests-1142",
       "repo": "psf__requests",
-      "extraction_latency_ms": 3.37,
+      "extraction_latency_ms": 4.0,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 0,
-        "tokens": 214
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "_parse_content_type_header",
+        "tokens": 214,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 0,
-        "tokens": 214
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "_parse_content_type_header",
+        "tokens": 214,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 0,
-        "tokens": 214
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "_parse_content_type_header",
+        "tokens": 214,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "psf__requests-1921",
       "repo": "psf__requests",
-      "extraction_latency_ms": 2.71,
+      "extraction_latency_ms": 5.82,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 0,
-        "tokens": 245
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "get_encoding_from_headers",
+        "tokens": 245,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 0,
-        "tokens": 245
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "get_encoding_from_headers",
+        "tokens": 245,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 0,
-        "tokens": 245
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "get_encoding_from_headers",
+        "tokens": 245,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "psf__requests-6028",
       "repo": "psf__requests",
-      "extraction_latency_ms": 4.67,
+      "extraction_latency_ms": 4.22,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 0,
-        "tokens": 307
+        "top1_fn_hit": 1,
+        "top1_file_hit": 0,
+        "predicted_target": "prepend_scheme_if_needed",
+        "tokens": 307,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 0,
-        "tokens": 307
+        "top1_fn_hit": 1,
+        "top1_file_hit": 0,
+        "predicted_target": "prepend_scheme_if_needed",
+        "tokens": 307,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 0,
-        "tokens": 307
+        "top1_fn_hit": 1,
+        "top1_file_hit": 0,
+        "predicted_target": "prepend_scheme_if_needed",
+        "tokens": 307,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "pydata__xarray-3095",
       "repo": "pydata__xarray",
-      "extraction_latency_ms": 22.81,
+      "extraction_latency_ms": 30.77,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 261
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Dataset.data_vars",
+        "tokens": 261,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 261
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Dataset.data_vars",
+        "tokens": 261,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 261
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "Dataset.data_vars",
+        "tokens": 261,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "pydata__xarray-4687",
       "repo": "pydata__xarray",
-      "extraction_latency_ms": 51.28,
+      "extraction_latency_ms": 66.41,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 353
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "show_versions",
+        "tokens": 353,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 353
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "show_versions",
+        "tokens": 353,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 353
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "show_versions",
+        "tokens": 353,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "pydata__xarray-6461",
       "repo": "pydata__xarray",
-      "extraction_latency_ms": 25.27,
+      "extraction_latency_ms": 32.22,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 296
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "where_method",
+        "tokens": 296,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 0,
-        "tokens": 296
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "where_method",
+        "tokens": 296,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 296
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "where_method",
+        "tokens": 296,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "pydata__xarray-6744",
       "repo": "pydata__xarray",
-      "extraction_latency_ms": 29.6,
+      "extraction_latency_ms": 41.13,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 358
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "DataArrayRolling._numpy_or_bottleneck_reduce",
+        "tokens": 358,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 358
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "DataArrayRolling._numpy_or_bottleneck_reduce",
+        "tokens": 358,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 358
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "DataArrayRolling._numpy_or_bottleneck_reduce",
+        "tokens": 358,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "pydata__xarray-6938",
       "repo": "pydata__xarray",
-      "extraction_latency_ms": 47.39,
+      "extraction_latency_ms": 64.28,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 364
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "Dataset.swap_dims",
+        "tokens": 364,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 364
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "GeoAccessor",
+        "tokens": 364,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 364
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "Dataset.swap_dims",
+        "tokens": 364,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "pytest-dev__pytest-5631",
       "repo": "pytest-dev__pytest",
-      "extraction_latency_ms": 73.71,
+      "extraction_latency_ms": 98.9,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 274
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "num_mock_patch_args",
+        "tokens": 274,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 274
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "num_mock_patch_args",
+        "tokens": 274,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 274
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "num_mock_patch_args",
+        "tokens": 274,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "pytest-dev__pytest-7205",
       "repo": "pytest-dev__pytest",
-      "extraction_latency_ms": 103.12,
+      "extraction_latency_ms": 135.86,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 333
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "_show_fixture_action",
+        "tokens": 333,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 333
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "CaptureManager.suspend_global_capture",
+        "tokens": 333,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 333
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "_show_fixture_action",
+        "tokens": 333,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "pytest-dev__pytest-7571",
       "repo": "pytest-dev__pytest",
-      "extraction_latency_ms": 32.01,
+      "extraction_latency_ms": 48.94,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 212
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "LogCaptureFixture.set_level",
+        "tokens": 212,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 212
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "LogCaptureFixture.set_level",
+        "tokens": 212,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 212
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "LogCaptureFixture.set_level",
+        "tokens": 212,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "pytest-dev__pytest-7982",
       "repo": "pytest-dev__pytest",
-      "extraction_latency_ms": 26.21,
+      "extraction_latency_ms": 33.46,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 227
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "cleanup_dead_symlinks",
+        "tokens": 227,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 227
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "_get_raw_skip_reason",
+        "tokens": 227,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 227
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "cleanup_dead_symlinks",
+        "tokens": 227,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "pytest-dev__pytest-8399",
       "repo": "pytest-dev__pytest",
-      "extraction_latency_ms": 84.19,
+      "extraction_latency_ms": 115.03,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 286
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "_make_xunit_fixture",
+        "tokens": 286,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 286
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "_make_xunit_fixture",
+        "tokens": 286,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 286
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "_make_xunit_fixture",
+        "tokens": 286,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "scikit-learn__scikit-learn-10908",
       "repo": "scikit-learn__scikit-learn",
-      "extraction_latency_ms": 57.64,
+      "extraction_latency_ms": 78.42,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 341
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "CountVectorizer.get_feature_names",
+        "tokens": 341,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 341
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "CountVectorizer.get_feature_names",
+        "tokens": 341,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 341
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "CountVectorizer.get_feature_names",
+        "tokens": 341,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "scikit-learn__scikit-learn-11578",
       "repo": "scikit-learn__scikit-learn",
-      "extraction_latency_ms": 193.15,
+      "extraction_latency_ms": 268.38,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 304
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "_log_reg_scoring_path",
+        "tokens": 304,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 304
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "_log_reg_scoring_path",
+        "tokens": 304,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 304
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "_log_reg_scoring_path",
+        "tokens": 304,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "scikit-learn__scikit-learn-12973",
       "repo": "scikit-learn__scikit-learn",
-      "extraction_latency_ms": 71.65,
+      "extraction_latency_ms": 93.12,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 382
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "LassoLarsIC.fit",
+        "tokens": 382,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 382
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "LassoLarsIC",
+        "tokens": 382,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 382
+        "top1_fn_hit": 1,
+        "top1_file_hit": 1,
+        "predicted_target": "LassoLarsIC.fit",
+        "tokens": 382,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "sphinx-doc__sphinx-10449",
       "repo": "sphinx-doc__sphinx",
-      "extraction_latency_ms": 134.78,
+      "extraction_latency_ms": 174.18,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 341
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "exclude_members_option",
+        "tokens": 341,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 341
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "exclude_members_option",
+        "tokens": 341,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 341
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "exclude_members_option",
+        "tokens": 341,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "sphinx-doc__sphinx-10673",
       "repo": "sphinx-doc__sphinx",
-      "extraction_latency_ms": 51.04,
+      "extraction_latency_ms": 66.5,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 290
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "StandaloneHTMLBuilder.index_page",
+        "tokens": 290,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 290
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "StandaloneHTMLBuilder.index_page",
+        "tokens": 290,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 290
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "StandaloneHTMLBuilder.index_page",
+        "tokens": 290,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "sphinx-doc__sphinx-7454",
       "repo": "sphinx-doc__sphinx",
-      "extraction_latency_ms": 79.62,
+      "extraction_latency_ms": 109.24,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 305
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "using_user_docutils_conf",
+        "tokens": 305,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 305
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "using_user_docutils_conf",
+        "tokens": 305,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 305
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "using_user_docutils_conf",
+        "tokens": 305,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "sphinx-doc__sphinx-7462",
       "repo": "sphinx-doc__sphinx",
-      "extraction_latency_ms": 69.61,
+      "extraction_latency_ms": 111.42,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 284
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "desc_sig_punctuation",
+        "tokens": 284,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 284
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "desc_sig_punctuation",
+        "tokens": 284,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 284
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "desc_sig_punctuation",
+        "tokens": 284,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "sphinx-doc__sphinx-7590",
       "repo": "sphinx-doc__sphinx",
-      "extraction_latency_ms": 38.88,
+      "extraction_latency_ms": 56.98,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 222
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "ClassDocumenter.get_user_defined_function_or_method",
+        "tokens": 222,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 222
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "ClassDocumenter.get_user_defined_function_or_method",
+        "tokens": 222,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 222
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "ClassDocumenter.get_user_defined_function_or_method",
+        "tokens": 222,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "sphinx-doc__sphinx-7748",
       "repo": "sphinx-doc__sphinx",
-      "extraction_latency_ms": 61.84,
+      "extraction_latency_ms": 73.78,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 218
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "ClassDocumenter.get_overloaded_signatures",
+        "tokens": 218,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 218
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "ClassDocumenter.get_overloaded_signatures",
+        "tokens": 218,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 218
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "ClassDocumenter.get_overloaded_signatures",
+        "tokens": 218,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "sphinx-doc__sphinx-7889",
       "repo": "sphinx-doc__sphinx",
-      "extraction_latency_ms": 69.37,
+      "extraction_latency_ms": 149.35,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 292
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "_make_subclass",
+        "tokens": 292,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 292
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "_make_subclass",
+        "tokens": 292,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 292
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "_make_subclass",
+        "tokens": 292,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "sphinx-doc__sphinx-8056",
       "repo": "sphinx-doc__sphinx",
-      "extraction_latency_ms": 58.0,
+      "extraction_latency_ms": 124.88,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 331
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "GoogleDocstring._load_custom_sections",
+        "tokens": 331,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 331
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "GoogleDocstring._load_custom_sections",
+        "tokens": 331,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 1,
-        "tokens": 331
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "GoogleDocstring._load_custom_sections",
+        "tokens": 331,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "sphinx-doc__sphinx-8120",
       "repo": "sphinx-doc__sphinx",
-      "extraction_latency_ms": 102.67,
+      "extraction_latency_ms": 171.38,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 337
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "CatalogRepository.locale_dirs",
+        "tokens": 337,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 337
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "CatalogRepository.locale_dirs",
+        "tokens": 337,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 337
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "CatalogRepository.locale_dirs",
+        "tokens": 337,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "sphinx-doc__sphinx-8548",
       "repo": "sphinx-doc__sphinx",
-      "extraction_latency_ms": 121.89,
+      "extraction_latency_ms": 133.61,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 195
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "inherited_members_option",
+        "tokens": 195,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 195
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "inherited_members_option",
+        "tokens": 195,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 1,
-        "tokens": 195
+        "top1_fn_hit": 0,
+        "top1_file_hit": 1,
+        "predicted_target": "inherited_members_option",
+        "tokens": 195,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "sphinx-doc__sphinx-8621",
       "repo": "sphinx-doc__sphinx",
-      "extraction_latency_ms": 47.17,
+      "extraction_latency_ms": 66.5,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 346
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "using_user_docutils_conf",
+        "tokens": 346,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 346
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "using_user_docutils_conf",
+        "tokens": 346,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 346
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "using_user_docutils_conf",
+        "tokens": 346,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "sympy__sympy-13372",
       "repo": "sympy__sympy",
-      "extraction_latency_ms": 43.12,
+      "extraction_latency_ms": 57.71,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 315
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "evalf_mul",
+        "tokens": 315,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 0,
-        "tokens": 315
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "evalf_mul",
+        "tokens": 315,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 315
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "evalf_mul",
+        "tokens": 315,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "sympy__sympy-17318",
       "repo": "sympy__sympy",
-      "extraction_latency_ms": 82.54,
+      "extraction_latency_ms": 109.0,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 0,
-        "tokens": 333
+        "top1_fn_hit": 1,
+        "top1_file_hit": 0,
+        "predicted_target": "rad_rationalize",
+        "tokens": 333,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 0,
-        "tokens": 333
+        "top1_fn_hit": 1,
+        "top1_file_hit": 0,
+        "predicted_target": "split_surds",
+        "tokens": 333,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 0,
-        "tokens": 333
+        "top1_fn_hit": 1,
+        "top1_file_hit": 0,
+        "predicted_target": "rad_rationalize",
+        "tokens": 333,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "sympy__sympy-18763",
       "repo": "sympy__sympy",
-      "extraction_latency_ms": 16.72,
+      "extraction_latency_ms": 21.13,
       "bm25_pack": {
         "fn_included": 1,
         "file_included": 0,
-        "tokens": 216
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "LinearCoefficients.abc",
+        "tokens": 216,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 1,
         "file_included": 0,
-        "tokens": 216
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "rotate_right",
+        "tokens": 216,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 1,
         "file_included": 0,
-        "tokens": 216
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "LinearCoefficients.abc",
+        "tokens": 216,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     },
     {
       "instance_id": "sympy__sympy-20916",
       "repo": "sympy__sympy",
-      "extraction_latency_ms": 31.55,
+      "extraction_latency_ms": 43.0,
       "bm25_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 175
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "MultisetPartitionTraverser.decrement_part_range",
+        "tokens": 175,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "perron_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 175
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "cse_release_variables",
+        "tokens": 175,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       },
       "slot_fused_pack": {
         "fn_included": 0,
         "file_included": 0,
-        "tokens": 175
+        "top1_fn_hit": 0,
+        "top1_file_hit": 0,
+        "predicted_target": "MultisetPartitionTraverser.decrement_part_range",
+        "tokens": 175,
+        "thinking_tokens": 0,
+        "completion_tokens": 0
       }
     }
   ]
