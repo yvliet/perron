@@ -1,0 +1,2050 @@
+{
+  "suite": "gemma4_ast_context_packing_localization",
+  "evaluation_mode": "deterministic_context_packing",
+  "target_model_family": "Google Gemma 4 (E4B / 26B A4B)",
+  "token_budget": 3480,
+  "git_sha": "07b999d6f3a2eeb1e0b0b54606234d65f074b034",
+  "utc_timestamp": "2026-10-04T09:59:57.008588+00:00",
+  "seed": 20261003,
+  "num_instances": 100,
+  "summary": {
+    "bm25_pack": {
+      "gold_function_inclusion_rate": 48.0,
+      "gold_file_inclusion_rate": 75.0,
+      "top1_function_acc": 48.0,
+      "top1_file_acc": 75.0,
+      "function_hits": 48,
+      "file_hits": 75,
+      "total_evaluated": 100,
+      "avg_token_occupancy": 280.8,
+      "avg_extraction_latency_ms": 354.87,
+      "avg_latency_ms": 354.87
+    },
+    "perron_pack": {
+      "gold_function_inclusion_rate": 54.0,
+      "gold_file_inclusion_rate": 68.0,
+      "top1_function_acc": 54.0,
+      "top1_file_acc": 68.0,
+      "function_hits": 54,
+      "file_hits": 68,
+      "total_evaluated": 100,
+      "avg_token_occupancy": 280.8,
+      "avg_extraction_latency_ms": 354.87,
+      "avg_latency_ms": 354.87
+    },
+    "slot_fused_pack": {
+      "gold_function_inclusion_rate": 52.0,
+      "gold_file_inclusion_rate": 77.0,
+      "top1_function_acc": 52.0,
+      "top1_file_acc": 77.0,
+      "function_hits": 52,
+      "file_hits": 77,
+      "total_evaluated": 100,
+      "avg_token_occupancy": 280.8,
+      "avg_extraction_latency_ms": 354.87,
+      "avg_latency_ms": 354.87
+    }
+  },
+  "instances": [
+    {
+      "instance_id": "astropy__astropy-14369",
+      "repo": "astropy__astropy",
+      "extraction_latency_ms": 353.56,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 324
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 324
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 324
+      }
+    },
+    {
+      "instance_id": "astropy__astropy-14508",
+      "repo": "astropy__astropy",
+      "extraction_latency_ms": 343.35,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 368
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 368
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 368
+      }
+    },
+    {
+      "instance_id": "astropy__astropy-7336",
+      "repo": "astropy__astropy",
+      "extraction_latency_ms": 249.43,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 344
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 344
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 344
+      }
+    },
+    {
+      "instance_id": "astropy__astropy-7606",
+      "repo": "astropy__astropy",
+      "extraction_latency_ms": 243.55,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 259
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 259
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 259
+      }
+    },
+    {
+      "instance_id": "astropy__astropy-8872",
+      "repo": "astropy__astropy",
+      "extraction_latency_ms": 168.58,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 267
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 267
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 267
+      }
+    },
+    {
+      "instance_id": "django__django-10554",
+      "repo": "django__django",
+      "extraction_latency_ms": 845.12,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 294
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 294
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 294
+      }
+    },
+    {
+      "instance_id": "django__django-11119",
+      "repo": "django__django",
+      "extraction_latency_ms": 276.49,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 201
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 201
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 201
+      }
+    },
+    {
+      "instance_id": "django__django-11141",
+      "repo": "django__django",
+      "extraction_latency_ms": 427.3,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 275
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 275
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 275
+      }
+    },
+    {
+      "instance_id": "django__django-11239",
+      "repo": "django__django",
+      "extraction_latency_ms": 434.31,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 273
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 273
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 273
+      }
+    },
+    {
+      "instance_id": "django__django-11292",
+      "repo": "django__django",
+      "extraction_latency_ms": 235.61,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 219
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 219
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 219
+      }
+    },
+    {
+      "instance_id": "django__django-11400",
+      "repo": "django__django",
+      "extraction_latency_ms": 614.98,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 244
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 244
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 244
+      }
+    },
+    {
+      "instance_id": "django__django-11477",
+      "repo": "django__django",
+      "extraction_latency_ms": 659.65,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 191
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 191
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 191
+      }
+    },
+    {
+      "instance_id": "django__django-11532",
+      "repo": "django__django",
+      "extraction_latency_ms": 862.85,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 326
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 326
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 326
+      }
+    },
+    {
+      "instance_id": "django__django-11603",
+      "repo": "django__django",
+      "extraction_latency_ms": 270.77,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 218
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 218
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 218
+      }
+    },
+    {
+      "instance_id": "django__django-11728",
+      "repo": "django__django",
+      "extraction_latency_ms": 663.54,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 225
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 225
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 225
+      }
+    },
+    {
+      "instance_id": "django__django-11790",
+      "repo": "django__django",
+      "extraction_latency_ms": 300.93,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 183
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 183
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 183
+      }
+    },
+    {
+      "instance_id": "django__django-11820",
+      "repo": "django__django",
+      "extraction_latency_ms": 242.79,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 196
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 196
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 196
+      }
+    },
+    {
+      "instance_id": "django__django-11951",
+      "repo": "django__django",
+      "extraction_latency_ms": 356.43,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 222
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 222
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 222
+      }
+    },
+    {
+      "instance_id": "django__django-12143",
+      "repo": "django__django",
+      "extraction_latency_ms": 557.6,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 329
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 329
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 329
+      }
+    },
+    {
+      "instance_id": "django__django-12193",
+      "repo": "django__django",
+      "extraction_latency_ms": 384.61,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 260
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 260
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 260
+      }
+    },
+    {
+      "instance_id": "django__django-12262",
+      "repo": "django__django",
+      "extraction_latency_ms": 386.56,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 300
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 300
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 300
+      }
+    },
+    {
+      "instance_id": "django__django-12276",
+      "repo": "django__django",
+      "extraction_latency_ms": 509.46,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 229
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 229
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 229
+      }
+    },
+    {
+      "instance_id": "django__django-12713",
+      "repo": "django__django",
+      "extraction_latency_ms": 229.01,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 186
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 186
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 186
+      }
+    },
+    {
+      "instance_id": "django__django-12741",
+      "repo": "django__django",
+      "extraction_latency_ms": 243.26,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 196
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 196
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 196
+      }
+    },
+    {
+      "instance_id": "django__django-13012",
+      "repo": "django__django",
+      "extraction_latency_ms": 796.94,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 320
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 320
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 320
+      }
+    },
+    {
+      "instance_id": "django__django-13089",
+      "repo": "django__django",
+      "extraction_latency_ms": 548.56,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 267
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 267
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 267
+      }
+    },
+    {
+      "instance_id": "django__django-13112",
+      "repo": "django__django",
+      "extraction_latency_ms": 863.1,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 292
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 292
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 292
+      }
+    },
+    {
+      "instance_id": "django__django-13121",
+      "repo": "django__django",
+      "extraction_latency_ms": 502.46,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 238
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 238
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 238
+      }
+    },
+    {
+      "instance_id": "django__django-13128",
+      "repo": "django__django",
+      "extraction_latency_ms": 290.53,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 192
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 192
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 192
+      }
+    },
+    {
+      "instance_id": "django__django-13195",
+      "repo": "django__django",
+      "extraction_latency_ms": 597.71,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 375
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 375
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 375
+      }
+    },
+    {
+      "instance_id": "django__django-13212",
+      "repo": "django__django",
+      "extraction_latency_ms": 725.23,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 217
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 217
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 217
+      }
+    },
+    {
+      "instance_id": "django__django-13297",
+      "repo": "django__django",
+      "extraction_latency_ms": 579.42,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 315
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 315
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 315
+      }
+    },
+    {
+      "instance_id": "django__django-13343",
+      "repo": "django__django",
+      "extraction_latency_ms": 388.54,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 326
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 326
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 326
+      }
+    },
+    {
+      "instance_id": "django__django-13417",
+      "repo": "django__django",
+      "extraction_latency_ms": 500.93,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 290
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 290
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 290
+      }
+    },
+    {
+      "instance_id": "django__django-13512",
+      "repo": "django__django",
+      "extraction_latency_ms": 623.21,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 216
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 216
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 216
+      }
+    },
+    {
+      "instance_id": "django__django-13820",
+      "repo": "django__django",
+      "extraction_latency_ms": 584.18,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 384
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 384
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 384
+      }
+    },
+    {
+      "instance_id": "django__django-14089",
+      "repo": "django__django",
+      "extraction_latency_ms": 223.01,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 202
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 202
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 202
+      }
+    },
+    {
+      "instance_id": "django__django-14122",
+      "repo": "django__django",
+      "extraction_latency_ms": 318.88,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 218
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 218
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 218
+      }
+    },
+    {
+      "instance_id": "django__django-14351",
+      "repo": "django__django",
+      "extraction_latency_ms": 1548.19,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 326
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 326
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 326
+      }
+    },
+    {
+      "instance_id": "django__django-14493",
+      "repo": "django__django",
+      "extraction_latency_ms": 495.26,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 277
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 277
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 277
+      }
+    },
+    {
+      "instance_id": "django__django-14725",
+      "repo": "django__django",
+      "extraction_latency_ms": 818.92,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 222
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 222
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 222
+      }
+    },
+    {
+      "instance_id": "django__django-14771",
+      "repo": "django__django",
+      "extraction_latency_ms": 425.93,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 280
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 280
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 280
+      }
+    },
+    {
+      "instance_id": "django__django-15104",
+      "repo": "django__django",
+      "extraction_latency_ms": 1101.0,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 323
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 323
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 323
+      }
+    },
+    {
+      "instance_id": "django__django-15128",
+      "repo": "django__django",
+      "extraction_latency_ms": 1696.76,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 329
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 329
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 329
+      }
+    },
+    {
+      "instance_id": "django__django-15277",
+      "repo": "django__django",
+      "extraction_latency_ms": 808.85,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 350
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 350
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 350
+      }
+    },
+    {
+      "instance_id": "django__django-15278",
+      "repo": "django__django",
+      "extraction_latency_ms": 512.23,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 268
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 268
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 268
+      }
+    },
+    {
+      "instance_id": "django__django-15375",
+      "repo": "django__django",
+      "extraction_latency_ms": 789.96,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 326
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 326
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 326
+      }
+    },
+    {
+      "instance_id": "django__django-15563",
+      "repo": "django__django",
+      "extraction_latency_ms": 587.28,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 297
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 297
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 297
+      }
+    },
+    {
+      "instance_id": "django__django-15916",
+      "repo": "django__django",
+      "extraction_latency_ms": 696.67,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 352
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 352
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 352
+      }
+    },
+    {
+      "instance_id": "django__django-15930",
+      "repo": "django__django",
+      "extraction_latency_ms": 334.67,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 245
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 245
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 245
+      }
+    },
+    {
+      "instance_id": "django__django-15973",
+      "repo": "django__django",
+      "extraction_latency_ms": 958.11,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 322
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 322
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 322
+      }
+    },
+    {
+      "instance_id": "django__django-16032",
+      "repo": "django__django",
+      "extraction_latency_ms": 1213.86,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 233
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 233
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 233
+      }
+    },
+    {
+      "instance_id": "django__django-16100",
+      "repo": "django__django",
+      "extraction_latency_ms": 328.66,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 198
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 198
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 198
+      }
+    },
+    {
+      "instance_id": "django__django-16145",
+      "repo": "django__django",
+      "extraction_latency_ms": 586.07,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 234
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 234
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 234
+      }
+    },
+    {
+      "instance_id": "django__django-16454",
+      "repo": "django__django",
+      "extraction_latency_ms": 547.47,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 320
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 320
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 320
+      }
+    },
+    {
+      "instance_id": "django__django-16569",
+      "repo": "django__django",
+      "extraction_latency_ms": 508.83,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 336
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 336
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 336
+      }
+    },
+    {
+      "instance_id": "django__django-16631",
+      "repo": "django__django",
+      "extraction_latency_ms": 723.47,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 286
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 286
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 286
+      }
+    },
+    {
+      "instance_id": "django__django-16901",
+      "repo": "django__django",
+      "extraction_latency_ms": 300.76,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 305
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 305
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 305
+      }
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-14623",
+      "repo": "matplotlib__matplotlib",
+      "extraction_latency_ms": 102.24,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 282
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 282
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 282
+      }
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-20826",
+      "repo": "matplotlib__matplotlib",
+      "extraction_latency_ms": 156.01,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 370
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 370
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 370
+      }
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-22719",
+      "repo": "matplotlib__matplotlib",
+      "extraction_latency_ms": 275.32,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 312
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 312
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 312
+      }
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-22865",
+      "repo": "matplotlib__matplotlib",
+      "extraction_latency_ms": 103.86,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 312
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 312
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 312
+      }
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-24570",
+      "repo": "matplotlib__matplotlib",
+      "extraction_latency_ms": 247.11,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 292
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 292
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 292
+      }
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-24627",
+      "repo": "matplotlib__matplotlib",
+      "extraction_latency_ms": 53.37,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 215
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 215
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 215
+      }
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-24637",
+      "repo": "matplotlib__matplotlib",
+      "extraction_latency_ms": 174.26,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 309
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 309
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 309
+      }
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-26208",
+      "repo": "matplotlib__matplotlib",
+      "extraction_latency_ms": 112.47,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 354
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 0,
+        "tokens": 354
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 354
+      }
+    },
+    {
+      "instance_id": "mwaskom__seaborn-3069",
+      "repo": "mwaskom__seaborn",
+      "extraction_latency_ms": 13.83,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 366
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 366
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 366
+      }
+    },
+    {
+      "instance_id": "mwaskom__seaborn-3187",
+      "repo": "mwaskom__seaborn",
+      "extraction_latency_ms": 22.26,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 311
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 311
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 311
+      }
+    },
+    {
+      "instance_id": "pallets__flask-5014",
+      "repo": "pallets__flask",
+      "extraction_latency_ms": 3.35,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 191
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 191
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 191
+      }
+    },
+    {
+      "instance_id": "psf__requests-1142",
+      "repo": "psf__requests",
+      "extraction_latency_ms": 3.37,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 0,
+        "tokens": 214
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 0,
+        "tokens": 214
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 0,
+        "tokens": 214
+      }
+    },
+    {
+      "instance_id": "psf__requests-1921",
+      "repo": "psf__requests",
+      "extraction_latency_ms": 2.71,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 0,
+        "tokens": 245
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 0,
+        "tokens": 245
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 0,
+        "tokens": 245
+      }
+    },
+    {
+      "instance_id": "psf__requests-6028",
+      "repo": "psf__requests",
+      "extraction_latency_ms": 4.67,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 0,
+        "tokens": 307
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 0,
+        "tokens": 307
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 0,
+        "tokens": 307
+      }
+    },
+    {
+      "instance_id": "pydata__xarray-3095",
+      "repo": "pydata__xarray",
+      "extraction_latency_ms": 22.81,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 261
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 261
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 261
+      }
+    },
+    {
+      "instance_id": "pydata__xarray-4687",
+      "repo": "pydata__xarray",
+      "extraction_latency_ms": 51.28,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 353
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 353
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 353
+      }
+    },
+    {
+      "instance_id": "pydata__xarray-6461",
+      "repo": "pydata__xarray",
+      "extraction_latency_ms": 25.27,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 296
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 0,
+        "tokens": 296
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 296
+      }
+    },
+    {
+      "instance_id": "pydata__xarray-6744",
+      "repo": "pydata__xarray",
+      "extraction_latency_ms": 29.6,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 358
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 358
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 358
+      }
+    },
+    {
+      "instance_id": "pydata__xarray-6938",
+      "repo": "pydata__xarray",
+      "extraction_latency_ms": 47.39,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 364
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 364
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 364
+      }
+    },
+    {
+      "instance_id": "pytest-dev__pytest-5631",
+      "repo": "pytest-dev__pytest",
+      "extraction_latency_ms": 73.71,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 274
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 274
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 274
+      }
+    },
+    {
+      "instance_id": "pytest-dev__pytest-7205",
+      "repo": "pytest-dev__pytest",
+      "extraction_latency_ms": 103.12,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 333
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 333
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 333
+      }
+    },
+    {
+      "instance_id": "pytest-dev__pytest-7571",
+      "repo": "pytest-dev__pytest",
+      "extraction_latency_ms": 32.01,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 212
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 212
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 212
+      }
+    },
+    {
+      "instance_id": "pytest-dev__pytest-7982",
+      "repo": "pytest-dev__pytest",
+      "extraction_latency_ms": 26.21,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 227
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 227
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 227
+      }
+    },
+    {
+      "instance_id": "pytest-dev__pytest-8399",
+      "repo": "pytest-dev__pytest",
+      "extraction_latency_ms": 84.19,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 286
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 286
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 286
+      }
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-10908",
+      "repo": "scikit-learn__scikit-learn",
+      "extraction_latency_ms": 57.64,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 341
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 341
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 341
+      }
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-11578",
+      "repo": "scikit-learn__scikit-learn",
+      "extraction_latency_ms": 193.15,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 304
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 304
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 304
+      }
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-12973",
+      "repo": "scikit-learn__scikit-learn",
+      "extraction_latency_ms": 71.65,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 382
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 382
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 382
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-10449",
+      "repo": "sphinx-doc__sphinx",
+      "extraction_latency_ms": 134.78,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 341
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 341
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 341
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-10673",
+      "repo": "sphinx-doc__sphinx",
+      "extraction_latency_ms": 51.04,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 290
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 290
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 290
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7454",
+      "repo": "sphinx-doc__sphinx",
+      "extraction_latency_ms": 79.62,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 305
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 305
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 305
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7462",
+      "repo": "sphinx-doc__sphinx",
+      "extraction_latency_ms": 69.61,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 284
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 284
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 284
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7590",
+      "repo": "sphinx-doc__sphinx",
+      "extraction_latency_ms": 38.88,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 222
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 222
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 222
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7748",
+      "repo": "sphinx-doc__sphinx",
+      "extraction_latency_ms": 61.84,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 218
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 218
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 218
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-7889",
+      "repo": "sphinx-doc__sphinx",
+      "extraction_latency_ms": 69.37,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 292
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 292
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 292
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8056",
+      "repo": "sphinx-doc__sphinx",
+      "extraction_latency_ms": 58.0,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 331
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 331
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 1,
+        "tokens": 331
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8120",
+      "repo": "sphinx-doc__sphinx",
+      "extraction_latency_ms": 102.67,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 337
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 337
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 337
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8548",
+      "repo": "sphinx-doc__sphinx",
+      "extraction_latency_ms": 121.89,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 195
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 195
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 1,
+        "tokens": 195
+      }
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8621",
+      "repo": "sphinx-doc__sphinx",
+      "extraction_latency_ms": 47.17,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 346
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 346
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 346
+      }
+    },
+    {
+      "instance_id": "sympy__sympy-13372",
+      "repo": "sympy__sympy",
+      "extraction_latency_ms": 43.12,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 315
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 0,
+        "tokens": 315
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 315
+      }
+    },
+    {
+      "instance_id": "sympy__sympy-17318",
+      "repo": "sympy__sympy",
+      "extraction_latency_ms": 82.54,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 0,
+        "tokens": 333
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 0,
+        "tokens": 333
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 0,
+        "tokens": 333
+      }
+    },
+    {
+      "instance_id": "sympy__sympy-18763",
+      "repo": "sympy__sympy",
+      "extraction_latency_ms": 16.72,
+      "bm25_pack": {
+        "fn_included": 1,
+        "file_included": 0,
+        "tokens": 216
+      },
+      "perron_pack": {
+        "fn_included": 1,
+        "file_included": 0,
+        "tokens": 216
+      },
+      "slot_fused_pack": {
+        "fn_included": 1,
+        "file_included": 0,
+        "tokens": 216
+      }
+    },
+    {
+      "instance_id": "sympy__sympy-20916",
+      "repo": "sympy__sympy",
+      "extraction_latency_ms": 31.55,
+      "bm25_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 175
+      },
+      "perron_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 175
+      },
+      "slot_fused_pack": {
+        "fn_included": 0,
+        "file_included": 0,
+        "tokens": 175
+      }
+    }
+  ]
+}

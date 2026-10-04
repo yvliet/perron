@@ -110,3 +110,24 @@ def calculate_specificity_scores(
         specificity[mask] = 0.0
 
     return specificity.astype(np.float32)
+
+
+def mask_test_nodes_distribution(
+    scores: np.ndarray,
+    is_test_node: Optional[Sequence[bool] | np.ndarray] = None,
+    mask_value: float = 0.0,
+) -> np.ndarray:
+    """
+    Mask out test nodes from ranking distributions prior to top-K selection.
+    """
+    if is_test_node is None:
+        return scores
+    s_arr = np.array(scores, copy=True)
+    mask = np.asarray(is_test_node, dtype=bool)
+    if len(mask) != len(s_arr):
+        raise ValueError(
+            f"Length of is_test_node ({len(mask)}) does not match scores ({len(s_arr)})."
+        )
+    s_arr[mask] = mask_value
+    return s_arr
+

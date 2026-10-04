@@ -123,6 +123,13 @@ class RepositoryRetrievalEngine:
         symbols: List[Dict[str, Any]],
         beta: float = 0.85,
         gamma: float = 0.70,
+        beta_query: Optional[float] = None,
+        beta_global: Optional[float] = None,
+        is_test_node: Optional[Sequence[bool] | np.ndarray] = None,
+        filter_test_nodes: bool = True,
+        prior_mode: str = "linear",
+        tau: float = 0.15,
+        k_prior: int = 25,
     ):
         # Check and enforce row-stochasticity
         row_sums_check = np.asarray(t_matrix.sum(axis=1)).flatten()
@@ -135,8 +142,28 @@ class RepositoryRetrievalEngine:
         self.t_matrix = t_matrix
         self.symbols = symbols
         self.num_nodes = t_matrix.shape[0]
-        self.beta = beta
+        self.beta_query = beta if beta_query is None else beta_query
+        self.beta_global = 0.85 if beta_global is None else beta_global
+        self.beta = self.beta_query
         self.gamma = gamma
+        self.filter_test_nodes = filter_test_nodes
+        self.prior_mode = prior_mode
+        self.tau = tau
+        self.k_prior = k_prior
+
+        # Determine test node mask
+        if is_test_node is not None:
+            self.is_test_mask = np.asarray(is_test_node, dtype=bool)
+        else:
+            has_is_test_field = any("is_test" in s for s in symbols)
+            if has_is_test_field:
+                self.is_test_mask = np.array([bool(s.get("is_test", False)) for s in symbols], dtype=bool)
+            else:
+                from perron.graph import _is_test_path, _is_test_symbol_name
+                self.is_test_mask = np.array([
+                    bool(_is_test_path(s.get("file_path", "")) or _is_test_symbol_name(s.get("identifier", "")))
+                    for s in symbols
+                ], dtype=bool)
 
         # Build in-degree vector
         if hasattr(t_matrix, "tocsc"):
@@ -172,13 +199,13 @@ class RepositoryRetrievalEngine:
         row_sums = np.diff(t_matrix.indptr)
         self.dangling = (row_sums == 0).astype(np.float32)
 
-        # Precompute global PageRank pi_global
+        # Precompute global PageRank pi_global using beta_global
         p_uniform = np.full(self.num_nodes, 1.0 / max(1, self.num_nodes), dtype=np.float32)
         self.pi_global = personalized_pagerank_power_iteration(
             t_matrix=self.t_matrix,
             dangling=self.dangling,
             p_0=p_uniform,
-            beta=self.beta,
+            beta=self.beta_global,
             max_iter=100,
             tol=1e-6,
         )
@@ -186,22 +213,59 @@ class RepositoryRetrievalEngine:
         # Precompute BM25 index
         self.bm25_index = FastBM25(symbols)
 
-    def compute_query_prior(self, query_text: str) -> np.ndarray:
-        """Compute query teleport prior p_0 from lexical BM25 matching."""
-        bm25_scores = self.bm25_index.query(query_text)
-        pos_scores = np.maximum(bm25_scores, 0.0)
-        s_sum = float(np.sum(pos_scores))
-        if s_sum > 1e-8:
-            return (pos_scores / s_sum).astype(np.float32)
-        return np.full(self.num_nodes, 1.0 / max(1, self.num_nodes), dtype=np.float32)
+    def _rank_scores(self, scores: np.ndarray) -> List[int]:
+        """Rank nodes stably by descending score, suppressing test nodes if filter_test_nodes is True."""
+        s = np.array(scores, dtype=np.float64, copy=True)
+        if self.filter_test_nodes and self.is_test_mask is not None and np.any(self.is_test_mask):
+            s[self.is_test_mask] = -1e9
+        return list(np.argsort(-s, kind="stable"))
 
-    def compute_personalized_pagerank(self, p_0: np.ndarray) -> np.ndarray:
+    def compute_query_prior(
+        self,
+        query_text: str,
+        mode: Optional[str] = None,
+        k: Optional[int] = None,
+        tau: Optional[float] = None,
+    ) -> np.ndarray:
+        """Compute query teleport prior p_0 from lexical BM25 matching (linear or sharp softmax top-k)."""
+        m = mode or self.prior_mode
+        if m == "softmax":
+            K = self.k_prior if k is None else k
+            t = self.tau if tau is None else tau
+            s = self.bm25_index.query(query_text).astype(np.float64)
+            if s.max() <= 0:
+                return np.full(self.num_nodes, 1.0 / max(1, self.num_nodes), dtype=np.float32)
+            idx = np.argsort(-s, kind="stable")[:K]
+            z = s[idx] / s.max()
+            w = np.exp((z - z.max()) / t)
+            p = np.zeros(self.num_nodes, dtype=np.float64)
+            p[idx] = w / w.sum()
+            return p.astype(np.float32)
+        else:
+            # Linear normalized BM25 prior over positive scores
+            bm25_scores = self.bm25_index.query(query_text)
+            pos_scores = np.maximum(bm25_scores, 0.0)
+            s_sum = float(np.sum(pos_scores))
+            if s_sum > 1e-8:
+                return (pos_scores / s_sum).astype(np.float32)
+            return np.full(self.num_nodes, 1.0 / max(1, self.num_nodes), dtype=np.float32)
+
+    def compute_linear_prior(self, query_text: str) -> np.ndarray:
+        """Dense linear BM25 prior."""
+        return self.compute_query_prior(query_text, mode="linear")
+
+    def compute_softmax_prior(self, query_text: str, k: int = 25, tau: float = 0.15) -> np.ndarray:
+        """Sharp top-K softmax BM25 prior with temperature tau."""
+        return self.compute_query_prior(query_text, mode="softmax", k=k, tau=tau)
+
+    def compute_personalized_pagerank(self, p_0: np.ndarray, beta: Optional[float] = None) -> np.ndarray:
         """Run power iteration personalized PageRank for teleport prior p_0."""
+        b = self.beta_query if beta is None else beta
         return personalized_pagerank_power_iteration(
             t_matrix=self.t_matrix,
             dangling=self.dangling,
             p_0=p_0,
-            beta=self.beta,
+            beta=b,
             max_iter=100,
             tol=1e-6,
         )
@@ -210,7 +274,7 @@ class RepositoryRetrievalEngine:
     def retrieve_bm25(self, query_text: str) -> List[int]:
         """Baseline 1: Okapi BM25."""
         scores = self.bm25_index.query(query_text)
-        return list(np.argsort(-scores, kind="stable"))
+        return self._rank_scores(scores)
 
     # 2. BM25 + 1-Hop Expansion
     def retrieve_bm25_1hop(self, query_text: str) -> List[int]:
@@ -225,7 +289,7 @@ class RepositoryRetrievalEngine:
             for v in self.adj_neighbors[u]:
                 if s_u * 0.50 > scores[v]:
                     scores[v] = s_u * 0.50
-        return list(np.argsort(-scores, kind="stable"))
+        return self._rank_scores(scores)
 
     # 3. Dense Semantic Retrieval
     def retrieve_dense(self, query_text: str) -> List[int]:
@@ -233,7 +297,7 @@ class RepositoryRetrievalEngine:
         q_tokens = set(tokenize_text(query_text))
         scores = np.zeros(self.num_nodes, dtype=np.float32)
         if not q_tokens:
-            return list(range(self.num_nodes))
+            return self._rank_scores(scores)
 
         for i, sym in enumerate(self.symbols):
             ident = sym.get("identifier", "").lower()
@@ -244,14 +308,14 @@ class RepositoryRetrievalEngine:
                 scores[i] = overlap / math.sqrt(len(q_tokens) * len(sym_tokens) + 1.0)
             elif any(qt in ident for qt in q_tokens if len(qt) >= 4):
                 scores[i] = 0.25
-        return list(np.argsort(-scores, kind="stable"))
+        return self._rank_scores(scores)
 
     # 4. Prior-Only Control (p0 ranking without diffusion)
     def retrieve_prior_only(self, query_text: str, p_0: Optional[np.ndarray] = None) -> List[int]:
         """Baseline 4: Prior-Only Control (ranking by p0 with no diffusion)."""
         if p_0 is None:
             p_0 = self.compute_query_prior(query_text)
-        return list(np.argsort(-p_0, kind="stable"))
+        return self._rank_scores(p_0)
 
     # 5. Standard Personalized PageRank (Uniform Teleport with shared p0)
     def retrieve_standard_ppr(
@@ -265,7 +329,7 @@ class RepositoryRetrievalEngine:
             if p_0 is None:
                 p_0 = self.compute_query_prior(query_text)
             pi_query = self.compute_personalized_pagerank(p_0)
-        return list(np.argsort(-pi_query, kind="stable"))
+        return self._rank_scores(pi_query)
 
     # 6. Authentic Aider Repo Map
     def retrieve_aider_repomap(self, query_text: str) -> List[int]:
@@ -283,7 +347,7 @@ class RepositoryRetrievalEngine:
             p_aider = np.full(self.num_nodes, 1.0 / max(1, self.num_nodes), dtype=np.float32)
 
         pi_aider = self.compute_personalized_pagerank(p_aider)
-        return list(np.argsort(-pi_aider, kind="stable"))
+        return self._rank_scores(pi_aider)
 
     # 7. Hub Blocklist with Lexical Override
     def retrieve_hub_blocklist_lexical(
@@ -304,7 +368,7 @@ class RepositoryRetrievalEngine:
             is_lexically_matched = (max_p0 > 1e-8 and (p_0[h] / max_p0) >= 0.20)
             if not is_lexically_matched:
                 scores[h] = 0.0
-        return list(np.argsort(-scores, kind="stable"))
+        return self._rank_scores(scores)
 
     # 8. Static Degree-Discounted Transition Matrix
     def retrieve_static_deg_discount(
@@ -319,11 +383,11 @@ class RepositoryRetrievalEngine:
             t_matrix=self.t_matrix_deg_discounted,
             dangling=self.dangling,
             p_0=p_0,
-            beta=self.beta,
+            beta=self.beta_query,
             max_iter=100,
             tol=1e-6,
         )
-        return list(np.argsort(-pi_disc, kind="stable"))
+        return self._rank_scores(pi_disc)
 
     # 9. Degree-Normalized PPR
     def retrieve_degree_normalized_ppr(
@@ -339,7 +403,7 @@ class RepositoryRetrievalEngine:
             pi_query = self.compute_personalized_pagerank(p_0)
         denom = np.power(self.in_degrees + 1.0, self.gamma)
         scores = pi_query / denom
-        return list(np.argsort(-scores, kind="stable"))
+        return self._rank_scores(scores)
 
     # 10. HippoRAG Pre-Walk Prior Scaling
     def retrieve_hipporag(
@@ -357,7 +421,7 @@ class RepositoryRetrievalEngine:
         else:
             scaled_p0 = p_0
         pi_hippo = self.compute_personalized_pagerank(scaled_p0)
-        return list(np.argsort(-pi_hippo, kind="stable"))
+        return self._rank_scores(pi_hippo)
 
     # 11. Query-Reweighted PPR (Dynamic Transitions)
     def retrieve_query_reweighted_ppr(
@@ -381,11 +445,11 @@ class RepositoryRetrievalEngine:
             t_matrix=t_rw,
             dangling=self.dangling,
             p_0=p_0,
-            beta=self.beta,
+            beta=self.beta_query,
             max_iter=100,
             tol=1e-6,
         )
-        return list(np.argsort(-pi_rw, kind="stable"))
+        return self._rank_scores(pi_rw)
 
     # 12. Perron Static Specificity (gamma = 0.70)
     def retrieve_perron_static(
@@ -401,7 +465,7 @@ class RepositoryRetrievalEngine:
             pi_query = self.compute_personalized_pagerank(p_0)
         denom = np.power(self.pi_global + 1e-8, 0.70)
         scores = pi_query / denom
-        return list(np.argsort(-scores, kind="stable"))
+        return self._rank_scores(scores)
 
     # 13. Perron Adaptive Specificity (gamma_q with relative prominence eta_q)
     def retrieve_perron(
@@ -421,8 +485,10 @@ class RepositoryRetrievalEngine:
             gamma=self.gamma,
             query_prior=p_0,
             hub_indices=self.hub_indices,
+            is_test_node=self.is_test_mask,
+            filter_test_nodes=self.filter_test_nodes,
         )
-        return list(np.argsort(-scores, kind="stable"))
+        return self._rank_scores(scores)
 
     # 14. Oracle Upper Bound
     def retrieve_oracle(self, gold_symbol_ids: Sequence[int]) -> List[int]:
@@ -430,7 +496,12 @@ class RepositoryRetrievalEngine:
         gold_set = set(gold_symbol_ids)
         top = [i for i in gold_symbol_ids if 0 <= i < self.num_nodes]
         rest = [i for i in range(self.num_nodes) if i not in gold_set]
-        return top + rest
+        full_ranks = top + rest
+        if self.filter_test_nodes and self.is_test_mask is not None and np.any(self.is_test_mask):
+            non_tests = [i for i in full_ranks if not self.is_test_mask[i]]
+            tests = [i for i in full_ranks if self.is_test_mask[i]]
+            return non_tests + tests
+        return full_ranks
 
     def retrieve_by_name(
         self,
@@ -472,3 +543,57 @@ class RepositoryRetrievalEngine:
             return self.retrieve_oracle(gold_symbol_ids or [])
         else:
             raise ValueError(f"Unknown retrieval method: {method_name}")
+
+
+if __name__ == "__main__":
+    import argparse
+    import sys
+
+    parser = argparse.ArgumentParser(description="Baseline Retrievers Engine")
+    parser.add_argument("--test-smoke", action="store_true", help="Run self-contained smoke tests")
+    args = parser.parse_args()
+
+    if args.test_smoke:
+        print("Running baseline retrievers smoke test...")
+        # 8-node synthetic test graph
+        rows = [0, 0, 1, 1, 2, 2, 4, 4, 6, 7]
+        cols = [6, 5, 5, 2, 5, 3, 5, 3, 5, 5]
+        data = [1.0] * len(rows)
+        adj = sp.csr_matrix((data, (rows, cols)), shape=(8, 8))
+        symbols = [
+            {"id": 0, "identifier": "process_order", "file_path": "order.py", "is_test": False},
+            {"id": 1, "identifier": "alpha", "file_path": "alpha.py", "is_test": False},
+            {"id": 2, "identifier": "beta", "file_path": "beta.py", "is_test": False},
+            {"id": 3, "identifier": "gamma", "file_path": "gamma.py", "is_test": False},
+            {"id": 4, "identifier": "delta", "file_path": "delta.py", "is_test": False},
+            {"id": 5, "identifier": "logging_util", "file_path": "logger.py", "is_test": False},
+            {"id": 6, "identifier": "calculate_tax", "file_path": "tax.py", "is_test": False},
+            {"id": 7, "identifier": "test_order", "file_path": "tests/test_order.py", "is_test": True},
+        ]
+        # Verify prior reconciliation and beta decoupling
+        engine = RepositoryRetrievalEngine(
+            t_matrix=adj,
+            symbols=symbols,
+            beta_query=0.85,
+            beta_global=0.50,
+            filter_test_nodes=True,
+        )
+        p_lin = engine.compute_linear_prior("process_order")
+        p_smax = engine.compute_softmax_prior("process_order", k=5, tau=0.15)
+        assert np.isclose(float(np.sum(p_lin)), 1.0, atol=1e-5), "Linear prior sum != 1.0"
+        assert np.isclose(float(np.sum(p_smax)), 1.0, atol=1e-5), "Softmax prior sum != 1.0"
+
+        # Verify all baselines mask test node (node 7)
+        methods = [
+            "bm25", "bm25_1hop", "dense", "prior_only", "standard_ppr",
+            "aider", "hub_blocklist", "deg_matrix", "degree_normalized",
+            "hipporag", "query_reweighted_ppr", "perron_static", "perron",
+        ]
+        for m in methods:
+            ranks = engine.retrieve_by_name(m, "process_order")
+            top_7 = ranks[:7]
+            assert 7 not in top_7, f"Method {m} failed to mask test node 7 from top ranks: {ranks}"
+
+        print(f"[PASS] All {len(methods)} baseline retrievers verified with test-node masking and decoupled beta.")
+        sys.exit(0)
+

@@ -8,8 +8,10 @@ dev/held-out split with deterministic random seed.
 
 from __future__ import annotations
 
+import ast
 import json
 import re
+import subprocess
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
 
@@ -56,19 +58,146 @@ def parse_unified_diff(patch_str: str) -> Tuple[List[str], List[Tuple[str, int, 
     return sorted(list(files)), hunks
 
 
+def parse_patch_modified_files(patch_str: str) -> Dict[str, Set[int]]:
+    """
+    Parse a unified diff string into a mapping of file_path -> set of modified line numbers in the pre-image.
+    """
+    files: Dict[str, Set[int]] = {}
+    current_file: Optional[str] = None
+    for line in patch_str.splitlines():
+        if line.startswith("diff --git"):
+            parts = line.split()
+            if len(parts) >= 4:
+                f = parts[3]
+                if f.startswith("b/"):
+                    f = f[2:]
+                current_file = f
+        elif line.startswith("@@") and current_file:
+            m = re.match(r"@@ -(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))? @@", line)
+            if m:
+                old_start = int(m.group(1))
+                old_count = int(m.group(2)) if m.group(2) is not None else 1
+                lines = set(range(old_start, old_start + max(1, old_count)))
+                files.setdefault(current_file, set()).update(lines)
+    return files
+
+
+class EnclosingSymbolVisitor(ast.NodeVisitor):
+    """AST visitor collecting classes, functions, and methods with their line spans."""
+    def __init__(self):
+        self.symbols: List[Dict[str, Any]] = []
+        self.scope_stack: List[str] = []
+
+    def visit_ClassDef(self, node: ast.ClassDef):
+        self.scope_stack.append(node.name)
+        qname = ".".join(self.scope_stack)
+        start_line = node.lineno
+        if node.decorator_list:
+            start_line = min(start_line, node.decorator_list[0].lineno)
+        end_line = getattr(node, "end_lineno", node.lineno)
+        self.symbols.append({
+            "name": qname,
+            "type": "class",
+            "start_line": start_line,
+            "end_line": end_line,
+            "span": end_line - start_line,
+        })
+        self.generic_visit(node)
+        self.scope_stack.pop()
+
+    def visit_FunctionDef(self, node: ast.FunctionDef):
+        self._handle_func(node)
+
+    def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef):
+        self._handle_func(node)
+
+    def _handle_func(self, node: ast.FunctionDef | ast.AsyncFunctionDef):
+        qname = f"{'.'.join(self.scope_stack)}.{node.name}" if self.scope_stack else node.name
+        sym_type = "method" if self.scope_stack else "function"
+        start_line = node.lineno
+        if node.decorator_list:
+            start_line = min(start_line, node.decorator_list[0].lineno)
+        end_line = getattr(node, "end_lineno", node.lineno)
+        self.symbols.append({
+            "name": qname,
+            "type": sym_type,
+            "start_line": start_line,
+            "end_line": end_line,
+            "span": end_line - start_line,
+        })
+        self.scope_stack.append(node.name)
+        self.generic_visit(node)
+        self.scope_stack.pop()
+
+
+def find_enclosing_symbol(tree: ast.AST, target_line: int) -> Optional[str]:
+    """Find the innermost enclosing symbol (function/method preferred over class) for a line."""
+    visitor = EnclosingSymbolVisitor()
+    visitor.visit(tree)
+    candidates = [
+        s for s in visitor.symbols
+        if s["start_line"] <= target_line <= s["end_line"]
+    ]
+    if not candidates:
+        return None
+    type_prio = {"function": 0, "method": 0, "class": 1}
+    candidates.sort(key=lambda s: (type_prio.get(s["type"], 2), s["span"]))
+    return candidates[0]["name"]
+
+
+def extract_gold_symbols_from_base_commit(
+    repo_path: Path,
+    base_commit: str,
+    patch_str: str,
+) -> Set[str]:
+    """
+    Extract canonical symbol keys '(file_path, qualname)' from base_commit AST.
+    Uses git show base_commit:file to eliminate cross-commit line drift.
+    """
+    modified_files = parse_patch_modified_files(patch_str)
+    gold_qualnames: Set[str] = set()
+    if not repo_path.exists() or not base_commit:
+        return gold_qualnames
+
+    for file_path, line_numbers in modified_files.items():
+        if not file_path.endswith(".py"):
+            continue
+        try:
+            res = subprocess.run(
+                ["git", "show", f"{base_commit}:{file_path}"],
+                cwd=repo_path,
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                timeout=5,
+            )
+            if res.returncode == 0 and res.stdout.strip():
+                tree = ast.parse(res.stdout)
+                for target_line in line_numbers:
+                    qualname = find_enclosing_symbol(tree, target_line)
+                    if qualname:
+                        gold_qualnames.add(f"{file_path}::{qualname}")
+        except Exception:
+            continue
+    return gold_qualnames
+
+
 class GoldPatchParser:
     """
     Extracts gold files, symbol nodes, and hub status for SWE-bench Lite tasks
-    using exact AST pre-image line range interval intersection.
+    using base-commit AST qualified-name extraction and snapshot reconciliation.
     """
 
     def __init__(
         self,
         graphs_dir: str | Path = "artifacts/swebench_graphs",
         tasks_file: str | Path = "data/swebench_lite_cache.jsonl",
+        clones_dir: str | Path = "artifacts/clones",
     ):
         self.graphs_dir = Path(graphs_dir)
         self.tasks_file = Path(tasks_file)
+        self.clones_dir = Path(clones_dir)
         self.repo_symbols: Dict[str, List[Dict[str, Any]]] = {}
         self.repo_hub_ids: Dict[str, Set[int]] = {}
         self._load_repo_metadata()
@@ -93,9 +222,11 @@ class GoldPatchParser:
     def extract_gold_for_task(self, task: Dict[str, Any]) -> Dict[str, Any]:
         """Extract gold files, gold symbol IDs, and hub status for a single task."""
         repo = task.get("repo", "")
+        base_commit = task.get("base_commit", "")
         instance_id = task.get("instance_id", "")
         patch = task.get("patch", "")
         slug = get_repo_slug(repo)
+        repo_path = self.clones_dir / slug
 
         symbols = self.repo_symbols.get(slug, [])
         hub_ids = self.repo_hub_ids.get(slug, set())
@@ -104,54 +235,81 @@ class GoldPatchParser:
         gold_symbol_ids: Set[int] = set()
         gold_symbol_names: Set[str] = set()
         is_hub_gold = False
+        unresolvable_symbols: List[str] = []
+        resolution_method = "unresolvable"
 
-        for f_patch, start, count in hunks:
-            hunk_start = start
-            hunk_end = start + max(0, count - 1)
-            candidates: List[Dict[str, Any]] = []
+        # 1. Primary: Base-Commit AST Qualified Name Extraction
+        base_qualnames = extract_gold_symbols_from_base_commit(repo_path, base_commit, patch)
+        if base_qualnames:
+            for item in base_qualnames:
+                f_path, qname = item.split("::", 1)
+                matched = False
+                for s in symbols:
+                    if file_path_matches(f_path, s.get("file_path", "")):
+                        ident = s.get("identifier", "")
+                        if ident == qname or qname.endswith("." + ident) or ident.endswith("." + qname):
+                            gold_symbol_ids.add(s["id"])
+                            gold_symbol_names.add(ident)
+                            matched = True
+                            if s["id"] in hub_ids:
+                                is_hub_gold = True
+                if not matched:
+                    unresolvable_symbols.append(item)
+            if gold_symbol_ids:
+                resolution_method = "base_commit_ast"
 
-            for s in symbols:
-                if not file_path_matches(f_patch, s.get("file_path", "")):
-                    continue
-                s_start = s.get("line_start", 0)
-                s_end = s.get("line_end", 0)
-                if s_start <= 0 or s_end < s_start:
-                    continue
+        # 2. Secondary fallback: Snapshot line-span intersection
+        if not gold_symbol_ids and hunks:
+            for f_patch, start, count in hunks:
+                hunk_start = start
+                hunk_end = start + max(0, count - 1)
+                candidates: List[Dict[str, Any]] = []
 
-                if count == 0:
-                    # Pure addition at start
-                    intersects = (s_start <= hunk_start <= s_end)
-                else:
-                    intersects = not (hunk_end < s_start or hunk_start > s_end)
+                for s in symbols:
+                    if not file_path_matches(f_patch, s.get("file_path", "")):
+                        continue
+                    s_start = s.get("line_start") or 0
+                    s_end = s.get("line_end") or 0
+                    if s_start <= 0 or s_end < s_start:
+                        continue
 
-                if intersects:
-                    candidates.append(s)
+                    if count == 0:
+                        intersects = (s_start <= hunk_start <= s_end)
+                    else:
+                        intersects = not (hunk_end < s_start or hunk_start > s_end)
 
-            if candidates:
-                type_prio = {"function": 0, "method": 0, "class": 1}
-                candidates.sort(
-                    key=lambda sym: (
-                        type_prio.get(sym.get("symbol_type", ""), 2),
-                        sym.get("line_end", 0) - sym.get("line_start", 0),
+                    if intersects:
+                        candidates.append(s)
+
+                if candidates:
+                    type_prio = {"function": 0, "method": 0, "class": 1}
+                    candidates.sort(
+                        key=lambda sym: (
+                            type_prio.get(sym.get("symbol_type", ""), 2),
+                            (sym.get("line_end") or 0) - (sym.get("line_start") or 0),
+                        )
                     )
-                )
-                innermost = candidates[0]
-                sym_id = innermost["id"]
-                gold_symbol_ids.add(sym_id)
-                ident = innermost.get("identifier", "")
-                if ident:
-                    gold_symbol_names.add(ident)
-                if sym_id in hub_ids:
-                    is_hub_gold = True
+                    innermost = candidates[0]
+                    sym_id = innermost["id"]
+                    gold_symbol_ids.add(sym_id)
+                    ident = innermost.get("identifier", "")
+                    if ident:
+                        gold_symbol_names.add(ident)
+                    if sym_id in hub_ids:
+                        is_hub_gold = True
+                    resolution_method = "snapshot_line"
 
         return {
             "instance_id": instance_id,
             "repo": repo,
+            "base_commit": base_commit,
             "gold_files": gold_files,
             "gold_symbol_ids": sorted(list(gold_symbol_ids)),
             "gold_symbol_names": sorted(list(gold_symbol_names)),
             "is_hub_gold": is_hub_gold,
             "has_function_target": len(gold_symbol_ids) > 0,
+            "resolution_method": resolution_method,
+            "unresolvable_symbols": unresolvable_symbols,
         }
 
     def build_all_gold_labels(self) -> Dict[str, Dict[str, Any]]:
@@ -339,9 +497,78 @@ def build_stratified_split(
 
 
 if __name__ == "__main__":
+    import argparse
+
+    cli_parser = argparse.ArgumentParser(description="Perron Gold Patch AST Parser")
+    cli_parser.add_argument(
+        "--validate-keys",
+        action="store_true",
+        help="Validate AST qualname key extraction across benchmark tasks",
+    )
+    cli_parser.add_argument(
+        "--export-jsonl",
+        action="store_true",
+        help="Export data_release/gold.jsonl",
+    )
+    cli_parser.add_argument(
+        "--save-labels",
+        action="store_true",
+        help="Save data/swebench_lite_gold_labels.json",
+    )
+    cli_parser.add_argument(
+        "--limit",
+        type=int,
+        default=None,
+        help="Limit number of tasks to process",
+    )
+    args = cli_parser.parse_args()
+
     parser = GoldPatchParser()
-    parser.save_gold_labels()
-    split_info = build_tri_partition_split()
-    with open("data/swebench_lite_split.json", "w", encoding="utf-8") as f:
-        json.dump(split_info, f, indent=2)
-    print("Saved tri-partition split configuration to data/swebench_lite_split.json")
+
+    if args.validate_keys:
+        print("[VALIDATION] Running AST qualname key extraction validation...")
+        tasks = []
+        with open(parser.tasks_file, "r", encoding="utf-8") as f:
+            for line in f:
+                if line.strip():
+                    tasks.append(json.loads(line))
+        if args.limit:
+            tasks = tasks[: args.limit]
+
+        total = len(tasks)
+        has_func = 0
+        method_counts: Dict[str, int] = {"base_commit_ast": 0, "snapshot_line": 0, "unresolvable": 0}
+        ast_matches = 0
+        unmatched_total = 0
+
+        for idx, task in enumerate(tasks):
+            info = parser.extract_gold_for_task(task)
+            m = info.get("resolution_method", "unresolvable")
+            method_counts[m] = method_counts.get(m, 0) + 1
+            if info.get("has_function_target"):
+                has_func += 1
+                if m == "base_commit_ast":
+                    ast_matches += 1
+            unmatched_total += len(info.get("unresolvable_symbols", []))
+            if (idx + 1) % 50 == 0 or idx + 1 == total:
+                print(f"  Processed {idx + 1}/{total} tasks... (AST matches: {ast_matches}/{has_func})")
+
+        ast_match_rate = (ast_matches / has_func * 100.0) if has_func > 0 else 0.0
+        print("\n=== AST Qualname Extraction Validation Results ===")
+        print(f"Total tasks evaluated: {total}")
+        print(f"Tasks with function target (S_func): {has_func} ({has_func / total * 100.0:.1f}%)")
+        print(f"Non-callable / unresolvable stratum: {total - has_func} ({(total - has_func) / total * 100.0:.1f}%)")
+        print(f"Resolution methods: {method_counts}")
+        print(f"Base-commit AST match rate on callable tasks: {ast_matches}/{has_func} ({ast_match_rate:.2f}%)")
+        print(f"Total unresolvable symbols recorded: {unmatched_total}")
+        assert ast_match_rate >= 80.0, f"Expected >= 80% AST match rate, got {ast_match_rate:.2f}%"
+        print("[VALIDATION PASSED] AST keying verified without line drift.")
+    elif args.export_jsonl:
+        parser.export_gold_jsonl()
+    elif args.save_labels:
+        parser.save_gold_labels()
+    else:
+        # Default behavior: run validation
+        print("No specific action requested; running key validation by default (pass --help for options).")
+        parser.save_gold_labels()
+

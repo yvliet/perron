@@ -1406,6 +1406,467 @@
       "ptr": "/counts/weighted_wstar_at10/k",
       "fmt": "pct_kn",
       "n_ptr": "/counts/weighted_wstar_at10/n_callable"
+    },
+    "FactLinRawStdFnAcc": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/linear__raw/by_beta/beta_0.85/standard_ppr/fn_acc_10",
+      "fmt": "pct1"
+    },
+    "FactLinRawStdHitsKN": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/linear__raw/by_beta/beta_0.85/standard_ppr/hits_10",
+      "fmt": "kn",
+      "n_ptr": "/num_callable_instances"
+    },
+    "FactLinRawStdTestPct": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/linear__raw/by_beta/beta_0.85/standard_ppr/test_pct_10",
+      "fmt": "pct1_raw"
+    },
+    "FactLinRawPerronFnAcc": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/linear__raw/by_beta/beta_0.85/perron_decoupled/gamma_0.70",
+      "fmt": "pct1"
+    },
+    "FactLinRawPerronHitsKN": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/linear__raw/by_beta/beta_0.85/perron_decoupled/gamma_0.70",
+      "fmt": "frac",
+      "n_ptr": "/num_callable_instances"
+    },
+    "FactLinSanStdFnAcc": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/linear__sanitized/by_beta/beta_0.85/standard_ppr/fn_acc_10",
+      "fmt": "pct1"
+    },
+    "FactLinSanStdHitsKN": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/linear__sanitized/by_beta/beta_0.85/standard_ppr/hits_10",
+      "fmt": "kn",
+      "n_ptr": "/num_callable_instances"
+    },
+    "FactLinSanStdTestPct": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/linear__sanitized/by_beta/beta_0.85/standard_ppr/test_pct_10",
+      "fmt": "pct1_raw"
+    },
+    "FactLinSanPerronFnAcc": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/linear__sanitized/by_beta/beta_0.85/perron_decoupled/gamma_0.70",
+      "fmt": "pct1"
+    },
+    "FactLinSanPerronHitsKN": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/linear__sanitized/by_beta/beta_0.85/perron_decoupled/gamma_0.70",
+      "fmt": "frac",
+      "n_ptr": "/num_callable_instances"
+    },
+    "FactSoftRawStdFnAcc": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/softmax__raw/by_beta/beta_0.85/standard_ppr/fn_acc_10",
+      "fmt": "pct1"
+    },
+    "FactSoftRawStdHitsKN": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/softmax__raw/by_beta/beta_0.85/standard_ppr/hits_10",
+      "fmt": "kn",
+      "n_ptr": "/num_callable_instances"
+    },
+    "FactSoftRawStdTestPct": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/softmax__raw/by_beta/beta_0.85/standard_ppr/test_pct_10",
+      "fmt": "pct1_raw"
+    },
+    "FactSoftRawPerronFnAcc": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/softmax__raw/by_beta/beta_0.85/perron_decoupled/gamma_0.70",
+      "fmt": "pct1"
+    },
+    "FactSoftRawPerronHitsKN": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/softmax__raw/by_beta/beta_0.85/perron_decoupled/gamma_0.70",
+      "fmt": "frac",
+      "n_ptr": "/num_callable_instances"
+    },
+    "FactSoftSanStdFnAcc": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/softmax__sanitized/by_beta/beta_0.85/standard_ppr/fn_acc_10",
+      "fmt": "pct1"
+    },
+    "FactSoftSanStdHitsKN": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/softmax__sanitized/by_beta/beta_0.85/standard_ppr/hits_10",
+      "fmt": "kn",
+      "n_ptr": "/num_callable_instances"
+    },
+    "FactSoftSanStdTestPct": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/softmax__sanitized/by_beta/beta_0.85/standard_ppr/test_pct_10",
+      "fmt": "pct1_raw"
+    },
+    "FactSoftSanPerronFnAcc": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/softmax__sanitized/by_beta/beta_0.85/perron_decoupled/gamma_0.70",
+      "fmt": "pct1"
+    },
+    "FactSoftSanPerronHitsKN": {
+      "file": "results/exploratory_factorial_sweep.json",
+      "ptr": "/results/softmax__sanitized/by_beta/beta_0.85/perron_decoupled/gamma_0.70",
+      "fmt": "frac",
+      "n_ptr": "/num_callable_instances"
+    },
+    "VerifNumTotal": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/num_total_instances",
+      "fmt": "int"
+    },
+    "VerifNumCallable": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/num_callable_instances",
+      "fmt": "int"
+    },
+    "VerifPerronStaticFnAcc": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/perron_static/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "VerifPerronStaticFnAccKN": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/perron_static/fn_acc_10/hits",
+      "fmt": "kn",
+      "n_ptr": "/num_callable_instances"
+    },
+    "VerifPerronStaticCILow": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/perron_static/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "VerifPerronStaticCIHigh": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/perron_static/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "VerifPerronStaticFnAccFive": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/perron_static/fn_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "VerifPerronStaticFileAccFive": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_all/perron_static/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "VerifPerronStaticHSI": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_all/perron_static/hsi/mean",
+      "fmt": "pct1"
+    },
+    "VerifPerronAdaptFnAcc": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/perron_adaptive/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "VerifPerronAdaptFnAccKN": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/perron_adaptive/fn_acc_10/hits",
+      "fmt": "kn",
+      "n_ptr": "/num_callable_instances"
+    },
+    "VerifPerronAdaptCILow": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/perron_adaptive/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "VerifPerronAdaptCIHigh": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/perron_adaptive/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "VerifPerronAdaptFnAccFive": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/perron_adaptive/fn_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "VerifPerronAdaptFileAccFive": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_all/perron_adaptive/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "VerifPerronAdaptHSI": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_all/perron_adaptive/hsi/mean",
+      "fmt": "pct1"
+    },
+    "VerifDegPPRFnAcc": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/deg_ppr/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "VerifDegPPRFnAccKN": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/deg_ppr/fn_acc_10/hits",
+      "fmt": "kn",
+      "n_ptr": "/num_callable_instances"
+    },
+    "VerifDegPPRCILow": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/deg_ppr/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "VerifDegPPRCIHigh": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/deg_ppr/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "VerifDegPPRFnAccFive": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/deg_ppr/fn_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "VerifDegPPRFileAccFive": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_all/deg_ppr/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "VerifDegPPRHSI": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_all/deg_ppr/hsi/mean",
+      "fmt": "pct1"
+    },
+    "VerifBMTwentyFiveFnAcc": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/bm25/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "VerifBMTwentyFiveFnAccKN": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/bm25/fn_acc_10/hits",
+      "fmt": "kn",
+      "n_ptr": "/num_callable_instances"
+    },
+    "VerifBMTwentyFiveCILow": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/bm25/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "VerifBMTwentyFiveCIHigh": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/bm25/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "VerifBMTwentyFiveFnAccFive": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/bm25/fn_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "VerifBMTwentyFiveFileAccFive": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_all/bm25/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "VerifBMTwentyFiveHSI": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_all/bm25/hsi/mean",
+      "fmt": "pct1"
+    },
+    "VerifStdPPRFnAcc": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/standard_ppr/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "VerifStdPPRFnAccKN": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/standard_ppr/fn_acc_10/hits",
+      "fmt": "kn",
+      "n_ptr": "/num_callable_instances"
+    },
+    "VerifStdPPRCILow": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/standard_ppr/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "VerifStdPPRCIHigh": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/standard_ppr/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "VerifStdPPRFnAccFive": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/standard_ppr/fn_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "VerifStdPPRFileAccFive": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_all/standard_ppr/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "VerifStdPPRHSI": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_all/standard_ppr/hsi/mean",
+      "fmt": "pct1"
+    },
+    "VerifStdPPRHubContam": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_all/standard_ppr/hsi/mean",
+      "fmt": "pct1c"
+    },
+    "VerifRRFPRFnAcc": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/rrf_fusion/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "VerifRRFPRFnAccKN": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/rrf_fusion/fn_acc_10/hits",
+      "fmt": "kn",
+      "n_ptr": "/num_callable_instances"
+    },
+    "VerifRRFCILow": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/rrf_fusion/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "VerifRRFCIHigh": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/rrf_fusion/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "VerifRRFFnAccFive": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/rrf_fusion/fn_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "VerifRRFFileAccFive": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_all/rrf_fusion/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "VerifRRFHSI": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_all/rrf_fusion/hsi/mean",
+      "fmt": "pct1"
+    },
+    "VerifHippoFnAcc": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/hipporag/fn_acc_10/mean",
+      "fmt": "pct1"
+    },
+    "VerifHippoFnAccKN": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/hipporag/fn_acc_10/hits",
+      "fmt": "kn",
+      "n_ptr": "/num_callable_instances"
+    },
+    "VerifHippoCILow": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/hipporag/fn_acc_10/ci_lower",
+      "fmt": "pct1"
+    },
+    "VerifHippoCIHigh": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/hipporag/fn_acc_10/ci_upper",
+      "fmt": "pct1"
+    },
+    "VerifHippoFnAccFive": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_callable/hipporag/fn_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "VerifHippoFileAccFive": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_all/hipporag/file_acc_5/mean",
+      "fmt": "pct1"
+    },
+    "VerifHippoHSI": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/summary_all/hipporag/hsi/mean",
+      "fmt": "pct1"
+    },
+    "PromptPackBMTwentyFiveTopFnAcc": {
+      "file": "results/gemma4_localization_evaluation.json",
+      "ptr": "/summary/bm25_pack/top1_function_acc",
+      "fmt": "pct1_raw"
+    },
+    "PromptPackBMTwentyFiveTopFileAcc": {
+      "file": "results/gemma4_localization_evaluation.json",
+      "ptr": "/summary/bm25_pack/top1_file_acc",
+      "fmt": "pct1_raw"
+    },
+    "PromptPackBMTwentyFiveFnHitsKN": {
+      "file": "results/gemma4_localization_evaluation.json",
+      "ptr": "/summary/bm25_pack/function_hits",
+      "fmt": "kn",
+      "n_ptr": "/summary/bm25_pack/total_evaluated"
+    },
+    "PromptPackBMTwentyFiveFileHitsKN": {
+      "file": "results/gemma4_localization_evaluation.json",
+      "ptr": "/summary/bm25_pack/file_hits",
+      "fmt": "kn",
+      "n_ptr": "/summary/bm25_pack/total_evaluated"
+    },
+    "PromptPackBMTwentyFiveAvgLat": {
+      "file": "results/gemma4_localization_evaluation.json",
+      "ptr": "/summary/bm25_pack/avg_latency_ms",
+      "fmt": "ms2"
+    },
+    "PromptPackPerronTopFnAcc": {
+      "file": "results/gemma4_localization_evaluation.json",
+      "ptr": "/summary/perron_pack/top1_function_acc",
+      "fmt": "pct1_raw"
+    },
+    "PromptPackPerronTopFileAcc": {
+      "file": "results/gemma4_localization_evaluation.json",
+      "ptr": "/summary/perron_pack/top1_file_acc",
+      "fmt": "pct1_raw"
+    },
+    "PromptPackPerronFnHitsKN": {
+      "file": "results/gemma4_localization_evaluation.json",
+      "ptr": "/summary/perron_pack/function_hits",
+      "fmt": "kn",
+      "n_ptr": "/summary/perron_pack/total_evaluated"
+    },
+    "PromptPackPerronFileHitsKN": {
+      "file": "results/gemma4_localization_evaluation.json",
+      "ptr": "/summary/perron_pack/file_hits",
+      "fmt": "kn",
+      "n_ptr": "/summary/perron_pack/total_evaluated"
+    },
+    "PromptPackPerronAvgLat": {
+      "file": "results/gemma4_localization_evaluation.json",
+      "ptr": "/summary/perron_pack/avg_latency_ms",
+      "fmt": "ms2"
+    },
+    "PromptPackSlotTopFnAcc": {
+      "file": "results/gemma4_localization_evaluation.json",
+      "ptr": "/summary/slot_fused_pack/top1_function_acc",
+      "fmt": "pct1_raw"
+    },
+    "PromptPackSlotTopFileAcc": {
+      "file": "results/gemma4_localization_evaluation.json",
+      "ptr": "/summary/slot_fused_pack/top1_file_acc",
+      "fmt": "pct1_raw"
+    },
+    "PromptPackSlotFnHitsKN": {
+      "file": "results/gemma4_localization_evaluation.json",
+      "ptr": "/summary/slot_fused_pack/function_hits",
+      "fmt": "kn",
+      "n_ptr": "/summary/slot_fused_pack/total_evaluated"
+    },
+    "PromptPackSlotFileHitsKN": {
+      "file": "results/gemma4_localization_evaluation.json",
+      "ptr": "/summary/slot_fused_pack/file_hits",
+      "fmt": "kn",
+      "n_ptr": "/summary/slot_fused_pack/total_evaluated"
+    },
+    "PromptPackSlotAvgLat": {
+      "file": "results/gemma4_localization_evaluation.json",
+      "ptr": "/summary/slot_fused_pack/avg_latency_ms",
+      "fmt": "ms2"
+    },
+    "PromptPackAvgTokens": {
+      "file": "results/gemma4_localization_evaluation.json",
+      "ptr": "/summary/bm25_pack/avg_token_occupancy",
+      "fmt": "num1"
     }
   }
 }

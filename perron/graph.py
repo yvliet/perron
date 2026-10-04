@@ -52,6 +52,7 @@ class ASTSymbolNode:
     source_code: Optional[str] = None
     calls: List[str] = field(default_factory=list)
     base_classes: List[str] = field(default_factory=list)
+    is_test: bool = False
 
     def __post_init__(self):
         if self.identifier is not None and not self.qualified_name:
@@ -318,6 +319,26 @@ def _matches_module_path(candidate_file: str, module_path: str) -> bool:
     return False
 
 
+def _is_test_path(file_path: str) -> bool:
+    """Identify if a relative file path belongs to a test suite or test module."""
+    clean = file_path.replace("\\", "/").lower()
+    parts = clean.split("/")
+    if any(p in ("tests", "test", "testing") for p in parts[:-1]):
+        return True
+    fname = parts[-1]
+    if fname.startswith("test_") or fname.endswith("_test.py") or fname == "conftest.py" or fname.startswith("test"):
+        return True
+    return False
+
+
+def _is_test_symbol_name(name: str) -> bool:
+    """Identify if a symbol name indicates test class or test method."""
+    leaf = name.split(".")[-1]
+    if leaf.startswith("test_") or leaf.endswith("_test") or leaf.startswith("Test") or leaf.endswith("Tests") or leaf == "TestCase":
+        return True
+    return False
+
+
 def extract_repository_graph(
     repo_dir: Path,
     include_patterns: Optional[List[str]] = None,
@@ -385,6 +406,12 @@ def extract_repository_graph(
 
         for item in collector.symbols_raw:
             nid = len(symbols)
+            f_is_test = _is_test_path(item["file_path"])
+            sym_is_test = f_is_test or _is_test_symbol_name(item["qualified_name"])
+            if not sym_is_test and "bases" in item:
+                if any("test" in b.lower() for b in item["bases"]):
+                    sym_is_test = True
+
             sym = ASTSymbolNode(
                 node_id=nid,
                 file_path=item["file_path"],
@@ -397,6 +424,7 @@ def extract_repository_graph(
                 parent_class=item["parent_class"],
                 docstring=item["docstring"],
                 decorators=item["decorators"],
+                is_test=sym_is_test,
             )
             symbols.append(sym)
             can_key = sym.canonical_key
@@ -497,14 +525,7 @@ def extract_repository_graph(
                             import_edges_set.add((u, v))
                             break
 
-            # 4. Unambiguous repository-wide suffix match fallback
-            if v is None:
-                parts = callee_name.split(".")
-                if len(parts) == 1 or (len(parts) == 2 and parts[0] in ("self", "cls")):
-                    short_name = parts[-1]
-                    candidates = suffix_to_ids.get(short_name, [])
-                    if len(candidates) == 1:
-                        v = candidates[0]
+            # Note: Step 4 unqualified suffix fallback was removed to eliminate false hubs (e.g. BlockNode.super).
 
             if v is not None and u != v:
                 if is_inherit_call:
@@ -513,16 +534,40 @@ def extract_repository_graph(
                     call_edges_set.add((u, v))
                     caller_edges_set.add((v, u))
 
-        # Add explicit class-to-base inheritance edges
+        # Add explicit class-to-base inheritance edges (constrained to intra-file and import-resolved bases)
         for item in collector.symbols_raw:
             if item["symbol_type"] == "class" and "bases" in item:
                 c_id = canonical_to_id.get(f"{file_path}::{item['qualified_name']}")
                 if c_id is None:
                     continue
                 for b_name in item["bases"]:
-                    for cand_id in suffix_to_ids.get(b_name.split(".")[-1], []):
+                    # 1. Intra-file base class
+                    intra_key = f"{file_path}::{b_name}"
+                    if intra_key in canonical_to_id:
+                        cand_id = canonical_to_id[intra_key]
                         if symbols[cand_id].symbol_type == "class" and cand_id != c_id:
                             inherit_edges_set.add((c_id, cand_id))
+                            continue
+
+                    # 2. Import-resolved base class
+                    if b_name in import_table.imported_symbols:
+                        mod_pfx, orig_b = import_table.imported_symbols[b_name]
+                        b_actual = orig_b or b_name
+                        for cand_id in qualified_to_ids.get(b_actual, ()):
+                            if symbols[cand_id].symbol_type == "class" and cand_id != c_id:
+                                if _matches_module_path(symbols[cand_id].file_path, mod_pfx):
+                                    inherit_edges_set.add((c_id, cand_id))
+                                    break
+                    elif "." in b_name:
+                        base_mod = b_name.split(".", 1)[0]
+                        attr_name = b_name.split(".", 1)[1]
+                        if base_mod in import_table.imported_modules:
+                            mod_path = import_table.imported_modules[base_mod]
+                            for cand_id in qualified_to_ids.get(attr_name, ()):
+                                if symbols[cand_id].symbol_type == "class" and cand_id != c_id:
+                                    if _matches_module_path(symbols[cand_id].file_path, mod_path):
+                                        inherit_edges_set.add((c_id, cand_id))
+                                        break
 
     # Add hierarchical class-to-method containment edges
     for sym in symbols:
@@ -532,6 +577,24 @@ def extract_repository_graph(
             if p_id is not None and p_id != sym.node_id:
                 call_edges_set.add((p_id, sym.node_id))
                 caller_edges_set.add((sym.node_id, p_id))
+
+    # Propagate test markings along class containment and inheritance
+    test_changed = True
+    while test_changed:
+        test_changed = False
+        # Propagate from parent class to method
+        for sym in symbols:
+            if not sym.is_test and sym.parent_class:
+                p_key = f"{sym.file_path}::{sym.parent_class}"
+                p_id = canonical_to_id.get(p_key)
+                if p_id is not None and symbols[p_id].is_test:
+                    sym.is_test = True
+                    test_changed = True
+        # Propagate from base class to derived class along inherit_edges
+        for c_id, base_id in inherit_edges_set:
+            if symbols[base_id].is_test and not symbols[c_id].is_test:
+                symbols[c_id].is_test = True
+                test_changed = True
 
     # Deterministic sorting of all relation edge tuples
     call_edges = sorted(list(call_edges_set))

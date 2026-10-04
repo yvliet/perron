@@ -19,6 +19,7 @@ from perron.diffusion import (
 from perron.specificity import (
     compute_global_pagerank,
     calculate_specificity_scores,
+    mask_test_nodes_distribution,
 )
 from perron.packer import (
     pack_context_subgraphs,
@@ -60,6 +61,7 @@ __all__ = [
     "personalized_pagerank_power_iteration",
     "compute_global_pagerank",
     "calculate_specificity_scores",
+    "mask_test_nodes_distribution",
     "pack_context_subgraphs",
     "ASTContextSymbol",
     "apply_symbol_edit",
