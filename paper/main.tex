@@ -124,7 +124,6 @@ Perron reconciles this physical reality via a \textbf{Dual-Tier deployment archi
     \item \textbf{Tier~1 (Edge Local)}: Executes Gemma~4~E4B (and E2B) via quantized 4-bit backends, defaulting to 4-bit \texttt{Transformers\allowbreak Backend} alongside GGUF (\texttt{perron/\allowbreak backends/\allowbreak gguf\_\allowbreak backend.py}) for CPU-only environments, with native Chain-of-Thought \texttt{<|think|>} extraction.
     \item \textbf{Tier 2 (Workstation Scaled)}: Targets Gemma~4~26B~A4B (activating 3.8B parameters per token across 128 experts) and Gemma~4~31B on 24GB GPUs (RTX 3090/4090 or Kaggle P100/T4 instances) for enterprise repositories requiring deep multi-file refactoring.
 \end{itemize}
-\enlargethispage{\baselineskip}
 
 \subsection{The Topological Bottleneck: Scale-Free Dependency Graphs}
 Source code dependency networks are scale-free graphs characterized by power-law degree distributions ($P(k) \sim k^{-\gamma}$). Ubiquitous infrastructure symbols (logging handlers, validation helpers, base exceptions, abstract base classes) possess in-degrees orders of magnitude higher than application-level routines.
@@ -140,7 +139,6 @@ Previous approaches that mitigate hub explosion through degree-weighted random w
 
 \section{Related Work}
 \label{sec:related}
-\enlargethispage{2\baselineskip}
 \textbf{Repository-Level Code Retrieval and Developer Agents}: Dense bi-encoders and lexical search engines (BM25) suffer from vocabulary mismatch and lack structural execution context. RepoCoder~\cite{zhang2023repocoder} showed that iterative retrieval loops improve completion but create multi-turn token inflation. AutoCodeRover~\cite{zhang2024autocoderover} navigates AST representations via iterative agent search queries. Aider~\cite{gauthier2023aider} introduced repository maps using PageRank over Tree-sitter tags; however, unconstrained PageRank amplifies global utility hubs, crowding out issue-specific definitions. Graph agents like RepoGraph~\cite{ma2024repograph}, CodexGraph~\cite{cheng2024codexgraph}, and LocAgent~\cite{dong2024locagent} employ multi-turn LLM reasoning over code graphs. In SWE-agent~\cite{yang2024sweagent}, custom ACI commands with immediate syntax feedback boost resolve rates by +10.7\% over bare shells. Agentless~\cite{xia2025agentless} demonstrated that hierarchical localization with test-filtered patch generation achieves 27.3\% on SWE-bench Lite without complex multi-turn loops. Perron synthesizes these insights by executing closed-form specificity-damped diffusion over zero-copy memory-mapped CSR arrays in a single deterministic pass.
 
 \textbf{Graph-RAG and Random Walk Diffusion}: Random walk formulations have a rich foundation in graph representation learning, initiated by DeepWalk~\cite{perozzi2014deepwalk} and Personalized PageRank~\cite{page1998pagerank}. Unsupervised graph mining toolkits, such as Karate Club~\cite{rozemberczki2020karateclub}, and recent knowledge graph foundation models~\cite{galkin2023towards} emphasize scalable sparse matrix operations over complex relational topologies. In information retrieval, HippoRAG~\cite{gutierrez2024hipporag} demonstrated on multi-hop QA benchmarks (MuSiQue, 2WikiMultiHopQA) that single-step Personalized PageRank over knowledge graphs outperforms iterative retrieval (IRCoT) by up to 20\% while running 10-30$\times$ cheaper and 6-13$\times$ faster, tuning PPR damping to $\beta = 0.5$ and synonymy to $\tau = 0.8$. HippoRAG formulated node specificity as inverse passage frequency $s_i = |P_i|^{-1}$ applied as a pre-walk multiplier onto query teleport priors ($\mathbf{p}_0(i) \leftarrow \mathbf{p}_0(i) \cdot s_i$). However, in scale-free software call graphs, high in-degree hubs (e.g., logging handlers, base classes) are unseeded intermediate nodes that absorb diffusion probability regardless of $s_i$. Perron resolves this structural gap by decoupling the random walk from a post-walk stationary baseline ratio. Furthermore, Haveliwala and Kamvar~\cite{haveliwala2003second} proved that for any row-stochastic matrix $\bar{T}$ and rank-1 perturbation $M = \beta \bar{T} + (1 - \beta) \mathbf{1} \mathbf{p}_0^\top$, the spectrum satisfies $\lambda_1(M) = 1$ and $\lambda_i(M) = \beta \lambda_i(\bar{T})$ for all $i \ge 2$, so that the second eigenvalue satisfies $|\lambda_2(M)| \le \beta$ and power iteration converges at rate $\mathcal{O}(\beta^t)$ independently of graph structure.
@@ -174,6 +172,7 @@ W_{uv} = \omega_{\text{call}} A^{(\text{call})}_{uv} + \omega_{\text{inherit}} A
 \end{equation}
 where $\boldsymbol{\omega} = [0.50, 0.25, 0.15, 0.10]$ and $A^{(r)}_{uv} = \mathbb{I}((u, v) \in \mathcal{E}_r)$.
 
+\pagebreak
 Let $D_u = \sum_{v} W_{uv}$ be the out-degree sum. The row-stochastic transition matrix $T \in \mathbb{R}^{|\mathcal{V}| \times |\mathcal{V}|}$ and dangling indicator vector $\mathbf{d} \in \{0, 1\}^{|\mathcal{V}|}$ are defined in Eq.~(\ref{eq:stochastic_matrix}):
 \begin{equation}
 T_{uv} = \begin{cases} \frac{W_{uv}}{D_u}, & D_u > 0 \\ 0, & D_u = 0 \end{cases}, \quad d_u = \begin{cases} 1.0, & D_u = 0 \\ 0.0, & D_u > 0 \end{cases}.
@@ -361,6 +360,7 @@ When language models emit code edits, outer indentation is often omitted or offs
 \end{tabular}
 \end{table}
 
+\pagebreak
 As illustrated in Figure~\ref{fig:comparative_interfaces} and quantified in Table~\ref{tab:edit_interfaces}, unconstrained shell edits and raw unified diffs suffer from severe interface failure modes on benchmark tasks. Across 30 model patch challenges, blind string replacement via \texttt{sed} applies unconditionally (\SedApplyRate) but induces indentation drift that corrupts target file syntax in \SedSyntaxErrorRate\ of cases. Standard \texttt{git apply} avoids disk corruption by rejecting patches, but fails on \GitApplyHunkRejectRate\ of hunks due to hallucinated line counters and boundary drift. The Perron editor (\texttt{perron/editor.py}) reaches \PerronASTVARKN\ valid applications against \SedVARKN\ for \texttt{sed} and \GitApplyVARKN\ for \texttt{git apply} (Table~\ref{tab:edit_interfaces}) by combining:
 \begin{itemize}
     \item \textbf{Anchor-Bounded Search}: Limits search to $[\texttt{start\_line} - 15, \texttt{end\_line} + 15]$ with strict boundary ordering validation.
@@ -369,6 +369,7 @@ As illustrated in Figure~\ref{fig:comparative_interfaces} and quantified in Tabl
     \item \textbf{Pre-Commit AST Validation}: Validates modified source via \texttt{ast.parse()} prior to disk write, with atomic transactional rollback via \texttt{os.replace}, so an edit that does not parse never reaches disk.
 \end{itemize}
 
+\pagebreak
 \subsection{Cross-Platform Targeted Test Isolation}
 SWE-bench~\cite{jimenez2024swebench} evaluates patches against both defect-specific tests (\texttt{FAIL\_TO\_PASS}) and regression suites (\texttt{PASS\_TO\_PASS}, with a median of 51 tests per repository). Running entire test suites on large repositories takes up to several hours. Perron isolates targeted pytest runs (\texttt{pytest -k <test\_name>}) with platform-aware process-group timeout enforcement:
 \begin{itemize}
@@ -456,6 +457,8 @@ Appendix~\ref{app:replay} documents ten deterministic replay scenarios used to t
 \subsection{Empirical Pareto Frontier and Bayesian Hyperparameter Optimization}
 \label{sec:pareto_frontier}
 
+To eliminate heuristic parameter selection, I deployed an automated Multi-Objective Bayesian Optimization pipeline via Optuna utilizing multivariate Tree-structured Parzen Estimators (TPE) over 50 trials across parameterized synthetic graph seeds ($N=1,000$ nodes, scale-free topology, 20 high-degree utility hubs, and controlled symptom-to-cause paths). While Section~\ref{sec:retrieval_benchmark} measures zero-shot retrieval over uncurated repositories driven by raw GitHub issues, this controlled synthetic setting isolates pure graph diffusion mechanics, Pareto budget trade-offs, and parameter sensitivity.
+
 \begin{figure}[t]
 \centering
 \IfFileExists{figures/pareto_frontier_and_sensitivity.pdf}{
@@ -467,8 +470,6 @@ Appendix~\ref{app:replay} documents ten deterministic replay scenarios used to t
 \label{fig:pareto_frontier}
 \label{fig:parameter_sensitivity}
 \end{figure}
-
-To eliminate heuristic parameter selection, I deployed an automated Multi-Objective Bayesian Optimization pipeline via Optuna utilizing multivariate Tree-structured Parzen Estimators (TPE) over 50 trials across parameterized synthetic graph seeds ($N=1,000$ nodes, scale-free topology, 20 high-degree utility hubs, and controlled symptom-to-cause paths). While Section~\ref{sec:retrieval_benchmark} measures zero-shot retrieval over uncurated repositories driven by raw GitHub issues, this controlled synthetic setting isolates pure graph diffusion mechanics, Pareto budget trade-offs, and parameter sensitivity.
 
 As shown in Figure~\ref{fig:pareto_frontier}, sweeping context token budgets $K \in [512, 4096]$ demonstrates Perron's Pareto dominance over competing retrieval methods under controlled synthetic topological conditions. Under severe synthetic context budget constraints ($K = 1,024$ tokens), Perron sustains \SyntheticParetoPerronTenTwentyFour\ controlled topological recall on synthetic graphs, whereas Standard PPR achieves \SyntheticParetoStdPPRTenTwentyFour, and token-overlap search achieves \SyntheticParetoTokenOverlapTenTwentyFour. At the target Gemma 4 context budget ($K = 3,480$), Perron reaches \SyntheticParetoPerronThreeFourEightZero\ controlled recall with \SyntheticParetoPerronHSI\ HSI on synthetic graphs. Furthermore, mapping the 2D parameter response surface (Figure~\ref{fig:parameter_sensitivity}) confirms that Perron's specificity damping is not overfitted to a knife-edge threshold on synthetic graphs: a robust topological basin with $>$\SyntheticBasinMinRecall\ controlled recall is sustained across synthetic parameter ranges $\gamma \in [0.55, 0.85]$ and $\beta \in [0.80, 0.90]$.
 
@@ -487,11 +488,11 @@ To support developer agent democratization and satisfy reproducible code audit r
     \item \textbf{Dataset \path{swebench-lite-codegraphs}}: edge topologies, dangling indicators and stationary distributions for all 12 SWE-bench Lite repositories under Apache 2.0. Source text is excluded to respect upstream licenses (MIT, BSD, GPL) and is reconstructed locally from git commits by \path{scripts/reconstruct_dataset.py}.
 \end{itemize}
 
+\pagebreak
 \section{Discussion and Limitations}
 \label{sec:discussion}
 While Perron delivers substantial recall gains, several limitations remain: (1)~static call graphs miss dynamic reflection (\texttt{getattr}) or monkey-patching; (2)~across disconnected modules, diffusion relies entirely on the teleport prior; (3)~multi-turn agents require context compaction; (4)~I did not run end-to-end issue resolution with a local model; the agent loop is tested only with deterministic replay (Appendix~\ref{app:replay}); and (5)~the reference engine targets Python AST; while an initial polyglot Tree-sitter interface smoke test is implemented for TypeScript (\texttt{perron/polyglot/treesitter.py}) to verify CSR protocol extensibility, large-scale multilingual SWE-bench evaluation remains an open research direction.
 
-\pagebreak
 \section{Conclusion}
 \label{sec:conclusion}
 \enlargethispage{3.5\baselineskip}
@@ -560,6 +561,7 @@ Gold targets & \DiagMedianInDegGold & \DiagMeanInDegGold & \DiagMaxInDegGold & -
 \end{tabular}
 \end{table}
 
+\pagebreak
 \section{Diagnostic Replay Scaffolding}
 \label{app:replay}
 The ten scenarios below drive the agent loop with deterministic, pre-recorded model outputs. They test tool dispatch, rollback and boundary handling, and are not measurements of issue-resolution ability.
@@ -598,9 +600,13 @@ BM25 + RAG~\cite{yang2024sweagent} & GPT-4 (Cloud API) & \$0.05 & 3.8\% (Pass@1)
 \label{fig:specificity_sweep}
 \end{figure}
 
+\pagebreak
 Table~\ref{tab:swebench_comparison} contrasts published literature baselines on SWE-bench Lite with Perron's local offline execution profile. To evaluate toolchain determinism, multi-turn recovery, and boundary invariants locally without stochastic API expenses, Perron was evaluated across 10 canonical defect archetypes (Table~\ref{tab:repair_results}), resolving 5/5 solvable defect scenarios while cleanly intercepting 5/5 boundary failure modes under deterministic scaffolding with zero syntax errors in applied diffs. Figure~\ref{fig:specificity_sweep} illustrates the empirical behavior of specificity damping across the 50 SWE-bench Lite repository instances, demonstrating how post-walk ratio transform outperforms pre-walk prior weighting across the entire spectrum of $\gamma$.
 
-\begin{table}[!htbp]
+\subsection{Action Dynamics and Failure Mode Analysis}
+\label{sec:action_analysis}
+
+\begin{table}[t]
 \centering
 \small
 \setlength{\tabcolsep}{3.0pt}
@@ -626,9 +632,6 @@ Table~\ref{tab:swebench_comparison} contrasts published literature baselines on 
 \bottomrule
 \end{tabularx}
 \end{table}
-
-\subsection{Action Dynamics and Failure Mode Analysis}
-\label{sec:action_analysis}
 
 To understand how Perron allocates operational effort during issue resolution, Figure~\ref{fig:action_failure_distribution}(a) visualizes action invocation frequencies across execution turns from deterministic replay harness telemetry. Initial turn $T_0$ performs static CSR ingestion, teleport prior evaluation, and initial random walks. Turns $T_0$--$T_2$ concentrate AST program packing, candidate patch synthesis, and targeted \texttt{pytest} executions. Across the 10 diagnostic archetypes, solvable tasks converge within Turn $T_2$ via targeted test feedback loops, avoiding protracted multi-turn conversational drift.
 
