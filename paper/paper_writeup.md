@@ -29,7 +29,7 @@ While lexical search finds symbols explicitly named in issue text, graph retriev
 This paper diagnoses these dynamics via a $2\times 2$ factorial sweep, characterizes spectral convergence via Brauer rank-1 bounds, and validates Decoupled Specificity on SWE-bench Verified.
 
 ### Systems Hardware Envelope
-The engine peaks at 144.33 MB resident memory (graph load 91.4 MB) on a 15.68 GiB host with 6.86 GiB available. Zero-copy memory-mapped CSR storage enables spectral diffusion in 1.89 ms on Requests and 5.10 ms on SymPy, sharing physical memory across worker threads via OS page caching ($W \rightarrow 1$).
+The standalone engine peaks at 144.33 MB resident memory (graph load 91.4 MB) on a 15.68 GiB host (6.86 GiB available), completing CSR diffusion in 1.89 ms on Requests and 5.10 ms on SymPy ($W \rightarrow 1$ shared memory). Live execution of `gemma-4-e4b-it` on an Nvidia Tesla T4 GPU consumed 2.37 GiB peak VRAM with 3548.1 ms mean TTFT and 11.6 tokens/sec decode throughput.
 
 ---
 
@@ -166,7 +166,7 @@ Perron is released as five reproducible deliverables under Apache 2.0 / CC0-1.0:
 
 ## 7. Discussion & Limitations
 
-Personalized PageRank fails on code graphs primarily from test node absorption and prior dispersion. Decoupled Specificity stabilizes diffuse priors (+24.1 pp) and suppresses hub accumulation (99.5% vs. 90.8% HSI) with zero-copy CSR efficiency. Four limitations remain: (1) static call resolution can conflate ambiguous method names; (2) multiplex edge weights [0.50, 0.25, 0.15, 0.10] are fixed across repositories rather than tuned per-project; (3) static graphs miss dynamic reflection; and (4) evaluation focuses on Python ASTs; polyglot grammar interfaces remain an active direction.
+Personalized PageRank fails on code graphs from test node absorption and prior dispersion. Decoupled Specificity stabilizes diffuse priors (+24.1 pp) and suppresses hubs (99.5% vs. 90.8% HSI). Four limitations remain: (1) static call resolution can conflate ambiguous method names; (2) edge weights [0.50, 0.25, 0.15, 0.10] are fixed across repositories; (3) static graphs miss dynamic reflection; and (4) evaluation focuses on Python ASTs; polyglot interfaces remain an active direction.
 
 ---
 

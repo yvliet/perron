@@ -2149,6 +2149,26 @@
       "file": "results/dose_response_evaluation.json",
       "ptr": "/linearity_validation/max_l1_error",
       "fmt": "num3"
+    },
+    "GemmaPeakVRAMGiB": {
+      "file": "results/live_inference_telemetry.json",
+      "ptr": "/peak_vram_gib",
+      "fmt": "gib2"
+    },
+    "GemmaMeanTTFTMs": {
+      "file": "results/live_inference_telemetry.json",
+      "ptr": "/mean_ttft_ms",
+      "fmt": "ms1"
+    },
+    "GemmaDecodeTokensSec": {
+      "file": "results/live_inference_telemetry.json",
+      "ptr": "/decode_tokens_per_sec",
+      "fmt": "num1"
+    },
+    "GemmaTransmissionKappa": {
+      "file": "results/live_inference_telemetry.json",
+      "ptr": "/transmission_coefficient_kappa",
+      "fmt": "num2"
     }
   }
 }

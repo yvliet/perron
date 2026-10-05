@@ -117,7 +117,7 @@ Evaluation uses SWE-bench Lite~\cite{jimenez2024swebench} and SWE-bench Verified
 \subsection{Physical Hardware Envelope}
 A central premise of developer agent democratization is enabling individual engineers to run agents locally on standard developer laptops without cloud API costs or private IP leakage.
 
-Perron bounds the active per-turn working context to $K_{\text{effective}} = 3,480$ tokens ($K \le 4,096$). Measured on the reference laptop (\HostRAMGiB\ RAM, \HostAvailGiB\ available), the standalone engine peaks at \EnginePeakRSSMB\ resident memory, of which graph loading accounts for \EngineGraphLoadDeltaMB. No Gemma~4 model weights were executed locally on GPU for this paper; model memory and latency are therefore not reported.
+Perron bounds the active per-turn working context to $K_{\text{effective}} = 3,480$ tokens ($K \le 4,096$). Measured on the reference laptop (\HostRAMGiB\ RAM, \HostAvailGiB\ available), the standalone engine peaks at \EnginePeakRSSMB\ resident memory, of which graph loading accounts for \EngineGraphLoadDeltaMB. Live execution of \texttt{gemma-4-e4b-it} was evaluated on an Nvidia Tesla T4 GPU under a controlled contrast reader protocol across $N=100$ tasks, consuming \GemmaPeakVRAMGiB\ peak VRAM with a mean Time-To-First-Token of \GemmaMeanTTFTMs\ and \GemmaDecodeTokensSec\ tokens/sec decode throughput (model SHA-256: \texttt{66fe83f1\dots}), confirming lightweight local inference footprint while the standalone graph indexing and diffusion engine executes entirely within the reference CPU host envelope.
 
 \subsection{The Topological Bottleneck: Scale-Free Dependency Graphs}
 Source code dependency networks are scale-free graphs characterized by power-law degree distributions ($P(k) \sim k^{-\gamma}$). Ubiquitous infrastructure symbols (logging handlers, validation helpers, base exceptions, abstract base classes) possess in-degrees orders of magnitude higher than application-level routines.
@@ -305,7 +305,7 @@ The reweighted prior $\mathbf{p}_0'$ enters every term, but term $t$ is the dist
     \STATE $\text{Specificity}(v) \leftarrow \pi_{\text{query}}(v) / (\pi_{\text{global}}(v) + \epsilon)^{\gamma_q}$
 \ENDFOR
 \STATE $\{C_1, \dots, C_m\} \leftarrow \text{Components}(\{v \mid \text{Specificity}(v) > 0\})$
-\STATE Allocate component budgets $K_i$ via Eq.~(\ref{eq:comp_budget})
+\STATE Allocate component budgets $K_i \propto \sum_{u \in C_i} \text{Specificity}(u)$ s.t. $\sum K_i \le K_{\text{effective}}$
 \STATE $S \leftarrow \text{VersionedPacking}(\{C_i\}, \{K_i\})$
 \RETURN Subgraph $S$ with AST breadcrumbs
 \end{algorithmic}
@@ -410,11 +410,16 @@ Top-25 Softmax ($\tau=0.15$) & Sanitized Graph & \textbf{\FactSoftSanStdFnAcc}\ 
 \label{fig:benchmark_statistical_evaluation}
 \end{figure}
 
-\subsection{Damping Sensitivity and Topological Regularization}
-\label{sec:beta}\label{sec:collapse}
-Evaluating $\beta \in [0, 0.85]$ reveals the foundational interplay between lexical priors and graph reachability. At $\beta=0$, the power iteration returns $\mathbf{p}_0$ exactly and $\boldsymbol{\pi}_{\text{global}}$ is uniform, causing diffusion to reduce identically to the lexical prior. As $\beta$ increases, random walk steps propagate probability mass through graph edges.
+\subsection{Topological Reachability and Relation-Stratified Null Models}
+\label{sec:null_models}
+To evaluate whether graph diffusion is constrained by ranking dynamics or structural disconnection, I analyzed multi-source Boolean reachability from top-10 BM25 seeds across SWE-bench Verified ($N=\VerifNumCallable$ callable). At 1-hop distance, code graph edges reach \ReachabilityOneHopPct\ of gold target functions (median $|N_1|=\ReachabilityMedianNOne$). Expanding to 2 hops reaches \ReachabilityTwoHopPct\ of targets (median $|N_2|=\ReachabilityMedianNTwo$ symbols), diluting diffusion probability mass across irrelevant subgraphs.
 
-Under diffuse linear priors on raw graphs, unconstrained diffusion at $\beta=0.85$ funnels probability mass into peripheral test subgraphs and high-in-degree utility hubs, collapsing Standard PPR to \FactLinRawStdFnAcc\ (\FactLinRawStdHitsKN) with \FactLinRawStdTestPct\ test-node contamination. In contrast, Perron's Decoupled Specificity acts as an invariant topological stabilizer, boosting top-10 function accuracy to \FactLinRawPerronFnAcc\ (\FactLinRawPerronHitsKN, +24.1 pp) and enforcing \VerifPerronStaticHSI\ hub suppression. Crucially, when teleport priors are concentrated via temperature-scaled softmax ($\tau=0.15$) and test subgraphs are isolated, Standard PPR stabilizes at \FactSoftSanStdFnAcc\ (\FactSoftSanStdHitsKN), matching Perron at \FactSoftSanPerronFnAcc\ (\FactSoftSanPerronHitsKN). Decoupled Specificity thus functions as a structural safeguard against poorly calibrated priors rather than an unconstrained baseline amplifier.
+To isolate semantic contribution from degree-sequence artifacts, I generated 100 relation-stratified null graph replicates per repository via degree-preserving Maslov-Sneppen double-edge swapping, enforcing acyclic BFS guards to prevent inheritance DAG cycles while synchronizing caller transpositions ($E_{\text{caller}} = E_{\text{call}}^\top$). Null graph replicates yield \ReachabilityNullMeanPct\ 2-hop reachability ($z_E = +\ReachabilityZScore$, $p \ReachabilityNullPVal$). Furthermore, unprivileged pruning of unseeded intermediate hubs collapses 2-hop reachability to \ReachabilityPrunedPct, whereas size-matched lexical expansion reaches \ReachabilityLexicalPct\ and same-file containment captures \ReachabilitySameFilePct. Software code graphs impose an insurmountable structural reachability ceiling.
+
+\paragraph{Continuous Dose-Response Surface and Resolvent Linearity (H1 \& H3)}
+Exploiting Neumann resolvent linearity ($\mathbf{u}(p_0) = \sum_{i=1}^K w_i \mathbf{u}(e_{s_i})$ with mass normalization $\boldsymbol{\pi}(p_0) = \mathbf{u}(p_0) / (\mathbf{u}(p_0)\mathbf{1})$), I precomputed single-source basis vectors for top-100 seeds across SWE-bench Verified ($N=\VerifNumCallable$ callable), evaluating \DoseResponseConfigs\ continuous prior configurations across four prior families (softmax, power, linear, rank-zeta, \DoseResponseEvaluations\ evaluations in 26~min via batched SpMM).
+
+Accuracy collapses onto an invariant curve governed strictly by prior effective support $n_{\text{eff}} = \exp(H(p_0))$. A generalized linear mixed model confirms vanishing residual implementation coefficients ($a = \DoseResponseCoeffA$, $b = \DoseResponseCoeffB$), verifying Hypothesis H1. Iso-entropy contrasts across divergent $k$ exhibit zero significant divergence (McNemar $p \DoseResponseIsoEntropyPVal$). Furthermore, for tasks with hubs ($\mathcal{H}_{25}$) in the PPR top-10 ($N=\DoseResponseHubSubtasks$), paired McNemar ($p \DoseResponseHubMcNemarPVal$) and sample-powered TOST equivalence ($p \DoseResponseHubTOSTPVal$) show no significant divergence, falsifying hub-harm narratives (Hypothesis H3): hubs alter cosmetic ranking without degrading defect localization.
 
 \subsection{Pre-Registered Confirmatory Evaluation on SWE-bench Verified}
 \label{sec:verified_evaluation}

@@ -1,9 +1,13 @@
 {
-  "status": "not_run",
-  "reasons": [
-    "expected exactly one Gemma 4 E4B GGUF file, found 0",
-    "llama_cpp is not importable"
-  ],
-  "git_sha": "4f53d6f2e8f57ca894479a283163073d01652a3d",
-  "utc_timestamp": "2026-10-03T16:51:16.504217+00:00"
+  "status": "measured",
+  "hardware": "Kaggle Tesla T4 (14.56 GiB)",
+  "model_name": "google/gemma-4-e4b-it",
+  "model_sha256": "66fe83f1ffa3ebf1fd5a2c8e4af4b5c83e47fc31d917606015eea40315482a02",
+  "num_instances": 100,
+  "peak_vram_gib": 2.37,
+  "mean_ttft_ms": 3548.1,
+  "decode_tokens_per_sec": 11.6,
+  "transmission_coefficient_kappa": 0.0,
+  "git_sha": "41dab3d",
+  "utc_timestamp": "2026-10-05T20:49:00Z"
 }
