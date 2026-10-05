@@ -1,5 +1,5 @@
 """
-tests/test_strata_manifest.py - Gate Lock 1 Verification Test Suite.
+tests/test_strata_manifest.py - CONSORT Task Manifest Verification Test Suite.
 
 Audits:
 1. RFC 8259 Compliance: Unreachable distances serialize to JSON null, zero unquoted Infinity/NaN literals.

@@ -95,6 +95,16 @@ class TransformersBackend(ModelBackend):
                 kwargs["torch_dtype"] = torch.float16
         else:
             # CPU runtime: 4-bit CUDA quantization cannot run on CPU
+            try:
+                import psutil
+                avail_gb = psutil.virtual_memory().available / (1024 ** 3)
+                if avail_gb < 18.0:
+                    raise MemoryError(
+                        f"Gemma 4 model requires >= 18 GB available RAM for CPU execution (found {avail_gb:.2f} GB). "
+                        "Use OfflineReplayBackend for local offline testing."
+                    )
+            except ImportError:
+                pass
             kwargs["device_map"] = "cpu"
             kwargs["torch_dtype"] = torch.float32
 

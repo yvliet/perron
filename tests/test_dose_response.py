@@ -1,5 +1,5 @@
 """
-Unit and Integration Tests for Phase 3 Deliverables:
+Unit and Integration Tests for Spectral Resolvent Linearity and Dose-Response Surface:
 - Spectral resolvent linearity tolerance (float32 <= 2.0e-6, float64 <= 1.0e-10)
 - Batched SpMM resolvent solver (compute_resolvent_basis_batched)
 - Fixed-window BM25 score normalization sanitization guardrails

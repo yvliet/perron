@@ -69,14 +69,14 @@ $$\boldsymbol{\pi}^{(t+1)} = \beta \cdot (\boldsymbol{\pi}^{(t)} T) + (\beta \cd
 **Proposition 1 (Spectral Gap & Geometric Convergence)**:  
 *Under Brauer's rank-1 perturbation theorem (Brauer, 1952), the Google operator $M = \beta (T + \mathbf{d}\mathbf{p}_0^T) + (1-\beta) \mathbf{1} \mathbf{p}_0^T$ satisfies $|\lambda_2(M)| \le \beta = 0.85$, establishing an invariant spectral gap $1 - |\lambda_2| \ge 0.15$. Because modular software architectures partition into disconnected subgraphs ($\lambda_2(\bar{T}) = 1.0$), Brauer's bound holds with exact equality: $|\lambda_2(M)| = 0.85$.*
 
-*Proof Sketch*: Let $\bar{T} = T + \mathbf{d} \mathbf{p}_0^T$. Then $M = \beta \bar{T} + (1-\beta) \mathbf{1} \mathbf{p}_0^T$ is a rank-1 perturbation of $\beta \bar{T}$. By Brauer (1952), $\lambda_i(M) = \beta \lambda_i(\bar{T})$ for $i \ge 2$. Because the maximum initial $L_1$ error between two probability vectors on the simplex satisfies $\|\mathbf{e}^{(0)}\|_1 \le 2.0$, contraction bounds convergence to tolerance $\epsilon = 10^{-6}$ in at most $\lceil \ln(2/\epsilon) / \ln(1/\beta) \rceil = 90$ iterations. On CPU, power iteration converges in 90 iterations on Requests (1.89 ms) and 66 on SymPy (5.10 ms), matching the worst-case bound on modular graphs.
+*Proof Sketch*: Let $\bar{T} = T + \mathbf{d} \mathbf{p}_0^T$. Then $M = \beta \bar{T} + (1-\beta) \mathbf{1} \mathbf{p}_0^T$ is a rank-1 perturbation. By Brauer (1952), $\lambda_i(M) = \beta \lambda_i(\bar{T})$ for $i \ge 2$. Contraction bounds convergence to tolerance $\epsilon = 10^{-6}$ in at most $\lceil \ln(2/\epsilon) / \ln(1/\beta) \rceil = 90$ iterations. Power iteration converges in 90 iterations on Requests (1.89 ms) and 66 on SymPy (5.10 ms).
 
 ### 3.4 Decoupled Post-Walk Specificity Ratio
 To suppress hubs without mutating sparse transition matrices, Perron precomputes global stationary distribution $\boldsymbol{\pi}_g$ under uniform teleportation. Specificity is computed post-walk:
 
 $$\text{Specificity}(v) = \frac{\pi_q(v)}{(\pi_g(v) + \epsilon)^{\gamma_q}}$$
 
-where $\epsilon = 10^{-8}$. In the stationary limit, $\ln(\pi_q(v) / \pi_g(v)) = \text{PMI}(v; q)$. Decoupled damping acts as power-law smoothed structural Inverse Document Frequency (IDF), analogous to popularity discounting in bipartite networks. Let $\mathcal{H}_{25}$ denote the top-25 in-degree hub symbols. Hub suppression is measured via the Hub Suppression Index: $\text{HSI}(q) = 1 - (|R_{10}(q) \cap \mathcal{H}_{25}| / 10)$.
+where $\epsilon = 10^{-8}$. In the stationary limit, $\ln(\pi_q(v) / \pi_g(v)) = \text{PMI}(v; q)$, acting as power-law smoothed structural IDF. Top-25 in-degree hub suppression is measured via the Hub Suppression Index: $\text{HSI}(q) = 1 - (|R_{10}(q) \cap \mathcal{H}_{25}| / 10)$.
 
 **Scale-Invariant Hub Prominence ($\eta_q$)**: When an issue explicitly names a central hub (`Session` in Requests, `Expr` in SymPy), aggressive discounting penalizes legitimate defect sites. Perron computes $\eta_q = \max_{h \in \mathcal{H}_{25}} p_0(h) / \max_v p_0(v)$. When $\eta_q \ge 0.20$, the exponent relaxes: $\gamma_q = \gamma \cdot (1 - \frac{1}{2} \mathbb{I}(\eta_q \ge 0.20))$, rescuing intentional targets. Figure 2 visualizes this Pareto trade-off on the pre-walk development validation split ($N=100$).
 
@@ -101,27 +101,19 @@ The transition matrix is stored as raw CSR arrays opened via `numpy.load(mmap_mo
 
 ## 5. Empirical Evaluation
 
-### 5.1 Factorial Sweep Diagnosis on SWE-bench Lite
-To isolate the causes of graph diffusion failure, I conducted a $2\times 2$ factorial sweep across all 237 callable SWE-bench Lite instances across Prior Dispersion (Dense Linear vs. Sharp Softmax $\tau=0.15$) and Graph Topology (Raw vs. Sanitized). Tasks filter to callable function edits.
+### 5.1 Continuous Dose-Response Surface and Resolvent Linearity (H1 & H3)
+Exploiting Neumann resolvent linearity ($\mathbf{u}(p_0) = \sum_{i=1}^K w_i \mathbf{u}(e_{s_i})$ with mass normalization $\boldsymbol{\pi}(p_0) = \mathbf{u}(p_0) / (\mathbf{u}(p_0)\mathbf{1})$), I precomputed single-source basis vectors for top-100 seeds across SWE-bench Verified ($N=344$ callable), evaluating 186 continuous prior configurations across four prior families (softmax, power, linear, rank-zeta, 63,984 evaluations in 26 min via batched SpMM).
 
-| Condition | Prior Mode | Test Filtering | Damping $\beta$ | Standard PPR Acc@10 | Perron Decoupled ($\gamma=0.70$) | Top-10 Test Pct |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| Linear + Raw | Linear | False | 0.85 | 10.1% (24/237) | 34.2% (81/237) | 32.5% |
-| Linear + Sanitized | Linear | True | 0.85 | 13.9% (33/237) | 36.7% (87/237) | 0.0% |
-| Softmax + Raw | Softmax | False | 0.85 | 46.0% (109/237) | 41.4% (98/237) | 18.6% |
-| Softmax + Sanitized | Softmax | True | 0.85 | **48.5%** (115/237) | 47.7% (113/237) | **0.0%** |
-| *Lexical Baseline (BM25)* | BM25 | True | - | 46.0% (109/237) | - | 0.0% |
-
-**Key Findings**:
-- Under dense linear priors, standard PPR collapses to 10.1% on raw graphs from 32.5% test contamination.
-- Isolating test nodes eliminates sink leakage (+3.8 pp recovery).
-- Concentrating priors via top-25 softmax ($\tau=0.15$) rescues Standard PPR to 48.5%, rendering Perron neutral (47.7%, $-0.8$ pp).
-- Perron acts as an invariant topological stabilizer under diffuse priors (+24.1 pp gain), remaining neutral under concentrated priors.
+Accuracy collapses onto an invariant curve governed strictly by prior effective support $n_{\text{eff}} = \exp(H(p_0))$. A generalized linear mixed model confirms vanishing residual implementation coefficients ($a = -0.008$, $b = -0.036$), verifying Hypothesis H1. Iso-entropy contrasts across divergent $k$ exhibit zero significant divergence (McNemar $p = 0.535$). Furthermore, for tasks with hubs ($\mathcal{H}_{25}$) in the PPR top-10 ($N=109$), paired McNemar ($p = 0.683$) and sample-powered TOST equivalence ($p < .001$) show no significant divergence, falsifying hub-harm narratives (Hypothesis H3): hubs alter cosmetic ranking without degrading defect localization.
 
 ---
 
-### 5.2 Damping Sensitivity and Topological Regularization
-On SWE-bench Lite, varying damping $\beta \in [0.50, 0.85]$ demonstrates that lower damping restricts random walks tightly around issue seeds, whereas unconstrained diffusion at $\beta=0.85$ requires calibrated softmax priors to prevent mass dispersion.
+### 5.2 Topological Reachability and Relation-Stratified Null Models
+To evaluate whether graph diffusion is constrained by ranking dynamics or structural disconnection, I analyzed multi-source Boolean reachability from top-10 BM25 seeds across SWE-bench Verified ($N=344$ callable). At 1-hop distance, code graph edges reach 57.8% of gold target functions (median $|N_1|=27$). Expanding to 2 hops reaches 66.9% of targets (median $|N_2|=324$ symbols), diluting diffusion probability mass across irrelevant subgraphs.
+
+To isolate semantic contribution from degree-sequence artifacts, I generated 100 relation-stratified null graph replicates per repository via degree-preserving Maslov-Sneppen double-edge swapping, enforcing acyclic BFS guards to prevent inheritance DAG cycles while synchronizing caller transpositions ($E_{\text{caller}} = E_{\text{call}}^T$). Null graph replicates yield 63.8% 2-hop reachability ($z_E = +6.46$, $p < .001$). Furthermore, unprivileged pruning of unseeded intermediate hubs collapses 2-hop reachability to 62.2%, whereas size-matched lexical expansion reaches 54.1% and same-file containment captures 66.9%. Software code graphs impose an insurmountable structural reachability ceiling.
+
+---
 
 ### 5.3 Pre-Registered Confirmatory Evaluation on SWE-bench Verified
 I evaluated generalizability on SWE-bench Verified across 12 canonical repositories (344 callable instances, filtering out non-callable file additions). Hyperparameters were frozen prior to evaluation ($\beta=0.85$, $\gamma^*=0.70$, $\tau=0.15$, $K=25$).
@@ -152,7 +144,7 @@ I evaluated candidate context packing under prompt budget constraints ($K \le 3{
 | `perron_pack` | Top-10 Perron | 283.8 tokens | 51.2% (176/344) | 67.2% (231/344) |
 | `slot_fused_pack` | 8 BM25 + 2 Perron | 283.8 tokens | **52.3%** (180/344) | **72.7%** (250/344) |
 
-Across arms, AST breadcrumbs average 283.8 whitespace words, preserving 91.8% of prompt capacity for Gemma 4 `<|think|>` reasoning. Table 3 inclusion credits enclosing class scopes (yielding 177 and 176 hits vs. 175 and 173 in Table 2). Standalone Perron matches BM25 in function inclusion (51.2% vs. 51.5%), while BM25 leads in file inclusion (72.4% vs. 67.2%). Slot fusion balances coverage (52.3% function, 72.7% file) at 513.96 ms joint pipeline latency (1.89 ms CSR diffusion vs. AST parsing and IO overhead).
+AST breadcrumbs average 283.8 words, preserving 91.8% of prompt capacity for Gemma 4 `<|think|>` reasoning. Inclusion credits enclosing class scopes. Perron matches BM25 in function inclusion (51.2% vs. 51.5%), while BM25 leads in file inclusion (72.4% vs. 67.2%). Slot fusion balances coverage (52.3% function, 72.7% file) at 513.96 ms pipeline latency.
 
 ### 5.5 Ablation Study
 Removing Decoupled Specificity ($\gamma=0$) drops HSI from 99.5% to 90.8% and collapses diffuse linear priors by -24.1 pp. Test-suite sanitization prevents an additional 3.8 pp sink leakage under unconstrained random walks.

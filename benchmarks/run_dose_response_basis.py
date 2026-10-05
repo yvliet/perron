@@ -729,7 +729,7 @@ def run_dose_response_benchmark(
                 )
                 max_l1_err = max(max_l1_err, l1_err)
             print(f"[{slug}] Measured Resolvent L1 error: {max_l1_err:.4e} (Calibrated threshold: 2.0e-6)")
-            assert max_l1_err <= 2.0e-6, f"Gate Lock 3 violation: L1 error {max_l1_err} exceeds 2.0e-6!"
+            assert max_l1_err <= 2.0e-6, f"Linearity verification violation: L1 error {max_l1_err} exceeds 2.0e-6!"
 
         # Evaluate each task in this repository
         for t in repo_tasks:
@@ -900,7 +900,7 @@ def run_dose_response_benchmark(
 
     t_end = time.perf_counter()
 
-    gate_lock_3_satisfied = bool(
+    acceptance_criteria_satisfied = bool(
         max_l1_err <= 2.0e-6 and
         0.0 <= r2_collapse <= 1.0 and
         abs(glmm_res["coef_a_ln_k"]) < 0.10 and
@@ -922,7 +922,7 @@ def run_dose_response_benchmark(
             "total_evaluations": n_tasks * n_configs,
             "n_configurations": n_configs,
             "execution_duration_seconds": round(t_end - t_start, 2),
-            "gate_lock_3_satisfied": gate_lock_3_satisfied,
+            "acceptance_criteria_satisfied": acceptance_criteria_satisfied,
         },
         "linearity_validation": {
             "max_l1_error": float(max_l1_err),
@@ -965,7 +965,7 @@ def run_dose_response_benchmark(
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(results, indent=2) + "\n", encoding="utf-8")
     print(f"\nSaved dose-response evaluation to {out_path}")
-    print(f"Gate Lock 3 Satisfied: {gate_lock_3_satisfied}")
+    print(f"Acceptance Criteria Satisfied: {acceptance_criteria_satisfied}")
 
     return results
 

@@ -1,5 +1,5 @@
 """
-Tests for Phase 2 deliverables:
+Tests for benchmark and dataset export deliverables:
 - scripts/export_stratum_dataset.py
 - benchmarks/evaluate_gemma4_localization.py (dry-run mode and target extraction)
 - benchmarks/run_beta_sweep.py (--trials Optuna mode)

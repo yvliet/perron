@@ -1,7 +1,7 @@
 """
-Gate Lock 2 Verification Suite: Topological Reachability & Degree-Preserving Null Rewiring.
+Topological Reachability & Degree-Preserving Null Rewiring Verification Suite.
 
-Validates the complete remediation of all Phase 2 critique defects:
+Validates the complete remediation of null model edge-rewiring invariants:
 1. Exact simple graph invariants (no multi-edges, no self-loops, Delta deg = 0).
 2. Transitive closure DAG acyclicity bitmask/BFS (preserves swaps across disjoint trees).
 3. Transpose symmetry E_caller_null = (E_call_null)^T.
@@ -254,9 +254,9 @@ class TestNullModelInvariants:
         assert loaded["import_edges"] == import_edges
         assert loaded["caller_edges"] == caller_edges
 
-    def test_performance_gate_lock_2_threshold(self):
+    def test_performance_null_rewire_threshold(self):
         """
-        Gate Lock 2 Assertion: Asserts that 100 null model replicates on a benchmark-scale graph
+        Asserts that 100 null model replicates on a benchmark-scale graph
         complete in strictly < 60.0 seconds.
         """
         num_nodes = 2000
@@ -303,5 +303,5 @@ class TestNullModelInvariants:
             _ = traverser.traverse(seeds=[1, 2, 3, 4, 5], max_hops=3)
 
         elapsed = time.time() - t0
-        print(f"Gate Lock 2 Benchmark: 100 replicates elapsed in {elapsed:.3f}s")
-        assert elapsed < 60.0, f"Gate Lock 2 breached: elapsed {elapsed:.3f}s >= 60.0s."
+        print(f"Null Model Benchmark: 100 replicates elapsed in {elapsed:.3f}s")
+        assert elapsed < 60.0, f"Performance threshold breached: elapsed {elapsed:.3f}s >= 60.0s."
