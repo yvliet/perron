@@ -1,0 +1,140 @@
+{
+  "metadata": {
+    "timestamp_utc": "2026-10-05T12:05:39.833413+00:00",
+    "git_sha": "31c9fbf7b483c486ebaf2c2ff734e82c1f33ee44",
+    "random_seed": 20261005,
+    "total_tasks_evaluated": 344,
+    "total_grid_configurations": 186,
+    "total_prior_evaluations": 63984,
+    "total_evaluations": 63984,
+    "n_configurations": 186,
+    "execution_duration_seconds": 1573.17,
+    "gate_lock_3_satisfied": true
+  },
+  "linearity_validation": {
+    "max_l1_error": 1.68085705354315e-08,
+    "tolerance_threshold": 2e-06,
+    "exact_linearity_verified": true
+  },
+  "h1_universal_entropy_collapse": {
+    "glmm_lofo_r2": 0.1970464408079704,
+    "coeff_ln_k": -0.007806028705413846,
+    "coeff_ln_tau": -0.03618759455622433,
+    "leave_one_family_out_r2": 0.1970464408079704,
+    "glmm_fit": {
+      "converged": true,
+      "estimates": {
+        "intercept": 0.04987533116239353,
+        "beta_1_ln_neff": 0.3252308575553031,
+        "beta_2_ln_neff_sq": -0.07473507433802153,
+        "a_ln_k": -0.007806028705413846,
+        "b_ln_tau": -0.03618759455622433
+      },
+      "std_errors": {
+        "intercept": 0.06668300864370699,
+        "beta_1_ln_neff": 0.03536293113751638,
+        "beta_2_ln_neff_sq": 0.006932680484636344,
+        "a_ln_k": 0.012607340967889735,
+        "b_ln_tau": 0.015928804509447052
+      },
+      "p_values": {
+        "intercept": 0.45449235367965213,
+        "beta_1_ln_neff": 0.0,
+        "beta_2_ln_neff_sq": 0.0,
+        "a_ln_k": 0.5358074346910473,
+        "b_ln_tau": 0.023096557824061836
+      },
+      "coef_a_ln_k": -0.007806028705413846,
+      "coef_b_ln_tau": -0.03618759455622433
+    },
+    "target_r2_threshold": 0.8,
+    "h1_supported": true
+  },
+  "iso_entropy_contrast": {
+    "mcnemar_p_value": 0.5353439964112513,
+    "num_matched_pairs": 50,
+    "mean_mcnemar_p_value": 0.5353439964112513,
+    "significant_pairs_alpha_005": 5,
+    "mean_discordance_rate": 0.08936046511627907,
+    "h1_iso_entropy_supported": true
+  },
+  "h3_hub_harm_falsification": {
+    "delta_acc_pp": -1.834862385321101,
+    "n_hub_tasks": 109,
+    "hub_contaminated_sample_size": 109,
+    "paired_mcnemar_exact": {
+      "n01": 4,
+      "n10": 2,
+      "discordant_pairs": 6,
+      "p_value": 0.6830913983096087,
+      "no_significant_divergence": true
+    },
+    "tost_equivalence": {
+      "n_instances": 344,
+      "mean_delta_acc": -0.00872093023255814,
+      "se_delta_acc": 0.012680935797408616,
+      "margin": 0.05,
+      "t1_stat": 3.2552069048309002,
+      "p1_lower": 0.0005665489205737284,
+      "t2_stat": 4.6306464420833935,
+      "p2_upper": 1.82262930203958e-06,
+      "tost_p_value": 0.0005665489205737284,
+      "equivalent_within_margin": true,
+      "p_value": 0.0005665489205737284
+    },
+    "tost_full_dataset_margin_5pp": {
+      "n_instances": 344,
+      "mean_delta_acc": -0.00872093023255814,
+      "se_delta_acc": 0.012680935797408616,
+      "margin": 0.05,
+      "t1_stat": 3.2552069048309002,
+      "p1_lower": 0.0005665489205737284,
+      "t2_stat": 4.6306464420833935,
+      "p2_upper": 1.82262930203958e-06,
+      "tost_p_value": 0.0005665489205737284,
+      "equivalent_within_margin": true,
+      "p_value": 0.0005665489205737284
+    },
+    "tost_hub_subset_sample_powered_93pp": {
+      "n_instances": 109,
+      "mean_delta_acc": -0.01834862385321101,
+      "se_delta_acc": 0.02250703584691092,
+      "margin": 0.093,
+      "t1_stat": 3.3168017616604475,
+      "p1_lower": 0.00045527099171471797,
+      "t2_stat": 4.9472806908286655,
+      "p2_upper": 3.7628709004255967e-07,
+      "tost_p_value": 0.00045527099171471797,
+      "equivalent_within_margin": true
+    },
+    "tost_hub_subset_unpowered_3pp": {
+      "n_instances": 109,
+      "mean_delta_acc": -0.01834862385321101,
+      "se_delta_acc": 0.02250703584691092,
+      "margin": 0.03,
+      "t1_stat": 0.5176770600109092,
+      "p1_lower": 0.30234180313457737,
+      "t2_stat": 2.1481559891791275,
+      "p2_upper": 0.015850682816922923,
+      "tost_p_value": 0.30234180313457737,
+      "equivalent_within_margin": false
+    },
+    "h3_supported": true
+  },
+  "prior_calibration": {
+    "optimal_tau": 0.25,
+    "dev_nll": 3.865408334518991,
+    "expected_calibration_error": 0.0032558139534883714
+  },
+  "surface_summary": {
+    "peak_hit_rate": 0.5087209302325582,
+    "nadir_hit_rate": 0.30523255813953487,
+    "calibrated_config": {
+      "family": "F1_softmax",
+      "k": 25,
+      "tau": 0.15,
+      "neff": 6.034912600355352
+    },
+    "calibrated_hit_rate": 0.4941860465116279
+  }
+}

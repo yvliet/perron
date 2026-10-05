@@ -23,6 +23,9 @@ import sys
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple, Any
+
+__path__ = [os.path.join(os.path.dirname(__file__), "graph")]
+sys.setrecursionlimit(max(sys.getrecursionlimit(), 25000))
 import numpy as np
 from scipy.sparse import csr_matrix
 

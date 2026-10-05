@@ -2039,6 +2039,116 @@
       "file": "results/verified_confirmatory_evaluation.json",
       "ptr": "/strata_results/C/rrf_fusion/rate",
       "fmt": "pct1"
+    },
+    "ReachabilityOneHopPct": {
+      "file": "results/reachability_null_evaluation.json",
+      "ptr": "/summary/reachability_1hop/mean",
+      "fmt": "pct1"
+    },
+    "ReachabilityTwoHopPct": {
+      "file": "results/reachability_null_evaluation.json",
+      "ptr": "/summary/reachability_2hop/mean",
+      "fmt": "pct1"
+    },
+    "ReachabilityNullMeanPct": {
+      "file": "results/reachability_null_evaluation.json",
+      "ptr": "/summary/null_model/reachability_2hop/mean",
+      "fmt": "pct1"
+    },
+    "ReachabilityNullStdPct": {
+      "file": "results/reachability_null_evaluation.json",
+      "ptr": "/summary/null_model/reachability_2hop/std",
+      "fmt": "pct1"
+    },
+    "ReachabilityZScore": {
+      "file": "results/reachability_null_evaluation.json",
+      "ptr": "/summary/null_model/reachability_2hop/z_score",
+      "fmt": "num2"
+    },
+    "ReachabilityNullPVal": {
+      "file": "results/reachability_null_evaluation.json",
+      "ptr": "/summary/null_model/reachability_2hop/p_value",
+      "fmt": "pval"
+    },
+    "ReachabilityPrunedPct": {
+      "file": "results/reachability_null_evaluation.json",
+      "ptr": "/summary/pruned_reachability_2hop/mean",
+      "fmt": "pct1"
+    },
+    "ReachabilityLexicalPct": {
+      "file": "results/reachability_null_evaluation.json",
+      "ptr": "/summary/lexical_reachability_size_matched/mean",
+      "fmt": "pct1"
+    },
+    "ReachabilitySameFilePct": {
+      "file": "results/reachability_null_evaluation.json",
+      "ptr": "/summary/same_file_containment/mean",
+      "fmt": "pct1"
+    },
+    "ReachabilityMedianNOne": {
+      "file": "results/reachability_null_evaluation.json",
+      "ptr": "/summary/reachability_1hop/median_nodes",
+      "fmt": "int"
+    },
+    "ReachabilityMedianNTwo": {
+      "file": "results/reachability_null_evaluation.json",
+      "ptr": "/summary/reachability_2hop/median_nodes",
+      "fmt": "int"
+    },
+    "DoseResponseRSquared": {
+      "file": "results/dose_response_evaluation.json",
+      "ptr": "/h1_universal_entropy_collapse/glmm_lofo_r2",
+      "fmt": "num3"
+    },
+    "DoseResponseCoeffA": {
+      "file": "results/dose_response_evaluation.json",
+      "ptr": "/h1_universal_entropy_collapse/coeff_ln_k",
+      "fmt": "num3"
+    },
+    "DoseResponseCoeffB": {
+      "file": "results/dose_response_evaluation.json",
+      "ptr": "/h1_universal_entropy_collapse/coeff_ln_tau",
+      "fmt": "num3"
+    },
+    "DoseResponseIsoEntropyPVal": {
+      "file": "results/dose_response_evaluation.json",
+      "ptr": "/iso_entropy_contrast/mcnemar_p_value",
+      "fmt": "pval"
+    },
+    "DoseResponseHubDeltaAcc": {
+      "file": "results/dose_response_evaluation.json",
+      "ptr": "/h3_hub_harm_falsification/delta_acc_pp",
+      "fmt": "num2"
+    },
+    "DoseResponseHubMcNemarPVal": {
+      "file": "results/dose_response_evaluation.json",
+      "ptr": "/h3_hub_harm_falsification/paired_mcnemar_exact/p_value",
+      "fmt": "pval"
+    },
+    "DoseResponseHubTOSTPVal": {
+      "file": "results/dose_response_evaluation.json",
+      "ptr": "/h3_hub_harm_falsification/tost_equivalence/p_value",
+      "fmt": "pval"
+    },
+    "DoseResponseHubSubtasks": {
+      "file": "results/dose_response_evaluation.json",
+      "ptr": "/h3_hub_harm_falsification/n_hub_tasks",
+      "fmt": "int"
+    },
+    "DoseResponseEvaluations": {
+      "file": "results/dose_response_evaluation.json",
+      "ptr": "/metadata/total_evaluations",
+      "fmt": "int"
+    },
+    "DoseResponseConfigs": {
+      "file": "results/dose_response_evaluation.json",
+      "ptr": "/metadata/n_configurations",
+      "fmt": "int"
+    },
+    "DoseResponseMaxLOneError": {
+      "file": "results/dose_response_evaluation.json",
+      "ptr": "/linearity_validation/max_l1_error",
+      "fmt": "num3"
     }
   }
 }
