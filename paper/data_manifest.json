@@ -1,5 +1,6 @@
 {
-  "benchmark": "SWE-bench Lite Real Repository Evaluation Suite (N=50 instances: Requests & SymPy)",
+  "benchmark": "Perron Evaluation Suite: Confirmatory Verified (N=344), Factorial Lite (N=237), Diagnostic Probe (N=50)",
+  "diagnostic_probe_cohort": "Requests & SymPy (N=50 pilot tasks for Figures and Dolan-More curves)",
   "hub_suppression_index": {
     "bi_encoder": {
       "mean": 97.8,

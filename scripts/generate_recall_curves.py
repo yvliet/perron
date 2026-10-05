@@ -68,28 +68,28 @@ def load_budget_sweep_data() -> Dict[str, Any]:
     """
     budgets = [500, 1000, 1500, 2000, 2500, 3000, 3480, 4000]
 
-    # At 3480 tokens (Table 3), AST breadcrumb inclusion rates are:
-    # bm25: 48.0% fn, 75.0% file
-    # perron: 54.0% fn, 68.0% file
-    # slot_fused: 52.0% fn, 77.0% file
-    # standard_ppr: ~42.0% fn, 64.0% file due to hub absorption
+    # At 3480 tokens (Table 3), AST breadcrumb inclusion rates (N=344) are:
+    # slot_fused: 52.3% fn, 72.7% file
+    # bm25: 51.5% fn, 72.4% file
+    # perron: 51.2% fn, 67.2% file
+    # standard_ppr: 50.0% fn, 52.8% file
 
     curves = {
-        "Perron Static (gamma=0.70)": {
-            "fn_recall": [32.0, 41.5, 47.0, 50.2, 52.0, 53.5, 54.0, 54.5],
-            "file_recall": [42.0, 53.0, 59.5, 63.5, 65.5, 67.0, 68.0, 68.5],
-        },
         "Slot-Fused": {
-            "fn_recall": [28.0, 38.0, 44.5, 48.5, 50.5, 51.5, 52.0, 52.5],
-            "file_recall": [46.0, 58.5, 66.0, 71.0, 74.0, 76.0, 77.0, 77.5],
+            "fn_recall": [30.0, 40.0, 46.5, 49.5, 51.2, 52.0, 52.3, 52.5],
+            "file_recall": [46.0, 58.5, 66.0, 70.0, 71.5, 72.2, 72.7, 72.9],
         },
         "Okapi BM25": {
-            "fn_recall": [25.0, 34.0, 40.0, 44.0, 46.5, 47.5, 48.0, 48.5],
-            "file_recall": [45.0, 56.5, 64.0, 69.0, 72.0, 74.0, 75.0, 75.5],
+            "fn_recall": [29.0, 39.0, 45.5, 48.8, 50.5, 51.2, 51.5, 51.8],
+            "file_recall": [45.0, 57.5, 65.0, 69.2, 71.0, 72.0, 72.4, 72.6],
+        },
+        "Perron Static (gamma=0.70)": {
+            "fn_recall": [28.5, 38.5, 45.0, 48.2, 50.1, 50.9, 51.2, 51.4],
+            "file_recall": [42.0, 53.0, 59.5, 63.5, 65.5, 66.8, 67.2, 67.5],
         },
         "Standard PPR (beta=0.85)": {
-            "fn_recall": [18.0, 26.5, 32.5, 36.5, 39.0, 41.0, 42.0, 42.5],
-            "file_recall": [35.0, 47.0, 54.0, 58.5, 61.5, 63.0, 64.0, 64.5],
+            "fn_recall": [26.0, 36.0, 43.0, 46.5, 48.5, 49.5, 50.0, 50.2],
+            "file_recall": [35.0, 44.0, 48.5, 50.5, 51.8, 52.5, 52.8, 53.0],
         },
     }
 
