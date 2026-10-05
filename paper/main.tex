@@ -217,6 +217,25 @@ This ensures a uniform geometric convergence rate $\mathcal{O}(\beta^t)$ in $L_1
 \end{equation}
 When $\bar{T}$ has more than one closed communicating class (mutually recursive groups with no outgoing calls, or disconnected components), eigenvalue $1$ has multiplicity greater than one and the bound is attained: $|\lambda_2(M)| = \beta$. For two probability vectors the error $\mathbf{e}^{(t)} = \boldsymbol{\pi}^{(t)} - \boldsymbol{\pi}^{*}$ sums to zero, so $\mathbf{e}^{(t+1)} = \beta\,\mathbf{e}^{(t)}\bar{T}$ and $\|\mathbf{e}^{(t)}\|_1 \le \beta^{t}\|\mathbf{e}^{(0)}\|_1 \le 2\beta^{t}$, because $\bar{T}$ is row-stochastic and two distributions are at most $2$ apart in $L_1$. Reaching $\epsilon = 10^{-6}$ therefore takes at most $\lceil \ln(2/\epsilon)/\ln(1/\beta) \rceil = \SpectralMaxIter$ iterations. Algorithm~\ref{alg:perron} stops on the residual $\|\boldsymbol{\pi}^{(t+1)} - \boldsymbol{\pi}^{(t)}\|_1 < \epsilon$; since $\|\mathbf{e}^{(t)}\|_1 \le \|\boldsymbol{\pi}^{(t+1)} - \boldsymbol{\pi}^{(t)}\|_1 + \beta\|\mathbf{e}^{(t)}\|_1$, the stopped iterate lies within $\epsilon/(1-\beta) \approx 6.7 \times 10^{-6}$ of the fixed point. On real repository graphs the residual rule stops after \ReqPowerIters\ iterations on Requests (\ReqConvergeMs) and \SymPowerIters\ on SymPy (\SymConvergeMs).
 
+\paragraph{Proposition 2 (Barycentric Convex Hull Placement \& Warping Bound)}
+\label{prop:convex_hull}
+Let $\mathbf{p}_0 = \sum_{i=1}^K w_i \mathbf{e}_{s_i}$ be any convex combination of query seed nodes with $w_i \ge 0$ and $\sum_{i=1}^K w_i = 1.0$. The stationary distribution $\boldsymbol{\pi}(\mathbf{p}_0)$ lies in the convex hull of the basis distributions:
+\begin{equation}
+\boldsymbol{\pi}(\mathbf{p}_0) = \sum_{i=1}^K \tilde{w}_i \boldsymbol{\pi}(\mathbf{e}_{s_i}) \in \operatorname{conv}\left(\{\boldsymbol{\pi}(\mathbf{e}_{s_i})\}_{i=1}^K\right),
+\label{eq:convex_hull}
+\end{equation}
+where the mass-normalized barycentric weights $\tilde{w}_i$ satisfy:
+\begin{equation}
+\tilde{w}_i = \frac{w_i m_i}{\mathbf{w}^\top \mathbf{m}}, \quad \text{with basis mass } m_i = \|\mathbf{u}(\mathbf{e}_{s_i})\|_1 = \|(1-\beta) \mathbf{e}_{s_i} (I - \beta T)^{-1}\|_1.
+\label{eq:barycentric_weights}
+\end{equation}
+Because transition operator $T$ is row-substochastic on directed multigraphs with dangling sinks ($\mathbf{d} \neq \mathbf{0}$), basis masses satisfy $1 - \beta \le m_i \le 1.0$. Consequently, the maximum coordinate warping ratio is bounded by:
+\begin{equation}
+\frac{\max_i m_i}{\min_j m_j} \le \frac{1}{1 - \beta} = \frac{1}{0.15} \approx 6.67.
+\label{eq:warping_bound}
+\end{equation}
+This bound explains why unnormalized superposition incurs severe error on graphs with absorbing leaf sinks, whereas mass-normalized barycentric superposition is exact to machine precision ($L_1 \le 10^{-10}$).
+
 \subsection{Decoupled Specificity Ratio Hub-Damping}
 \label{sec:specificity}
 Personalized PageRank accumulates probability mass on high-in-degree hub nodes due to graph topology. While HippoRAG~\cite{gutierrez2024hipporag} introduced pre-walk node specificity ($s_i = |P_i|^{-1}$) to scale the query teleport prior, pre-walk scaling cannot prevent unseeded intermediate hubs from absorbing probability mass during random walk transitions on scale-free graphs. To suppress structural popularity without mutating the static matrix $T$, Perron establishes a repository-wide stationary baseline $\boldsymbol{\pi}_{\text{global}}$, computed once per codebase using a uniform prior $\mathbf{p}_{\text{uniform}} = \frac{1}{|V|} \mathbf{1}$.
@@ -232,6 +251,16 @@ where $\epsilon = 10^{-8}$. In the primary static configuration (\textbf{Perron 
 \label{eq:dynamic_gamma}
 \end{equation}
 where $\tau_{\text{lex}} = 0.20$ denotes the scale-invariant relative hub prominence threshold, and baseline $\gamma = 0.70$. When a query focuses on domain-specific leaves ($\eta_q < \tau_{\text{lex}}$), $\gamma_q$ defaults to the baseline exponent $\gamma = 0.70$, aggressively penalizing unseeded structural hubs. Conversely, when an issue query explicitly targets a central architectural class ($\eta_q \ge 0.20$), $\gamma_q$ is uniformly relaxed across the entire graph to $0.5 \gamma = 0.35$. Because $\gamma_q$ is relaxed uniformly across all symbols, it compresses the denominator dynamic range without inducing per-node denominator inversion on sub-unitary probabilities ($\pi_{\text{global}} < 1$), successfully preventing false-positive suppression of verified defect targets. Both configurations are benchmarked in Section~\ref{sec:verified_evaluation}.
+
+\paragraph{Proposition 3 (Exact Asymptotic PMI Decomposition on Query Support)}
+\label{prop:pmi_decomposition}
+For any symbol $v$ on query support $\mathcal{V}_q^+ = \{v \in \mathcal{V} \mid \pi_{\text{query}}(v) > 0\}$, the log-transformed Specificity score satisfies:
+\begin{equation}
+\ln \text{Specificity}(v) = (1 - \gamma) \ln \pi_{\text{query}}(v) + \gamma \text{PMI}(v; q) - \gamma \ln\left(1 + \frac{\epsilon}{\pi_{\text{global}}(v)}\right).
+\label{eq:pmi_decomposition}
+\end{equation}
+For reachable symbols ($\pi_{\text{global}}(v) \gg \epsilon$), the residual $\mathcal{R}_\epsilon(v) = -\gamma \ln(1 + \epsilon / \pi_{\text{global}}(v))$ vanishes, yielding an exact Pareto log-linear interpolation between reachability ($\gamma=0$) and surprise ($\gamma=1$):
+$\ln \text{Specificity}(v) = (1 - \gamma) \ln \pi_{\text{query}}(v) + \gamma \text{PMI}(v; q)$.
 
 Mathematically, in the stationary limit, the ratio $\pi_{\text{query}}(v) / \pi_{\text{global}}(v)$ maps directly to the likelihood ratio $P(V_\infty = v \mid Q = q) / P(V_\infty = v) = 2^{\text{PMI}(v; q)}$. The sub-linear exponent $\gamma = 0.70$ acts as a power-law smoothed structural Inverse Document Frequency (IDF), analogous in structural discounting behavior to popularity-discounted random walks in bipartite recommender systems~\cite{zhou2010solving} and unigram frequency discounting in Word2Vec Skip-Gram negative sampling~\cite{mikolov2013distributed,levy2014neural}. The design choice that matters is decoupling: keeping the row-stochastic transition matrix $T$ strictly static, binary, and zero-copy in memory, while applying smoothed PMI popularity discounting in $\mathcal{O}(|\mathcal{V}|)$ time without runtime edge mutations or memory reallocation.
 
