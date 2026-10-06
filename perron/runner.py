@@ -52,13 +52,14 @@ from perron.backends.gguf_backend import GgufBackend
 def create_backend_from_config(
     model_cfg: Dict[str, Any],
     runtime_cfg: Optional[Dict[str, Any]] = None,
+    backend_override: Optional[str] = None,
 ) -> ModelBackend:
     """
     Instantiates the model backend specified in agent.yaml.
     Supports environment variable overrides for offline container execution:
     GEMMA_CHECKPOINT_DIR, MODEL_PATH, or local cache paths.
     """
-    backend_type = model_cfg.get("backend", "transformers").lower()
+    backend_type = (backend_override or model_cfg.get("backend", "transformers")).lower()
     checkpoint_candidates = [
         os.environ.get("GEMMA_CHECKPOINT_DIR"),
         os.environ.get("MODEL_PATH"),
@@ -85,13 +86,21 @@ def create_backend_from_config(
     if backend_type == "transformers":
         load_in_4bit = quantization in ("4bit", "q4_k_m")
         load_in_8bit = quantization == "8bit"
-        return TransformersBackend(
-            model_name_or_path=base_model,
-            adapter_path=adapter_path,
-            load_in_4bit=load_in_4bit,
-            load_in_8bit=load_in_8bit,
-            local_files_only=offline_mode,
-        )
+        try:
+            return TransformersBackend(
+                model_name_or_path=base_model,
+                adapter_path=adapter_path,
+                load_in_4bit=load_in_4bit,
+                load_in_8bit=load_in_8bit,
+                local_files_only=offline_mode,
+            )
+        except (OSError, ValueError, Exception) as exc:
+            raise RuntimeError(
+                f"Failed to initialize TransformersBackend for '{base_model}'. "
+                f"Error: {exc}\n"
+                "To run in offline replay mode without downloading model weights, "
+                "pass '--backend replay' to the runner CLI or set 'backend: replay' in agent.yaml."
+            ) from exc
     elif backend_type == "gguf":
         model_path = os.environ.get("GGUF_MODEL_PATH") or model_cfg.get("model_path")
         if not model_path or not Path(model_path).exists():
@@ -120,6 +129,7 @@ def run_runner(
     test_filter: Optional[str] = None,
     instance_id: str = "task_instance",
     max_turns: Optional[int] = None,
+    backend_override: Optional[str] = None,
 ) -> Dict[str, Any]:
     """
     Core execution logic for headless agent runner.
@@ -143,7 +153,7 @@ def run_runner(
     gamma = diffusion_cfg.get("gamma", 0.70)
     tau = diffusion_cfg.get("tau", 0.15)
 
-    backend = create_backend_from_config(model_cfg, runtime_cfg)
+    backend = create_backend_from_config(model_cfg, runtime_cfg, backend_override=backend_override)
 
     with EphemeralWorktree(repo_dir) as worktree_repo:
         agent = PerronAgent(
@@ -192,6 +202,7 @@ def main():
     parser.add_argument("--issue-file", type=str, default=None, help="Path to file containing issue description")
     parser.add_argument("--output-patch", type=str, default=None, help="Path to save generated git patch")
     parser.add_argument("--config", type=str, default="agent.yaml", help="Path to agent.yaml")
+    parser.add_argument("--backend", type=str, default=None, choices=["transformers", "gguf", "vllm", "replay"], help="Override model backend specified in configuration")
     parser.add_argument("--test-file", type=str, default=None, help="Optional test file to verify")
     parser.add_argument("--test-filter", type=str, default=None, help="Optional test filter expression")
     parser.add_argument("--instance-id", type=str, default="task_0", help="Unique task identifier")
@@ -218,6 +229,7 @@ def main():
         test_filter=args.test_filter,
         instance_id=args.instance_id,
         max_turns=args.max_turns,
+        backend_override=args.backend,
     )
 
     if not out_patch and result["patch"]:

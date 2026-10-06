@@ -16,6 +16,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 
 def test_load_instance_graph():
     """Verify loading an exported instance graph from data_release/graphs/."""
+    pytest.importorskip("pyarrow")
     graphs_dir = REPO_ROOT / "data_release" / "graphs"
     assert graphs_dir.exists(), "Requires data_release/graphs/"
 

@@ -41,10 +41,18 @@ def load_gold_data(gold_path: Optional[Path] = None) -> List[Dict[str, Any]]:
         p = REPO_ROOT / "data_release" / "gold.jsonl"
     else:
         # Fallback build on the fly
-        from benchmarks.gold_patch_parser import GoldPatchParser
-        parser = GoldPatchParser()
-        parser.export_gold_jsonl()
-        p = REPO_ROOT / "data_release" / "gold.jsonl"
+        try:
+            from benchmarks.gold_patch_parser import GoldPatchParser
+            parser = GoldPatchParser()
+            parser.export_gold_jsonl()
+            p = REPO_ROOT / "data_release" / "gold.jsonl"
+        except ImportError as exc:
+            if exc.name and exc.name.startswith("benchmarks"):
+                raise FileNotFoundError(
+                    "Gold dataset 'data_release/gold.jsonl' not found. "
+                    "Please generate it using benchmarks/gold_patch_parser.py or provide a valid gold_path."
+                ) from exc
+            raise
 
     records = []
     with open(p, "r", encoding="utf-8") as f:

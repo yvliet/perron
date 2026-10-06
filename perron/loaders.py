@@ -12,7 +12,6 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 import numpy as np
 import scipy.sparse as sp
-import pyarrow.parquet as pq
 
 
 class InstanceGraph:
@@ -120,6 +119,14 @@ def load_instance_graph(instance_path: Union[str, Path]) -> InstanceGraph:
 
     num_nodes = len(indptr) - 1
     t_matrix = sp.csr_matrix((data, indices, indptr), shape=(num_nodes, num_nodes))
+
+    try:
+        import pyarrow.parquet as pq
+    except ImportError as exc:
+        raise ImportError(
+            "pyarrow is required to load parquet node tables. "
+            "Install it via 'pip install pyarrow' or 'pip install perron-core[data]'."
+        ) from exc
 
     nodes_table = pq.read_table(p / "nodes.parquet")
 

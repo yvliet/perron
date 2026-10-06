@@ -23,7 +23,7 @@ from typing import Any, Dict, List, Optional, Tuple
 from perron import __version__
 from perron.retriever import CodeGraph, PerronRetriever
 
-# Direct all diagnostics to stderr so stdout remains a pristine JSON-RPC stream
+# Direct all diagnostics to stderr so stdout remains an uncorrupted JSON-RPC stream
 logging.basicConfig(
     stream=sys.stderr,
     level=logging.INFO,
