@@ -52,6 +52,12 @@ FIGURES_REGISTRY = {
         "outputs": ["benchmark_statistical_evaluation.pdf", "benchmark_statistical_evaluation.png"],
         "fn": "generate_figure5_statistical_evaluation",
     },
+    6: {
+        "name": "Figure 6: Continuous Dose-Response Surface & Damping Sensitivity",
+        "description": "Two-panel dose-response curve across 186 configurations and beta sensitivity",
+        "outputs": ["neff_dose_response.pdf", "neff_dose_response.png"],
+        "fn": "generate_figure_neff_dose_response",
+    },
 }
 
 def list_figures():
@@ -79,6 +85,7 @@ def run_figure_generation(fig_id=None):
         generate_figure3_action_and_failure,
         generate_figure4_pass_at_k,
         generate_figure5_statistical_evaluation,
+        generate_figure_neff_dose_response,
     )
     
     fn_map = {
@@ -87,6 +94,7 @@ def run_figure_generation(fig_id=None):
         3: generate_figure3_action_and_failure,
         4: generate_figure4_pass_at_k,
         5: generate_figure5_statistical_evaluation,
+        6: generate_figure_neff_dose_response,
     }
     
     figures_to_run = [fig_id] if fig_id in fn_map else sorted(fn_map.keys())
@@ -95,7 +103,7 @@ def run_figure_generation(fig_id=None):
     if fig_id in fn_map:
         print(f"Generating Figure {fig_id}: {FIGURES_REGISTRY[fig_id]['name']}")
     else:
-        print("Generating All 5 Publication-Grade Figures for Perron")
+        print("Generating All Publication-Grade Figures for Perron")
     print("=" * 75)
     
     for fid in figures_to_run:
