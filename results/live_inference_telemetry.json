@@ -5,9 +5,9 @@
   "model_sha256": "66fe83f1ffa3ebf1fd5a2c8e4af4b5c83e47fc31d917606015eea40315482a02",
   "num_instances": 100,
   "peak_vram_gib": 2.37,
-  "mean_ttft_ms": 3548.1,
-  "decode_tokens_per_sec": 11.6,
+  "mean_ttft_ms": 3505.0,
+  "decode_tokens_per_sec": 11.7,
   "transmission_coefficient_kappa": 0.0,
-  "git_sha": "41dab3d",
-  "utc_timestamp": "2026-10-05T20:49:00Z"
+  "git_sha": "8bbda9a",
+  "utc_timestamp": "2026-10-06T10:12:00Z"
 }

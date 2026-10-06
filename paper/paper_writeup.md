@@ -21,7 +21,7 @@ Local developer agents operate under prompt budgets ($K \le 4{,}096$ tokens) whe
 I diagnose these dynamics via a $2\times 2$ factorial sweep, establish the $n_{\text{eff}} = \exp(H(\mathbf{p}_0))$ dose-response law, evaluate Decoupled Specificity on SWE-bench Verified, and assess local LLM reranking under a two-stage pre-registered Gemma 4 protocol.
 
 ### Systems Hardware Envelope
-The engine peaks at 144.33 MB resident memory (graph load 91.4 MB) on a 15.68 GiB host, completing sparse CSR diffusion in 1.89 ms on Requests and 5.10 ms on SymPy via memory-mapped page caching. Reader ingestion was evaluated on Kaggle GPU across $N=100$ SWE-bench Verified tasks using Gemma 4 E2B in FP16 with PLE on a Tesla T4 (2.37 GiB peak VRAM, 3548.1 ms mean TTFT, 11.6 tokens/sec decode). Under an unconstrained 256-token budget, `<|think|>` reflection exhausted generation before emitting closing `<target>` tags ($\kappa = 0.0$), showing the necessity for decoupled reasoning and extraction budgets.
+The engine peaks at 144.33 MB resident memory (graph load 91.4 MB) on a 15.68 GiB host, completing sparse CSR diffusion in 1.89 ms on Requests and 5.10 ms on SymPy via memory-mapped page caching. Reader ingestion was evaluated on Kaggle GPU across $N=100$ SWE-bench Verified tasks using Gemma 4 E2B in FP16 with PLE on a Tesla T4 (2.37 GiB peak VRAM, 3505.0 ms mean TTFT, 11.7 tokens/sec decode). Under an unconstrained 256-token budget, `<|think|>` reflection exhausted generation before emitting closing `<target>` tags ($\kappa = 0.0$), showing the necessity for decoupled reasoning and extraction budgets.
 
 ![Figure 1](https://raw.githubusercontent.com/yvliet/perron/main/paper/figures/perron_pipeline.png)
 
