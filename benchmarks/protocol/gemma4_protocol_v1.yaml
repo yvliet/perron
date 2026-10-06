@@ -1,0 +1,493 @@
+# =============================================================================
+# GEMMA 4 EVALUATION PROTOCOL  -  gemma4_protocol_v1.yaml
+#
+# Question: does graph-derived candidate generation add ranking signal beyond
+# size-matched, non-graph candidate pools, when every pool is scored by the
+# SAME frozen Gemma 4 pointwise reranker?   ("Structure proposes, LLM disposes")
+#
+# TWO-STAGE FREEZE (see `lock:` at the bottom)
+#   Stage 1  Freeze THIS file: pools, arms, prompt VARIANTS, metrics, tests,
+#            decision rules, gates.  Nothing about outcomes is known yet.
+#   Dev      Validate prompts on the Lite dev split ONLY. Pick one variant by
+#            the pre-declared rule. Write the lock JSON.
+#   Stage 2  Freeze the lock JSON (chosen prompt, token ids, golden-render
+#            hashes, measured throughput). Then run Verified, exactly once.
+#   Why two stages: validating prompts AFTER hashing one file would otherwise
+#   force an edit to the hashed file. Variants are declared here; the lock only
+#   records which one won.
+#
+# RULES
+#   R1. Anything not specified here is EXPLORATORY and must be labelled so.
+#   R2. Hash the raw bytes of this file (LF line endings, UTF-8).
+#   R3. Every RESOLVE_BEFORE_STAGE1 marker (double angle brackets) must be
+#       replaced with a real value before stage 1; freeze_protocol.py enforces it.
+#   R4. Deviations are logged in deviations.md and disclosed in the paper.
+# =============================================================================
+
+protocol:
+  id: gemma4-pointwise-rerank
+  version: "1.0.0"
+  drafted: "2026-10-06"
+  author: "Sultan Haikal"
+  thesis: >
+    Graph structure proposes candidates; an LLM disposes. Test whether
+    graph-derived candidates carry ranking signal beyond size-matched
+    non-graph candidates under an identical pointwise Gemma 4 reranker.
+  evidence_class: >
+    Pre-specified protocol, hashed before the first Verified execution. It is
+    NOT part of the earlier Perron pre-registration (commit 6908e78) and must
+    be described in the paper as a separate, pre-specified protocol.
+  conventions:
+    all_tests_two_sided: true
+    alpha: 0.05
+    outcome_expectations: none
+    verified_gemma_runs_allowed: 1   # crash-resume is fine; a re-run with any change is a NEW protocol version
+    seeds:
+      bootstrap: 20261106
+      permutation: 20261107
+      downstream_sampling: 20261108
+
+# -----------------------------------------------------------------------------
+# 1. HYPOTHESES
+# -----------------------------------------------------------------------------
+hypotheses:
+  H1_topology_beyond_controls:
+    tier: 1
+    statement: >
+      With per-task pool size matched, reranking the graph pool (A4) gives higher
+      strict Acc@5 than reranking the depth-matched BM25 pool (A2) AND than the
+      same-file-matched pool (A3).
+  H2_reranker_on_fixed_pool:
+    tier: 2
+    statement: "Gemma pointwise reranking of the BM25 top-10 (A1) changes Acc@1/3/5 and MRR@50 relative to BM25 order (B0). Acc@10 is identical by construction."
+  H3_system_vs_lexical:
+    tier: 2
+    statement: "The graph-pool reranker (A4) differs from BM25 (B0) on Acc@1/3/5/10 and MRR@50."
+  H4_semantic_vs_degree_sequence:
+    tier: 3_exploratory
+    statement: "A4 differs from A5 (same procedure on a degree-preserving null graph)."
+  H5_reader_transmission:
+    tier: descriptive
+    statement: "Given the gold function in a 5-candidate context, Gemma 4 selects it at a rate well above chance (replaces the kappa=0.0 truncation artifact)."
+
+# -----------------------------------------------------------------------------
+# 2. DATA
+# -----------------------------------------------------------------------------
+data:
+  test:
+    benchmark: "SWE-bench Verified"
+    subset: "callable tasks with function-level ground truth, as frozen in the Perron pre-registration"
+    expected_n: 344
+    repos: 12
+    split_sha256: "95c7ef3ca69214f5ac9f6bcba20e2531596ed260c2cbe181d2df3a56873d259b"
+  dev:
+    benchmark: "SWE-bench Lite"
+    name: dev_val
+    expected_n: 100
+    allowed_uses: [prompt_variant_selection, gate_checks, throughput_measurement]
+  integrity_assertions:
+    - "dev_val and test are disjoint by instance_id. If not, remove the overlap from test for ALL primary analyses and report the reduced N."
+    - "Graph, BM25 index and breadcrumbs are built from each task's base_commit only."
+  prompt_may_contain: [problem_statement, candidate_breadcrumb]
+  prompt_must_not_contain:
+    - patch
+    - test_patch
+    - hints_text
+    - FAIL_TO_PASS
+    - PASS_TO_PASS
+    - bm25_score
+    - pool_rank
+    - arm_id
+    - graph_edges
+    - seed_flag
+  gold:
+    definition: "functions/methods whose line spans are modified by the gold patch (frozen Perron ground-truth annotation)"
+    match: strict            # file path + qualified name. Class-scope credit is SECONDARY only.
+    success_rule: any_gold   # a task succeeds at k if at least one gold function is in the top k
+  strata:
+    source: "kaggle dataset yvliet/swebench-strata-annotations"
+    named: [A]               # N=208
+    unnamed: [B, C]          # N=136. B (N=5) is merged into C: N=5 supports no inference.
+  verified_access_before_stage2:
+    allowed:
+      - "non-LLM reproduction of already-published numbers (gate G0)"
+      - "gold-free quantities: pool sizes, token counts, prompt lengths"
+    forbidden:
+      - "any gold-dependent statistic of the NEW pools (oracle recall, Acc@k of A1-A6)"
+
+# -----------------------------------------------------------------------------
+# 3. CANDIDATE POOLS
+# -----------------------------------------------------------------------------
+candidates:
+  universe:
+    graph: "sanitized Perron CSR graph of the task's repo at base_commit (test nodes masked)"
+    node_kinds: [function, method]
+  seeds:
+    id: S
+    definition: "the 10 highest BM25 scores over the universe, same scorer as Table 2; ties by qualified name ascending"
+    bm25_config: "k1=1.5, b=0.75, token_boosts={name: 3.0, path: 2.0, docstring: 1.0, code_body: 1.0}"
+    p0: "p0(s) = bm25(s) / sum_{s' in S} bm25(s'); uniform over S if the sum is 0"
+  filter_F:
+    applies_to: "every NON-seed candidate in every arm (never to S, because S defines B0)"
+    rules:
+      - "node kind in {function, method}"
+      - "not a test node"
+      - "not in H25, the 25 highest in-degree symbols of the repo graph (Eq. 15), computed on the sanitized graph"
+  graph_expansion:
+    neighbors: "out-neighbors of S under support(W), i.e. the Perron operator edges (call, caller, inherit, import), then filter_F, minus S"
+    adjacency_score: "a(u) = sum_{s in S} p0(s) * T[s,u]   (one step of the walk from p0)"
+    order: "a(u) descending; ties by qualified name ascending"
+    expansion_cap: 40
+  pool_size:
+    M_max: 50
+    rule: "M_t = 10 + min(|E_t|, 40), where E_t is the filtered 1-hop set. M_t is in [10, 50] and is computed from the graph arm only; every control arm is built to EXACTLY M_t."
+  pool_rules:
+    A1: "S only (10)."
+    A2: "S, then continue down the BM25 ranking, skipping symbols that fail filter_F, until M_t."
+    A3: "S, then symbols in files containing any seed (passing filter_F), ordered by BM25 desc, up to M_t. If too few, FILL with the next BM25 ranks (as A2). Log fill count per task."
+    A4: "S, then the first (M_t - 10) of E_t by adjacency_score."
+    A5: "As A4 but on null replicate r_t = sha256(instance_id) mod 100 of the degree-preserving relation-stratified null graphs; truncate to M_t - 10; FILL with next BM25 ranks if short."
+    A6: "S, then Perron Static ranking (Table 2 config, softmax prior k=25 tau=0.15 unless G0 shows otherwise), skipping S and filter_F failures, until M_t."
+  arms:
+    - {id: B0, name: bm25,             llm: false, priority: baseline}
+    - {id: B1, name: perron_static,    llm: false, priority: baseline}
+    - {id: A1, name: rerank_seeds,     llm: true,  priority: required}
+    - {id: A2, name: rerank_depth,     llm: true,  priority: required}
+    - {id: A3, name: rerank_samefile,  llm: true,  priority: required}
+    - {id: A4, name: rerank_graph,     llm: true,  priority: required}
+    - {id: A5, name: rerank_nullgraph, llm: true,  priority: secondary}
+    - {id: A6, name: rerank_perron,    llm: true,  priority: secondary}
+  fairness_constraints:
+    - "One renderer, one prompt, one scorer for all arms. No arm-specific text or features reach the model."
+    - "Pointwise scoring is independent of pool order, so pool order cannot create position bias."
+    - "Interpretation is limited to this candidate generator and ordering rule, not 'graph topology' in general."
+  pool_diagnostics_to_log:
+    - "M_t distribution; fraction of tasks with A3/A5 fill; mean fill size"
+    - "pairwise Jaccard of pools; size of graph-unique candidates (in A4 but in neither A2 nor A3)"
+    - "oracle recall of each pool (Verified: only after stage 2)"
+
+# -----------------------------------------------------------------------------
+# 4. MODEL, PROMPT, SCORING
+# -----------------------------------------------------------------------------
+model:
+  name: gemma-4-e2b-it
+  checkpoint_sha256: "66fe83f1ffa3ebf1fd5a2c8e4af4b5c83e47fc31d917606015eea40315482a02"
+  dtype: float16                       # T4 has no native bf16
+  dtype_fallback: float32              # used only if gate G2 finds non-finite logits
+  decoding: "none for scoring (single forward pass); greedy for downstream"
+  thinking: disabled                   # via the chat template's own switch; verified by golden-render check
+  gpu: "Kaggle T4, single GPU (CUDA_VISIBLE_DEVICES=0), internet disabled"
+
+breadcrumb:
+  renderer: "perron/packer.py breadcrumb renderer at 8e8ea3a"
+  fields: [file_path, line_range, enclosing_class_header, enclosing_class_docstring_first_line, signature, docstring]
+  base_snapshot: base_commit
+  modes:
+    skeleton:                  {body_head_lines: 0,  docstring_max_tokens: 80, class_docstring_max_tokens: 30, max_candidate_tokens: 320}
+    skeleton_plus_body_head:   {body_head_lines: 12, docstring_max_tokens: 80, class_docstring_max_tokens: 30, max_candidate_tokens: 480}
+  truncation_order: [body_head, docstring, class_docstring]
+
+issue_text:
+  source: problem_statement
+  normalize: "CRLF -> LF; strip"
+  max_tokens: 1000
+  truncation: "if longer, keep the first 700 and last 300 tokens joined by the line '[... truncated ...]'"
+
+prompt_variants:                       # declared now; dev picks one; NO free-form edits afterwards
+  P0:
+    breadcrumb_mode: skeleton
+    template: |
+      You are helping localize the cause of a software issue.
+
+      Read the GitHub issue, then read one candidate code location from the repository.
+
+      <issue>
+      {issue_text}
+      </issue>
+
+      <candidate>
+      {candidate_breadcrumb}
+      </candidate>
+
+      Does resolving this issue require editing the candidate function?
+      Answer with exactly one word: Yes or No.
+  P1:
+    breadcrumb_mode: skeleton
+    template: |
+      Below is a GitHub issue for a Python repository and one candidate function from that repository.
+
+      <issue>
+      {issue_text}
+      </issue>
+
+      <candidate>
+      {candidate_breadcrumb}
+      </candidate>
+
+      Answer Yes only if the code of this specific function must be changed to fix the issue. Answer No if the function is merely related to the issue, calls the buggy code, or is called by it.
+      Answer with exactly one word: Yes or No.
+  P2:
+    breadcrumb_mode: skeleton_plus_body_head
+    template: |
+      Below is a GitHub issue for a Python repository and one candidate function from that repository.
+
+      <issue>
+      {issue_text}
+      </issue>
+
+      <candidate>
+      {candidate_breadcrumb}
+      </candidate>
+
+      Answer Yes only if the code of this specific function must be changed to fix the issue. Answer No if the function is merely related to the issue, calls the buggy code, or is called by it.
+      Answer with exactly one word: Yes or No.
+  chat_format:
+    messages: "[{role: user, content: <rendered template>}]   # no system role, for compatibility"
+    render: "tokenizer.apply_chat_template(messages, add_generation_prompt=True, tokenize=False) with the thinking switch OFF"
+
+scoring:
+  position: "logits at the LAST prompt token (the first token the model would generate)"
+  yes_strings: ["Yes", "yes", "▁Yes", "▁yes"]
+  no_strings:  ["No",  "no",  "▁No",  "▁no"]
+  token_resolution: "tokenizer.convert_tokens_to_ids; drop unknown; require >=1 id per side; ids are recorded in the lock"
+  formula: "s(t,v) = logsumexp(z[Y_ids]) - logsumexp(z[N_ids]), z = final-position logits upcast to float32"
+  format_mass: "m(t,v) = P(Y_ids) + P(N_ids) under the full-vocab softmax; logged for every pair"
+  ranking: "descending s; ties (|diff| < 1e-6) broken by arm prior order, then qualified name ascending"
+  missing_or_nonfinite_score: "assign -inf (ranked last) and log; if >1% of pairs, flag the run"
+  cache:
+    unique_unit: "(instance_id, candidate_id, prompt_variant)"
+    note: "a candidate shared by several arms is scored ONCE; arms are assembled from the cache"
+  batching:
+    padding_side: left
+    sort: "by prompt length, descending"
+    max_batch_size: 16
+    max_batch_tokens: 12288            # sum of padded lengths per forward
+    logits_to_keep: 1                  # REQUIRED: full-sequence logits over a ~256k-class vocabulary would not fit a T4 (verify vocab size)
+    use_cache: false
+    inference_mode: true
+    attention: sdpa
+  prefix_kv_reuse: "off by default; allowed only if gate G3 equivalence passes"
+  fusion_secondary:
+    name: rrf_with_bm25
+    k0: 60
+    note: "no tuned weights; exploratory"
+
+# -----------------------------------------------------------------------------
+# 5. COMPUTE PLAN (Kaggle T4, 9 h session ceiling)
+# -----------------------------------------------------------------------------
+compute:
+  session_limit_hours: 9               # per the plan; re-verify on the day
+  internal_session_ceiling_hours: 7.5
+  checkpoint_every_tasks: 10
+  resumable: true                      # deterministic cache keyed by the unique unit
+  projection_formula: "hours = unique_pairs * mean_prompt_tokens / measured_prefill_tokens_per_sec / 3600"
+  planning_estimate: "NOT MEASURED. Order of magnitude 1-4 h for A1-A6 without prefix reuse; replace with the measured value in the lock."
+  gate: "projected total hours for A1-A4 <= 6.0 before starting Verified"
+  fallbacks_in_order:
+    - "enable prefix_kv_reuse (only if G3 passes)"
+    - "shard tasks across sessions by sha256(instance_id) mod K, one lock-verified session per shard, then merge"
+    - "drop A5, then A6 (secondary) - NEVER drop A1-A4"
+
+# -----------------------------------------------------------------------------
+# 6. METRICS
+# -----------------------------------------------------------------------------
+metrics:
+  unit: task
+  list_truncation: 50                  # every arm is evaluated on its top-50
+  Acc_at_k:
+    k: [1, 3, 5, 10]
+    definition: "1[ top-k of the arm's ranked list contains >= 1 gold function ]  (strict match)"
+  MRR_at_50: "1 / rank of the first gold function if within 50, else 0"
+  Recall_at_k_secondary: "|top-k intersect gold| / |gold|, averaged over tasks"
+  class_scope_credit_secondary: "hit also credited if the gold function's enclosing class is retrieved; reported separately, never in primary"
+  pool_oracle_recall: "1[ pool contains >= 1 gold function ]; no LLM; descriptive and used in secondary set-level tests"
+  intervals:
+    single_arm: "Wilson 95%"
+    differences: "stratified paired bootstrap (resample tasks within repo, B=10000, percentile 95%)"
+  integrity_checks:
+    - "Acc@10(A1) == Acc@10(B0) exactly (same 10-symbol pool)"
+    - "Gate G0 reproduces published Acc@10: B0 175/344, B1 173/344"
+
+# -----------------------------------------------------------------------------
+# 7. STATISTICS AND DECISION RULES
+# -----------------------------------------------------------------------------
+statistics:
+  tests:
+    binary_paired: "exact two-sided McNemar on discordant pairs (n10 vs n01); report counts"
+    continuous_paired: "paired sign-flip permutation test, 100000 permutations, seed = conventions.seeds.permutation"
+    difference_ci: "stratified paired bootstrap, see metrics.intervals"
+  tier1_confirmatory:
+    endpoint: "Acc@5 (strict, any_gold)"
+    why_acc5: "BM25 led Perron at top-5 in the earlier study, and 5 slots is a realistic budget for local agents. Chosen BEFORE seeing any Gemma results; all other k are reported."
+    contrasts:
+      PC1: "Acc@5(A4) - Acc@5(A2)"
+      PC2: "Acc@5(A4) - Acc@5(A3)"
+    multiplicity: "Holm over {PC1, PC2}, family alpha 0.05"
+    sesoi_pp: 2.0
+    equivalence_margin_pp: 5.0         # coarse; used only to LABEL null-compatible results
+    classification_per_contrast:
+      POSITIVE:        "p_holm < 0.05 AND delta >= +2.0 pp"
+      CONTROL_BETTER:  "p_holm < 0.05 AND delta <= -2.0 pp"
+      NULL_COMPATIBLE: "not POSITIVE/CONTROL_BETTER AND the 95% bootstrap CI lies within (-5.0, +5.0) pp"
+      INCONCLUSIVE:    "everything else, including significant |delta| < 2.0 pp"
+    overall_verdict:
+      topology_adds_signal: "POSITIVE if PC1 and PC2 are both POSITIVE; PARTIAL if exactly one; otherwise NOT_DEMONSTRATED"
+      robust_label: "add ROBUST only if delta > 0 after dropping Django, and delta > 0 in every leave-one-repo-out run"
+    power_statement: >
+      With ~10-15% discordant pairs at N=344, the 80%-power minimum detectable
+      difference is about 4.7-5.9 pp (about 5.2-6.5 pp after Holm). The 2.0 pp SESOI
+      is below that. Null results MUST be written as 'no difference detected at the
+      study's resolution (MDE ~5-6.5 pp)', never as 'no effect'. Recompute from
+      observed discordance and report.
+  tier2_secondary:                     # Holm within each family
+    F2a: {contrast: "A1 - B0",         endpoints: [Acc@1, Acc@3, Acc@5, MRR@50]}
+    F2b: {contrast: "A2 - A1",         endpoints: [Acc@5, Acc@10, MRR@50]}
+    F2c: {contrast: "A4 - B0",         endpoints: [Acc@1, Acc@3, Acc@5, Acc@10, MRR@50]}
+    F2d: {contrast: "A4 - A2, A4 - A3", endpoints: [Acc@1, Acc@3, Acc@10, MRR@50]}
+    F2e: {contrast: "A4 - A2, A4 - A3", endpoints: [pool_oracle_recall]}
+  tier3_exploratory:
+    - "A5 and A6 contrasts (H4, diffusion vs 1-hop)"
+    - "named vs unnamed strata; per-repo forest plot; leave-one-repo-out"
+    - "RRF fusion; Recall@k; class-scope credit"
+    - "repo-cluster bootstrap CI (resample whole repos)"
+    - "optional mixed model: logit P(hit) ~ arm + (1|task) + (1|repo), if it converges"
+  reporting_rules:
+    - "Report ALL tiers, including null and negative results."
+    - "Label tier-2 and tier-3 results as such. Only tier 1 carries a confirmatory verdict."
+
+# -----------------------------------------------------------------------------
+# 8. DOWNSTREAM EDIT-LOCATION MINI-TEST (N ~ 100)
+# -----------------------------------------------------------------------------
+downstream:
+  status: descriptive    # N=100 cannot support small-effect inference. Report counts and CIs, no verdicts.
+  sample:
+    n: 100
+    population: "test set after integrity assertions"
+    method: "sort instance_ids ascending; proportional allocation by repo (largest remainder); uniform sampling without replacement within repo using numpy RandomState(conventions.seeds.downstream_sampling)"
+    outcome_blind: true               # no use of retrieval results in selection
+    ids_sha256: "recorded in the lock as downstream_ids_sha256 (sha256 of the sorted selected instance_ids, newline-joined)"
+  context_k: 5
+  arms:
+    D0: "BM25 top-5 breadcrumbs, in rank order"
+    D1: "A4 reranked top-5, in rank order"
+    D2: "reranked top-5 from the chosen control (A2 or A3; the one with higher dev Acc@5, tie -> higher dev MRR@50; recorded in the lock)"
+    D3: "oracle: one gold function (chosen by seeded RNG if several) at a seeded-random position among 5, other 4 = BM25 top candidates excluding gold. Measures reader transmission."
+  reader_prompt: |
+    You are given a GitHub issue and a numbered list of candidate functions from the repository.
+    Choose the functions that must be edited to resolve the issue.
+
+    <issue>
+    {issue_text}
+    </issue>
+
+    <candidates>
+    [1] {candidate_1}
+    [2] {candidate_2}
+    [3] {candidate_3}
+    [4] {candidate_4}
+    [5] {candidate_5}
+    </candidates>
+
+    Respond with ONLY a JSON list of at most 3 candidate numbers in order of confidence, for example [2, 5]. Do not explain.
+  breadcrumb_mode: "same mode as the selected prompt variant"
+  decoding: {mode: greedy, max_new_tokens: 24, thinking: disabled}
+  parsing: "first JSON list in the output; numbers outside 1-5 or unparseable output = failure (counted as a miss and reported)"
+  metrics:
+    EditLoc_at_1: "1[ first listed candidate is a gold function ]"
+    EditLoc_at_3: "1[ any listed candidate is a gold function ]"
+    ContextHit_at_5: "1[ gold in the shown 5 ]  (ceiling for the arm)"
+    conversion: "P(EditLoc@1 | gold shown)"
+    reader_transmission: "EditLoc@1 on D3; also chance-adjusted (p - 0.2) / 0.8"
+    parse_failure_rate: "report per arm; flag if > 5%"
+  reporting: "counts, paired differences with stratified bootstrap CI; exact McNemar shown for transparency only"
+  exploratory_thinking_variant:
+    enabled: false
+    budgets: {think_max_tokens: 768, answer_max_tokens: 24}
+    forced_close: "if the thinking budget is exhausted, append the end-of-thinking marker from the lock and generate the answer"
+    end_of_thinking_marker: "if this variant is enabled, the marker is read from the chat template and recorded in the lock as end_of_thinking_marker"
+
+# -----------------------------------------------------------------------------
+# 9. DEV STAGE (SWE-bench Lite dev_val, N=100)
+# -----------------------------------------------------------------------------
+dev_stage:
+  run: "variants P0, P1, P2 over pools A1-A4 on dev_val"
+  selection_rule:
+    eligibility: "gates G2 and G3 pass for the variant"
+    objective: "highest mean dev MRR@50 across arms A1..A4 (equal weights)"
+    tie_break: "if within 0.005, fewer mean prompt tokens, then lower variant index"
+  revision_budget: "none. If NO variant passes G2, at most ONE new variant P3 may be authored; it is logged in deviations.md and appended to the lock"
+  diagnostic_issue_ablation: "dev only: score A4 pool with the issue replaced by '(no issue provided)'; report the Acc@5 gap. Informational, not a gate."
+  go_no_go_on_dev_performance: "none. Verified proceeds once G0-G5 pass, regardless of dev accuracy, to avoid outcome-contingent execution."
+
+# -----------------------------------------------------------------------------
+# 10. GATES (all must pass before the Verified Gemma run)
+# -----------------------------------------------------------------------------
+gates:
+  G0_reproduction:   "frozen code reproduces published Verified Acc@10: BM25 175/344, Perron Static 173/344 (exact). On failure: stop and resolve the definition (any_gold, prior, sanitization)."
+  G1_integrity:      "graph artifacts match recorded hashes; every snapshot is base_commit; prompt_must_not_contain fields are absent (string-audit of 50 rendered prompts)."
+  G2_prompt_validity: "on dev: mean format_mass >= 0.90; zero non-finite logits (else switch to dtype_fallback); the thinking switch is off in rendered goldens."
+  G3_numerical_stability: "on 200 sampled dev pairs: max |s(batch=1) - s(batched)| <= 0.10 and within-task Spearman >= 0.99; same for prefix reuse if enabled."
+  G4_compute:        "projected hours <= 6.0 (see compute.gate)."
+  G5_protocol_hashes: "the runner verifies stage-1 and stage-2 hashes at startup and prints them into every output file."
+
+# -----------------------------------------------------------------------------
+# 11. OUTPUTS, REPORTING, THREATS
+# -----------------------------------------------------------------------------
+outputs:
+  per_pair_scores: "scores.parquet [instance_id, candidate_id, variant, s, format_mass, n_prompt_tokens]"
+  per_arm_rankings: "rankings/{arm}.jsonl"
+  manifest: "run_manifest.json [protocol hashes, git commit, model/tokenizer hash, torch/transformers/CUDA versions, GPU, start/end time]"
+  deviations_log: deviations.md
+required_tables:
+  - "T-A  arm x {Acc@1,3,5,10, MRR@50} with Wilson CIs, N per arm"
+  - "T-B  contrasts with delta, CI, discordant counts, p, Holm p, classification"
+  - "T-C  pool sizes, fill rates, oracle recall, graph-unique candidate counts"
+  - "T-D  compute: unique pairs, tokens/s, wall-clock per arm"
+  - "T-E  downstream arms D0-D3 (descriptive)"
+threats_to_validity:
+  - "Possible SWE-bench contamination in Gemma pretraining; cannot be excluded."
+  - "Single 2B-class model; single prompt family; signature-level context unless P2 wins."
+  - "Resolution: N=344 detects only ~5-6.5 pp differences."
+  - "Django dominates Verified; repo-level robustness is reported."
+  - "1-hop via filtered function/method nodes means inherit/import edges rarely contribute."
+  - "Python only; static call graph misses dynamic dispatch."
+
+# -----------------------------------------------------------------------------
+# 12. LOCK (stage 2)
+# -----------------------------------------------------------------------------
+lock:
+  file: gemma4_lock_v1.json
+  amendable_only_by_adding_these_fields:
+    - stage1_sha256_raw
+    - git_commit
+    - prompt_variant_selected
+    - prompt_template_sha256
+    - rendered_golden_prompts_sha256        # three golden examples
+    - yes_token_ids
+    - no_token_ids
+    - model_checkpoint_sha256
+    - tokenizer_sha256
+    - library_versions
+    - measured_prefill_tokens_per_sec
+    - projected_total_hours
+    - dev_results_sha256
+    - chosen_control_for_downstream
+    - downstream_ids_sha256
+    - gates_passed
+  required_fields:
+    - stage1_sha256_raw
+    - git_commit
+    - prompt_variant_selected
+    - prompt_template_sha256
+    - rendered_golden_prompts_sha256
+    - yes_token_ids
+    - no_token_ids
+    - model_checkpoint_sha256
+    - tokenizer_sha256
+    - library_versions
+    - measured_prefill_tokens_per_sec
+    - projected_total_hours
+    - dev_results_sha256
+    - chosen_control_for_downstream
+    - downstream_ids_sha256
+    - gates_passed

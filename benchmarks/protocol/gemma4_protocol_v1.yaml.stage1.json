@@ -1,0 +1,8 @@
+{
+  "file": "gemma4_protocol_v1.yaml",
+  "raw_sha256": "96af1621a27b48a99666a8fcef626ecd2415fd094fc6b6803fce567c38d927ce",
+  "canonical_json_sha256": "f80593781e5a76891614b15c466b1b7fe840ba2a90fffa6bc3b2a2fc367ac8cd",
+  "git_commit": "8e8ea3a8913d9f1e2f445a56125691d07ca64257",
+  "frozen_utc": "2026-10-06T05:02:10Z",
+  "stage": 1
+}
