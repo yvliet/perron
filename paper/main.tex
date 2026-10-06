@@ -58,7 +58,7 @@
 % Running Header (Publication & ArXiv Standard)
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\textit{Does Graph Structure Help a Small LLM Localize Bugs? PPR and Gemma 4 on Code Graphs}}
+\fancyhead[L]{\small\textit{Graph Expansion Adds Little to Lexical Retrieval for Small-LLM Bug Localization}}
 \fancyhead[R]{\small\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \fancypagestyle{plain}{%
@@ -79,7 +79,7 @@
     urlcolor=darkblue
 }
 
-\title{\vspace{-1.5em}\LARGE\textbf{Does Graph Structure Help a Small LLM Localize Bugs? A Diagnostic Study of Personalized PageRank, Topological Regularization, and Gemma 4 Reranking on Code Graphs}\vspace{-0.5em}}
+\title{\vspace{-1.5em}\LARGE\textbf{Graph Expansion Adds Little to Lexical Retrieval for Small-LLM Bug Localization: A Pre-Registered Diagnostic Study with Gemma 4 on SWE-bench Verified}\vspace{-0.5em}}
 
 \author{
     \textbf{Sultan Haikal} \\
@@ -96,7 +96,7 @@
 \thispagestyle{plain}
 
 \begin{abstract}
-Local developer agents must localize code defect targets within constrained prompt budgets ($K \le 4{,}096$ tokens). While Personalized PageRank (PPR) over code dependency graphs is standardly deployed to discover unmentioned symbols, its empirical efficacy is widely debated. Through a systematic $2\times 2$ factorial evaluation on SWE-bench Lite ($N=237$) alongside a continuous dose-response surface across 186 prior configurations on SWE-bench Verified ($N=344$, 63,984 evaluations), I demonstrate that unconstrained PPR degradation is driven by \textbf{teleport prior dispersion} and test-suite sinks rather than scale-free hub absorption alone. Retrieval accuracy collapses onto an invariant dose-response curve governed by effective prior entropy support $n_{\text{eff}} = \exp(H(p_0))$ ($R^2 = 0.197$ binary logit cross-validation; analytical GLMM vertex at $n_{\text{eff}}^* \approx 8.8$), with Two One-Sided Tests (TOST) confirming no evidence of hub-presence harm within a sample-powered $\pm 9.3$ pp equivalence margin on hub-bearing tasks ($p < .001$, $N=109$). Under diffuse linear priors, PPR collapses to \FactLinRawStdFnAcc, whereas concentrated query priors ($\tau=0.15$) rescue standard PPR to \FactSoftSanStdFnAcc. \textbf{Perron} adapts stationary-normalized rooted PageRank via post-walk Decoupled Specificity ($\boldsymbol{\pi}_q / (\boldsymbol{\pi}_g + \epsilon)^\gamma$), providing an adaptive topological regularizer (+24.1 pp under diffuse priors) while sustaining \VerifPerronStaticHSI\ hub suppression. In a pre-specified confirmatory retrieval evaluation on SWE-bench Verified ($N=\VerifNumCallable$), Perron achieves \VerifPerronStaticFnAcc\ Function Acc@10 vs.\ Okapi BM25's \VerifBMTwentyFiveFnAcc\ (non-inferiority inconclusive against a $-2.0$ pp margin), while BM25 leads at top-5 retrieval (\VerifBMTwentyFiveFnAccFive\ vs.\ \VerifPerronStaticFnAccFive). Under a separate pre-specified, hash-committed protocol, candidate pools are scored pointwise by a frozen \texttt{gemma-4-e2b-it} language model: graph 1-hop expansion ($A_4$) yields 47.1\% Acc@5 vs.\ depth-matched BM25 ($A_2$, 45.1\%, $\Delta = +2.03$ pp, 95\% CI $[-0.29, +4.36]$ pp) and seed reranking ($A_1$, 46.2\%, $\Delta = +0.87$ pp, net 3 tasks, $p=0.5488$), classified as \texttt{NULL\_COMPATIBLE} under exact McNemar tests ($p_{\text{holm}} = 0.287, 0.302$). Un-reranked BM25 ($B_0$) preserves superior rank order (MRR@50 $0.3439$ vs $0.3409$). Downstream evaluation ($N=100$) reveals that retrieval pool recall (35\%--38\%), rather than local reader discrimination (74.0\% top-1 on oracle contexts, 67.5\% chance-adjusted), forms the primary agentic bottleneck. I release \texttt{scores.parquet}, \texttt{perron-core}, and \texttt{perron-mcp} under Apache~2.0.
+Local developer agents must find the code an issue concerns within a prompt of a few thousand tokens. Graph walks over call graphs are widely used to reach symbols the issue never names. I test whether they help a small local model. On SWE-bench Verified ($N=344$ callable tasks), under a hash-committed protocol, a frozen \texttt{gemma-4-e2b-it} scores candidate pools pointwise. Graph 1-hop expansion reaches 47.1\% Acc@5, against 45.1\% for depth-matched BM25 (+2.03 pp, 95\% CI [$-$0.29, +4.36], Holm $p=0.287$) and 45.6\% for same-file expansion (+1.45 pp, Holm $p=0.302$). Both pools contain the gold function in 201/344 tasks (58.4\%), with 18 discordant tasks each way. Expansion adds 7.3 pp of oracle recall over the seed pool, yet the scorer converts about 1 pp of it. Most loss occurs before scoring: 41.6 pp between task set and pool, 11.3 pp between pool and top-5. In a descriptive $N=100$ reader test, the model finds the gold target in 74\% of oracle contexts, while retrieval supplies it in only 35--38\% of tasks. The study is Python-only, uses one small model, and cannot exclude gains of about 4 pp. I release 19,298 scored candidate evaluations, the library, and precomputed graphs under Apache~2.0.
 \end{abstract}
 
 \section{Introduction}
@@ -522,25 +522,35 @@ A6 & Rerank Perron Diffusion & 23.6\% [19.4, 28.3] & 38.7\% [33.7, 43.9] & 45.6\
 \begin{table}[t]
 \centering
 \footnotesize
-\setlength{\tabcolsep}{3.5pt}
-\caption{\textbf{Pre-specified confirmatory contrasts on primary endpoint (Strict Acc@5, $N=344$).} Multiplicity adjusted via step-down Holm--Bonferroni over family $\alpha=0.05$. Paired 95\% CIs estimated via repo-stratified bootstrap ($B=10{,}000$).}
+\setlength{\tabcolsep}{3.0pt}
+\caption{\textbf{Pre-specified confirmatory and exploratory contrasts on SWE-bench Verified ($N=344$).} Confirmatory family (PC1, PC2) evaluated on primary endpoint (Strict Acc@5) with step-down Holm--Bonferroni correction over family $\alpha=0.05$. Paired 95\% CIs estimated via repo-stratified bootstrap ($B=10{,}000$). Tier-2 exploratory contrasts and reciprocal rank tests segregated below midrule.}
 \label{tab:gemma4_contrasts}
 \begin{tabular}{lcccccc}
 \toprule
 \textbf{Contrast} & $\boldsymbol{\Delta}$ \textbf{(pp)} & \textbf{95\% Bootstrap CI} & $\boldsymbol{n_{10}} / \boldsymbol{n_{01}}$ & $\boldsymbol{p_{\text{exact}}}$ & $\boldsymbol{p_{\text{holm}}}$ & \textbf{Classification} \\
 \midrule
+\multicolumn{7}{l}{\textit{Tier-1 Pre-Registered Confirmatory Family (Acc@5)}} \\
 \textbf{PC1 (A4 $-$ A2)} & +2.03 & [$-$0.29, +4.36] & 12 / 5 & 0.1435 & 0.2869 & \texttt{NULL\_COMPATIBLE} \\
 \textbf{PC2 (A4 $-$ A3)} & +1.45 & [$-$0.58, +3.78] & 10 / 5 & 0.3018 & 0.3018 & \texttt{NULL\_COMPATIBLE} \\
-\textbf{Secondary (A4 $-$ A1)} & +0.87 & [$-$1.92, +3.66] & 7 / 4 & 0.5488 & 0.5488 & \texttt{NULL\_COMPATIBLE} \\
+\midrule
+\multicolumn{7}{l}{\textit{Tier-2 Baseline \& Exploratory Contrasts}} \\
+A1 $-$ B0 (Seed Rerank vs BM25) & +1.45 & [$-$1.33, +4.24] & 15 / 10 & 0.4244 & --- & Exploratory \\
+A4 $-$ B0 (Graph Rerank vs BM25) & +2.33 & [$-$0.87, +5.52] & 18 / 10 & 0.1849 & --- & Exploratory \\
+A4 $-$ A1 (Graph vs Seeds) & +0.87 & [$-$1.92, +3.66] & 7 / 4 & 0.5488 & --- & Exploratory (+3 tasks) \\
+\midrule
+\multicolumn{7}{l}{\textit{Paired Reciprocal Rank Test (MRR@50)}} \\
+A4 vs B0 (Graph vs BM25) & $-$0.0030 & [$-$0.024, +0.018] & \multicolumn{2}{c}{Wilcoxon $W=\RerankWilcoxonW$} & $p\RerankWilcoxonP$ & Exploratory \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 As presented in Table~\ref{tab:gemma4_reranking} and Table~\ref{tab:gemma4_contrasts}:
 \begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
-    \item \textbf{Pre-Specified Contrasts \& Realized Power}: Graph reranking (A4) achieves 47.1\% Acc@5 compared to 45.1\% for depth-matched BM25 (A2, $\Delta = +2.03$ pp) and 45.6\% for same-file matching (A3, $\Delta = +1.45$ pp). While positive in point estimate, exact two-sided McNemar tests on discordant pairs ($12/5$ and $10/5$) yield $p_{\text{holm}} = 0.2869$ and $0.3018$. Given the observed discordance rate ($n_d = 15\text{--}17$ pairs, $4.4\%\text{--}4.9\%$), the study's realized Minimum Detectable Difference (MDD) at 80\% power under $\alpha=0.05$ was $3.4\text{--}3.7$ pp. While the 95\% bootstrap confidence interval bounds potential gains below $+4.36$ pp, both intervals lie entirely within the pre-registered equivalence bounds of $[-5.0, +5.0]$ pp, classifying both confirmatory contrasts as \texttt{NULL\_COMPATIBLE} (verdict: \texttt{NOT\_DEMONSTRATED}).
-    \item \textbf{Lexical Seed Dominance \& Rank Order}: Comparing graph expansion (A4) directly to seed reranking (A1, 46.2\% Acc@5) yields an advantage of only 3 tasks out of 344 ($\Delta = +0.87$ pp, $n_{10}=7, n_{01}=4$, $p=0.5488$), despite requiring 4,988 additional neural evaluations to score graph out-neighbors. Furthermore, un-reranked BM25 (B0) maintains higher MRR@50 ($0.3439$ vs $0.3409$) and top-1 accuracy ($25.3\%$ vs $24.7\%$) than A4. Expanding candidate pools with non-graph controls (A2, A3) dilutes the scoring pool with distractors, lowering Acc@5 below A1; A4 appears superior to controls not due to topological discovery, but because graph pools suffer less distractor dilution.
-    \item \textbf{Downstream Reader Transmission \& Distractor Confusion ($N=100$)}: To determine whether local edge models exploit retrieved candidates, I evaluated arms D0--D3 under a 5-candidate prompt. In BM25 contexts (D0), ContextHit@5 is $35.0\%$ and EditLoc@1 is $33.0\%$ (conversion $94.3\%$), matching a trivial baseline that always selects candidate 1 ($33.0\%$). In Graph contexts (D1), ContextHit@5 rises to $37.0\%$, but EditLoc@1 drops to $31.0\%$ (conversion collapses to $83.8\%$), showing that structurally plausible graph neighbors (callers and callees) confuse the 2B reader model. Viability is demonstrated in the oracle arm (D3, randomized position), where Gemma 4 achieves $74.0\%$ top-1 accuracy ($67.5\%$ chance-adjusted, 95\% Wilson CI $[64.6, 81.6]\%$, Table~\ref{tab:downstream_mini_test}), proving that the retrieval channel (which supplies the gold target on only $35\%\text{--}38\%$ of tasks) is the primary agentic bottleneck.
+    \item \textbf{Pre-Specified Contrasts \& Realized Power}: Graph reranking (A4) achieves 47.1\% Acc@5 compared to 45.1\% for depth-matched BM25 (A2, $\Delta = +2.03$ pp) and 45.6\% for same-file matching (A3, $\Delta = +1.45$ pp). While positive in point estimate, exact two-sided McNemar tests on discordant pairs ($12/5$ and $10/5$) yield $p_{\text{holm}} = 0.287$ and $0.302$. Given the observed discordance rate ($n_d = 15\text{--}17$ pairs), the realized Minimum Detectable Difference (MDD) at 80\% power under $\alpha=0.05$ was $3.4\text{--}3.7$ pp. While the 95\% bootstrap confidence interval admits gains up to $+4.36$ pp, both intervals lie entirely within the pre-registered equivalence bounds of $[-5.0, +5.0]$ pp, classifying both confirmatory contrasts as \texttt{NULL\_COMPATIBLE} (verdict: \texttt{NOT\_DEMONSTRATED}).
+    \item \textbf{Candidate Pool Oracle Parity}: Candidate pool oracle recall is 58.4\% (201/344) for both graph 1-hop expansion ($A_4$) and depth BM25 ($A_2$). Across discordant tasks, $n_{10} = 18$ and $n_{01} = 18$, producing an exact two-sided McNemar $p = 1.0000$. With 36 discordant pairs, the 95\% CI on the recall difference is approximately $\pm 3.4$ pp. Parity is observed on this sample; because Acc@k cannot exceed candidate recall, the two pools are tied for any scorer on this benchmark.
+    \item \textbf{Rank Order \& Pointwise Distractor Accumulation}: Comparing graph expansion (A4) directly to seed reranking (A1, 46.2\% Acc@5) yields a net advantage of 3 tasks ($\Delta = +0.87$ pp, $n_{10}=7, n_{01}=4$, $p=0.549$ exploratory), requiring 4,988 extra forward passes. Un-reranked BM25 ($B_0$) preserves nominally higher MRR@50 ($0.3439$ vs $0.3409$, Wilcoxon $W=12{,}480, p=0.72$) and top-1 accuracy ($25.3\%$ vs $24.7\%$) than $A_4$, though differences are within noise. Under independent pointwise scoring, expanding pool size $M$ accumulates false exceedances: $\mathbb{E}[X \mid s^*] = \sum_{j=1}^{M-1} (1 - F_{\text{dist}, j}(s^*))$.
+    \item \textbf{Leave-Django-Out \& Strata Invariance}: In Leave-Django-Out jackknife cross-validation ($N=230$), candidate pool parity holds (57.1\% vs 57.1\%, $p=1.0000$) and reranked Acc@5 yields $\Delta(A_4 - A_2) = +2.17$ pp ($p=0.227$). Lexical strata confirm parity on un-named targets (Stratum C, $N=131$: 28 BM25 hits vs 27 Perron hits, $p=1.0000$).
+    \item \textbf{Pipeline Loss Decomposition}: On SWE-bench Verified ($N=344$), upstream candidate boundary loss (41.6 pp, $100.0\% \to 58.4\%$) exceeds downstream compaction loss (11.3 pp to top-5) by a factor of 3.7 under the $M \le 50$ pool cap and $K=5$ packing budget. In the downstream reader test ($N=100$, Table~\ref{tab:downstream_mini_test}), Gemma 4 achieves 74.0\% top-1 accuracy on oracle contexts (67.5\% chance-adjusted), whereas retrieval supplies the gold target in only 35\%--38\% of tasks.
 \end{itemize}
 
 \begin{table}[t]
@@ -557,6 +567,24 @@ D0 & BM25 Top-5 & 35.0\% & 33.0\% & 35.0\% & 0.943 \\
 D1 & A4 Graph Top-5 & 37.0\% & 31.0\% & 37.0\% & 0.838 \\
 D2 & A3 Control Top-5 & 38.0\% & 30.0\% & 37.0\% & 0.789 \\
 D3 & Oracle Context (Transmission) & 100.0\% & \textbf{74.0\%} & \textbf{85.0\%} & 0.740 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4.5pt}
+\caption{\textbf{Measured systems compute throughput and resource footprints.} Perron CSR measured on 15.68 GiB host; Gemma 4 E2B measured on NVIDIA Tesla T4 GPU in FP16 with PLE across $N=100$ SWE-bench Verified tasks.}
+\label{tab:systems_compute}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Component / Operation} & \textbf{Memory Footprint} & \textbf{Latency / TTFT} & \textbf{Throughput} & \textbf{Evaluation Volume} \\
+\midrule
+Perron CSR Diffusion (Requests) & 144.33 MB RSS & 1.89 ms & 529 diffusions/s & 90 iter ($\epsilon=10^{-6}$) \\
+Perron CSR Diffusion (SymPy) & 144.33 MB RSS & 5.10 ms & 196 diffusions/s & 66 iter ($\epsilon=10^{-6}$) \\
+Perron Graph Memory Delta & 91.4 MB delta & --- & Zero-copy mmap & 12 repositories \\
+Gemma 4 E2B Inference (T4) & 2.37 GiB VRAM & 3,505 ms TTFT & 11.7 tok/s decode & 19,298 scored passes \\
 \bottomrule
 \end{tabular}
 \end{table}

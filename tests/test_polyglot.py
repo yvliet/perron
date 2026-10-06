@@ -11,7 +11,7 @@ try:
     from perron.polyglot.treesitter import TreeSitterExtractor, TREE_SITTER_AVAILABLE
     from perron.matrix import build_static_transition_matrix
     from perron.diffusion import personalized_pagerank_power_iteration
-    from perron.specificity import calculate_specificity_scores
+    from perron.specificity import calculate_specificity_scores, compute_global_pagerank
 except ImportError:
     TREE_SITTER_AVAILABLE = False
 
@@ -76,6 +76,34 @@ def test_typescript_extraction_and_diffusion():
         pi = personalized_pagerank_power_iteration(t_matrix, p0, beta=0.85)
         assert np.isclose(np.sum(pi), 1.0)
 
-        degrees = np.diff(t_matrix.indptr).astype(np.float64)
-        scores = calculate_specificity_scores(pi, degrees, gamma=0.70)
+        dangling = (np.diff(t_matrix.indptr) == 0).astype(np.float32)
+        pi_global = compute_global_pagerank(t_matrix, dangling, beta=0.85)
+        scores = calculate_specificity_scores(pi, pi_global, gamma=0.70)
         assert scores[symbol_index_map["OrderService.processOrder"]] > 0.0
+
+
+@pytest.mark.skipif(not TREE_SITTER_AVAILABLE, reason="tree-sitter optional dependency not installed")
+def test_typescript_multi_file_node_id_sequencing():
+    from perron.polyglot.treesitter import extract_typescript_graph
+
+    ts_file1 = """
+    export class AlphaService {
+        execute(): void {}
+    }
+    """
+    ts_file2 = """
+    export class BetaService {
+        run(): void {}
+        terminate(): void {}
+    }
+    """
+    with tempfile.TemporaryDirectory() as tmpdir:
+        repo_path = Path(tmpdir)
+        (repo_path / "alpha.ts").write_text(ts_file1, encoding="utf-8")
+        (repo_path / "beta.ts").write_text(ts_file2, encoding="utf-8")
+
+        symbols = extract_typescript_graph(repo_path)
+        assert len(symbols) >= 5
+
+        node_ids = [s.node_id for s in symbols]
+        assert node_ids == list(range(len(symbols))), f"Non-sequential node IDs: {node_ids}"

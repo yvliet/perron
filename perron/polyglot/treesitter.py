@@ -38,8 +38,8 @@ class TreeSitterExtractor:
             self.parser = tree_sitter.Parser()
             self.parser.language = self.language
 
-    def extract_file(self, file_path: Path, repo_root: Path) -> List[ASTSymbolNode]:
-        """Parse a single TypeScript/JavaScript file into ASTSymbolNode objects."""
+    def extract_file(self, file_path: Path, repo_root: Path, start_node_id: int = 0) -> List[ASTSymbolNode]:
+        """Parse a single TypeScript/JavaScript file into ASTSymbolNode objects with monotonic node IDs."""
         try:
             with open(file_path, "rb") as f:
                 code_bytes = f.read()
@@ -52,7 +52,7 @@ class TreeSitterExtractor:
         rel_path = str(file_path.relative_to(repo_root)).replace("\\", "/")
 
         symbols: List[ASTSymbolNode] = []
-        self._traverse_tree(root_node, rel_path, code_bytes, symbols)
+        self._traverse_tree(root_node, rel_path, code_bytes, symbols, start_node_id=start_node_id)
         return symbols
 
     def _traverse_tree(
@@ -62,6 +62,7 @@ class TreeSitterExtractor:
         code_bytes: bytes,
         symbols: List[ASTSymbolNode],
         parent_class: Optional[str] = None,
+        start_node_id: int = 0,
     ) -> None:
         node_type = node.type
 
@@ -75,7 +76,7 @@ class TreeSitterExtractor:
 
                 symbols.append(
                     ASTSymbolNode(
-                        node_id=len(symbols),
+                        node_id=start_node_id + len(symbols),
                         identifier=full_name,
                         file_path=rel_path,
                         symbol_type="function" if node_type != "method_definition" else "method",
@@ -97,7 +98,7 @@ class TreeSitterExtractor:
 
                 symbols.append(
                     ASTSymbolNode(
-                        node_id=len(symbols),
+                        node_id=start_node_id + len(symbols),
                         identifier=class_name,
                         file_path=rel_path,
                         symbol_type="class",
@@ -110,11 +111,11 @@ class TreeSitterExtractor:
                     )
                 )
                 for child in node.children:
-                    self._traverse_tree(child, rel_path, code_bytes, symbols, parent_class=class_name)
+                    self._traverse_tree(child, rel_path, code_bytes, symbols, parent_class=class_name, start_node_id=start_node_id)
                 return
 
         for child in node.children:
-            self._traverse_tree(child, rel_path, code_bytes, symbols, parent_class=parent_class)
+            self._traverse_tree(child, rel_path, code_bytes, symbols, parent_class=parent_class, start_node_id=start_node_id)
 
     def _get_node_name(self, node: tree_sitter.Node, code_bytes: bytes) -> Optional[str]:
         name_node = node.child_by_field_name("name")
@@ -157,12 +158,12 @@ class TreeSitterExtractor:
 
 
 def extract_typescript_graph(repo_dir: Path) -> List[ASTSymbolNode]:
-    """Scan directory and extract symbols for all .ts and .js files."""
+    """Scan directory and extract symbols for all .ts and .js files with contiguous node IDs."""
     extractor = TreeSitterExtractor()
     all_symbols: List[ASTSymbolNode] = []
     for ext in ("*.ts", "*.tsx", "*.js", "*.jsx"):
-        for path in repo_dir.rglob(ext):
+        for path in sorted(repo_dir.rglob(ext)):
             if "node_modules" in path.parts or ".git" in path.parts:
                 continue
-            all_symbols.extend(extractor.extract_file(path, repo_dir))
+            all_symbols.extend(extractor.extract_file(path, repo_dir, start_node_id=len(all_symbols)))
     return all_symbols
