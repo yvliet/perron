@@ -1,0 +1,9 @@
+{
+  "file": "gemma4_lock_v1.json",
+  "raw_sha256": "dbbf292032b2fdff39692476b3d557dddd437a176b745f4ae63ca34fab254712",
+  "canonical_json_sha256": "be9d6f9074bcaf010a14ecfc0d3614fc87109264e545bbb5dd1b166bdf1ff31f",
+  "stage1_raw_sha256": "96af1621a27b48a99666a8fcef626ecd2415fd094fc6b6803fce567c38d927ce",
+  "git_commit": "a13ab34f0b02fa137c59cd90f95822fabae1fd0e",
+  "frozen_utc": "2026-10-06T06:22:54Z",
+  "stage": 2
+}

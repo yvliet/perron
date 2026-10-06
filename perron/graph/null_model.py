@@ -123,15 +123,15 @@ def swap_edges_dag_bfs(
         return False
 
     # Apply swap
-    adj_out[u1].remove(v1)
+    adj_out[u1].discard(v1)
     adj_out[u1].add(v2)
-    adj_out[u2].remove(v2)
+    adj_out[u2].discard(v2)
     adj_out[u2].add(v1)
 
     if adj_in is not None:
-        adj_in[v1].remove(u1)
+        adj_in[v1].discard(u1)
         adj_in[v1].add(u2)
-        adj_in[v2].remove(u2)
+        adj_in[v2].discard(u2)
         adj_in[v2].add(u1)
 
     return True
@@ -158,14 +158,14 @@ class DAGReachabilityTracker:
 
     def apply_swap(self, u1: int, v1: int, u2: int, v2: int) -> None:
         """Applies swap in-place to adjacency sets."""
-        self.adj_out[u1].remove(v1)
+        self.adj_out[u1].discard(v1)
         self.adj_out[u1].add(v2)
-        self.adj_out[u2].remove(v2)
+        self.adj_out[u2].discard(v2)
         self.adj_out[u2].add(v1)
 
-        self.adj_in[v1].remove(u1)
+        self.adj_in[v1].discard(u1)
         self.adj_in[v1].add(u2)
-        self.adj_in[v2].remove(u2)
+        self.adj_in[v2].discard(u2)
         self.adj_in[v2].add(u1)
 
 
@@ -198,7 +198,8 @@ class MaslovSneppenRewirer:
         Returns:
             Rewired list of directed edges.
         """
-        edge_list: List[Tuple[int, int]] = [tuple(e) for e in edges]
+        clean_edges = list({(int(e[0]), int(e[1])) for e in edges if 0 <= e[0] < num_nodes and 0 <= e[1] < num_nodes})
+        edge_list: List[Tuple[int, int]] = sorted(clean_edges)
         m = len(edge_list)
         if m < 2:
             return list(edge_list)
@@ -244,8 +245,8 @@ class MaslovSneppenRewirer:
                     continue
 
             # Apply swap to set and list
-            edge_set.remove((u1, v1))
-            edge_set.remove((u2, v2))
+            edge_set.discard((u1, v1))
+            edge_set.discard((u2, v2))
             edge_set.add((u1, v2))
             edge_set.add((u2, v1))
 

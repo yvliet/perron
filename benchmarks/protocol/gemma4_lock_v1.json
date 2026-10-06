@@ -1,0 +1,35 @@
+{
+  "stage1_sha256_raw": "96af1621a27b48a99666a8fcef626ecd2415fd094fc6b6803fce567c38d927ce",
+  "git_commit": "8e8ea3a8913d9f1e2f445a56125691d07ca64257",
+  "prompt_variant_selected": "P0",
+  "prompt_template_sha256": "fa0355696e9ad14218a224c560f36e063927ae0dde8b5e1185eb74115ed85bc5",
+  "rendered_golden_prompts_sha256": "949246a58d6343b4c39d86b34ab26b6437e03febeaf787a6c9ec4db3047485e6",
+  "yes_token_ids": [
+    9454,
+    4639
+  ],
+  "no_token_ids": [
+    2961,
+    2307
+  ],
+  "model_checkpoint_sha256": "66fe83f1ffa3ebf1fd5a2c8e4af4b5c83e47fc31d917606015eea40315482a02",
+  "tokenizer_sha256": "8f8b89e7e1ef0dcbb66a8dbb507ee83a002eb23b7a5a3a0eec335756bc3880a1",
+  "library_versions": {
+    "python": "3.13.3",
+    "numpy": "2.5.2",
+    "scipy": "1.18.1",
+    "torch": "2.14.0"
+  },
+  "measured_prefill_tokens_per_sec": 503487.64,
+  "projected_total_hours": 0.01,
+  "dev_results_sha256": "2e5ca0cf8f96bb6650dbeca228cacb59af10396af488e1121d44d98e7d034d4c",
+  "chosen_control_for_downstream": "A3",
+  "downstream_ids_sha256": "8886622a4f67965005bde16702fb5497921dfb51793adc223f33c97c908d4346",
+  "gates_passed": {
+    "G0": true,
+    "G1": true,
+    "G2": true,
+    "G3": true,
+    "G4": true
+  }
+}
