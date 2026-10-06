@@ -1,7 +1,7 @@
 """
 Trajectory Serialization & Dataset Compiler for SFT and DPO Training.
 
-Transforms PerronAgent TrajectoryResult records into publication-grade training datasets:
+Serializes PerronAgent TrajectoryResult records as training datasets:
 1. ShareGPT / OpenAI SFT JSONL format with native Gemma 4 thinking tags and XML edit blocks.
 2. DPO preference pairs contrasting verified passing patches (chosen) against syntax/test failures (rejected).
 """

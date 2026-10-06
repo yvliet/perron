@@ -483,7 +483,7 @@ class CodeGraph:
 
     def close(self) -> None:
         """Close memory-mapped array buffers safely."""
-        close_mmap_csr(self.t_matrix)
+        close_mmap_csr(self.t_matrix, self.dangling, self.pi_global)
 
     def __enter__(self) -> CodeGraph:
         return self

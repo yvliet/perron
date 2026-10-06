@@ -217,7 +217,7 @@ def run_targeted_test(
     if is_windows:
         kwargs["creationflags"] = subprocess.CREATE_NEW_PROCESS_GROUP
     else:
-        kwargs["preexec_fn"] = os.setsid
+        kwargs["start_new_session"] = True
 
     start_time = time.monotonic()
     timed_out = False

@@ -25,6 +25,8 @@ I diagnose these failure modes via a $2\times 2$ factorial sweep, characterize s
 ### Systems Hardware Envelope
 The standalone engine peaks at 144.33 MB resident memory (graph load 91.4 MB) on a 15.68 GiB host, completing sparse CSR diffusion in 1.89 ms on Requests and 5.10 ms on SymPy via OS page cache memory-mapping. Reader ingestion was evaluated under a controlled contrast protocol on Kaggle GPU across $N=100$ SWE-bench Verified tasks using Gemma 4 E2B in unquantized FP16 with native PLE on a Tesla T4 (2.37 GiB peak VRAM, 3548.1 ms mean TTFT, 11.6 tokens/sec decode throughput). Under a 256-token budget, `<|think|>` reflection exhausted generation before emitting closing `<target>` tags across all conditions (transmission kappa 0.0), showing reader transmission requires dedicated generation allocation.
 
+![Figure 1](https://raw.githubusercontent.com/yvliet/perron/main/paper/figures/perron_pipeline.png)
+
 ---
 
 ## 2. Related Work
@@ -42,9 +44,9 @@ The standalone engine peaks at 144.33 MB resident memory (graph load 91.4 MB) on
 ### 3.1 Multiplex Transition Operator
 A codebase is modeled as a directed multigraph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ with AST symbol nodes and multiplex relations $r \in \{\text{call}, \text{inherit}, \text{import}, \text{caller}\}$:
 
-$$W_{uv} = 0.50 A^{(\text{call})}_{uv} + 0.25 A^{(\text{inherit})}_{uv} + 0.15 A^{(\text{import})}_{uv} + 0.10 A^{(\text{caller})}_{uv}$$
+$$W_{u,v} = 0.50 A^{(\text{call})}_{u,v} + 0.25 A^{(\text{inherit})}_{u,v} + 0.15 A^{(\text{import})}_{u,v} + 0.10 A^{(\text{caller})}_{u,v}$$
 
-Matrix $T$ normalizes out-degree $D_u = \sum_v W_{uv}$ ($T_{uv} = W_{uv}/D_u$); dangling indicator $d_u = 1.0$ when $D_u = 0$ else $0.0$.
+Matrix $T$ normalizes out-degree $D_u = \sum_v W_{u,v}$ ($T_{u,v} = W_{u,v}/D_u$); dangling indicator $d_u = 1.0$ when $D_u = 0$ else $0.0$.
 
 ### 3.2 Teleportation Prior Vector ($p_0$)
 Issue prompts are tokenized against identifiers, paths, and docstrings using Okapi BM25 ($k_1 = 1.5, b = 0.75$). Candidate scores undergo shift-invariant softmax ($\tau = 0.15$) over top $K=25$ candidates: for $v \in \mathcal{K}$, $p_0(v) \propto \exp((\tilde{s}_v - \max_u \tilde{s}_u)/\tau)$, and $0$ otherwise.
@@ -72,8 +74,6 @@ where $\epsilon = 10^{-8}$. With uniform query prior $P(Q=q) = 1/|\mathcal{V}|$,
 
 ## 4. Systems Architecture & Memory Virtualization
 
-![Figure 1](https://raw.githubusercontent.com/yvliet/perron/main/paper/figures/perron_pipeline.png)
-
 ### 4.1 Shared Read-Only Graph Storage
 The transition matrix is stored as raw CSR arrays opened via `numpy.load(mmap_mode='r')`. Specificity output rescaling allows parallel workers to share physical memory via OS page caching. Dynamically rewriting edge weights per query costs 319.0 ms on a 1M-node synthetic graph (17.5% of diffusion time).
 
@@ -90,9 +90,9 @@ The transition matrix is stored as raw CSR arrays opened via `numpy.load(mmap_mo
 ### 5.1 Continuous Dose-Response Surface and Resolvent Linearity (H1, H2 & H3)
 Exploiting resolvent linearity ($\mathbf{u}(p_0) = \sum_{i=1}^K w_i \mathbf{u}(e_{s_i})$), I precomputed basis vectors for top-100 seeds on SWE-bench Verified ($N=344$ callable), evaluating 186 continuous configurations across four prior families (softmax, power, linear, rank-zeta, 63,984 evaluations in 26 min via batched SpMM).
 
-![Figure 5](https://raw.githubusercontent.com/yvliet/perron/main/paper/figures/neff_dose_response.png)
+![Figure 4](https://raw.githubusercontent.com/yvliet/perron/main/paper/figures/neff_dose_response.png)
 
-As shown in Figure 5, retrieval accuracy collapses onto an invariant dose-response curve governed by prior effective support $n_{\text{eff}} = \exp(H(\mathbf{p}_0))$ across $n_{\text{eff}} \in [4, 8]$. A binomial GLMM confirms vanishing cutoff effects and modest temperature sensitivity:
+As shown in Figure 4, retrieval accuracy collapses onto an invariant dose-response curve governed by prior effective support $n_{\text{eff}} = \exp(H(\mathbf{p}_0))$ across $n_{\text{eff}} \in [4, 8]$. A binomial GLMM confirms vanishing cutoff effects and modest temperature sensitivity:
 
 $$\text{logit}(P(Y_{ij}=1)) = \beta_0 + \beta_1 \ln n_{\text{eff}} + \beta_2 (\ln n_{\text{eff}})^2 + a \ln k + b \ln \tau + \gamma_j$$
 
@@ -114,7 +114,7 @@ Same-file containment captures 66.9%, matching 2-hop graph reachability via symm
 ---
 
 ## 5.3 Pre-Registered Confirmatory Evaluation on SWE-bench Verified
-I evaluated generalizability on SWE-bench Verified across 12 canonical repositories (344 callable instances, filtering out non-callable file additions). Hyperparameters were frozen prior to evaluation ($\beta=0.85$, $\gamma^*=0.70$, $\tau=0.15$, $K=25$).
+I evaluated generalizability on SWE-bench Verified across 12 canonical repositories (344 callable instances, filtering out non-callable file additions). Evaluation protocols and hyperparameters were frozen under pre-registration Git commit `6908e78` (protocol SHA-256: `89416e4081680860a807ff601dec0a86261a63450567a6024118a60538ffb29e`, split SHA-256: `95c7ef3c...`) prior to evaluation ($\beta=0.85$, $\gamma^*=0.70$, $\tau=0.15$, $K=25$).
 
 | Method | Fn Acc@10 ($N=344$) | 95% Bootstrap CI | Fn Acc@5 | File Acc@5 | HSI@10 | Holm $p$ vs Perron |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -147,7 +147,7 @@ Across arms, prompts contain an identical mean of 283.8 whitespace words formatt
 ### 5.5 Ablation Study
 Removing Decoupled Specificity ($\gamma=0$) drops HSI from 99.5% to 90.8% and collapses diffuse linear priors by -24.1 pp. Test-suite sanitization prevents an additional 3.8 pp sink leakage under unconstrained random walks.
 
-![Figure 4](https://raw.githubusercontent.com/yvliet/perron/main/paper/figures/benchmark_statistical_evaluation.png)
+![Figure 5](https://raw.githubusercontent.com/yvliet/perron/main/paper/figures/benchmark_statistical_evaluation.png)
 
 ---
 
@@ -188,3 +188,6 @@ On software code graphs, Personalized PageRank collapse under default damping ($
 10. Pearson, S., et al. Fault Localization. *ICSE*, 2017.
 11. Zou, D., et al. Fault Localization Families. *IEEE TSE*, 2021.
 12. Liben-Nowell, D. & Kleinberg, J. The Link-Prediction Problem. *JASIST*, 2007.
+13. Andersen, R., et al. Local Graph Partitioning using PageRank Vectors. *FOCS*, 2006.
+14. Klicpera, J., et al. Predict then Propagate. *ICLR*, 2019.
+15. Bojchevski, A., et al. Scaling Graph Neural Networks with Approximate PageRank. *KDD*, 2020.

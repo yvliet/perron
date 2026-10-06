@@ -212,6 +212,7 @@ def load_mmap_csr(
 def close_mmap_csr(
     t_matrix: Optional[csr_matrix] = None,
     dangling: Optional[np.ndarray] = None,
+    *extra_arrays: Optional[np.ndarray],
 ) -> None:
     """
     Explicitly close underlying file handles for memory-mapped arrays on Windows.
@@ -227,6 +228,9 @@ def close_mmap_csr(
                 candidates.append(arr)
     if dangling is not None:
         candidates.append(dangling)
+    for arr in extra_arrays:
+        if arr is not None:
+            candidates.append(arr)
 
     visited_ids = set()
     for item in candidates:

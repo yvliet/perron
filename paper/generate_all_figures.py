@@ -713,7 +713,7 @@ def generate_figure_neff_dose_response():
     ax2.set_ylim(0, 24)
     ax2.set_xlabel(r'Damping Factor $\beta$', fontsize=8.5)
     ax2.set_ylabel('Diagnostic Hit Rate (%)', fontsize=8.5)
-    ax2.set_title(r'(b) Damping Sensitivity \& Sink Absorption', fontsize=9, fontweight='bold')
+    ax2.set_title('(b) Damping Sensitivity & Sink Absorption', fontsize=9, fontweight='bold')
     ax2.grid(True, ls=':', lw=0.5, alpha=0.6)
     ax2.legend(loc='upper right', fontsize=7.0, framealpha=0.9)
 

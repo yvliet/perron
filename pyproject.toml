@@ -31,6 +31,7 @@ data = [
     "pyarrow>=14.0.0",
     "networkx>=3.0",
     "mlcroissant>=1.0.0",
+    "torch-geometric>=2.4.0",
 ]
 polyglot = [
     "tree-sitter>=0.22.0",
@@ -45,6 +46,8 @@ inference-torch = [
     "accelerate>=0.28.0",
     "bitsandbytes>=0.43.0",
     "peft>=0.10.0",
+    "kagglehub>=0.2.0",
+    "psutil>=5.9.0",
 ]
 eval = [
     "datasets>=2.18.0",

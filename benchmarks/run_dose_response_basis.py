@@ -141,8 +141,8 @@ def verify_basis_linearity_tolerance(
         dangling=dangling,
         p_0=p0,
         beta=beta,
-        max_iter=150,
-        tol=1e-12,
+        max_iter=200,
+        tol=1e-11,
     )
 
     l1_err = float(np.sum(np.abs(pi_basis - pi_iter)))
