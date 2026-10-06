@@ -96,7 +96,7 @@
 \thispagestyle{plain}
 
 \begin{abstract}
-Local developer agents must find the code an issue concerns within a prompt budget of a few thousand tokens. Graph walks over static call graphs are widely used to reach symbols that the issue description never names. In this paper, I test whether call-graph expansion assists a small local reasoning model. On SWE-bench Verified ($N=\TaskCallableBenchmark$ callable tasks), under a hash-committed protocol, a frozen \texttt{gemma-4-e2b-it} scores candidate pools pointwise. Graph 1-hop expansion reaches 47.1\% Acc@5, against 45.1\% for depth-matched BM25 (+2.03 pp, 95\% CI [$-$0.29, +4.36], Holm $p=0.287$) and 45.6\% for same-file expansion (+1.45 pp, Holm $p=0.302$). Both candidate pools contain the gold function in 201/344 tasks (58.4\%), with 18 discordant tasks each way. While graph expansion adds 7.3 pp of oracle recall over the lexical seed pool, the pointwise model scorer converts only about 1 pp of it. Evaluating truncation curves at pool sizes $M \in [10, 50]$ confirms that lexical expansion degrades Acc@5 from 46.2\% to 45.1\% ($-$1.16 pp) due to distractor accumulation, whereas graph expansion stabilizes at 47.1\%. In Stratum~C ($N=\StratumCTotalTasks$ tasks where the issue never names the target), graph expansion yields 12.2\% Acc@5 vs.\ 8.4\% for depth BM25 (+3.82 pp); however, 60.0\% of graph expansion's extra recalled tasks reside in Stratum~A, largely duplicating lexical search. An empirical loss decomposition shows that the primary failure occurs before scoring: 41.6 pp of boundary loss between task set and candidate pool, compared to 11.3 pp of compaction loss from pool to top-5. In a descriptive $N=100$ reader test, Gemma 4 identifies the gold target in 74\% of oracle contexts, while retrieval supplies it in only 35--38\% of tasks. The study is Python-only, evaluates one 2B model, and cannot exclude true gains of approximately 4 pp. I release 19,298 scored candidate evaluations, the \texttt{perron-core} library, and precomputed repository graphs under Apache~2.0.
+Local developer agents must localize software defects within a working context of a few thousand tokens. Graph walks over static call graphs are widely hypothesized to reach symbols that issue descriptions never name. In this paper, I test whether call-graph expansion assists a compact 2B reasoning model. On SWE-bench Verified ($N=\TaskCallableBenchmark$ callable tasks), under a hash-committed protocol, a frozen \texttt{gemma-4-e2b-it} scores candidate pools pointwise. Graph 1-hop expansion reaches 47.1\% Acc@5, against 45.1\% for depth-matched BM25 (+2.03 pp, 95\% CI [$-$0.29, +4.36], Holm $p=0.287$) and 45.6\% for same-file expansion (+1.45 pp, Holm $p=0.302$). Both pools contain the gold function in 201/344 tasks (58.4\%), with 18 discordant tasks each way symmetrically split between named and un-named issues. Compared to reranking lexical seeds alone (46.2\%), graph expansion yields a net gain of only 3 tasks (+0.87 pp, $p=0.549$). In Stratum~C ($N=131$ un-named tasks), graph expansion achieves 12.2\% Acc@5 vs.\ 8.4\% for depth BM25 (+3.82 pp, $p=0.125$), but neither beats seeds alone (13.7\%) or unscored BM25 (15.3\%). Upstream boundary loss before scoring (41.6 pp) exceeds downstream compaction loss (11.3 pp) by $3.68\times$. The study is Python-only, evaluates one 2B model, and cannot exclude true gains below 3.4 pp. I release 19,298 scored candidate evaluations, the \texttt{perron-core} library, and precomputed repository graphs under Apache~2.0.
 \end{abstract}
 
 \section{Introduction}
@@ -118,10 +118,10 @@ In this paper, I test both conditions on SWE-bench Verified~\cite{jimenez2024swe
 
 \subsection{Contributions}
 \begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
-    \item \textbf{Matched-Control Evaluation Design}: Depth-matched BM25, same-file, and degree-preserving null-graph candidate pools are scored by the identical model under controlled prompt budgets, isolating what the graph structure contributes beyond pool cardinality.
-    \item \textbf{Empirical Loss Funnel and Truncation Curves}: A 4-stage loss decomposition separates candidate boundary ceiling, rank compaction, and reader error. Truncating candidate pools at $M \in [10, 15, 20, 30, 50]$ demonstrates that adding lexical candidates causes distractor accumulation (degrading Acc@5 by $-$1.16 pp in Arm~A2), whereas graph expansion resists distractor collapse (+0.87 pp in Arm~A4).
-    \item \textbf{Stratum C ($N=131$) Accessibility Analysis}: Evaluating tasks where the issue never mentions the gold symbol demonstrates that graph expansion achieves 12.2\% Acc@5 vs.\ 8.4\% for depth BM25 (+3.82 pp); however, 15 of the 25 extra recalled tasks (60.0\%) fall in Stratum~A (already named), proving that graph expansion predominantly duplicates lexical search.
-    \item \textbf{Mathematical Foundations as Diagnostic Explanations}: Linear algebraic bounds (Brauer rank-1 spectral radius bound $|\lambda_2| \le \beta = 0.85$, barycentric warping bounds, and exact asymptotic PMI decomposition) prove why topological stability cannot overcome semantic disconnection on scale-free software graphs.
+    \item \textbf{Matched-Control Evaluation Design}: Depth-matched BM25, same-file, and degree-preserving null-graph candidate pools are scored by the identical model under controlled prompt budgets, isolating what graph structure contributes beyond pool cardinality.
+    \item \textbf{Empirical Loss Funnel and Truncation Curves}: A 4-stage loss decomposition separates candidate boundary ceiling, rank compaction, and reader error. Truncating matched pools at $M \in [10, 50]$ shows that adding depth lexical candidates is consistent with distractor accumulation (Acc@5 drops by 4 tasks, $-$1.16 pp, $p=0.455$), whereas graph expansion plateaus flat (+3 tasks, +0.87 pp over seeds, $p=0.549$).
+    \item \textbf{Discordant Strata Symmetry}: The 18 discordant tasks recalled exclusively by graph expansion and the 18 tasks recalled exclusively by lexical expansion are split almost identically across strata (9 vs.\ 10 in Stratum~C, 9 vs.\ 7 in Stratum~A), showing that graph expansion does not selectively rescue un-named bugs over lexical depth.
+    \item \textbf{Linear Algebraic Foundations}: Linear algebraic bounds (Brauer rank-1 spectral radius bound $|\lambda_2| \le \beta = 0.85$, barycentric coordinate warping, and exact asymptotic PMI decomposition) characterize the convergence rate and normalization properties of the Perron CSR engine.
     \item \textbf{Open-Source Ecosystem Deliverables}: I release 19,298 scored candidate evaluations (\texttt{scores.parquet}), the \texttt{perron-core} library (Apache~2.0), \texttt{perron-mcp}, and precomputed CSR graphs.
 \end{itemize}
 
@@ -140,6 +140,9 @@ Scalable diffusion on graphs builds on push-based approximate Personalized PageR
 
 \paragraph{Program Slicing and Fault Localization}
 Classical program slicing~\cite{weiser1984program} computes backward executable slices on statement-level Program Dependence Graphs (PDGs), but conservative alias analysis often retains 50\% to 80\% of an application's codebase. Spectrum-Based Fault Localization (SBFL)~\cite{pearson2017evaluating,zou2021empirical} evaluates test coverage matrices to score statement suspiciousness. Pearson et al.~\cite{pearson2017evaluating} showed that fault-localization findings on artificial faults do not reliably transfer to real-world software defects, motivating authentic issue evaluation on SWE-bench~\cite{jimenez2024swebench}. Perron extracts symbol-level AST multigraphs to pack relevant contexts into prompt budgets ($K \le 4,096$) without requiring test execution during retrieval.
+
+\paragraph{Pointwise versus Listwise Reranking}
+Pointwise language model scoring (e.g., MonoT5~\cite{nogueira2020document}) evaluates each candidate independently. Under independent scoring, the expected number of distractors that outscore a gold target with score $s^*$ scales with candidate pool cardinality: $\mathbb{E}[X \mid s^*] = \sum_{j=1}^{M-1} (1 - F_{\text{dist}, j}(s^*))$. Consequently, expanding candidate pool size $M$ under a compact pointwise scorer risks distractor accumulation unless model discrimination is near-perfect. In contrast, listwise and setwise architectures~\cite{zhuang2023rankt5} introduce direct cross-candidate attention competition, mitigating distractor dominance.
 
 \section{Theoretical Foundations and The Perron Graph Engine}
 \label{sec:system}
@@ -335,13 +338,13 @@ A6 & Perron Diffusion Pool & 23.6\% [19.4, 28.3] & 38.7\% [33.7, 43.9] & 45.6\% 
 \textbf{Contrast} & $\boldsymbol{\Delta}$ \textbf{(pp)} & \textbf{95\% Bootstrap CI} & $\boldsymbol{n_{10}} / \boldsymbol{n_{01}}$ & $\boldsymbol{p_{\text{exact}}}$ & $\boldsymbol{p_{\text{holm}}}$ & \textbf{Classification} \\
 \midrule
 \multicolumn{7}{l}{\textit{Confirmatory Family (Acc@5)}} \\
-\textbf{PC1 (A4 $-$ A2)} & +2.03 & [$-$0.29, +4.36] & 12 / 5 & 0.1435 & 0.2869 & \texttt{NULL\_COMPATIBLE} \\
-\textbf{PC2 (A4 $-$ A3)} & +1.45 & [$-$0.58, +3.78] & 10 / 5 & 0.3018 & 0.3018 & \texttt{NULL\_COMPATIBLE} \\
+\textbf{PC1 (A4 $-$ A2)} & +2.03 & [$-$0.29, +4.36] & 12 / 5 & 0.1435 & 0.2869 & Null-Compatible \\
+\textbf{PC2 (A4 $-$ A3)} & +1.45 & [$-$0.58, +3.78] & 10 / 5 & 0.3018 & 0.3018 & Null-Compatible \\
 \midrule
 \multicolumn{7}{l}{\textit{Exploratory Contrasts}} \\
-A1 $-$ B0 (Seed Rerank vs.\ BM25) & +1.45 & [$-$1.33, +4.24] & 15 / 10 & 0.4244 & --- & Exploratory \\
-A4 $-$ B0 (Graph Rerank vs.\ BM25) & +2.33 & [$-$0.87, +5.52] & 18 / 10 & 0.1849 & --- & Exploratory \\
-A4 $-$ A1 (Graph vs.\ Seeds) & +0.87 & [$-$1.92, +3.66] & 7 / 4 & 0.5488 & --- & Exploratory (+3 tasks) \\
+A1 $-$ B0 (Seed Rerank vs.\ BM25) & +1.45 & [$-$1.33, +4.24] & 15 / 10 & 0.4244 & -- & Exploratory \\
+A4 $-$ B0 (Graph Rerank vs.\ BM25) & +2.33 & [$-$0.87, +5.52] & 18 / 10 & 0.1849 & -- & Exploratory \\
+A4 $-$ A1 (Graph vs.\ Seeds) & +0.87 & [$-$1.92, +3.66] & 7 / 4 & 0.5488 & -- & Exploratory (+3 tasks) \\
 \midrule
 \multicolumn{7}{l}{\textit{Paired Reciprocal Rank Test (MRR@50)}} \\
 A4 vs.\ B0 (Graph vs.\ BM25) & $-$0.0030 & [$-$0.024, +0.018] & \multicolumn{2}{c}{Wilcoxon $W=\RerankWilcoxonW$} & $p\RerankWilcoxonP$ & Exploratory \\
@@ -350,7 +353,7 @@ A4 vs.\ B0 (Graph vs.\ BM25) & $-$0.0030 & [$-$0.024, +0.018] & \multicolumn{2}{
 \end{table}
 
 \paragraph{Confirmatory Findings}
-Graph 1-hop expansion (A4) reaches 47.1\% Acc@5 compared to 45.1\% for depth-matched BM25 (A2, $\Delta = +2.03$ pp, 95\% CI [$-$0.29, +4.36], Holm $p=0.287$) and 45.6\% for same-file matching (A3, $\Delta = +1.45$ pp, 95\% CI [$-$0.58, +3.78], Holm $p=0.302$). Both contrasts are classified as null-compatible within the pre-registered equivalence bounds of $[-5.0, +5.0]$ pp. Given the realized discordance counts ($n_d = 17$ and $15$), the study was powered to detect true differences $\ge 3.4\text{--}3.7$ pp; true gains below this threshold cannot be ruled out.
+Graph 1-hop expansion (A4) reaches 47.1\% Acc@5 compared to 45.1\% for depth-matched BM25 (A2, $\Delta = +2.03$ pp, 95\% CI [$-$0.29, +4.36], Holm $p=0.287$) and 45.6\% for same-file matching (A3, $\Delta = +1.45$ pp, 95\% CI [$-$0.58, +3.78], Holm $p=0.302$). Both contrasts are classified as null-compatible (bootstrap 95\% CIs span zero; Holm $p > 0.05$). Given the realized discordance counts ($n_d = 17$ and $15$), the study achieved 80\% statistical power to detect true differences $\ge 3.4\text{--}3.7$ pp; true gains below this threshold cannot be ruled out.
 
 \paragraph{Candidate Pool Ceiling Parity}
 Candidate pool oracle recall is identical: 58.4\% (201/344) for both graph expansion ($A_4$) and depth BM25 ($A_2$). Across discordant tasks, $n_{10}=18$ and $n_{01}=18$ (two-sided McNemar $p=1.0000$). With 36 discordant pairs, the 95\% CI on the recall difference is approximately $\pm 3.4$ pp. Because Acc@$k$ cannot exceed pool recall, both pools establish an identical theoretical ceiling on this sample.
@@ -360,14 +363,14 @@ Comparing graph expansion (A4) directly to seed reranking (A1, 46.2\% Acc@5) yie
 
 \subsection{Pointwise Candidate Pool-Size Truncation Curves}
 \label{sec:truncation_curves}
-To empirically test the distractor-accumulation mechanism without running new model passes, I evaluated pointwise rankings from \texttt{scores.parquet} under truncated pool cutoffs $M \in [10, 15, 20, 30, 50]$.
+To empirically test the distractor-accumulation mechanism without running new model passes, I evaluated pointwise rankings from \texttt{scores.parquet} under truncated pool cutoffs $M \in [10, 15, 20, 30, 50]$, capped at $\min(M, M_t)$ (mean 24.5 candidates).
 
 \begin{table}[t]
 \centering
 \footnotesize
 \setlength{\tabcolsep}{4.0pt}
 \renewcommand{\arraystretch}{0.95}
-\caption{\textbf{Pointwise candidate pool-size truncation curves on SWE-bench Verified ($N=344$).} Evaluates candidate pool oracle recall and Acc@5 across pool cutoffs $M \in [10, 15, 20, 30, 50]$ for depth BM25 (A2) and graph 1-hop expansion (A4).}
+\caption{\textbf{Pointwise candidate pool-size truncation curves on SWE-bench Verified ($N=344$).} Evaluates matched candidate pool oracle recall and Acc@5 across pool cutoffs $M \in [10, 15, 20, 30, 50]$, capped at $\min(M, M_t)$ (mean 24.5 candidates), for depth BM25 (A2) and graph 1-hop expansion (A4).}
 \label{tab:truncation_curves}
 \begin{tabular}{lccccc}
 \toprule
@@ -384,8 +387,8 @@ Arm A4 (Graph 1-Hop) Acc@5 & \TruncAFourAccFiveTen & \TruncAFourAccFiveFifteen &
 
 As shown in Table~\ref{tab:truncation_curves}, expanding candidate pool size produces divergent empirical dynamics:
 \begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
-    \item \textbf{Arm A2 (Depth BM25)}: Expanding $M$ from 10 to 50 raises pool oracle recall by +15.99 pp (176 to 231 tasks, 51.2\% to 67.2\%). However, Acc@5 degrades monotonically from 46.22\% ($M=10$) down to 45.06\% ($M=50$, net $-$1.16 pp). Because added lexical candidates are unconstrained by execution structure, they act as distractors that outscore gold targets: $\mathbb{E}[X \mid s^*] = \sum_{j=1}^{M-1} (1 - F_{\text{dist}, j}(s^*))$.
-    \item \textbf{Arm A4 (Graph 1-Hop)}: Pool oracle recall expands from 51.16\% ($M=10$) to 58.43\% ($M=50$). Unlike lexical search, Acc@5 rises from 46.22\% ($M=10$) to 47.09\% ($M=20$) and stabilizes flat at 47.09\% through $M=50$ (+0.87 pp over $M=10$). Graph-derived candidates do not actively erode model ranking.
+    \item \textbf{Arm A2 (Depth BM25)}: Expanding $M$ from 10 to 50 raises matched pool oracle recall from 51.16\% to 58.43\% (176 to 201 tasks, +7.27 pp). However, Acc@5 shifts from 46.22\% down to 45.06\% (a loss of 4 tasks, $-$1.16 pp, exact McNemar $p=0.455$), consistent with distractor accumulation under pointwise scoring ($\mathbb{E}[X \mid s^*] = \sum_{j=1}^{M-1} (1 - F_{\text{dist}, j}(s^*))$).
+    \item \textbf{Arm A4 (Graph 1-Hop)}: Matched pool oracle recall expands identically from 51.16\% to 58.43\% (+7.27 pp). Acc@5 rises slightly from 46.22\% ($M=10$) to 47.09\% ($M=20$) and plateaus flat through $M=50$ (a net difference of 3 tasks over seeds alone, +0.87 pp, $p=0.549$).
 \end{itemize}
 
 \subsection{Stratum C ($N=131$) Breakdown on Un-Named Tasks}
@@ -396,7 +399,7 @@ The motivation for graph expansion is finding defect targets that the issue desc
 \centering
 \footnotesize
 \setlength{\tabcolsep}{4.0pt}
-\caption{\textbf{Stratum C ($N=131$) localization performance on un-named defect tasks.} Evaluates tasks where the issue description never mentions the gold symbol.}
+\caption{\textbf{Stratum C ($N=131$) localization performance on un-named defect tasks.} Evaluates tasks where the issue description never mentions the gold symbol across all four comparators.}
 \label{tab:stratum_c_breakdown}
 \begin{tabular}{lcccc}
 \toprule
@@ -410,15 +413,14 @@ A2 (Depth-Matched BM25, $M \le 50$) & \StratumCATwoAccFive & \StratumCATwoHits &
 \end{tabular}
 \end{table}
 
-In Stratum~C, graph expansion (A4) achieves 12.2\% Acc@5 (16/131) compared to 8.4\% for depth BM25 (A2, 11/131, $\Delta = +3.82$ pp, exact McNemar $p=0.1250$). However, raw unscored BM25 top-5 (B0) hits 20/131 (15.3\%), confirming that the small 2B scorer degrades raw BM25 in un-named contexts. 
+In Stratum~C, graph expansion (A4) achieves 12.2\% Acc@5 (16/131) compared to 8.4\% for depth BM25 (A2, 11/131, $\Delta = +3.82$ pp, exact McNemar $p=0.1250$). However, neither expansion strategy outperforms reranking lexical seeds alone (A1, 13.7\%, 18/131) or unscored BM25 top-5 (B0, 15.3\%, 20/131). Even in the un-named stratum where graph traversal is hypothesized to provide the greatest advantage, expanding the candidate pool dilutes model precision relative to seeds alone.
 
-Crucially, tracking the 25 extra tasks recalled by graph expansion over seeds reveals their distribution across strata:
+Furthermore, analyzing the 18 discordant tasks recalled exclusively by graph expansion ($A_4 \setminus A_2$) and the 18 tasks recalled exclusively by depth BM25 ($A_2 \setminus A_4$) reveals near-perfect symmetry across strata:
 \begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
-    \item \textbf{Stratum A (Target Named)}: \StratumAExtraGraphTasks\ tasks (\StratumAExtraGraphPct).
-    \item \textbf{Stratum B (Target 1-Hop from Mention)}: \StratumBExtraGraphTasks\ task (\StratumBExtraGraphPct).
-    \item \textbf{Stratum C (Target Un-Named)}: \StratumCExtraGraphTasks\ tasks (\StratumCExtraGraphPct).
+    \item \textbf{Graph-Only Recall (18 Tasks)}: 9 tasks in Stratum~C (\DiscordantGraphOnlyStratumCPct), 0 in Stratum~B (\DiscordantGraphOnlyStratumBPct), 9 in Stratum~A (\DiscordantGraphOnlyStratumAPct).
+    \item \textbf{Lexical-Only Recall (18 Tasks)}: 10 tasks in Stratum~C (\DiscordantLexicalOnlyStratumCPct), 1 in Stratum~B (\DiscordantLexicalOnlyStratumBPct), 7 in Stratum~A (\DiscordantLexicalOnlyStratumAPct).
 \end{itemize}
-Thus, 60.0\% of the extra recall contributed by graph expansion falls into tasks where the defect target was already named in the issue, demonstrating that graph walks predominantly duplicate lexical search rather than discovering structurally hidden defect sites.
+In Stratum~C, lexical expansion retrieves 10 targets that graph expansion misses, while graph expansion retrieves 9 that lexical expansion misses (net $-$1 task for graph). Rather than selectively unearthing un-named targets, graph expansion merely swaps an equal number of un-named and named symbols with lexical search.
 
 \subsection{Pipeline Loss Decomposition and Loss Funnel (RQ3)}
 \label{sec:rq3}
@@ -496,7 +498,7 @@ On SWE-bench Lite ($N=237$), factorial sweep diagnosis demonstrates why unconstr
 \label{sec:threats}
 \begin{enumerate}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
     \item \textbf{Programming Language Scope}: Evaluation is restricted to Python AST dependency networks. While directed multigraph diffusion is language-agnostic, static call graphs miss dynamic runtime dispatch, reflection (\texttt{getattr}), and monkey-patching.
-    \item \textbf{Model Capacity and Prompting}: Findings are derived from one compact model (\texttt{gemma-4-e2b-it}) with pointwise scoring. Frontier models (e.g., Gemma 4 31B, Claude 3.5 Sonnet) or listwise scoring prompts may exhibit different conversion rates.
+    \item \textbf{Model Capacity and Prompting}: Findings are derived from one compact model (\texttt{gemma-4-e2b-it}) with pointwise scoring. Frontier models (e.g., Gemma 4 31B or frontier cloud models) or listwise scoring prompts may exhibit different conversion rates.
     \item \textbf{Candidate Pool Bounds}: Pools evaluate 1-hop expansion capped at 50 candidates ($M_t \le 50$). Multi-hop expansion reaches 66.9\% oracle recall but introduces hundreds of distractors.
     \item \textbf{Task Scope}: Restricted to $N=344$ function-level tasks on SWE-bench Verified. Patch generation and full test execution were not evaluated.
     \item \textbf{Statistical Power}: With realized discordance counts, the 95\% CI on PC1 admits true gains up to $+4.36$ pp. The finding is that gains are not demonstrated and large effects are ruled out, not that true effect is strictly zero.
@@ -516,15 +518,15 @@ To support reproducible research, Perron is released as an open-source software 
 
 \section{Conclusion}
 \label{sec:conclusion}
-On SWE-bench Verified, call-graph 1-hop expansion does not outperform matched lexical pools under a frozen Gemma 4 scorer, nor does it expand candidate reachability beyond lexical depth. While graph expansion adds 7.3 pp of candidate pool recall, the small model converts only about 1 pp of it into top-5 accuracy. Evaluating pool truncation curves confirms that adding lexical candidates causes distractor accumulation, whereas graph expansion brings semantically related candidates that resist ranking collapse. Upstream boundary loss ($41.6$ pp) exceeds downstream compaction loss ($11.3$ pp) by a factor of $3.68\times$. For resource-constrained local developer agents, retrieval engineering should invest in first-stage lexical recall and compact AST breadcrumb packing rather than unconstrained graph diffusion.
+On SWE-bench Verified, call-graph 1-hop expansion does not outperform matched lexical pools under a frozen Gemma 4 scorer, nor does it expand candidate reachability beyond lexical depth. While graph expansion adds 7.3 pp of candidate pool recall over seeds alone, the small model converts only about 1 pp of it into top-5 accuracy. Matched pool truncation curves demonstrate that expanding candidate pool breadth under a pointwise scorer fails to improve localization due to distractor accumulation; in un-named defect tasks, neither expansion beats seeds alone or unscored BM25. Upstream boundary loss ($41.6$ pp) exceeds downstream compaction loss ($11.3$ pp) by a factor of $3.68\times$. For resource-constrained local developer agents, retrieval engineering should invest in high-precision top-$k$ lexical retrieval, compact AST breadcrumb packing, or listwise reranking architectures rather than expanding local graph neighbors.
 
-\vspace{-0.5em}
+\vspace{-0.8em}
 {
 \let\oldthebibliography\thebibliography
 \renewcommand\thebibliography[1]{%
   \oldthebibliography{#1}%
   \footnotesize
-  \setlength{\itemsep}{0pt}%
+  \setlength{\itemsep}{-1.5pt}%
   \setlength{\parsep}{0pt}%
   \setlength{\parskip}{0pt}%
 }
