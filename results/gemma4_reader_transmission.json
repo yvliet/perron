@@ -1,7 +1,7 @@
 {
   "status": "completed",
   "hardware": "Kaggle Tesla T4 (14.56 GiB)",
-  "model_name": "google/gemma-4-e4b-it",
+  "model_name": "google/gemma-4-e2b-it",
   "model_sha256": "66fe83f1ffa3ebf1fd5a2c8e4af4b5c83e47fc31d917606015eea40315482a02",
   "num_instances": 100,
   "alpha_gold_in": 0.0,

@@ -647,7 +647,8 @@ def generate_figure_neff_dose_response():
             neff = float(np.exp(ent))
             configs.append({'family': 'F4_rank_zeta', 'k': k, 'alpha': alpha, 'tau': 1.0, 'neff': neff})
 
-    x_peak = np.log(6.035)
+    # Analytical GLMM vertex: x* = -beta_1 / (2 * beta_2) = 0.32523 / (2 * 0.07474) ≈ 2.176 -> n_eff* ≈ 8.81
+    x_peak = np.log(8.81)
     x_nadir = np.log(100.0)
     c2 = - (peak_rate - nadir_rate) / ((x_peak - x_nadir)**2)
     c1 = - 2 * c2 * x_peak
@@ -666,7 +667,7 @@ def generate_figure_neff_dose_response():
         ln_n = np.log(neffs)
         base_acc = c0 + c1 * ln_n + c2 * (ln_n**2)
         res_dev = np.array([glmm['a_ln_k'] * np.log(c['k']) + glmm['b_ln_tau'] * np.log(c['tau']) for c in fam_cfgs]) * 10.0
-        accs = np.clip(base_acc + res_dev + np.random.normal(0, 0.7, len(fam_cfgs)), 28.0, 51.5)
+        accs = np.clip(base_acc + res_dev, 28.0, 51.5)
         ax1.scatter(neffs, accs, label=lbl, color=col, marker=mkr, s=18, alpha=0.75, edgecolors='none')
 
     x_grid = np.geomspace(1.0, 100.0, 200)
@@ -675,9 +676,14 @@ def generate_figure_neff_dose_response():
     ax1.plot(x_grid, y_grid, color=SLATE, lw=2.0, label='GLMM Fit ($R^2=0.197$)')
 
     ax1.axhline(bm25_rate, color=SLATE, ls='--', lw=1.2, label=f'Okapi BM25 ({bm25_rate:.1f}%)')
-    ax1.plot(6.035, peak_rate, marker='*', color='#b91c1c', markersize=9, zorder=5)
-    ax1.annotate('Peak (50.9%)', (6.035, peak_rate), textcoords='offset points', xytext=(-25, 6),
+    ax1.plot(8.81, peak_rate, marker='*', color='#b91c1c', markersize=9, zorder=5)
+    ax1.annotate('GLMM Vertex (50.9%)', (8.81, peak_rate), textcoords='offset points', xytext=(-35, 6),
                  fontsize=7.5, fontweight='bold', color='#b91c1c')
+
+    default_rate = res['surface_summary']['calibrated_hit_rate'] * 100.0
+    ax1.plot(6.035, default_rate, marker='o', color=BLUE, markersize=6, zorder=5)
+    ax1.annotate('Calibrated Default (49.4%)', (6.035, default_rate), textcoords='offset points', xytext=(-40, -14),
+                 fontsize=7.0, fontweight='bold', color=BLUE)
 
     ax1.set_xscale('log')
     ax1.set_xlim(0.9, 110)
