@@ -315,6 +315,12 @@ def analyze_protocol_results() -> Dict[str, Any]:
             },
         }
 
+    # Table T-E: Downstream Mini-Test
+    downstream_f = RESULTS_DIR / "downstream_results.json"
+    table_e = {}
+    if downstream_f.exists():
+        table_e = json.loads(downstream_f.read_text(encoding="utf-8"))
+
     # Combined output structure
     output_data = {
         "timestamp_utc": datetime.datetime.now(datetime.timezone.utc).isoformat(),
@@ -322,6 +328,7 @@ def analyze_protocol_results() -> Dict[str, Any]:
         "table_A": table_a,
         "table_B": table_b,
         "table_C": table_c,
+        "table_E": table_e,
     }
 
     OUTPUT_JSON.write_text(json.dumps(output_data, indent=2) + "\n", encoding="utf-8")
@@ -385,6 +392,21 @@ def analyze_protocol_results() -> Dict[str, Any]:
             f"- **A5 Null Graph Fill Rate**: {table_c['a5_fills']['fraction_filled']}% tasks required filling (Mean fill: {table_c['a5_fills']['mean_fill_size']} symbols)",
             f"- **Jaccard Similarity with Graph Pool (A4)**: J(A4, A2) = {table_c['jaccard']['mean_a4_a2']}, J(A4, A3) = {table_c['jaccard']['mean_a4_a3']}",
             f"- **Graph-Unique Candidates**: {table_c['graph_unique_candidates']['mean_per_task']} symbols/task ({table_c['graph_unique_candidates']['total']} total)",
+        ])
+
+    if table_e:
+        md_lines.extend([
+            "",
+            "## Table T-E: Downstream Edit-Location Mini-Test (N=100, Descriptive)",
+            "",
+            "| Arm | Candidate Context | ContextHit@5 | EditLoc@1 | EditLoc@3 | Conversion |",
+            "| :--- | :--- | :--- | :--- | :--- | :--- |",
+            f"| **D0** | BM25 Top-5 | {table_e['D0']['context_hit_5']['pct']:.1f}% | {table_e['D0']['edit_loc_1']['pct']:.1f}% | {table_e['D0']['edit_loc_3']['pct']:.1f}% | {table_e['D0']['conversion']:.3f} |",
+            f"| **D1** | A4 Graph Top-5 | {table_e['D1']['context_hit_5']['pct']:.1f}% | {table_e['D1']['edit_loc_1']['pct']:.1f}% | {table_e['D1']['edit_loc_3']['pct']:.1f}% | {table_e['D1']['conversion']:.3f} |",
+            f"| **D2** | A3 Control Top-5 | {table_e['D2']['context_hit_5']['pct']:.1f}% | {table_e['D2']['edit_loc_1']['pct']:.1f}% | {table_e['D2']['edit_loc_3']['pct']:.1f}% | {table_e['D2']['conversion']:.3f} |",
+            f"| **D3** | Oracle Context (Transmission) | {table_e['D3']['context_hit_5']['pct']:.1f}% | {table_e['D3']['edit_loc_1']['pct']:.1f}% | {table_e['D3']['edit_loc_3']['pct']:.1f}% | {table_e['D3']['conversion']:.3f} |",
+            "",
+            f"- **Reader Transmission Rate (D3)**: {table_e['reader_transmission']['raw_p'] * 100.0:.1f}% (Chance-adjusted: {table_e['reader_transmission']['chance_adjusted'] * 100.0:.1f}%)",
         ])
 
     OUTPUT_MD.write_text("\n".join(md_lines) + "\n", encoding="utf-8")

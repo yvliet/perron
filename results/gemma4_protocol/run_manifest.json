@@ -1,0 +1,11 @@
+{
+  "timestamp_utc": "2026-10-06T06:29:15.445724+00:00",
+  "protocol_path": "gemma4_protocol_v1.yaml",
+  "protocol_sha256": "96af1621a27b48a99666a8fcef626ecd2415fd094fc6b6803fce567c38d927ce",
+  "lock_path": "gemma4_lock_v1.json",
+  "lock_sha256": "dbbf292032b2fdff39692476b3d557dddd437a176b745f4ae63ca34fab254712",
+  "chosen_variant": "P0",
+  "n_callable_tasks": 344,
+  "cache_entries": 19298,
+  "wall_clock_seconds": 341.3097010999991
+}

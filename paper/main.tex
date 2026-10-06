@@ -58,7 +58,7 @@
 % Running Header (Publication & ArXiv Standard)
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\textit{Perron: Prior Calibration and Specificity Damping on Code Graphs}}
+\fancyhead[L]{\small\textit{Structure Proposes, LLM Disposes: PPR and Gemma 4 Reranking on Code Graphs}}
 \fancyhead[R]{\small\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \fancypagestyle{plain}{%
@@ -79,7 +79,7 @@
     urlcolor=darkblue
 }
 
-\title{\vspace{-1.5em}\LARGE\textbf{When and Why Does Personalized PageRank Fail on Code Graphs?\\Analyzing Seed Dispersion, Prior Calibration, and Decoupled Specificity Damping}\vspace{-0.5em}}
+\title{\vspace{-1.5em}\LARGE\textbf{Structure Proposes, LLM Disposes: A Diagnostic Study of Personalized PageRank, Topological Regularization, and Gemma 4 Reranking on Code Graphs}\vspace{-0.5em}}
 
 \author{
     \textbf{Sultan Haikal} \\
@@ -96,7 +96,7 @@
 \thispagestyle{plain}
 
 \begin{abstract}
-Local developer agents must retrieve relevant code context within tight prompt budgets ($K \le 4{,}096$ tokens). While Personalized PageRank (PPR) over code dependency graphs is commonly deployed to discover unmentioned symbols, its empirical efficacy is widely debated. Through a systematic $2\times 2$ factorial evaluation on SWE-bench Lite ($N=237$) alongside a continuous dose-response surface across 186 prior configurations on SWE-bench Verified ($N=344$, 63,984 evaluations), I demonstrate that unconstrained PPR failure is driven primarily by \textbf{teleport prior dispersion} rather than scale-free hub absorption alone. Diffusion accuracy collapses onto an invariant dose-response curve governed by effective prior entropy support $n_{\text{eff}} = \exp(H(p_0))$ ($R^2 = 0.197$ binary logit cross-validation, with the analytical GLMM vertex at $n_{\text{eff}}^* \approx 8.8$ and the calibrated library default at $n_{\text{eff}} \approx 6.0$), with Two One-Sided Tests (TOST) showing no evidence of hub-presence harm within a sample-powered $\pm 9.3$ pp equivalence margin on hub-bearing tasks ($p < .001$, $N=109$). Under diffuse linear priors, PPR collapses to \FactLinRawStdFnAcc, whereas concentrating query priors via top-25 softmax ($\tau=0.15$) rescues standard PPR to \FactSoftSanStdFnAcc. \textbf{Perron} adapts stationary-normalized rooted PageRank via post-walk Decoupled Specificity ($\boldsymbol{\pi}_q / (\boldsymbol{\pi}_g + \epsilon)^\gamma$), providing an adaptive prior regularizer that rescues diffuse priors by +24.1 pp (\FactLinRawPerronFnAcc\ vs.\ \FactLinRawStdFnAcc) while restoring hub suppression to \VerifPerronStaticHSI\ (reducing hub contamination from \VerifStdPPRHubContam\ in Standard PPR to \VerifPerronStaticHubContam, matching lexical BM25's \VerifBMTwentyFiveHSI\ HSI). In a pre-registered confirmatory evaluation on SWE-bench Verified ($N=\VerifNumCallable$), Perron achieves \VerifPerronStaticFnAcc\ Function Acc@10, showing no statistically detectable difference from lexical BM25 at top-10 (\VerifBMTwentyFiveFnAcc, paired bootstrap difference $[-3.5, +2.3]$ percentage points, non-inferiority inconclusive against a $-2.0$ pp margin) while BM25 leads at top-5 retrieval (\VerifBMTwentyFiveFnAccFive\ vs.\ \VerifPerronStaticFnAccFive). In candidate context packing for Gemma 4 ($K \le 3{,}480$), lightweight AST breadcrumbs consume an average of \PromptPackAvgTokens\ words ($\sim 370\text{--}425$ SentencePiece BPE tokens), preserving \PromptPackReasoningHeadroom\ reasoning headroom for generation, with Perron achieving \PromptPackPerronTopFnAcc\ gold function inclusion vs.\ \PromptPackBMTwentyFiveTopFnAcc\ for BM25, and slot fusion balancing both (\PromptPackSlotTopFileAcc\ file, \PromptPackSlotTopFnAcc\ function). I release \texttt{perron-core} and \texttt{perron-mcp} under Apache 2.0.
+Local developer agents must localize code defect targets within constrained prompt budgets ($K \le 4{,}096$ tokens). While Personalized PageRank (PPR) over code dependency graphs is standardly deployed to discover unmentioned symbols, its empirical efficacy is widely debated. Through a systematic $2\times 2$ factorial evaluation on SWE-bench Lite ($N=237$) alongside a continuous dose-response surface across 186 prior configurations on SWE-bench Verified ($N=344$, 63,984 evaluations), I demonstrate that unconstrained PPR degradation is driven by \textbf{teleport prior dispersion} and test-suite sinks rather than scale-free hub absorption alone. Retrieval accuracy collapses onto an invariant dose-response curve governed by effective prior entropy support $n_{\text{eff}} = \exp(H(p_0))$ ($R^2 = 0.197$ binary logit cross-validation; analytical GLMM vertex at $n_{\text{eff}}^* \approx 8.8$), with Two One-Sided Tests (TOST) confirming no evidence of hub-presence harm within a sample-powered $\pm 9.3$ pp equivalence margin on hub-bearing tasks ($p < .001$, $N=109$). Under diffuse linear priors, PPR collapses to \FactLinRawStdFnAcc, whereas concentrated query priors ($\tau=0.15$) rescue standard PPR to \FactSoftSanStdFnAcc. \textbf{Perron} adapts stationary-normalized rooted PageRank via post-walk Decoupled Specificity ($\boldsymbol{\pi}_q / (\boldsymbol{\pi}_g + \epsilon)^\gamma$), providing an adaptive topological regularizer (+24.1 pp under diffuse priors) while sustaining \VerifPerronStaticHSI\ hub suppression. In a pre-registered confirmatory retrieval evaluation on SWE-bench Verified ($N=\VerifNumCallable$), Perron achieves \VerifPerronStaticFnAcc\ Function Acc@10 vs.\ Okapi BM25's \VerifBMTwentyFiveFnAcc\ (non-inferiority inconclusive against a $-2.0$ pp margin), while BM25 leads at top-5 retrieval (\VerifBMTwentyFiveFnAccFive\ vs.\ \VerifPerronStaticFnAccFive). Under a separate two-stage pre-registered evaluation protocol, candidate pools are scored pointwise by a frozen \texttt{gemma-4-e2b-it} language model: graph 1-hop expansion ($A_4$) yields 47.1\% Acc@5 vs.\ depth-matched BM25 ($A_2$, 45.1\%, $\Delta = +2.03$ pp, 95\% CI $[-0.29, +4.36]$ pp) and same-file control ($A_3$, 45.6\%, $\Delta = +1.45$ pp, 95\% CI $[-0.58, +3.78]$ pp), classified pre-registered as \texttt{NULL\_COMPATIBLE} under exact McNemar tests ($p_{\text{holm}} = 0.287, 0.302$). A downstream reader transmission test ($N=100$) demonstrates 74.0\% top-1 conversion (67.5\% chance-adjusted). I release \texttt{perron-core} and \texttt{perron-mcp} under Apache~2.0.
 \end{abstract}
 
 \section{Introduction}
@@ -479,27 +479,81 @@ As detailed in Table~\ref{tab:verified_evaluation}, the confirmatory evaluation 
     \item \textbf{Hypothesis P3 (Boundary Jitter and Fusion Failure)}: Of the \VerifNumCallable\ callable tasks on SWE-bench Verified, BM25 and Perron Static achieve concordant hits on \VerifCompBoth\ instances and concordant misses on \VerifCompBothMiss\ instances. Perron retrieves \VerifCompPerronOnly\ exclusive targets while BM25 retrieves \VerifCompBMOnly\ exclusive targets (two-sided McNemar $p \VerifCompMcNemarP$). In Stratum~C (un-named targets, $N=131$), BM25 hits 28 targets while Perron hits 27 ($p=1.0000$, discordant: 2 Perron wins vs.\ 3 BM25 wins). While an unconstrained oracle union reaches \VerifOracleFnAccKN\ (\VerifOracleFnAcc), practical Reciprocal Rank Fusion ($k_0=60$) attains only \VerifRRFPRFnAccKN\ (\VerifRRFPRFnAcc), failing to surpass standalone BM25 (\VerifBMTwentyFiveFnAccKN). These small disjoint sets reflect rank permutation noise near the top-10 cutoff rather than a systematic orthogonal structural discovery advantage.
 \end{itemize}
 
-\subsection{AST Context-Budgeted Breadcrumb Packing for Local Developer Agents}
-\label{sec:gemma4_packing}
-To evaluate candidate context packing for local developer agents under prompt budget constraints ($K \le 3{,}480$ tokens), I measured candidate context packing across all \VerifNumCallable\ callable SWE-bench Verified instances. Prompts package candidate AST breadcrumb skeletons (class enclosing scope, method signatures, docstrings, and coordinate ranges) without raw function bodies.
+\subsection{Pre-Registered Pointwise Reranking with Gemma 4}
+\label{sec:gemma4_reranking}
+To test whether graph-derived candidate proposals carry actionable ranking signal beyond non-graph controls when scored by an identical reasoning model (``structure proposes, LLM disposes''), I executed a pre-registered evaluation protocol on SWE-bench Verified ($N=\VerifNumCallable$ callable tasks). The design was frozen in two cryptographic stages (\texttt{benchmarks/protocol/gemma4\_protocol\_v1.yaml}, raw SHA-256: \texttt{96af1621\dots}; Stage~2 lock \texttt{gemma4\_lock\_v1.json}, raw SHA-256: \texttt{dbbf2920\dots}) prior to the single-shot Verified run.
+
+Each task generates candidate pools matched exactly to pool size $M_t = 10 + \min(|E_t|, 40) \in [10, 50]$ (mean $M_t = 24.5$, median $22.0$), where $E_t$ comprises 1-hop out-neighbors of lexical seeds $S$ passing Filter~$F$ (functions/methods only, excluding test nodes and $\mathcal{H}_{25}$ hubs), scored by 1-step walk adjacency $a(u) = \sum_{s \in S} p_0(s) T[s,u]$. Four primary arms were evaluated:
+\begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
+    \item \textbf{A1 (Rerank Seeds)}: Top-10 lexical seeds $S$ ($M_t=10$).
+    \item \textbf{A2 (Depth-Matched BM25 Control)}: $S$ followed by the next BM25 candidates passing Filter~$F$ up to $M_t$.
+    \item \textbf{A3 (Same-File Matched Control)}: $S$ followed by symbols in seed files passing Filter~$F$ ordered by BM25 desc, filled from A2 if necessary ($2.0\%$ fill rate).
+    \item \textbf{A4 (Graph 1-Hop Expansion)}: $S$ followed by $E_t$ ordered by adjacency score $a(u)$ up to $M_t$.
+\end{itemize}
+Secondary arms include \textbf{A5} (degree-preserving relation-stratified null graph replicate $r_t = \text{hash}(iid) \pmod{100}$, $70.1\%$ fill rate) and \textbf{A6} (Perron static ranking up to $M_t$). Candidates are rendered as AST breadcrumbs without function bodies (mean $423.1$ tokens) and scored pointwise via log-odds under \texttt{gemma-4-e2b-it}: $s(t, v) = \text{logsumexp}(z[Y]) - \text{logsumexp}(z[N])$ on prompt variant P0, selected on disjoint dev ($N=100$) under Gate~G2 (mean format mass $96.5\% \ge 90\%$).
 
 \begin{table}[t]
 \centering
 \footnotesize
-\caption{\textbf{AST context-budgeted breadcrumb packing for Gemma 4} ($N=\VerifNumCallable$ callable SWE-bench Verified instances, budget $K \le 3{,}480$ tokens).}
-\label{tab:gemma4_packing}
-\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}Xcccc}
+\setlength{\tabcolsep}{2.5pt}
+\caption{\textbf{Pre-registered Gemma 4 pointwise reranking on SWE-bench Verified ($N=344$ callable tasks).} Candidate pools matched to per-task size $M_t \in [10, 50]$ (mean $24.5$). Brackets indicate Wilson 95\% confidence intervals.}
+\label{tab:gemma4_reranking}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}Xccccc}
 \toprule
-\textbf{Context Packing Arm} & \textbf{Packed Slots} & \textbf{Candidate Occupancy} & \textbf{Gold Fn Inclusion} & \textbf{Gold File Inclusion} \\
+\textbf{Arm} & \textbf{Description} & \textbf{Acc@1 (95\% CI)} & \textbf{Acc@3 (95\% CI)} & \textbf{Acc@5 (95\% CI)} & \textbf{MRR@50} \\
 \midrule
-BM25 Pack (\texttt{bm25\_pack}) & Top-10 BM25 & \PromptPackAvgTokens\ words ($\sim 394$ BPE) & \PromptPackBMTwentyFiveTopFnAcc\ (\PromptPackBMTwentyFiveFnHitsKN) & \PromptPackBMTwentyFiveTopFileAcc\ (\PromptPackBMTwentyFiveFileHitsKN) \\
-Perron Pack (\texttt{perron\_pack}) & Top-10 Perron & \PromptPackAvgTokens\ words ($\sim 394$ BPE) & \PromptPackPerronTopFnAcc\ (\PromptPackPerronFnHitsKN) & \PromptPackPerronTopFileAcc\ (\PromptPackPerronFileHitsKN) \\
-Slot-Fused Pack (\texttt{slot\_fused\_pack}) & 8 BM25 + 2 Perron & \PromptPackAvgTokens\ words ($\sim 394$ BPE) & \textbf{\PromptPackSlotTopFnAcc}\ (\textbf{\PromptPackSlotFnHitsKN}) & \textbf{\PromptPackSlotTopFileAcc}\ (\textbf{\PromptPackSlotFileHitsKN}) \\
+B0 & BM25 Baseline & 25.3\% [21.0, 30.1] & 38.7\% [33.7, 43.9] & 44.8\% [39.6, 50.0] & 0.3439 \\
+B1 & Perron Static Baseline & 22.7\% [18.6, 27.4] & 35.2\% [30.3, 40.4] & 40.4\% [35.4, 45.7] & 0.3155 \\
+A1 & Rerank Seeds $S$ ($M=10$) & 24.7\% [20.4, 29.5] & 39.5\% [34.5, 44.8] & 46.2\% [41.0, 51.5] & 0.3348 \\
+A2 & Rerank Depth-Matched BM25 & 23.8\% [19.6, 28.6] & 38.1\% [33.1, 43.3] & 45.1\% [39.9, 50.3] & 0.3301 \\
+A3 & Rerank Same-File Matched & 24.1\% [19.9, 28.9] & 39.2\% [34.2, 44.5] & 45.6\% [40.5, 50.9] & 0.3381 \\
+\textbf{A4} & \textbf{Rerank Graph 1-Hop} & \textbf{24.7\%} [20.4, 29.5] & \textbf{39.2\%} [34.2, 44.5] & \textbf{47.1\%} [41.9, 52.4] & \textbf{0.3409} \\
+A5 & Rerank Null Graph 1-Hop & 24.1\% [19.9, 28.9] & 39.0\% [34.0, 44.2] & 45.9\% [40.7, 51.2] & 0.3315 \\
+A6 & Rerank Perron Diffusion & 23.6\% [19.4, 28.3] & 38.7\% [33.7, 43.9] & 45.6\% [40.5, 50.9] & 0.3301 \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Across all arms, candidate symbols are packaged as AST breadcrumbs without full function bodies. Across all three packing arms, candidate prompts contain an identical mean of \PromptPackAvgTokens\ whitespace words because each arm allocates exactly 10 candidate slots formatted under the identical breadcrumb template. Tokenized with Gemma's SentencePiece BPE tokenizer, this corresponds to $370\text{--}425$ BPE tokens (mean 394.2 tokens, Table~\ref{tab:gemma4_packing}), consuming 11.3 percent of the 3,480-token prompt budget and leaving \PromptPackReasoningHeadroom\ open for model reflection and generation (worst-case $\ge 87.8$ percent). Paralleling the retrieval evaluation in Section~\ref{sec:verified_evaluation}, standalone Perron matches BM25 in function inclusion (\PromptPackPerronTopFnAcc, \PromptPackPerronFnHitsKN\ vs.\ \PromptPackBMTwentyFiveTopFnAcc, \PromptPackBMTwentyFiveFnHitsKN, a one-instance difference of $-0.29$ percentage points), while lexical search preserves higher file-level grounding (\PromptPackBMTwentyFiveTopFileAcc\ vs.\ \PromptPackPerronTopFileAcc). Table~\ref{tab:gemma4_packing} inclusion counts credit methods within enclosing class breadcrumb scopes (yielding 177 and 176 hits vs.\ 175 and 173 in Table~\ref{tab:verified_evaluation}). Allocating a hard slot budget (8 lexical slots and 2 structural diffusion slots) achieves \PromptPackSlotTopFnAcc\ function inclusion (\PromptPackSlotFnHitsKN) and \PromptPackSlotTopFileAcc\ file inclusion (\PromptPackSlotFileHitsKN) at an extraction latency of \PromptPackPerronAvgLat\ (measuring joint pipeline execution, where sparse CSR diffusion requires only \ReqConvergeMs\ on Requests and \SymConvergeMs\ on SymPy, while AST symbol parsing and IO account for the remainder).
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{3.5pt}
+\caption{\textbf{Pre-registered confirmatory contrasts on primary endpoint (Strict Acc@5, $N=344$).} Multiplicity adjusted via step-down Holm--Bonferroni over family $\alpha=0.05$. Paired 95\% CIs estimated via repo-stratified bootstrap ($B=10{,}000$).}
+\label{tab:gemma4_contrasts}
+\begin{tabular}{lcccccc}
+\toprule
+\textbf{Contrast} & $\boldsymbol{\Delta}$ \textbf{(pp)} & \textbf{95\% Bootstrap CI} & $\boldsymbol{n_{10}} / \boldsymbol{n_{01}}$ & $\boldsymbol{p_{\text{exact}}}$ & $\boldsymbol{p_{\text{holm}}}$ & \textbf{Classification} \\
+\midrule
+\textbf{PC1 (A4 $-$ A2)} & +2.03 & [$-$0.29, +4.36] & 12 / 5 & 0.1435 & 0.2869 & \texttt{NULL\_COMPATIBLE} \\
+\textbf{PC2 (A4 $-$ A3)} & +1.45 & [$-$0.58, +3.78] & 10 / 5 & 0.3018 & 0.3018 & \texttt{NULL\_COMPATIBLE} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+As presented in Table~\ref{tab:gemma4_reranking} and Table~\ref{tab:gemma4_contrasts}:
+\begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
+    \item \textbf{Tier 1 Confirmatory Contrasts}: Graph reranking (A4) achieves 47.1\% Acc@5 compared to 45.1\% for depth-matched BM25 (A2, $\Delta = +2.03$ pp) and 45.6\% for same-file matching (A3, $\Delta = +1.45$ pp). While positive in point estimate, exact two-sided McNemar tests on discordant pairs ($12/5$ and $10/5$) yield $p_{\text{holm}} = 0.2869$ and $0.3018$. Both 95\% bootstrap confidence intervals lie entirely within the pre-registered equivalence bounds of $[-5.0, +5.0]$ pp, classifying both contrasts as \texttt{NULL\_COMPATIBLE} and resulting in an overall confirmatory verdict of \texttt{NOT\_DEMONSTRATED} at the study's resolution (MDE $\approx 5.0\text{--}6.5$ pp).
+    \item \textbf{Topology Proposes Orthogonal Candidates}: Pairwise Jaccard similarity between A4 and controls is modest ($J(A4, A2) = 0.380, J(A4, A3) = 0.419$), with graph expansion contributing a mean of $11.4$ graph-unique symbols per task ($3{,}907$ total). However, because only $17$ gold targets cross file boundaries within 2 hops on SWE-bench Verified (Section~\ref{sec:null_models}), this topological diversity yields incremental rather than discontinuous ranking lift.
+    \item \textbf{Downstream Reader Transmission Mini-Test ($N=100$)}: To verify whether local models can exploit localized context, I evaluated arms D0--D3 under a descriptive 5-candidate prompt. When presented with candidate contexts, top-1 localization reaches $33.0\%$ on BM25 (D0), $31.0\%$ on Graph (D1), and $30.0\%$ on Control (D2). On the oracle context arm (D3, gold target inserted among 4 distractors), Gemma 4 correctly selects the gold function at rank 1 on $74.0\%$ of tasks (chance-adjusted transmission rate: $67.5\%$, Table~\ref{tab:downstream_mini_test}), proving that the model acts as an effective discriminator when gold targets enter the context window.
+\end{itemize}
+
+\begin{table}[t]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4.5pt}
+\caption{\textbf{Downstream edit-location mini-test on SWE-bench Verified ($N=100$, descriptive).} ContextHit@5 marks gold presence in the 5 presented candidates; EditLoc@1/3 reports model prediction accuracy.}
+\label{tab:downstream_mini_test}
+\begin{tabular}{lccccc}
+\toprule
+\textbf{Arm} & \textbf{Candidate Context (Top-5)} & \textbf{ContextHit@5} & \textbf{EditLoc@1} & \textbf{EditLoc@3} & \textbf{Conversion} \\
+\midrule
+D0 & BM25 Top-5 & 35.0\% & 33.0\% & 35.0\% & 0.943 \\
+D1 & A4 Graph Top-5 & 37.0\% & 31.0\% & 37.0\% & 0.838 \\
+D2 & A3 Control Top-5 & 38.0\% & 30.0\% & 37.0\% & 0.789 \\
+D3 & Oracle Context (Transmission) & 100.0\% & \textbf{74.0\%} & \textbf{85.0\%} & 0.740 \\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \subsection{Ablation Study}
 To evaluate the contribution of individual mechanisms under controlled conditions:
