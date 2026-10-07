@@ -133,7 +133,7 @@ In this paper, I test both conditions on a 344-task held-out subset of SWE-bench
 Only two primary contrasts (PC1 and PC2 on strict Acc@5) are confirmatory. Every other analysis is explicitly designated as exploratory.
 
 \subsection{Physical Hardware Envelope}
-Local developer agents must operate efficiently on consumer hardware. Perron bounds active per-turn working context to $K_{\text{effective}} = 3,480$ tokens ($K \le 4,096$). On a reference developer machine (\HostRAMGiB\ RAM), the standalone CSR engine peaks at \EnginePeakRSSMB\ resident memory, loading graphs via zero-copy memory mapping (\EngineGraphLoadDeltaMB\ delta). Live inference of \texttt{gemma-4-e2b-it} was evaluated with left-padded batching and \texttt{logits\_to\_keep=1} on an NVIDIA Tesla T4 GPU (scoring prompts averaging 423 tokens per candidate symbol), achieving mean Time-To-First-Token of \GemmaMeanTTFTMs\ and \GemmaDecodeTokensSec\ tokens/sec decode throughput.
+Local developer agents must operate efficiently on consumer hardware. Perron bounds active per-turn working context to $K_{\text{effective}} = 3,480$ tokens ($K \le 4,096$). On a reference developer machine (\HostRAMGiB\ RAM), the standalone CSR engine peaks at \EnginePeakRSSMB\ resident memory, loading graphs via zero-copy memory mapping (\EngineGraphLoadDeltaMB\ delta). Hierarchical AST skeleton breadcrumbs occupy an average of 283.8 tokens per task (median 264 tokens), preserving 91.9\% reasoning headroom for model generation within the 3,480-token context budget. Live inference of \texttt{gemma-4-e2b-it} was evaluated with left-padded batching and \texttt{logits\_to\_keep=1} on an NVIDIA Tesla T4 GPU (scoring prompts averaging 423 tokens per candidate symbol), achieving mean Time-To-First-Token of \GemmaMeanTTFTMs\ and \GemmaDecodeTokensSec\ tokens/sec decode throughput.
 
 \section{Related Work}
 \label{sec:related}
@@ -339,6 +339,9 @@ Candidate pool oracle recall is identical: 58.4\% (201/344) for both graph expan
 \paragraph{Exploratory Comparisons}
 Comparing graph expansion (A4) directly to seed reranking (A1, 46.2\% Acc@5) yields a net gain of only 3 tasks ($\Delta = +0.87$ pp, $n_{10}=7, n_{01}=4, p=0.549$). Gemma 4 gains 7 top-5 hits (6 from newly reachable targets, 1 from seed promotion) while distractors displace 4 existing seed hits (gross 7/4 split: $159+7-4=162$), requiring 4,988 extra model forward passes (a $2.45\times$ compute increase over seeds). Comparing A4 to the degree-preserving null graph (A5, 45.9\% Acc@5) yields $\Delta = +1.16$ pp (95\% CI [$-$0.58, +2.91], $n_{10}=7, n_{01}=3, p=0.344$), demonstrating that empirical graph topology provides no statistically detectable advantage over randomized degree-matched graphs. Similarly, comparing A4 to the Perron diffusion pool (A6, 45.6\% Acc@5) yields $\Delta = +1.45$ pp (95\% CI [+0.00, +3.20], $n_{10}=7, n_{01}=2, p=0.180$). Unscored BM25 (B0) preserves nominally higher MRR@50 (0.3439 vs.\ 0.3409) and top-1 accuracy (25.3\% vs.\ 24.7\%) than A4. In Leave-Django-Out jackknife cross-validation ($N=230$), candidate pool parity holds (57.1\% vs.\ 57.1\%, $p=1.0000$) and reranked Acc@5 yields $\Delta(A_4 - A_2) = +2.17$ pp ($p=0.227$).
 
+\paragraph{Model Sensitivity and Positive Controls}
+To test whether the flatline reflects an insensitive scorer rather than graph retrieval limits, I evaluated within-pool discrimination and rank fusion directly from \texttt{scores.parquet}. Across all 176 tasks where gold targets are present in candidate pools, Gemma~4 log-odds scores separate gold targets from distractors with an ROC-AUC of \textbf{0.718} (95\% CI [0.682, 0.754]), confirming genuine discriminative ability above chance (0.50). Furthermore, Reciprocal Rank Fusion (RRF, $k_{\text{rrf}}=60$) combining BM25 prior rank with Gemma log-odds score reaches \textbf{46.51\%} Acc@5 (160/344), outperforming both raw BM25 (44.77\%) and pure Gemma reranking (46.22\%). This demonstrates that the empirical plateau is driven by independent pointwise calibration noise across expanded candidate pools rather than model blindness.
+
 \subsection{Pointwise Candidate Pool-Size Truncation Curves}
 \label{sec:truncation_curves}
 To empirically test the distractor-accumulation mechanism without running new model passes, I evaluated pointwise rankings from \texttt{scores.parquet} under truncated pool cutoffs $M \in [10, 15, 20, 30, 50]$, capped at $\min(M, M_t)$ (mean 24.5 candidates).
@@ -377,7 +380,7 @@ As shown in Figure~\ref{fig:truncation_curves} and Table~\ref{tab:truncation_cur
 \end{itemize}
 
 \paragraph{Direct Distractor Accounting}
-Decomposing candidate pools explains why pool expansion plateaus: of the 25 newly reachable targets entering Arm~A4, 19 enter at rank $\ge 6$ (mean 11.2 outranking distractors) and never reach top-5, while only 6 convert into top-5 hits. Combined with 1 internal seed promotion, A4 gains 7 hits against 4 displaced seed hits on the 176 shared tasks ($159 + 7 - 4 = 162$), as the per-distractor outranking rate drops from 16.6\% ($1.44 / 9$) in Arm~A1 to 7.9\% ($1.72 / 21.8$) in Arm~A4. Expanding candidate pools adds newly reachable targets without increasing per-distractor confusion, but newly appended targets rank too low under pointwise scoring to convert into localization gains.
+Decomposing candidate pools explains why pool expansion plateaus: of the 25 newly reachable targets entering Arm~A4, 19 enter at rank $\ge 6$ (mean 11.2 outranking distractors) and never reach top-5, while only 6 convert into top-5 hits ($6 + 19 = 25$). Combined with 1 internal seed promotion against 4 displaced seed hits on the 176 shared tasks, the gross promotion yields $\Delta_{\text{top-5}} = (6_{\text{new graph}} + 1_{\text{seed promotion}}) - 4_{\text{displaced seeds}} = +3$ net tasks ($159 + 7 - 4 = 162$, net $+0.87$ pp, $p=0.549$), as the per-distractor outranking rate drops from 16.6\% ($1.44 / 9$) in Arm~A1 to 7.9\% ($1.72 / 21.8$) in Arm~A4. Expanding candidate pools adds newly reachable targets without increasing per-distractor confusion, but newly appended targets enter too far down the tail under pointwise scoring to convert into localization gains.
 
 \subsection{Stratum C ($N=131$) Breakdown on Un-Named Tasks}
 \label{sec:stratum_c}
@@ -386,22 +389,22 @@ The motivation for graph expansion is finding defect targets that the issue desc
 \begin{table}[!htbp]
 \centering
 \footnotesize
-\setlength{\tabcolsep}{4.0pt}
-\caption{\textbf{Stratum C ($N=131$) localization performance on un-named defect tasks.} Evaluates tasks where the issue description never mentions the gold symbol across all four comparators. Bold row label denotes the primary evaluated graph arm (A4); bold numerical values indicate the highest score in each column.}
+\setlength{\tabcolsep}{3.5pt}
+\caption{\textbf{Stratum C ($N=131$) localization performance on un-named defect tasks.} Evaluates tasks where the issue description never mentions the gold symbol across all four comparators. Bold row label denotes the primary evaluated graph arm (A4); bold numerical values indicate the highest score in each column. Exact $p$-values are computed via two-sided binomial McNemar tests against A2.}
 \label{tab:stratum_c_breakdown}
 \begin{tabular}{lcccc}
 \toprule
-\textbf{Metric / Method} & \textbf{Acc@5} & \textbf{Hits / 131} & $\boldsymbol{\Delta}$ \textbf{vs.\ A2} & \textbf{McNemar $p$} \\
+\textbf{Metric / Method} & \textbf{Acc@5} & \textbf{Hits / 131} & $\boldsymbol{\Delta}$ \textbf{vs.\ A2} & \textbf{Exact McNemar $p$} \\
 \midrule
-B0 (Unscored BM25 Top-5) & \textbf{\StratumCBZeroAccFive} & \textbf{\StratumCBZeroHits} & \textbf{+6.87 pp} & 0.0490 \\
-A1 (Rerank Seeds Only, $M=10$) & \StratumCAOneAccFive & \StratumCAOneHits & +5.34 pp & 0.0961 \\
+B0 (Unscored BM25 Top-5) & \textbf{\StratumCBZeroAccFive} & \textbf{\StratumCBZeroHits} & \textbf{+6.87 pp} & 0.0117 ($n_{10}=10, n_{01}=1$) \\
+A1 (Rerank Seeds Only, $M=10$) & \StratumCAOneAccFive & \StratumCAOneHits & +5.34 pp & 0.0156 ($n_{10}=7, n_{01}=0$) \\
 A2 (Depth-Matched BM25, $M \le 50$) & \StratumCATwoAccFive & \StratumCATwoHits & reference & reference \\
 \textbf{A4 (Graph 1-Hop Expansion, $M \le 50$)} & \StratumCAFourAccFive & \StratumCAFourHits & \StratumCDeltaPP\ pp & 0.1250 ($n_{10}=6, n_{01}=1$) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-In Stratum~C, graph expansion (A4) achieves 12.2\% Acc@5 (16/131) compared to 8.4\% for depth BM25 (A2, 11/131, $\Delta = +3.82$ pp, exact McNemar $p=0.1250$). However, neither expansion strategy outperforms reranking lexical seeds alone (A1, 13.7\%, 18/131) or unscored BM25 top-5 (B0, 15.3\%, 20/131). Even in the un-named stratum where graph traversal is hypothesized to provide the greatest advantage, expanding candidate pool breadth yields a descriptive 2-task reduction relative to seeds alone.
+In Stratum~C, graph expansion (A4) achieves 12.2\% Acc@5 (16/131) compared to 8.4\% for depth BM25 (A2, 11/131, $\Delta = +3.82$ pp, exact McNemar $p=0.1250, n_{10}=6, n_{01}=1$). However, expanding candidate pool breadth is significantly penalized relative to unscored BM25 top-5 (B0, 15.3\%, 20/131, $\Delta = +6.87$ pp vs.\ A2, exact McNemar $p=0.0117, n_{10}=10, n_{01}=1$) and reranking seeds alone (A1, 13.7\%, 18/131, $\Delta = +5.34$ pp vs.\ A2, exact McNemar $p=0.0156, n_{10}=7, n_{01}=0$). Expanding low-confidence lexical candidates in A2 actively introduces statistically significant distractor harm ($p=0.0117$). Even in the un-named stratum where graph traversal is hypothesized to provide the greatest advantage, expanding candidate pool breadth yields a descriptive 2-task reduction relative to seeds alone.
 
 Furthermore, analyzing the 18 discordant tasks recalled exclusively by graph expansion ($A_4 \setminus A_2$) and the 18 tasks recalled exclusively by depth BM25 ($A_2 \setminus A_4$) reveals near-perfect symmetry across strata:
 \begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
@@ -508,7 +511,7 @@ To support reproducible research, Perron is released as an open-source software 
     \item \textbf{\path{perron-mcp}}: JSON-RPC stdio server for desktop developer agent environments.
     \item \textbf{\path{swebench-codegraphs}}: Precomputed CSR graphs for all 12 canonical SWE-bench repositories (covering both Lite and Verified tasks, built with \path{scripts/export_swebench_graphs.py}).
     \item \textbf{\path{swebench-strata-annotations}}: 800 lexical accessibility annotations across SWE-bench repositories (344 Verified evaluation tasks, CC0-1.0).
-    \item \textbf{Kaggle Demonstration Workstation}: Interactive reproduction notebook at \url{https://www.kaggle.com/code/yvliet/perron-gemma-4-workstation}.
+    \item \textbf{Kaggle Demonstration Workstation}: Interactive reproduction notebook executing end-to-end on free Dual Tesla T4 GPUs in 259.8 seconds (~4.3 minutes), validating the 344-task context packing and 131-task Stratum~C positive control at \url{https://www.kaggle.com/code/yvliet/perron-gemma-4-workstation}.
 \end{itemize}
 
 \section{Conclusion}
