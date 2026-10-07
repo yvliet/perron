@@ -9,6 +9,12 @@ from perron.reranker.candidate_pools import (
     build_downstream_candidates,
     is_filter_f_passing,
 )
+from perron.reranker.provenance import (
+    CallPathProvenanceRenderer,
+    EdgeType,
+    ProvenanceResolver,
+    SymbolProvenance,
+)
 from perron.reranker.scorer import (
     PROMPT_TEMPLATES,
     BreadcrumbRenderer,
@@ -26,4 +32,8 @@ __all__ = [
     "PointwiseReranker",
     "PROMPT_TEMPLATES",
     "normalize_and_truncate_issue_text",
+    "CallPathProvenanceRenderer",
+    "ProvenanceResolver",
+    "SymbolProvenance",
+    "EdgeType",
 ]

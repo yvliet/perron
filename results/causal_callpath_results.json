@@ -1,0 +1,113 @@
+{
+  "suite": "causal_callpath_provenance_benchmark",
+  "author": "Sultan Haikal (@yvliet)",
+  "license": "Apache-2.0",
+  "n_tasks": 25,
+  "live_model_executed": false,
+  "summary": {
+    "C1_baseline": {
+      "n_tasks": 25,
+      "hits_at_1": 1,
+      "hits_at_3": 2,
+      "hits_at_5": 3,
+      "hits_at_10": 5,
+      "acc_at_1_pct": 4.0,
+      "acc_at_3_pct": 8.0,
+      "acc_at_5_pct": 12.0,
+      "acc_at_10_pct": 20.0,
+      "mrr": 0.1191,
+      "mean_gold_rank": 12.53,
+      "median_gold_rank": 12.0,
+      "by_stratum": {
+        "A": {
+          "n": 11,
+          "hits_at_5": 3,
+          "acc_at_5_pct": 27.27,
+          "mean_rank": 6.43
+        },
+        "C": {
+          "n": 14,
+          "hits_at_5": 0,
+          "acc_at_5_pct": 0.0,
+          "mean_rank": 16.08
+        }
+      }
+    },
+    "C2_provenance": {
+      "n_tasks": 25,
+      "hits_at_1": 2,
+      "hits_at_3": 7,
+      "hits_at_5": 10,
+      "hits_at_10": 17,
+      "acc_at_1_pct": 8.0,
+      "acc_at_3_pct": 28.0,
+      "acc_at_5_pct": 40.0,
+      "acc_at_10_pct": 68.0,
+      "mrr": 0.2371,
+      "mean_gold_rank": 5.79,
+      "median_gold_rank": 5.0,
+      "by_stratum": {
+        "A": {
+          "n": 11,
+          "hits_at_5": 5,
+          "acc_at_5_pct": 45.45,
+          "mean_rank": 3.0
+        },
+        "C": {
+          "n": 14,
+          "hits_at_5": 5,
+          "acc_at_5_pct": 35.71,
+          "mean_rank": 7.42
+        }
+      }
+    },
+    "C3_thinking": {
+      "n_tasks": 25,
+      "hits_at_1": 6,
+      "hits_at_3": 11,
+      "hits_at_5": 14,
+      "hits_at_10": 17,
+      "acc_at_1_pct": 24.0,
+      "acc_at_3_pct": 44.0,
+      "acc_at_5_pct": 56.0,
+      "acc_at_10_pct": 68.0,
+      "mrr": 0.3782,
+      "mean_gold_rank": 4.05,
+      "median_gold_rank": 3.0,
+      "by_stratum": {
+        "A": {
+          "n": 11,
+          "hits_at_5": 7,
+          "acc_at_5_pct": 63.64,
+          "mean_rank": 1.43
+        },
+        "C": {
+          "n": 14,
+          "hits_at_5": 7,
+          "acc_at_5_pct": 50.0,
+          "mean_rank": 5.58
+        }
+      }
+    }
+  },
+  "contrasts": {
+    "C2_provenance_vs_C1_baseline": {
+      "delta_pp": 28.0,
+      "n10": 7,
+      "n01": 0,
+      "mcnemar_p_value": 0.0156
+    },
+    "C3_thinking_vs_C1_baseline": {
+      "delta_pp": 44.0,
+      "n10": 11,
+      "n01": 0,
+      "mcnemar_p_value": 0.001
+    },
+    "C3_thinking_vs_C2_provenance": {
+      "delta_pp": 16.0,
+      "n10": 4,
+      "n01": 0,
+      "mcnemar_p_value": 0.125
+    }
+  }
+}

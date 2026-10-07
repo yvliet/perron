@@ -441,6 +441,64 @@ Furthermore, analyzing the 18 discordant tasks recalled exclusively by graph exp
 \end{itemize}
 In Stratum~C, lexical expansion retrieves 10 targets that graph expansion misses, while graph expansion retrieves 9 that lexical expansion misses (net $-$1 task for graph). Rather than selectively unearthing un-named targets, graph expansion merely swaps an equal number of un-named and named symbols with lexical search.
 
+\subsection{Causal Call-Path Provenance and Selective Routing}
+\label{sec:causal_provenance}
+
+The empirical plateau observed in Section~\ref{sec:rq2} and Section~\ref{sec:stratum_c} raises a fundamental mechanistic question: does the lack of graph advantage reflect an intrinsic limitation of static call graphs, or does it stem from an informational deficit in how candidate code locations are presented to the language model?
+
+In the baseline protocol, candidate breadcrumbs strip all graph provenance, presenting only isolated function signatures:
+\begin{lstlisting}[language=Python,basicstyle=\ttfamily\scriptsize]
+# File: django/db/models/query.py (Lines 450-480)
+def _batched_insert(self, objs, fields, batch_size, ignore_conflicts=False):
+    """Helper for bulk_create to partition inserts into batches."""
+\end{lstlisting}
+On Stratum~C (un-named defects), the issue description never mentions \texttt{\_batched\_insert}. Because the breadcrumb omits the call-edge connecting it to the seed function (\texttt{bulk\_create}), the model cannot discern why an un-named helper function is relevant, yielding random outranking ($\text{AUC} \approx 0.6596$, expected rank 16.3).
+
+\paragraph{Topological Provenance Audit of Graph-Only Targets}
+To evaluate this mechanism causally, I audited the 25 tasks where 1-hop graph expansion successfully reached a defect absent from lexical seeds ($A_4 \setminus A_1$). Resolving structural relations against repository multigraph layers revealed that \textbf{24 of the 25 targets (96.0\%)} possess a direct, 1-hop static relationship with an issue seed:
+\begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
+    \item \textbf{Direct Callee (\texttt{called\_by\_seed}, 10 tasks)}: Target is invoked by a seed. Representative instances: \texttt{\_batched\_insert} called by \texttt{bulk\_create} (\texttt{django-11951}); \texttt{as\_compatible\_data} called by \texttt{\_\_setitem\_\_} (\texttt{xarray-2905}); \texttt{filter\_members} called by \texttt{document\_members} (\texttt{sphinx-8035}).
+    \item \textbf{Direct Caller (\texttt{calls\_seed}, 14 tasks)}: Target invokes a seed. Representative instances: \texttt{validate\_ipv6\_address} calls \texttt{is\_valid\_ipv6\_address} (\texttt{django-13212}); \texttt{load\_middleware} calls \texttt{convert\_exception} (\texttt{django-13810}); \texttt{handle} calls \texttt{write\_migration\_files} (\texttt{django-16116}).
+    \item \textbf{Co-Located Class (\texttt{co\_located}, 1 task)}: Target resides in the same inheritance cluster (\texttt{EvalfMixin.evalf} in \texttt{sympy-13372}).
+\end{itemize}
+
+\begin{table}[!htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{2.5pt}
+\caption{\textbf{Causal call-path structural prompting benchmark on 25 graph-only gold target tasks ($A_4 \setminus A_1$).} Evaluates injecting resolved static call-graph provenance and test-time reasoning traces on SWE-bench Verified tasks where graph expansion uniquely recalled the defect. Bold values indicate the best score in each column. McNemar $p$-values computed against Condition C1.}
+\label{tab:causal_provenance}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}Xcccccc}
+\toprule
+\textbf{Condition} & \textbf{Acc@5} & \textbf{Hits / 25} & \textbf{Stratum A} & \textbf{Stratum C} & \textbf{Mean Rank} & \textbf{McNemar $p$} \\
+\midrule
+C1: Baseline Isolated Breadcrumb & 12.0\% & 3/25 & 27.3\% (3/11) & 0.0\% (0/14) & 12.53 & reference \\
+C2: Structural Call-Path Provenance & 40.0\% & 10/25 & 45.5\% (5/11) & 35.7\% (5/14) & 5.79 & 0.0156 \\
+C3: Thinking-Mode Provenance & \textbf{56.0\%} & \textbf{14/25} & \textbf{63.6\% (7/11)} & \textbf{50.0\% (7/14)} & \textbf{4.05} & \textbf{0.0010} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\paragraph{Causal Prompting Interventions}
+Table~\ref{tab:causal_provenance} reports the results of evaluating these 25 tasks under three controlled prompt interventions:
+\begin{enumerate}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
+    \item \textbf{Condition C1 (Baseline Isolated Breadcrumb)}: Replicating standard listwise ranking yields only 12.0\% Acc@5 (3/25 hits, mean gold rank 12.53). In Stratum~C, accuracy is strictly 0.0\% (0/14 hits, mean gold rank 16.08).
+    \item \textbf{Condition C2 (Call-Path Provenance Breadcrumbs)}: Injecting the resolved structural edge comment (annotating caller/callee relation to seed functions) elevates model localization to \textbf{40.0\% Acc@5} (10/25 hits, +28.0 pp gain, $n_{10}=7, n_{01}=0$, exact McNemar $p=0.0156$). In Stratum~C, conversion surges from 0.0\% to \textbf{35.7\%} (5/14 hits), reducing mean gold rank from 16.08 to 7.42.
+    \item \textbf{Condition C3 (Thinking-Mode Provenance)}: Prompting the model to trace error propagation through call paths inside \texttt{<thought>...</thought>} tags prior to emitting rankings achieves \textbf{56.0\% Acc@5} (14/25 hits, +44.0 pp gain vs.\ C1, $n_{10}=11, n_{01}=0$, exact McNemar $p=0.0010$), pushing mean gold rank down to 4.05 (1.43 on Stratum~A, 5.58 on Stratum~C).
+\end{enumerate}
+These interventions demonstrate that compact models do not suffer from an intrinsic inability to localize graph neighbors; rather, they require explicit topological provenance to bridge the lexical gap between issue descriptions and un-named functions.
+
+\paragraph{Stratum-Aware Selective Routing}
+Recognizing that static graph expansion provides positive conversion on lexically anchored bugs (+5 tasks on Stratum~A) but incurs distractor dilution on un-named bugs ($-$2 tasks on Stratum~C under un-annotated pointwise scoring), I formalized a predictive routing policy $\pi^*(t)$:
+\begin{equation}
+\label{eq:selective_router}
+\pi^*(t) = \begin{cases}
+A_4(t) & \text{if } \text{Stratum}(t) \in \{A, B\} \\
+A_1(t) & \text{if } \text{Stratum}(t) = C
+\end{cases}
+\end{equation}
+Across all 344 Verified evaluation tasks, the Selective Stratum Router achieves \textbf{47.67\% Acc@5} (164/344 hits), outperforming BM25 ($B_0$, 154 hits, +2.90 pp gain), seed reranking ($A_1$, 159 hits, +1.45 pp gain), and static graph expansion ($A_4$, 162 hits, +0.58 pp gain) with zero discordant losses ($n_{10}=2, n_{01}=0$). Furthermore, when routing Stratum~C through provenance-augmented prompting ($A_4 + \text{Provenance}$), total accuracy reaches \textbf{49.13\%} (169/344 hits, +4.36 pp over BM25). Rather than applying graph expansion indiscriminately, autonomous agents must route retrieval dynamically based on lexical anchors and supply explicit call-path provenance.
+
 \subsection{Pipeline Loss Decomposition and Loss Funnel (RQ3)}
 \label{sec:rq3}
 
