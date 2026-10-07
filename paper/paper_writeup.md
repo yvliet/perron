@@ -3,58 +3,43 @@
 
 **Author**: Sultan Haikal ([@yvliet](https://github.com/yvliet)) · **Code**: [https://github.com/yvliet/perron](https://github.com/yvliet/perron) · **License**: Apache 2.0
 
+*Official Competition Writeup (≤ 3,000 words). Unabridged companion research manuscript, proofs, and scripts available at https://github.com/yvliet/perron.*
+
 ---
 
 ## Abstract
 
-Local developer agents must localize software defects within tight token budgets without cloud inference. Graph walks over call graphs aim to reach symbols issue descriptions omit. I test whether 1-hop graph expansion assists a compact local model (`gemma-4-e2b-it`) on SWE-bench Verified ($N=344$ callable tasks). Under a hash-committed protocol, graph 1-hop expansion reaches 47.1% Acc@5 vs 45.1% for depth-matched BM25 (+2.03 pp, 95% CI [−0.29, +4.36], Holm $p=0.287$) and 45.6% for same-file expansion (+1.45 pp, Holm $p=0.302$). Both pools recall gold in 201/344 tasks (58.4%), with 18 discordant tasks each way. Compared to reranking seeds alone (46.2%), graph expansion rescues 7 newly reachable targets into top-5 while distractors displace 4 seed hits, producing a gross 7/4 split and net gain of only 3 tasks (+0.87 pp, $p=0.549$). In Stratum C ($N=131$ un-named tasks), graph expansion achieves 12.2% Acc@5 vs 8.4% for depth BM25 (+3.82 pp, $p=0.125$), but neither beats seeds alone (13.7%) or unscored BM25 (15.3%). At $k=5$, retrieval boundary loss (41.6 pp) exceeds downstream compaction loss (11.3 pp) by $3.68\times$ (spanning $1.2\times$ at $k=1$ to $6.8\times$ at $k=10$). In an $N=100$ reader test, the model identifies gold in 74% of oracle contexts, while retrieval supplies it in only 35–38% of tasks. The paired 95% bootstrap CI [−0.29, +4.36] pp spans zero, ruling out gains larger than $+4.4$ pp ($15$ tasks) over depth-matched lexical reranking (PC1). I release 19,298 scored candidate evaluations, the library, and precomputed graphs under Apache 2.0.
+Local developer agents must localize software defects within tight context budgets without cloud APIs. Call-graph traversal aims to reach defect targets omitted from issue descriptions. I test whether 1-hop graph expansion assists a compact local model (`gemma-4-e2b-it`) on SWE-bench Verified ($N=344$ callable tasks). Under a hash-committed protocol, graph 1-hop expansion achieves 47.1% Acc@5 vs 45.1% for depth-matched BM25 (+2.03 pp, 95% CI [−0.29, +4.36], Holm $p=0.287$) and 45.6% for same-file expansion (+1.45 pp, Holm $p=0.302$). Both pools recall gold in 201/344 tasks (58.4%), with 18 discordant tasks each way. Reranking seeds alone yields 46.2%; graph expansion rescues 7 newly reachable targets into top-5 while distractors displace 4 seed hits (gross 7/4 split, net +3 tasks, $p=0.549$). Direct measurement shows that expanding candidate pools doubles mean distractors outranking gold targets (1.44 to 2.90), surging tasks with $\ge 5$ outranking distractors from 17 to 39. In Stratum C ($N=131$ un-named tasks), graph expansion reaches 12.2% Acc@5 vs 8.4% for depth BM25 (+3.82 pp, $p=0.125$), but neither beats seeds alone (13.7%) or unscored BM25 (15.3%). At $k=5$, upstream boundary loss (41.6 pp) exceeds downstream compaction loss (11.3 pp) by $3.68\times$ (spanning $1.2\times$ at $k=1$ to $6.8\times$ at $k=10$). In an $N=100$ reader test, the model identifies gold in 74% of oracle contexts, while retrieval supplies it in only 35–38%. The confirmatory CI [−0.29, +4.36] pp rules out gains $> +4.4$ pp ($15$ tasks) over depth-matched lexical reranking (PC1). I release 19,298 scored candidate evaluations, the engine, and precomputed graphs under Apache 2.0.
 
 ---
 
 ## 1. Introduction
 
-Local agents must localize software defects within tight token budgets without cloud inference. Lexical search locates symbols named in issue descriptions. Graph retrieval traverses call edges to reach un-named symbols. This approach relies on two conditions: graph traversal must place omitted targets into candidate pools, and a small model must rank them above added distractors.
+Local developer agents must localize code defects within tight token budgets without cloud inference. Lexical search locates symbols explicitly named in issue text; graph retrieval traverses call edges to reach un-named symbols. This relies on two assumptions: graph traversal places omitted targets into candidate pools, and compact models can rank them above added distractors.
 
-I evaluate both assumptions on SWE-bench Verified using Perron, a memory-mapped CSR graph engine, and a frozen Gemma 4 scorer, addressing three research questions:
-- **RQ1**: Does Personalized PageRank (PPR) diffusion, with or without hub damping, outperform BM25 at function-level retrieval?
-- **RQ2**: Under a frozen small scorer, does graph 1-hop expansion outperform lexical-depth and same-file pools of equal size?
-- **RQ3**: At which pipeline stage is localization accuracy lost?
+I evaluate both assumptions on SWE-bench Verified using Perron, a memory-mapped CSR graph engine, and a frozen Gemma 4 scorer across three research questions: (RQ1) Does PPR diffusion beat BM25? (RQ2) Does graph 1-hop expansion outperform depth-matched and same-file lexical controls? (RQ3) Where is accuracy lost across the pipeline? Confirmatory contrasts are locked upfront as PC1 ($A_4 - A_2$) and PC2 ($A_4 - A_3$); all other analyses are exploratory.
 
-### Contributions
-- **Matched-control design**: depth-matched BM25, same-file, and degree-preserving null-graph pools evaluated under identical scoring budgets, with two confirmatory contrasts locked upfront.
-- **Four-stage loss decomposition**: separating boundary ceiling, pool reachability, rank compaction, and reader comprehension.
-- **Diffusion diagnostics**: identifying why diffusion degrades under diffuse priors on code graphs, and demonstrating specificity damping mechanics.
-- **Released open resources**: 19,298 scored candidate evaluations, high-throughput engine library, and precomputed repository graphs.
-
-Only contrasts PC1 and PC2 are confirmatory; all other analyses are exploratory.
+Contributions include: (1) matched controls isolating graph topology from pool breadth; (2) four-stage loss decomposition separating upstream boundary loss from compaction; (3) direct empirical measurement of distractor displacement under pointwise scoring; (4) continuous dose-response diagnostics of spectral diffusion; and (5) open release of 19,298 scored evaluations, graphs, and engine library.
 
 ---
 
 ## 2. Related Work
 
-- **Graphs and agents for localization**: Aider [1] ranks tags with PageRank. RepoGraph [2], CodexGraph [3], and LocAgent [4] give agents graph tools; AutoCodeRover [5] navigates ASTs iteratively. Agentless [6] resolves 27.3% of SWE-bench Lite with hierarchical localization and no agent loop, showing simple pipelines are strong baselines. These systems use large hosted models; I evaluate whether graph expansion assists a 2B model in one scoring pass.
-- **Random-walk retrieval**: Approximate PPR [7], APPNP [8], and rooted PageRank [9] motivate diffusion. HippoRAG [10] rescales teleport priors by inverse passage frequency. Perron divides converged walks by static stationary vectors, leaving matrices unmutated.
-- **Pointwise versus listwise reranking**: Pointwise scorers (MonoT5 [13]) evaluate candidates independently, accumulating distractors as pool size grows ($\mathbb{E}[X] = \sum (1 - F_{\text{dist}}(s^*))$). Listwise and setwise LLM rerankers (RankGPT [14], Setwise [15]) permit joint cross-candidate attention, mitigating the distractor dominance inherent to independent pointwise scoring.
-- **Empirical evaluation**: Pearson et al. [11] showed artificial fault findings rarely transfer to real code, motivating authentic SWE-bench tasks [12]. Matched controls isolate graph topology from pool breadth.
+- **Graphs and agents**: Aider [1], RepoGraph [2], CodexGraph [3], and LocAgent [4] equip agents with graph tools; AutoCodeRover [5] navigates ASTs. Agentless [6] resolves 27.3% of Lite without an agent loop. These use large models; I test whether graph expansion assists a 2B model in one pass.
+- **Random-walk retrieval**: Approximate PPR [7], APPNP [8], and rooted PageRank [9] motivate diffusion; HippoRAG [10] rescales teleport priors. Perron divides converged walks by static stationary baselines.
+- **Reranking**: Pointwise scorers (MonoT5 [13]) evaluate candidates independently, accumulating distractors as pool size expands ($\mathbb{E}[X] = \sum (1 - F_{\text{dist}}(s^*))$). Listwise rerankers (RankGPT [14], Setwise [15]) enable cross-candidate attention, mitigating distractor dominance.
+- **Empirical localization**: Pearson et al. [11] showed synthetic fault results rarely transfer to real code, motivating authentic SWE-bench tasks [12]. Matched controls isolate topology from pool breadth.
 
 ---
 
 ## 3. Study Design
 
-- **Benchmark & Strata**: SWE-bench Verified [12] contains 500 tasks across 12 repositories. Excluding 93 Lite overlaps, 56 base-commit AST drift exclusions, and 7 non-callable patches yields 344 callable Python tasks. Tasks are stratified by lexical visibility: Stratum A (Named, $N=208$, 60.5%), Stratum B (Traceback, $N=5$, 1.5%), and Stratum C (Un-Named, $N=131$, 38.1%), annotated via deterministic regex (`perron.analysis.strata`, verified by manual spot-check audit across 50 randomly sampled tasks with 100% agreement, CC0-1.0). Hyperparameters ($eta=0.85, \gamma=0.70, 	au=0.15, K=25$) were frozen prior to evaluation.
-- **Perron Engine**: Directed multigraphs index call, inherit, import, and caller edges (weights 0.50, 0.25, 0.15, 0.10) in mmap CSR arrays. Power iteration converges at rate $eta$ in $\le 90$ steps to $10^{-6}$ ($<5$ ms, 144 MB RAM). Decoupled Specificity scores $\pi_q(v) / (\pi_g(v)+\epsilon)^\gamma$, damping against stationary vector $\pi_g$ The library prior uses softmax ($	au=0.15$) over top-25 BM25 seeds.
-- **Pools and Arms**: Seeds $S$ are top-10 BM25 symbols. Filter $F$ keeps functions/methods and removes test nodes and the 25 highest in-degree hubs. $E_t$ denotes 1-hop out-neighbours of $S$ passing $F$. Pool size is $M_t = 10 + \min(|E_t|, 40) \in [10, 50]$ (mean 24.5).
-  - **B0**: BM25 order, unscored
-  - **A1**: Seeds only ($M=10$)
-  - **A2**: Seeds plus next BM25 candidates ($M_t$)
-  - **A3**: Seeds plus same-file symbols ($M_t$)
-  - **A4**: Seeds plus $E_t$ ordered by 1-step walk adjacency ($M_t$)
-  - **A5**: Degree-preserving null graph
-  - **A6**: Perron diffusion pool
-  - *Pool Discrepancy*: Masking test seeds rescues 16 source tasks while Filter $F$ hub pruning drops 14, yielding net $+2$ over 1-hop BFS ($199 + 16 - 14 = 201$).
+- **Benchmark & Strata**: Evaluating on the callable, AST-parsable cohort of SWE-bench Verified [12] (excluding 93 Lite overlaps, 56 AST drift exclusions, and 7 non-callable patches) yields 344 tasks across 12 repositories. Strata: Stratum A (Named, $N=208$, 60.5%), Stratum B (Traceback, $N=5$, 1.5%), Stratum C (Un-Named, $N=131$, 38.1%), annotated via deterministic regex (`perron.analysis.strata`, 50-task spot-check audit 100% agreement, CC0-1.0). Localization Hit@$k$ is 1.0 if at least one gold function is in top-$k$, else 0.0. Hyperparameters ($\beta=0.85, \gamma=0.70, \tau=0.15, K=25$) were frozen upfront.
+- **Perron Engine**: Directed multigraphs index call, inherit, import, and caller edges (weights 0.50, 0.25, 0.15, 0.10) in mmap CSR arrays. Power iteration converges under spectral gap bound $|\lambda_2| \le \beta = 0.85$ [16] to $10^{-6}$ in $\le 90$ steps ($<5$ ms, 144 MB RAM). By Markov renewal, dangling restarts to $\mathbf{p}_0$ match normalized leaky resolvents $(I - \beta T)^{-1}$ ($L_1 < 2 \times 10^{-8}$). Decoupled Specificity $\pi_q(v) / (\pi_g(v)+\epsilon)^\gamma$ damps against $\pi_g$, enforcing $\text{HSI@10} = 1.0 - (|\text{top-10} \cap \mathcal{H}_{25}| / 10.0)$ ($\mathcal{H}_{25}$: top-25 hubs). Library prior uses softmax ($\tau=0.15$) over top-25 BM25 seeds.
+- **Pools and Arms**: Seeds $S$ are top-10 BM25 symbols. Filter $F$ keeps functions/methods, pruning test nodes and top-25 hubs. Pool size is $M_t = 10 + \min(|E_t|, 40) \in [10, 50]$ (mean 24.5) for 1-hop out-neighbours $E_t$. Arms: **B0** (unscored BM25), **A1** (seeds $M=10$), **A2** (depth BM25), **A3** (same-file), **A4** (1-hop graph), **A5** (null graph), **A6** (Perron diffusion). Pruning yields net $+2$ tasks over raw BFS ($199 + 16 - 14 = 201$).
 - **Scorer**: Prompts average 423 tokens (issue text, instructions, $<100$-token AST breadcrumbs). A frozen `gemma-4-e2b-it` (FP16, thinking disabled) scores candidates via affirmative minus negative logsumexp logits (19,298 forward passes, 2.37 GiB peak VRAM on Tesla T4).
-- **Hash-Committed Protocol**: Retrieval was committed and pushed publicly at `6908e78` (October 5, 2026); Gemma reranking was locked in two hashed stages (SHA-256 `96af1621`, `dbbf2920`, commit `29e0066`, October 6, 2026). Confirmatory contrasts are PC1 ($A_4 - A_2$) and PC2 ($A_4 - A_3$) on Acc@5, tested via exact two-sided McNemar with step-down Holm correction. CIs use repository-stratified bootstrap ($B=10{,}000$).
-- **Reader Test**: On $N=100$ tasks stratified by repository size with BM25 coverage, a 5-candidate context is built from BM25 top-5 (D0), graph top-5 (D1), same-file top-5 (D2), or an oracle with the gold target at a random position (D3). Conversion is EditLoc@1 divided by ContextHit@5 (descriptive).
+- **Hash-Committed Protocol**: Retrieval was committed at [`6908e78`](https://github.com/yvliet/perron/commit/6908e78) (October 5, 2026); Gemma reranking was locked in two hashed stages (SHA-256 `96af1621`, `dbbf2920`, commit [`29e0066`](https://github.com/yvliet/perron/commit/29e0066), October 6, 2026). Confirmatory contrasts are PC1 ($A_4 - A_2$) and PC2 ($A_4 - A_3$) on Acc@5, tested via exact two-sided McNemar with step-down Holm correction. CIs use repository-stratified bootstrap ($B=10{,}000$).
+- **Reader Test**: On $N=100$ tasks with BM25 coverage, a 5-candidate context is built from BM25 top-5 (D0), graph top-5 (D1), same-file top-5 (D2), or an oracle with gold target at a random position (D3). Conversion is EditLoc@1 divided by ContextHit@5 (descriptive).
 
 ---
 
@@ -76,16 +61,8 @@ Top-10 seeds cover 50.9% of gold targets. One hop covers 57.8% (median 27 nodes)
 | **A3** | Same-file ($M \le 50$) | 24.1% | 45.6% | 52.0% | 0.3381 |
 | **A4** | Graph 1-hop ($M \le 50$) | 24.7% | 47.1% | 52.3% | 0.3409 |
 
-- **Confirmatory Contrasts on Acc@5**:
-  - **PC1 ($A_4 - A_2$)**: $+2.03$ pp (95% CI [−0.29, +4.36], discordant 12/5, Holm $p=0.287$).
-  - **PC2 ($A_4 - A_3$)**: $+1.45$ pp (95% CI [−0.58, +3.78], discordant 10/5, Holm $p=0.302$).
-  - Both contrasts are null-compatible (CIs span zero, Holm $p > 0.05$), excluding large gains (> 4.4 pp over depth-matched lexical reranking).
-- **Exploratory Contrasts**:
-  - **$A_4 - A_1$**: $+0.87$ pp (95% CI [−1.92, +3.66], discordant 7/4, $p=0.549$). Gemma 4 promotes 7 newly reachable targets into top-5 while distractors displace 4 seed hits (gross 7/4 split, net +3 tasks: $159+7-4=162$), requiring 4,988 extra forward passes (a $2.45\times$ compute increase over seeds).
-  - **$A_4 - A_5$ (Null Graph Control)**: $+1.16$ pp (95% CI [−0.58, +2.91], discordant 7/3, $p=0.344$), indicating empirical graph topology adds no detectable gain over degree-matched random graphs.
-  - **$A_4 - A_6$ (Diffusion Pool)**: $+1.45$ pp (95% CI [+0.00, +3.20], discordant 7/2, $p=0.180$).
-  - Unscored BM25 (**B0**) maintains nominally higher MRR@50 (0.344 vs 0.341) and top-1 accuracy (25.3% vs 24.7%) than $A_4$.
-  - Excluding Django ($N=230$), $A_4 - A_2$ is $+2.17$ pp ($p=0.227$).
+- **Confirmatory (Acc@5)**: PC1 ($A_4 - A_2$): $+2.03$ pp (95% CI [−0.29, +4.36], discordant 12/5, Holm $p=0.287$). PC2 ($A_4 - A_3$): $+1.45$ pp (95% CI [−0.58, +3.78], discordant 10/5, Holm $p=0.302$). Both span zero, ruling out gains $> +4.4$ pp ($15$ tasks).
+- **Exploratory**: $A_4 - A_1$: $+0.87$ pp (95% CI [−1.92, +3.66], discordant 7/4, $p=0.549$; gross 7/4 split, net +3 tasks, $2.45\times$ compute). Null control $A_4 - A_5$: $+1.16$ pp (95% CI [−0.58, +2.91], discordant 7/3, $p=0.344$). Diffusion $A_4 - A_6$: $+1.45$ pp (CI [+0.00, +3.20], discordant 7/2, $p=0.180$). Unscored BM25 (**B0**) maintains higher MRR@50 (0.344 vs 0.341) and Acc@1 (25.3% vs 24.7%). Excluding Django ($N=230$), $A_4 - A_2$ is $+2.17$ pp ($p=0.227$).
 
 ### 4.4 Candidate Pool Truncation Curves & Loss Decomposition (RQ3)
 
@@ -96,9 +73,9 @@ Top-10 seeds cover 50.9% of gold targets. One hop covers 57.8% (median 27 nodes)
 | **A4 (Graph 1-Hop) Recall** | 51.2% | 54.9% | 55.5% | 57.6% | 58.4% |
 | **A4 (Graph 1-Hop) Acc@5** | 46.2% | 46.8% | **47.1%** | 46.5% | **47.1%** |
 
-- **Distractor Accumulation**: Truncating matched pools at $M \in [10, 50]$ (mean 24.5 candidates) shows that adding depth BM25 candidates is consistent with distractor accumulation under pointwise scoring ($\mathbb{E}[X \mid s^*] = \sum (1 - F_{\text{dist}}(s^*))$): Acc@5 drops by 4 tasks (46.2% to 45.1%, $-$1.16 pp, exact McNemar $p=0.455$) despite adding +7.27 pp of recall. In $A_4$, Acc@5 plateaus (+3 tasks over seeds, +0.87 pp, $p=0.549$).
-- **Stratum C Breakdown ($N=131$ Un-Named Tasks)**: For un-named targets, $A_4$ reaches 12.2% Acc@5 (16/131) vs 8.4% for $A_2$ (11/131, $+3.82$ pp, $p=0.125$), but neither beats seeds alone (13.7%, 18/131) or unscored BM25 (15.3%, 20/131). The 18 discordant recall tasks split symmetrically across strata (9 vs 10 in C, 0 vs 1 in B, 9 vs 7 in A), confirming graph expansion does not selectively target un-named bugs.
-- **Four-Stage Loss Funnel**: (1) Benchmark: 100% (344) $\to$ (2) Seed pool ceiling: 51.2% (176, loss 48.8 pp) $\to$ (3) Graph pool ceiling: 58.4% (201, $+7.3$ pp, loss 41.6 pp) $\to$ (4) Scored top-5: 47.1% (162, loss 11.3 pp). At $k=5$, upstream boundary loss exceeds compaction loss by $3.68\times$ ($41.6 / 11.3$, spanning $1.2\times$ at $k=1$ to $6.8\times$ at $k=10$): expansion adds 7.3 pp oracle recall, but Gemma 4 converts only $\sim 1$ pp into ranked accuracy due to the 7/4 gross displacement split.
+- **Distractor Accumulation**: Truncating matched pools at $M \in [10, 50]$ (mean 24.5) shows adding depth BM25 candidates causes distractor accumulation under pointwise scoring ($\mathbb{E}[X \mid s^*] = \sum (1 - F_{\text{dist}}(s^*))$): Acc@5 drops by 4 tasks (46.2% to 45.1%, $-$1.16 pp, McNemar $p=0.455$) despite $+7.27$ pp recall. Direct measurement confirms this mechanism: across tasks with gold in pool, mean distractors outranking gold jump from 1.44 in $A_1$ ($M=10$) to 2.90 in $A_4$ and 3.59 in $A_2$. Tasks where $\ge 5$ distractors displace gold outside top-5 surge from 17 in $A_1$ (90.3% conversion) to 39 in $A_4$ (80.6%) and 46 in $A_2$ (77.1%). In $A_4$, Acc@5 plateaus (+3 tasks over seeds, +0.87 pp, $p=0.549$).
+- **Stratum C Breakdown ($N=131$ Un-Named)**: For un-named targets, $A_4$ reaches 12.2% Acc@5 (16/131) vs 8.4% for $A_2$ (11/131, $+3.82$ pp, $p=0.125$); neither beats seeds alone (13.7%, 18/131) or unscored BM25 (15.3%, 20/131). The 18 discordant recall tasks split symmetrically (9 vs 10 in C, 0 vs 1 in B, 9 vs 7 in A).
+- **Four-Stage Funnel**: (1) Benchmark: 100% (344) $\to$ (2) Seed ceiling: 51.2% (176) $\to$ (3) Graph ceiling: 58.4% (201, $+7.3$ pp) $\to$ (4) Top-5: 47.1% (162). Upstream boundary loss (41.6 pp) exceeds downstream compaction loss (11.3 pp) by $3.68\times$ at $k=5$ ($1.2\times$ at $k=1$, $6.8\times$ at $k=10$): expansion adds 7.3 pp recall, but Gemma 4 converts only $\sim 1$ pp due to the 7/4 gross displacement split.
 
 ### 4.5 Downstream Reader (Descriptive, N=100)
 
@@ -109,20 +86,20 @@ Top-10 seeds cover 50.9% of gold targets. One hop covers 57.8% (median 27 nodes)
 | **D2** | Same-file top-5 | 38.0% | 30.0% | 0.789 |
 | **D3** | Oracle (randomized position) | 100.0% | 74.0% | 0.740 |
 
-In D0, choosing candidate 1 yields 33.0% EditLoc@1 (rank-1 prior). In D3, gold is found in 74.0% of tasks (Wilson CI [64.6, 81.6]%). While the reader misses a quarter of oracle cases, retrieval supplies gold in only 35–38% of tasks, limiting end-to-end performance.
+In D0, candidate 1 yields 33.0% EditLoc@1 (matching rank-1 baseline). In D3, gold is identified in 74.0% of tasks (Wilson CI [64.6, 81.6]%). While the reader misses 26% of oracle cases, retrieval supplies gold in only 35–38%, forming the primary bottleneck.
 
-### 4.6 Diffusion Diagnostics on SWE-bench Lite (Exploratory, N=237)
-Under diffuse linear priors, standard PPR collapses to 10.1% Acc@10; test subgraphs absorb 32.5% of top-10 slots. Top-25 softmax prior ($\tau=0.15$) restores 48.5% (BM25: 46.0%). Specificity damping adds +24.1 pp under diffuse priors, but −0.8 pp under softmax. Across 186 configurations, accuracy tracks effective support $n_{\text{eff}} = \exp(H(\mathbf{p}_0))$ (peaking near 8.8). Damping lifts HSI from 90.8% to 99.5%: a safeguard for diffuse priors, not an accuracy gain.
+### 4.6 Diffusion Diagnostics & Continuous Dose-Response
+On SWE-bench Lite ($N=237$), exploratory factorial diagnosis shows standard PPR collapses to 10.1% Acc@10 under diffuse linear priors, with test subgraphs absorbing 32.5% of top-10 slots; top-25 softmax prior ($\tau=0.15$) restores 48.5% (BM25: 46.0%). Specificity damping adds +24.1 pp under diffuse priors, but −0.8 pp under softmax. To test entropy collapse on the Verified cohort ($N=344$, 63,984 SpMM solves across 186 prior configurations), retrieval accuracy exhibits a significant quadratic relationship with prior effective support $n_{\text{eff}} = \exp(H(\mathbf{p}_0))$ ($p < 0.001$, GLMM $R^2 = 0.197$), peaking near $n_{\text{eff}}^* \approx 8.8$ while family-specific differences account for remaining residual variance. Specificity damping lifts HSI from 90.8% to 99.5%: a safeguard for diffuse priors, not an accuracy gain.
 
 ---
 
 ## 5. Discussion
 
-- **What the evidence supports**: Point estimates nominally favor graph expansion (+0.87 to +2.03 pp), but differences are statistically null-compatible under a frozen 2B scorer. Bounded CIs rule out gains larger than $+4.4$ pp ($15$ tasks) over depth-matched lexical reranking while remaining consistent with small or null effects.
-- **Distractor mechanism**: Truncation curves are consistent with distractor accumulation under pointwise scoring: expanding depth BM25 from $M=10$ to $M=50$ adds $+7.27$ pp recall but drops Acc@5 by 4 tasks ($-1.16$ pp, $p=0.455$). Because expected distractors scale as $\sum (1 - F_{\text{dist}}(s^*))$, pointwise scoring penalizes pool breadth; listwise ranking remains a promising hypothesis.
-- **Practical implication**: Under a 4,096-token budget with a 2B scorer, lexical precision and AST breadcrumbs are the safer investment: graph expansion required 4,988 extra passes ($2.45\times$ compute) for +0.87 pp (+3 tasks net, gross 7/4 split, $p=0.549$).
-- **A reusable audit**: Any retrieval stage feeding a small model can be audited using the same framework: report pool oracle recall, add depth-matched and same-file controls under the same scorer, and decompose loss before and after ranking.
-- **Limitations**: (1) Python-only static ASTs without dynamic dispatch. (2) Single 2B model under pointwise scoring. (3) 1-hop pools capped at $M \le 50$. (4) Function-level targets on 344 tasks without patch synthesis. (5) Descriptive reader test ($N=100$). (6) Two confirmatory contrasts (PC1/PC2).
+- **Empirical verdict**: Point estimates nominally favor graph expansion (+0.87 to +2.03 pp), but differences are statistically null-compatible under a frozen 2B scorer. Bounded CIs rule out gains $> +4.4$ pp ($15$ tasks) over depth-matched lexical reranking (PC1).
+- **Distractor accumulation & Scorer sensitivity**: Truncation curves reflect distractor accumulation under pointwise scoring: expanding depth BM25 from $M=10$ to $M=50$ adds $+7.27$ pp recall but drops Acc@5 by 4 tasks ($-1.16$ pp, $p=0.455$), as mean distractors outranking gold double from 1.44 to 3.59. Does this demonstrate graph expansion lacks signal, or that a frozen 2B pointwise LLM is too noisy to exploit it? Gemma 4 2B Acc@1 (24.7%) matches unscored BM25 (25.3%), and the reader test matches picking candidate 1 (33.0%). Independent pointwise scoring penalizes candidate pool breadth; listwise ranking remains a key open direction.
+- **Practical takeaway**: Under tight context budgets, retrieval engineering is more safely invested in lexical precision and AST breadcrumbs: graph expansion required 4,988 extra passes ($2.45\times$ compute) for +0.87 pp (gross 7/4 split, $p=0.549$).
+- **Reusable audit framework**: Any retrieval stage feeding a local model can be audited similarly: report pool recall, add depth-matched and same-file controls under the same scorer, and decompose upstream versus ranking loss.
+- **Limitations**: (1) Python static ASTs without dynamic dispatch; (2) single 2B model under pointwise scoring; (3) 1-hop pools capped at $M \le 50$; (4) function-level targets on 344 tasks without patch synthesis; (5) descriptive reader test ($N=100$); (6) two confirmatory contrasts.
 - **Protocol disclosure**: B0 Acc@10 is 176/344 in reranking vs 175/344 in retrieval (`astropy__astropy-14182` tie-break; see `deviations.md`). Confirmatory PC1/PC2 are unaffected.
 
 ---
@@ -131,7 +108,7 @@ Under diffuse linear priors, standard PPR collapses to 10.1% Acc@10; test subgra
 
 - **`scores.parquet`**: 19,298 scored candidate evaluations with per-arm rankings for all 344 tasks (Apache 2.0).
 - **`perron-core` v0.3.0 (PyPI) and `perron-mcp`**: JSON-RPC stdio server with context-retrieval and AST-breadcrumb tools.
-- **`swebench-lite-codegraphs`**: Precomputed CSR graphs for the 12 SWE-bench Lite repositories.
+- **`swebench-codegraphs`**: Precomputed CSR graphs for all 12 canonical SWE-bench repositories (covering both Lite and Verified tasks), with builder script at `scripts/export_swebench_graphs.py`.
 - **`swebench-strata-annotations`**: 800 lexical-accessibility annotations across SWE-bench repositories (344 Verified evaluation tasks, CC0-1.0).
 - **Reproduction notebook**: [https://www.kaggle.com/code/yvliet/perron-gemma-4-workstation](https://www.kaggle.com/code/yvliet/perron-gemma-4-workstation)
 
@@ -139,7 +116,7 @@ Under diffuse linear priors, standard PPR collapses to 10.1% Acc@10; test subgra
 
 ## 7. Conclusion
 
-On SWE-bench Verified, graph 1-hop expansion provides no statistically detectable benefit over matched lexical pools under a frozen Gemma 4 scorer, nor does it widen reachability beyond lexical depth. While graph expansion adds 7.3 pp of pool recall over seeds alone, Gemma 4 converts only $\sim 1$ pp into top-5 accuracy due to the 7/4 gross displacement split. Candidate pool truncation curves show that expanding pool breadth under pointwise scoring yields flat or declining localization, consistent with distractor accumulation; on un-named tasks, neither expansion outperforms seeds alone or unscored BM25. At $k=5$, upstream boundary loss (41.6 pp) exceeds downstream compaction loss (11.3 pp) by $3.68\times$ (spanning $1.2\times$ at $k=1$ to $6.8\times$ at $k=10$). The small gains (+0.87 to +2.03 pp) are statistically null-compatible and do not justify a $2.45\times$ compute penalty (4,988 extra forward passes). Local agent pipelines under tight inference budgets are more effectively guided toward high-precision lexical retrieval and compact AST breadcrumbs. Scored data, engine code, and precomputed graphs are released under Apache 2.0.
+On SWE-bench Verified, graph 1-hop expansion provides no statistically detectable benefit over matched lexical pools under a frozen Gemma 4 scorer, nor does it widen reachability beyond lexical depth. While graph expansion adds 7.3 pp of pool recall over seeds alone, Gemma 4 converts only $\sim 1$ pp into top-5 accuracy due to the 7/4 gross displacement split. Candidate pool truncation curves show that expanding pool breadth under pointwise scoring yields flat or declining localization, consistent with distractor accumulation; on un-named tasks, neither expansion outperforms seeds alone or unscored BM25. Upstream boundary loss (41.6 pp) exceeds downstream compaction loss (11.3 pp) by $3.68\times$ at $k=5$ ($1.2\times$ at $k=1$, $6.8\times$ at $k=10$). The small gains (+0.87 to +2.03 pp) are statistically null-compatible and do not justify a $2.45\times$ compute penalty (4,988 extra forward passes). Local agent pipelines under tight inference budgets are more effectively guided toward high-precision lexical retrieval and compact AST breadcrumbs. Scored data, engine code, and precomputed graphs are released under Apache 2.0.
 
 ---
 
@@ -160,3 +137,4 @@ On SWE-bench Verified, graph 1-hop expansion provides no statistically detectabl
 - [13] R. Nogueira et al. *Document ranking with a pretrained sequence-to-sequence model.* Findings of EMNLP 2020.
 - [14] W. Sun et al. *Is ChatGPT good at search? Investigating large language models as re-ranking agents.* EMNLP 2023.
 - [15] R. Pradeep et al. *RankZephyr: Effective and robust zero-shot listwise reranking in language models.* arXiv 2023.
+- [16] T. H. Haveliwala, S. D. Kamvar. *The second eigenvalue of the Google matrix.* Stanford University Technical Report, 2003.
