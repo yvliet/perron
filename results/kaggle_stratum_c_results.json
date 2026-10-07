@@ -1,0 +1,73 @@
+{
+  "suite": "stratum_c_unnamed_defect_benchmark",
+  "timestamp_utc": "2026-10-07T04:20:41.109605+00:00",
+  "n_tasks": 131,
+  "author": "Sultan Haikal (GitHub: @yvliet)",
+  "summary": {
+    "B0": {
+      "hits_at_1": 4,
+      "hits_at_3": 12,
+      "hits_at_5": 20,
+      "hits_at_10": 28,
+      "acc_at_1_pct": 3.05,
+      "acc_at_3_pct": 9.16,
+      "acc_at_5_pct": 15.27,
+      "acc_at_10_pct": 21.37,
+      "mrr_50": 0.0862
+    },
+    "A1": {
+      "hits_at_1": 1,
+      "hits_at_3": 8,
+      "hits_at_5": 18,
+      "hits_at_10": 28,
+      "acc_at_1_pct": 0.76,
+      "acc_at_3_pct": 6.11,
+      "acc_at_5_pct": 13.74,
+      "acc_at_10_pct": 21.37,
+      "mrr_50": 0.0573
+    },
+    "A2": {
+      "hits_at_1": 1,
+      "hits_at_3": 4,
+      "hits_at_5": 11,
+      "hits_at_10": 22,
+      "acc_at_1_pct": 0.76,
+      "acc_at_3_pct": 3.05,
+      "acc_at_5_pct": 8.4,
+      "acc_at_10_pct": 16.79,
+      "mrr_50": 0.0475
+    },
+    "A4": {
+      "hits_at_1": 1,
+      "hits_at_3": 4,
+      "hits_at_5": 16,
+      "hits_at_10": 24,
+      "acc_at_1_pct": 0.76,
+      "acc_at_3_pct": 3.05,
+      "acc_at_5_pct": 12.21,
+      "acc_at_10_pct": 18.32,
+      "mrr_50": 0.0523
+    }
+  },
+  "contrasts": {
+    "B0_vs_A2": {
+      "delta_pp": 6.87,
+      "n10": 10,
+      "n01": 1,
+      "mcnemar_p_value": 0.0117
+    },
+    "A1_vs_A2": {
+      "delta_pp": 5.34,
+      "n10": 7,
+      "n01": 0,
+      "mcnemar_p_value": 0.0156
+    },
+    "A4_vs_A2": {
+      "delta_pp": 3.82,
+      "n10": 6,
+      "n01": 1,
+      "mcnemar_p_value": 0.125
+    }
+  },
+  "elapsed_seconds": 0.05
+}

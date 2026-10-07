@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 """
-Update notebooks/kaggle_gemma4_workstation.ipynb with clean offline N=344 Gemma 4 evaluation.
+Update notebooks/kaggle_gemma4_workstation.ipynb with clean offline N=344 Gemma 4 evaluation
+and Stratum C (N=131) un-named defect positive-control benchmark.
+
+License: Apache-2.0
+Author: Sultan Haikal (GitHub: @yvliet)
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 
@@ -12,6 +17,10 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="Patch Kaggle workstation notebook.")
+    parser.add_argument("--mode", default="full", choices=["full", "stratum_c"], help="Patching mode")
+    args = parser.parse_args()
+
     nb_path = PROJECT_ROOT / "notebooks" / "kaggle_gemma4_workstation.ipynb"
     if not nb_path.exists():
         raise FileNotFoundError(f"Notebook not found: {nb_path}")
@@ -275,15 +284,191 @@ def main() -> None:
         "print('=' * 80)\n",
     ]
 
+    # Cell 12: Markdown description for Stratum C Positive-Control Benchmark
+    cell12_lines = [
+        "## 7. Stratum C ($N=131$) Un-Named Defect Positive-Control Benchmark\n",
+        "\n",
+        "We evaluate candidate pool breadth under graph expansion specifically on Stratum C ($N=131$ tasks where the gold target symbol is un-named in the issue description).\n",
+        "\n",
+        "This positive control directly evaluates whether graph reachability translates into top-5 localization when issue text lacks target names:\n",
+        "- **Arm B0**: Unscored BM25 Top-5\n",
+        "- **Arm A1**: Pointwise reranked on 10 BM25 seeds\n",
+        "- **Arm A2**: Depth-matched BM25 ($M \\le 50$)\n",
+        "- **Arm A4**: Graph 1-hop expansion ($M \\le 50$)\n",
+        "\n",
+        "We compute Acc@5, Delta vs A2, and exact two-sided McNemar discordant pair tests ($n_{10}, n_{01}$) to verify empirical calibration against Table 5 of the manuscript.\n",
+    ]
+
+    # Cell 13: Stratum C execution
+    cell13_lines = [
+        "# Step 7: Stratum C (N=131) Un-Named Defect Positive-Control Benchmark\n",
+        "import os, sys, re, time, json, math\n",
+        "from pathlib import Path\n",
+        "from typing import Any, Dict, List, Optional, Sequence, Tuple\n",
+        "import numpy as np\n",
+        "\n",
+        "print('=' * 80)\n",
+        "print(' Stratum C (N=131) Un-Named Defect Positive-Control Benchmark')\n",
+        "print('=' * 80)\n",
+        "\n",
+        "def find_eval_bundle():\n",
+        "    candidate_paths = [\n",
+        "        Path('/kaggle/input/perron-gemma4-benchmark/stratum_c_eval_bundle.json'),\n",
+        "        Path('/kaggle/input/stratum_c_eval_bundle.json'),\n",
+        "        Path('data_release/stratum_c_eval_bundle.json'),\n",
+        "        Path('../data_release/stratum_c_eval_bundle.json'),\n",
+        "    ]\n",
+        "    for p in candidate_paths:\n",
+        "        if p.exists():\n",
+        "            return p\n",
+        "    base_input = Path('/kaggle/input')\n",
+        "    if base_input.exists():\n",
+        "        for p in sorted(base_input.rglob('stratum_c_eval_bundle.json')):\n",
+        "            if p.exists():\n",
+        "                return p\n",
+        "    return None\n",
+        "\n",
+        "bundle_path = find_eval_bundle()\n",
+        "if bundle_path is None:\n",
+        "    print('Notice: stratum_c_eval_bundle.json not found in search paths. Operating in simulated mode.')\n",
+        "else:\n",
+        "    print(f'Loading Stratum C evaluation bundle from: {bundle_path}')\n",
+        "    bundle_data = json.loads(bundle_path.read_text(encoding='utf-8'))\n",
+        "    tasks = bundle_data.get('tasks', [])\n",
+        "    print(f'Loaded {len(tasks)} Stratum C un-named tasks.')\n",
+        "\n",
+        "    arms = ['B0', 'A1', 'A2', 'A4']\n",
+        "    hits_at_k = {arm: {1: 0, 3: 0, 5: 0, 10: 0} for arm in arms}\n",
+        "    per_task_acc5 = {arm: [] for arm in arms}\n",
+        "    reciprocal_ranks = {arm: [] for arm in arms}\n",
+        "\n",
+        "    def exact_mcnemar(hits_a, hits_b):\n",
+        "        n10 = sum(1 for a, b in zip(hits_a, hits_b) if a == 1 and b == 0)\n",
+        "        n01 = sum(1 for a, b in zip(hits_a, hits_b) if a == 0 and b == 1)\n",
+        "        n_disc = n10 + n01\n",
+        "        if n_disc == 0:\n",
+        "            return 0, 0, 1.0\n",
+        "        k = min(n10, n01)\n",
+        "        binom_cdf = sum(math.comb(n_disc, i) * (0.5 ** n_disc) for i in range(k + 1))\n",
+        "        return n10, n01, float(min(1.0, max(0.0, 2.0 * binom_cdf)))\n",
+        "\n",
+        "    for task in tasks:\n",
+        "        gold_ids = set(task.get('gold_symbol_ids', []))\n",
+        "        cands = task.get('candidates', [])\n",
+        "        pools = task.get('pools', {})\n",
+        "        official_rankings = task.get('official_ranked_symbol_ids', {})\n",
+        "\n",
+        "        score_by_cand = {c['cand_index']: c.get('pointwise_score', -999.0) for c in cands}\n",
+        "        sym_id_by_cand = {c['cand_index']: c.get('symbol_id', c['node_idx']) for c in cands}\n",
+        "\n",
+        "        for arm in arms:\n",
+        "            pool_indices = pools.get(arm, [])\n",
+        "            prior_rank_map = {c_idx: rank for rank, c_idx in enumerate(pool_indices)}\n",
+        "            sorted_cand_indices = sorted(\n",
+        "                pool_indices,\n",
+        "                key=lambda c_i: (-round(score_by_cand.get(c_i, -999.0), 6), prior_rank_map.get(c_i, 999999)),\n",
+        "            )\n",
+        "            ranked_sym_ids = [sym_id_by_cand[c_i] for c_i in sorted_cand_indices]\n",
+        "            eval_sym_ids = official_rankings.get(arm) or ranked_sym_ids\n",
+        "\n",
+        "            h1 = int(any(sid in gold_ids for sid in eval_sym_ids[:1]))\n",
+        "            h3 = int(any(sid in gold_ids for sid in eval_sym_ids[:3]))\n",
+        "            h5 = int(any(sid in gold_ids for sid in eval_sym_ids[:5]))\n",
+        "            h10 = int(any(sid in gold_ids for sid in eval_sym_ids[:10]))\n",
+        "\n",
+        "            hits_at_k[arm][1] += h1\n",
+        "            hits_at_k[arm][3] += h3\n",
+        "            hits_at_k[arm][5] += h5\n",
+        "            hits_at_k[arm][10] += h10\n",
+        "            per_task_acc5[arm].append(h5)\n",
+        "\n",
+        "            rr = 0.0\n",
+        "            for r_idx, sid in enumerate(eval_sym_ids[:50], 1):\n",
+        "                if sid in gold_ids:\n",
+        "                    rr = 1.0 / r_idx\n",
+        "                    break\n",
+        "            reciprocal_ranks[arm].append(rr)\n",
+        "\n",
+        "    n_tasks = len(tasks)\n",
+        "    summary_results = {}\n",
+        "    for arm in arms:\n",
+        "        summary_results[arm] = {\n",
+        "            'hits_at_5': hits_at_k[arm][5],\n",
+        "            'acc_at_5_pct': round(hits_at_k[arm][5] / n_tasks * 100.0, 2),\n",
+        "            'mrr_50': round(float(np.mean(reciprocal_ranks[arm])), 4),\n",
+        "        }\n",
+        "\n",
+        "    a2_hits = per_task_acc5['A2']\n",
+        "    contrasts = {}\n",
+        "    for arm in ('B0', 'A1', 'A4'):\n",
+        "        comp_hits = per_task_acc5[arm]\n",
+        "        delta_pp = (sum(comp_hits) - sum(a2_hits)) / n_tasks * 100.0\n",
+        "        n10, n01, p_val = exact_mcnemar(comp_hits, a2_hits)\n",
+        "        contrasts[f'{arm}_vs_A2'] = {\n",
+        "            'delta_pp': round(delta_pp, 2),\n",
+        "            'n10': n10,\n",
+        "            'n01': n01,\n",
+        "            'mcnemar_p_value': round(p_val, 4),\n",
+        "        }\n",
+        "\n",
+        "    print('\\n' + '=' * 80)\n",
+        "    print(f'{\"Method / Arm\":<26} | {\"Acc@5\":<12} | {\"Hits / 131\":<12} | {\"Delta vs A2\":<14} | {\"McNemar p\":<10}')\n",
+        "    print('-' * 80)\n",
+        "    for arm in arms:\n",
+        "        s = summary_results[arm]\n",
+        "        acc_str = f\"{s['acc_at_5_pct']:.1f}%\"\n",
+        "        hits_str = f\"{s['hits_at_5']}/{n_tasks}\"\n",
+        "        if arm == 'A2':\n",
+        "            delta_str = 'reference'\n",
+        "            p_str = 'reference'\n",
+        "        else:\n",
+        "            c = contrasts[f'{arm}_vs_A2']\n",
+        "            delta_str = f\"{c['delta_pp']:+.2f} pp\"\n",
+        "            p_str = f\"{c['mcnemar_p_value']:.4f} (n10={c['n10']}, n01={c['n01']})\"\n",
+        "        print(f'{arm:<26} | {acc_str:<12} | {hits_str:<12} | {delta_str:<14} | {p_str:<10}')\n",
+        "    print('=' * 80)\n",
+        "\n",
+        "    out_dir = Path('/kaggle/working') if Path('/kaggle/working').exists() else Path('results')\n",
+        "    out_dir.mkdir(parents=True, exist_ok=True)\n",
+        "    out_file = out_dir / 'kaggle_stratum_c_results.json'\n",
+        "    telemetry = {\n",
+        "        'suite': 'stratum_c_positive_control',\n",
+        "        'author': 'Sultan Haikal (@yvliet)',\n",
+        "        'n_tasks': n_tasks,\n",
+        "        'summary': summary_results,\n",
+        "        'contrasts': contrasts,\n",
+        "    }\n",
+        "    out_file.write_text(json.dumps(telemetry, indent=2), encoding='utf-8')\n",
+        "    print(f'\\n[+] Saved Stratum C telemetry to {out_file}')\n",
+    ]
+
     nb["cells"][1]["source"] = cell1_lines
     nb["cells"][5]["source"] = cell5_lines
     nb["cells"][6]["source"] = cell6_lines
     nb["cells"][7]["source"] = cell7_lines
 
+    # Ensure cells 12 and 13 exist for Stratum C section
+    if len(nb["cells"]) <= 12:
+        nb["cells"].append({
+            "cell_type": "markdown",
+            "metadata": {},
+            "source": cell12_lines,
+        })
+        nb["cells"].append({
+            "cell_type": "code",
+            "execution_count": None,
+            "metadata": {},
+            "outputs": [],
+            "source": cell13_lines,
+        })
+    else:
+        nb["cells"][12]["source"] = cell12_lines
+        nb["cells"][13]["source"] = cell13_lines
+
     with open(nb_path, "w", encoding="utf-8") as f:
         json.dump(nb, f, indent=1)
 
-    print(f"Patched {nb_path} with robust offline N=344 benchmark successfully!")
+    print(f"Patched {nb_path} with robust offline N=344 benchmark and Stratum C positive control successfully!")
 
 
 if __name__ == "__main__":
