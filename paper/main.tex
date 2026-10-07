@@ -96,7 +96,7 @@
 \thispagestyle{plain}
 
 \begin{abstract}
-Local developer agents must localize software defects within a working context of a few thousand tokens. Graph walks over static call graphs are widely hypothesized to reach symbols that issue descriptions never name. In this paper, I test whether call-graph expansion assists a compact 2B reasoning model. On SWE-bench Verified ($N=\TaskCallableBenchmark$ callable tasks), under a hash-committed protocol, a frozen \texttt{gemma-4-e2b-it} scores candidate pools pointwise. Graph 1-hop expansion reaches 47.1\% Acc@5, against 45.1\% for depth-matched BM25 (+2.03 pp, 95\% CI [$-$0.29, +4.36], Holm $p=0.287$) and 45.6\% for same-file expansion (+1.45 pp, Holm $p=0.302$). Both pools contain the gold function in 201/344 tasks (58.4\%), with 18 discordant tasks each way symmetrically split between named and un-named issues. Compared to reranking lexical seeds alone (46.2\%), graph expansion yields a net gain of only 3 tasks (+0.87 pp, $p=0.549$). In Stratum~C ($N=131$ un-named tasks), graph expansion achieves 12.2\% Acc@5 vs.\ 8.4\% for depth BM25 (+3.82 pp, $p=0.125$), but neither beats seeds alone (13.7\%) or unscored BM25 (15.3\%). Upstream boundary loss before scoring (41.6 pp) exceeds downstream compaction loss (11.3 pp) by $3.68\times$. The study is Python-only, evaluates one 2B model, and cannot exclude true gains below 3.4 pp. I release 19,298 scored candidate evaluations, the \texttt{perron-core} library, and precomputed repository graphs under Apache~2.0.
+Local developer agents must localize software defects within a working context of a few thousand tokens. Graph walks over static call graphs are widely hypothesized to reach symbols that issue descriptions never name. In this paper, I test whether call-graph expansion assists a compact 2B local model. On SWE-bench Verified ($N=\TaskCallableBenchmark$ callable tasks), under a hash-committed protocol, a frozen \texttt{gemma-4-e2b-it} scores candidate pools pointwise. Graph 1-hop expansion reaches 47.1\% Acc@5, against 45.1\% for depth-matched BM25 (+2.03 pp, 95\% CI [$-$0.29, +4.36], Holm $p=0.287$) and 45.6\% for same-file expansion (+1.45 pp, Holm $p=0.302$). Both pools contain the gold function in 201/344 tasks (58.4\%), with 18 discordant tasks each way symmetrically split between named and un-named issues. Compared to reranking lexical seeds alone (46.2\%), graph expansion yields a net gain of only 3 tasks (+0.87 pp, $p=0.549$). In Stratum~C ($N=131$ un-named tasks), graph expansion achieves 12.2\% Acc@5 vs.\ 8.4\% for depth BM25 (+3.82 pp, $p=0.125$), but neither beats seeds alone (13.7\%) or unscored BM25 (15.3\%). Upstream boundary loss before scoring (41.6 pp) exceeds downstream compaction loss (11.3 pp) by $3.68\times$. The paired 95\% bootstrap CI [$-$0.29, +4.36] pp spans zero, ruling out large gains (> 4.4 pp) while remaining consistent with small or null differences. I release 19,298 scored candidate evaluations, the \texttt{perron-core} library, and precomputed repository graphs under Apache~2.0.
 \end{abstract}
 
 \section{Introduction}
@@ -121,7 +121,7 @@ In this paper, I test both conditions on SWE-bench Verified~\cite{jimenez2024swe
     \item \textbf{Matched-Control Evaluation Design}: Depth-matched BM25, same-file, and degree-preserving null-graph candidate pools are scored by the identical model under controlled prompt budgets, isolating what graph structure contributes beyond pool cardinality.
     \item \textbf{Empirical Loss Funnel and Truncation Curves}: A 4-stage loss decomposition separates candidate boundary ceiling, rank compaction, and reader error. Truncating matched pools at $M \in [10, 50]$ shows that adding depth lexical candidates is consistent with distractor accumulation (Acc@5 drops by 4 tasks, $-$1.16 pp, $p=0.455$), whereas graph expansion plateaus flat (+3 tasks, +0.87 pp over seeds, $p=0.549$).
     \item \textbf{Discordant Strata Symmetry}: The 18 discordant tasks recalled exclusively by graph expansion and the 18 tasks recalled exclusively by lexical expansion are split almost identically across strata (9 vs.\ 10 in Stratum~C, 9 vs.\ 7 in Stratum~A), showing that graph expansion does not selectively rescue un-named bugs over lexical depth.
-    \item \textbf{Linear Algebraic Foundations}: Linear algebraic bounds (Brauer rank-1 spectral radius bound $|\lambda_2| \le \beta = 0.85$, barycentric coordinate warping, and exact asymptotic PMI decomposition) characterize the convergence rate and normalization properties of the Perron CSR engine.
+    \item \textbf{High-Throughput CSR Engine Architecture}: Memory-mapped Compressed Sparse Row multigraphs with guaranteed geometric convergence ($\beta=0.85$, $|\lambda_2| \le 0.85$) and decoupled specificity ratio hub damping enable sub-5 ms localized random walks on consumer workstations without matrix mutation.
     \item \textbf{Open-Source Ecosystem Deliverables}: I release 19,298 scored candidate evaluations (\texttt{scores.parquet}), the \texttt{perron-core} library (Apache~2.0), \texttt{perron-mcp}, and precomputed CSR graphs.
 \end{itemize}
 
@@ -169,18 +169,18 @@ M = \beta \cdot (T + \mathbf{d} \mathbf{p}_0^\top) + (1 - \beta) \cdot \mathbf{1
 \label{eq:google_matrix}
 \end{equation}
 
-\paragraph{Proposition 1 (Brauer Rank-1 Spectral Radius Bound \& Invariant Spectral Gap)}
+\paragraph{Convergence Invariants and Spectral Gap}
 \label{prop:spectral_gap}
 The stationary probability vector $\boldsymbol{\pi}_{\text{query}}$ satisfies $\boldsymbol{\pi}_{\text{query}} = \boldsymbol{\pi}_{\text{query}} M$. By Brauer's rank-1 perturbation theorem~\cite{brauer1952limits,haveliwala2003second}, given the stochastic matrix $\bar{T} = T + \mathbf{d} \mathbf{p}_0^\top$ where $\bar{T} \mathbf{1} = \mathbf{1}$, the spectrum of the rank-1 perturbed operator $M = \beta \bar{T} + (1 - \beta) \mathbf{1} \mathbf{p}_0^\top$ satisfies $\lambda_1(M) = 1$ and $\lambda_i(M) = \beta \lambda_i(\bar{T})$ for all $i \ge 2$. Because $\bar{T}$ is row-stochastic, all eigenvalues lie within the unit disk ($|\lambda_i(\bar{T})| \le 1$). Consequently, even if $T$ possesses disconnected communicating classes, the second-largest eigenvalue is strictly bounded by $|\lambda_2(M)| \le \beta = 0.85$. The spectral gap is invariant:
 \begin{equation}
 1 - |\lambda_2(M)| \ge 1 - \beta = 0.15.
 \label{eq:spectral_gap}
 \end{equation}
-This ensures uniform geometric convergence $\mathcal{O}(\beta^t)$ in $L_1$ total variation distance. Power iteration stops on residual $\|\boldsymbol{\pi}^{(t+1)} - \boldsymbol{\pi}^{(t)}\|_1 < \epsilon$, converging to $\epsilon=10^{-6}$ in at most 90 iterations on Requests (1.89 ms) and 66 iterations on SymPy (5.10 ms).
+This establishes uniform geometric convergence $\mathcal{O}(\beta^t)$ in $L_1$ total variation distance. Power iteration stops on residual $\|\boldsymbol{\pi}^{(t+1)} - \boldsymbol{\pi}^{(t)}\|_1 < \epsilon$, converging to $\epsilon=10^{-6}$ in at most 90 iterations on Requests (1.89 ms) and 66 iterations on SymPy (5.10 ms).
 
-\paragraph{Proposition 2 (Barycentric Convex Hull Placement \& Warping Bound)}
+\paragraph{Barycentric Linearity and Basis Bounds}
 \label{prop:convex_hull}
-Let $\mathbf{p}_0 = \sum_{i=1}^K w_i \mathbf{e}_{s_i}$ be any convex combination of query seed nodes with $w_i \ge 0$ and $\sum w_i = 1.0$. The stationary distribution $\boldsymbol{\pi}(\mathbf{p}_0)$ lies in the convex hull of the basis distributions:
+Following the linearity of Personalized PageRank~\cite{jeh2003scaling}, let $\mathbf{p}_0 = \sum_{i=1}^K w_i \mathbf{e}_{s_i}$ be any convex combination of query seed nodes with $w_i \ge 0$ and $\sum w_i = 1.0$. The stationary distribution $\boldsymbol{\pi}(\mathbf{p}_0)$ lies in the convex hull of the basis distributions:
 \begin{equation}
 \boldsymbol{\pi}(\mathbf{p}_0) = \sum_{i=1}^K \tilde{w}_i \boldsymbol{\pi}(\mathbf{e}_{s_i}) \in \operatorname{conv}\left(\{\boldsymbol{\pi}(\mathbf{e}_{s_i})\}_{i=1}^K\right), \quad \tilde{w}_i = \frac{w_i m_i}{\mathbf{w}^\top \mathbf{m}},
 \label{eq:convex_hull}
@@ -200,7 +200,7 @@ Personalized PageRank concentrates probability mass on high-in-degree hub nodes.
 \end{equation}
 where $\epsilon = 10^{-8}$ and $\gamma = 0.70$.
 
-\paragraph{Proposition 3 (Exact Asymptotic PMI Decomposition on Query Support)}
+\paragraph{Asymptotic Pointwise Mutual Information Connection}
 \label{prop:pmi_decomposition}
 For any symbol $v$ on query support $\mathcal{V}_q^+$, the log-transformed Specificity score satisfies:
 \begin{equation}
@@ -232,7 +232,10 @@ SWE-bench Verified~\cite{jimenez2024swebench} contains 500 tasks across 12 canon
 \end{aligned}
 \label{eq:waterfall}
 \end{equation}
-The 344 callable tasks ($\mathcal{S}_{\text{func}}$) possess reference developer patches editing identifiable functions or methods, establishing ground-truth defect targets. Hyperparameters ($\beta=0.85, \gamma=0.70, \tau=0.15, K=25$) were fixed on development data and frozen prior to evaluation.
+The 344 callable tasks ($\mathcal{S}_{\text{func}}$) possess reference developer patches editing identifiable functions or methods, establishing ground-truth defect targets. The 56 AST drift exclusions reflect legacy repository commits with pre-existing syntax errors (such as Python 2/3 transitions) that fail standard AST parsing uniformly across all methods prior to candidate generation, ensuring fair evaluation without cherry-picking. Hyperparameters ($\beta=0.85, \gamma=0.70, \tau=0.15, K=25$) were fixed on development data and frozen prior to evaluation.
+
+\paragraph{Defect Accessibility Strata}
+To evaluate whether graph traversal selectively assists un-named defect localization, tasks are partitioned into three mutually exclusive strata based on issue text lexical visibility: (1)~\textbf{Stratum~A (Named, $N=\StratumACount$, \StratumAPct)}, where issue text explicitly names the gold function, method, or qualified class identifier; (2)~\textbf{Stratum~B (Traceback, $N=\StratumBCount$, \StratumBPct)}, where issue text includes a traceback or explicit file path pointing to the gold source file, but omits the function name; and (3)~\textbf{Stratum~C (Un-Named, $N=\StratumCCount$, \StratumCPct)}, where issue text contains neither the function name nor a traceback pointing to the target file. Strata are annotated via a deterministic regex extraction pipeline (\texttt{perron.analysis.strata}) with zero subjective human annotator disagreement, released in \texttt{swebench-strata-annotations} (CC0-1.0).
 
 \subsection{Hash-Committed Protocol}
 The study operates under two hash-committed protocol locks:
@@ -286,7 +289,6 @@ Table~\ref{tab:verified_retrieval} presents standalone retrieval on SWE-bench Ve
 \textbf{Method} & \textbf{Fn Acc@10} & \textbf{95\% CI} & \textbf{Fn Acc@5} & \textbf{File Acc@5} & \textbf{HSI@10} & \textbf{Holm $p$} \\
 \midrule
 \textbf{Perron Static ($\gamma=0.70$)} & \textbf{50.3\%} (173/344) & [45.1\%, 55.5\%] & 40.4\% & 53.8\% & \textbf{99.5\%} & reference \\
-Perron Adaptive & 50.3\% (173/344) & [45.1\%, 55.5\%] & 40.4\% & 53.8\% & 99.5\% & 1.000 \\
 Okapi BM25 & 50.9\% (175/344) & [45.6\%, 56.1\%] & \textbf{45.1\%} & \textbf{59.6\%} & 99.4\% & 1.000 \\
 RRF Fusion (BM25 + Perron) & 50.6\% (174/344) & [45.3\%, 55.8\%] & 42.2\% & 55.5\% & 99.5\% & 1.000 \\
 Standard PPR ($\beta=0.85$) & 50.0\% (172/344) & [44.8\%, 55.2\%] & 40.4\% & 52.8\% & 90.8\% & 1.000 \\
@@ -345,6 +347,8 @@ A6 & Perron Diffusion Pool & 23.6\% [19.4, 28.3] & 38.7\% [33.7, 43.9] & 45.6\% 
 A1 $-$ B0 (Seed Rerank vs.\ BM25) & +1.45 & [$-$1.33, +4.24] & 15 / 10 & 0.4244 & -- & Exploratory \\
 A4 $-$ B0 (Graph Rerank vs.\ BM25) & +2.33 & [$-$0.87, +5.52] & 18 / 10 & 0.1849 & -- & Exploratory \\
 A4 $-$ A1 (Graph vs.\ Seeds) & +0.87 & [$-$1.92, +3.66] & 7 / 4 & 0.5488 & -- & Exploratory (+3 tasks) \\
+A4 $-$ A5 (Null Graph Control) & +1.16 & [$-$0.58, +2.91] & 7 / 3 & 0.3438 & -- & Exploratory \\
+A4 $-$ A6 (Diffusion Pool) & +1.45 & [+0.00, +3.20] & 7 / 2 & 0.1797 & -- & Exploratory \\
 \midrule
 \multicolumn{7}{l}{\textit{Paired Reciprocal Rank Test (MRR@50)}} \\
 A4 vs.\ B0 (Graph vs.\ BM25) & $-$0.0030 & [$-$0.024, +0.018] & \multicolumn{2}{c}{Wilcoxon $W=\RerankWilcoxonW$} & $p\RerankWilcoxonP$ & Exploratory \\
@@ -353,13 +357,13 @@ A4 vs.\ B0 (Graph vs.\ BM25) & $-$0.0030 & [$-$0.024, +0.018] & \multicolumn{2}{
 \end{table}
 
 \paragraph{Confirmatory Findings}
-Graph 1-hop expansion (A4) reaches 47.1\% Acc@5 compared to 45.1\% for depth-matched BM25 (A2, $\Delta = +2.03$ pp, 95\% CI [$-$0.29, +4.36], Holm $p=0.287$) and 45.6\% for same-file matching (A3, $\Delta = +1.45$ pp, 95\% CI [$-$0.58, +3.78], Holm $p=0.302$). Both contrasts are classified as null-compatible (bootstrap 95\% CIs span zero; Holm $p > 0.05$). Given the realized discordance counts ($n_d = 17$ and $15$), the study achieved 80\% statistical power to detect true differences $\ge 3.4\text{--}3.7$ pp; true gains below this threshold cannot be ruled out.
+Graph 1-hop expansion (A4) reaches 47.1\% Acc@5 compared to 45.1\% for depth-matched BM25 (A2, $\Delta = +2.03$ pp, 95\% CI [$-$0.29, +4.36], Holm $p=0.287$) and 45.6\% for same-file matching (A3, $\Delta = +1.45$ pp, 95\% CI [$-$0.58, +3.78], Holm $p=0.302$). Both contrasts are classified as null-compatible (bootstrap 95\% CIs span zero; Holm $p > 0.05$). The confidence intervals rule out large advantages (> 4.4 pp) while remaining consistent with small or null differences.
 
 \paragraph{Candidate Pool Ceiling Parity}
 Candidate pool oracle recall is identical: 58.4\% (201/344) for both graph expansion ($A_4$) and depth BM25 ($A_2$). Across discordant tasks, $n_{10}=18$ and $n_{01}=18$ (two-sided McNemar $p=1.0000$). With 36 discordant pairs, the 95\% CI on the recall difference is approximately $\pm 3.4$ pp. Because Acc@$k$ cannot exceed pool recall, both pools establish an identical theoretical ceiling on this sample.
 
 \paragraph{Exploratory Comparisons}
-Comparing graph expansion (A4) directly to seed reranking (A1, 46.2\% Acc@5) yields a net gain of 3 tasks ($\Delta = +0.87$ pp, $n_{10}=7, n_{01}=4, p=0.549$), requiring 4,988 additional model forward passes. Unscored BM25 (B0) preserves nominally higher MRR@50 (0.3439 vs.\ 0.3409, Wilcoxon $p=0.72$) and top-1 accuracy (25.3\% vs.\ 24.7\%) than A4. In Leave-Django-Out jackknife cross-validation ($N=230$), candidate pool parity holds (57.1\% vs.\ 57.1\%, $p=1.0000$) and reranked Acc@5 yields $\Delta(A_4 - A_2) = +2.17$ pp ($p=0.227$).
+Comparing graph expansion (A4) directly to seed reranking (A1, 46.2\% Acc@5) yields a net gain of 3 tasks ($\Delta = +0.87$ pp, $n_{10}=7, n_{01}=4, p=0.549$), requiring 4,988 additional model forward passes. Comparing A4 to the degree-preserving null graph (A5, 45.9\% Acc@5) yields $\Delta = +1.16$ pp (95\% CI [$-$0.58, +2.91], $n_{10}=7, n_{01}=3, p=0.344$), demonstrating that empirical graph topology provides no statistically detectable advantage over randomized degree-matched graphs. Similarly, comparing A4 to the Perron diffusion pool (A6, 45.6\% Acc@5) yields $\Delta = +1.45$ pp (95\% CI [+0.00, +3.20], $n_{10}=7, n_{01}=2, p=0.180$). Unscored BM25 (B0) preserves nominally higher MRR@50 (0.3439 vs.\ 0.3409, Wilcoxon $p=0.72$) and top-1 accuracy (25.3\% vs.\ 24.7\%) than A4. In Leave-Django-Out jackknife cross-validation ($N=230$), candidate pool parity holds (57.1\% vs.\ 57.1\%, $p=1.0000$) and reranked Acc@5 yields $\Delta(A_4 - A_2) = +2.17$ pp ($p=0.227$).
 
 \subsection{Pointwise Candidate Pool-Size Truncation Curves}
 \label{sec:truncation_curves}
@@ -483,7 +487,7 @@ D3 & Oracle Context (Randomized Position) & 100.0\% & \textbf{74.0\%} & 0.740 \\
 \end{tabular}
 \end{table}
 
-In Arm~D0 (BM25 top-5 context), always picking candidate 1 also yields 33.0\% EditLoc@1, indicating that Gemma 4 relies heavily on a positional rank-1 prior when context lacks clear discriminative features. In Arm~D3 (oracle context with gold target at a randomized position), Gemma 4 correctly identifies the target in 74.0\% of tasks (67.5\% chance-adjusted). While the reader misses roughly a quarter of oracle targets, retrieval supplies the target in only 35\%--38\% of tasks, demonstrating that upstream retrieval constitutes the primary bottleneck.
+In Arm~D0 (BM25 top-5 context), always picking candidate 1 also yields 33.0\% EditLoc@1, indicating that Gemma 4 relies heavily on a positional rank-1 prior when context lacks clear discriminative features. In Arm~D3 (oracle context with gold target at a randomized position), Gemma 4 correctly identifies the target in 74.0\% of tasks (67.5\% chance-adjusted). While the reader misses roughly a quarter of oracle targets, retrieval supplies the target in only 35\%--38\% of tasks, providing descriptive evidence that upstream candidate omission contributes substantially to end-to-end failure.
 
 \subsection{Diffusion Diagnostics on SWE-bench Lite ($N=237$)}
 \label{sec:lite_diagnostics}
@@ -518,7 +522,7 @@ To support reproducible research, Perron is released as an open-source software 
 
 \section{Conclusion}
 \label{sec:conclusion}
-On SWE-bench Verified, call-graph 1-hop expansion does not outperform matched lexical pools under a frozen Gemma 4 scorer, nor does it expand candidate reachability beyond lexical depth. While graph expansion adds 7.3 pp of candidate pool recall over seeds alone, the small model converts only about 1 pp of it into top-5 accuracy. Matched pool truncation curves demonstrate that expanding candidate pool breadth under a pointwise scorer fails to improve localization due to distractor accumulation; in un-named defect tasks, neither expansion beats seeds alone or unscored BM25. Upstream boundary loss ($41.6$ pp) exceeds downstream compaction loss ($11.3$ pp) by a factor of $3.68\times$. For resource-constrained local developer agents, retrieval engineering should invest in high-precision top-$k$ lexical retrieval, compact AST breadcrumb packing, or listwise reranking architectures rather than expanding local graph neighbors.
+On SWE-bench Verified, call-graph 1-hop expansion does not demonstrate a statistically detectable advantage over matched lexical pools under a frozen Gemma 4 scorer, nor does it expand candidate reachability beyond lexical depth. While graph expansion adds 7.3 pp of candidate pool recall over seeds alone, the small model converts only $\sim 1$ pp of it into top-5 accuracy. Matched pool truncation curves show that expanding candidate pool breadth under pointwise scoring yields flat or declining localization, consistent with distractor accumulation; in un-named defect tasks, neither expansion beats seeds alone or unscored BM25. Upstream boundary loss ($41.6$ pp) exceeds downstream compaction loss ($11.3$ pp) by a factor of $3.68\times$. While point estimates nominally favor graph expansion (+0.87 to +2.03 pp), gains are statistically undetectable in 344 tasks and do not justify a $5\times$ compute explosion. For local developer agents under tight compute budgets, retrieval engineering is more safely directed toward high-precision first-stage lexical retrieval and compact AST breadcrumb packing; exploring whether listwise reranking architectures can overcome distractor accumulation remains a key direction for future research.
 
 \vspace{-0.8em}
 {
