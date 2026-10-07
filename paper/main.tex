@@ -255,17 +255,17 @@ Table~\ref{tab:verified_retrieval} presents standalone retrieval on SWE-bench Ve
 \footnotesize
 \setlength{\tabcolsep}{3.0pt}
 \renewcommand{\arraystretch}{0.95}
-\caption{\textbf{Standalone retrieval evaluation on SWE-bench Verified ($N=344$ callable tasks).} Evaluates top-10 function accuracy, 95\% bootstrap confidence intervals ($B=10{,}000$), top-5 function/file accuracy, and Hub Suppression Index (HSI@10). Holm $p$-values are computed against Perron Static.}
+\caption{\textbf{Standalone retrieval evaluation on SWE-bench Verified ($N=344$ callable tasks).} Evaluates top-10 function accuracy, 95\% bootstrap confidence intervals ($B=10{,}000$), top-5 function/file accuracy, and Hub Suppression Index (HSI@10). Bold numerical values indicate the highest score in each column. Holm $p$-values are computed against Perron Static.}
 \label{tab:verified_retrieval}
 \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}Xcccccc}
 \toprule
 \textbf{Method} & \textbf{Fn Acc@10} & \textbf{95\% CI} & \textbf{Fn Acc@5} & \textbf{File Acc@5} & \textbf{HSI@10} & \textbf{Holm $p$} \\
 \midrule
-\textbf{Perron Static ($\gamma=0.70$)} & \textbf{50.3\%} (173/344) & [45.1\%, 55.5\%] & 40.4\% & 53.8\% & \textbf{99.5\%} & reference \\
-Okapi BM25 & 50.9\% (175/344) & [45.6\%, 56.1\%] & \textbf{45.1\%} & \textbf{59.6\%} & 99.4\% & 1.000 \\
-RRF Fusion (BM25 + Perron) & 50.6\% (174/344) & [45.3\%, 55.8\%] & 42.2\% & 55.5\% & 99.5\% & 1.000 \\
+\textbf{Perron Static ($\gamma=0.70$)} & 50.3\% (173/344) & [45.1\%, 55.5\%] & 40.4\% & 53.8\% & \textbf{99.5\%} & reference \\
+Okapi BM25 & \textbf{50.9\%} (175/344) & [45.6\%, 56.1\%] & \textbf{45.1\%} & \textbf{59.6\%} & 99.4\% & 1.000 \\
+RRF Fusion (BM25 + Perron) & 50.6\% (174/344) & [45.3\%, 55.8\%] & 42.2\% & 55.5\% & \textbf{99.5\%} & 1.000 \\
 Standard PPR ($\beta=0.85$) & 50.0\% (172/344) & [44.8\%, 55.2\%] & 40.4\% & 52.8\% & 90.8\% & 1.000 \\
-Degree-Normalized PPR & 49.4\% (170/344) & [44.2\%, 54.7\%] & 40.1\% & 52.3\% & 99.5\% & 1.000 \\
+Degree-Normalized PPR & 49.4\% (170/344) & [44.2\%, 54.7\%] & 40.1\% & 52.3\% & \textbf{99.5\%} & 1.000 \\
 HippoRAG Prior Scaling & 49.4\% (170/344) & [44.2\%, 54.7\%] & 40.4\% & 52.6\% & 91.1\% & 1.000 \\
 \bottomrule
 \end{tabularx}
@@ -284,21 +284,21 @@ Table~\ref{tab:reranking_results} and Table~\ref{tab:confirmatory_contrasts} rep
 \footnotesize
 \setlength{\tabcolsep}{2.5pt}
 \renewcommand{\arraystretch}{0.95}
-\caption{\textbf{Gemma 4 pointwise candidate reranking on SWE-bench Verified ($N=344$ callable tasks).} Pools matched to per-task size $M_t \in [10, 50]$ (mean 24.5). Brackets indicate Wilson 95\% confidence intervals. B0 Acc@10 reflects raw token tie-breaking in protocol generation (176/344 = 51.2\%), differing by 1 task from Table~\ref{tab:verified_retrieval} AST entity deduplication (175/344 = 50.9\%, documented in \texttt{deviations.md}).}
+\caption{\textbf{Gemma 4 pointwise candidate reranking on SWE-bench Verified ($N=344$ callable tasks).} Pools matched to per-task size $M_t \in [10, 50]$ (mean 24.5). Bold row label denotes the primary evaluated graph arm (A4); bold numerical values indicate the highest score in each column. Brackets indicate Wilson 95\% confidence intervals. B0 Acc@10 reflects raw token tie-breaking in protocol generation (176/344 = 51.2\%), differing by 1 task from Table~\ref{tab:verified_retrieval} AST entity deduplication (175/344 = 50.9\%, documented in \texttt{deviations.md}).}
 \label{tab:reranking_results}
 \begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}Xccccc}
 \toprule
 \textbf{Arm} & \textbf{Candidate Pool Composition} & \textbf{Acc@1 (95\% CI)} & \textbf{Acc@3 (95\% CI)} & \textbf{Acc@5 (95\% CI)} & \textbf{Acc@10 (95\% CI)} & \textbf{MRR@50} \\
 \midrule
-B0 & BM25 Baseline (Unscored) & 25.3\% [21.0, 30.1] & 38.7\% [33.7, 43.9] & 44.8\% [39.6, 50.0] & 51.2\% [45.9, 56.4] & \textbf{0.3439} \\
+B0 & BM25 Baseline (Unscored) & \textbf{25.3\%} [21.0, 30.1] & 38.7\% [33.7, 43.9] & 44.8\% [39.6, 50.0] & 51.2\% [45.9, 56.4] & \textbf{0.3439} \\
 B1 & Perron Baseline (Unscored) & 22.7\% [18.6, 27.4] & 35.2\% [30.3, 40.4] & 40.4\% [35.4, 45.7] & 50.3\% [45.0, 55.5] & 0.3155 \\
 \midrule
-A1 & Rerank Seeds $S$ ($M=10$) & 24.7\% [20.4, 29.5] & 39.5\% [34.5, 44.8] & 46.2\% [41.0, 51.5] & 51.2\% [45.9, 56.4] & 0.3348 \\
+A1 & Rerank Seeds $S$ ($M=10$) & 24.7\% [20.4, 29.5] & \textbf{39.5\%} [34.5, 44.8] & 46.2\% [41.0, 51.5] & 51.2\% [45.9, 56.4] & 0.3348 \\
 A2 & Depth-Matched BM25 Control & 23.8\% [19.6, 28.6] & 38.1\% [33.1, 43.3] & 45.1\% [39.9, 50.3] & 51.2\% [45.9, 56.4] & 0.3301 \\
 A3 & Same-File Matched Control & 24.1\% [19.9, 28.9] & 39.2\% [34.2, 44.5] & 45.6\% [40.5, 50.9] & 52.0\% [46.8, 57.3] & 0.3381 \\
-\textbf{A4} & \textbf{Graph 1-Hop Expansion} & \textbf{24.7\%} [20.4, 29.5] & \textbf{39.2\%} [34.2, 44.5] & \textbf{47.1\%} [41.9, 52.4] & \textbf{52.3\%} [47.0, 57.5] & 0.3409 \\
+\textbf{A4} & \textbf{Graph 1-Hop Expansion} & 24.7\% [20.4, 29.5] & 39.2\% [34.2, 44.5] & \textbf{47.1\%} [41.9, 52.4] & 52.3\% [47.0, 57.5] & 0.3409 \\
 A5 & Null Graph Control & 24.1\% [19.9, 28.9] & 39.0\% [34.0, 44.2] & 45.9\% [40.7, 51.2] & 51.2\% [45.9, 56.4] & 0.3315 \\
-A6 & Perron Diffusion Pool & 23.6\% [19.4, 28.3] & 38.7\% [33.7, 43.9] & 45.6\% [40.5, 50.9] & 52.6\% [47.3, 57.8] & 0.3301 \\
+A6 & Perron Diffusion Pool & 23.6\% [19.4, 28.3] & 38.7\% [33.7, 43.9] & 45.6\% [40.5, 50.9] & \textbf{52.6\%} [47.3, 57.8] & 0.3301 \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -307,7 +307,7 @@ A6 & Perron Diffusion Pool & 23.6\% [19.4, 28.3] & 38.7\% [33.7, 43.9] & 45.6\% 
 \centering
 \footnotesize
 \setlength{\tabcolsep}{3.0pt}
-\caption{\textbf{Confirmatory and exploratory contrasts on SWE-bench Verified ($N=344$).} Confirmatory family (PC1, PC2) evaluated on strict Acc@5 with step-down Holm correction. Paired 95\% CIs estimated via repository-stratified bootstrap ($B=10{,}000$).}
+\caption{\textbf{Confirmatory and exploratory contrasts on SWE-bench Verified ($N=344$).} Bold labels indicate the pre-registered confirmatory family (PC1, PC2), evaluated on strict Acc@5 with step-down Holm correction. Paired 95\% CIs estimated via repository-stratified bootstrap ($B=10{,}000$).}
 \label{tab:confirmatory_contrasts}
 \begin{tabular}{lcccccc}
 \toprule
@@ -355,7 +355,7 @@ To empirically test the distractor-accumulation mechanism without running new mo
 \footnotesize
 \setlength{\tabcolsep}{4.0pt}
 \renewcommand{\arraystretch}{0.95}
-\caption{\textbf{Pointwise candidate pool-size truncation curves on SWE-bench Verified ($N=344$).} Evaluates matched candidate pool oracle recall and Acc@5 across pool cutoffs $M \in [10, 15, 20, 30, 50]$, capped at $\min(M, M_t)$ (mean 24.5 candidates), for depth BM25 (A2) and graph 1-hop expansion (A4).}
+\caption{\textbf{Pointwise candidate pool-size truncation curves on SWE-bench Verified ($N=344$).} Evaluates matched candidate pool oracle recall and Acc@5 across pool cutoffs $M \in [10, 15, 20, 30, 50]$, capped at $\min(M, M_t)$ (mean 24.5 candidates), for depth BM25 (A2) and graph 1-hop expansion (A4). Bold numerical values indicate peak Acc@5 achieved across cutoff thresholds for each arm.}
 \label{tab:truncation_curves}
 \begin{tabular}{lccccc}
 \toprule
@@ -365,7 +365,7 @@ Arm A2 (Depth BM25) Oracle Recall & \TruncATwoRecallTen & \TruncATwoRecallFiftee
 Arm A2 (Depth BM25) Acc@5 & \textbf{\TruncATwoAccFiveTen} & \TruncATwoAccFiveFifteen & \TruncATwoAccFiveTwenty & \TruncATwoAccFiveThirty & \TruncATwoAccFiveFifty \\
 \midrule
 Arm A4 (Graph 1-Hop) Oracle Recall & \TruncAFourRecallTen & \TruncAFourRecallFifteen & \TruncAFourRecallTwenty & \TruncAFourRecallThirty & \TruncAFourRecallFifty \\
-Arm A4 (Graph 1-Hop) Acc@5 & \TruncAFourAccFiveTen & \TruncAFourAccFiveFifteen & \textbf{\TruncAFourAccFiveTwenty} & \textbf{\TruncAFourAccFiveThirty} & \textbf{\TruncAFourAccFiveFifty} \\
+Arm A4 (Graph 1-Hop) Acc@5 & \TruncAFourAccFiveTen & \TruncAFourAccFiveFifteen & \textbf{\TruncAFourAccFiveTwenty} & \TruncAFourAccFiveThirty & \textbf{\TruncAFourAccFiveFifty} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -387,16 +387,16 @@ The motivation for graph expansion is finding defect targets that the issue desc
 \centering
 \footnotesize
 \setlength{\tabcolsep}{4.0pt}
-\caption{\textbf{Stratum C ($N=131$) localization performance on un-named defect tasks.} Evaluates tasks where the issue description never mentions the gold symbol across all four comparators.}
+\caption{\textbf{Stratum C ($N=131$) localization performance on un-named defect tasks.} Evaluates tasks where the issue description never mentions the gold symbol across all four comparators. Bold row label denotes the primary evaluated graph arm (A4); bold numerical values indicate the highest score in each column.}
 \label{tab:stratum_c_breakdown}
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Metric / Method} & \textbf{Acc@5} & \textbf{Hits / 131} & $\boldsymbol{\Delta}$ \textbf{vs.\ A2} & \textbf{McNemar $p$} \\
 \midrule
-B0 (Unscored BM25 Top-5) & \StratumCBZeroAccFive & \StratumCBZeroHits & +6.87 pp & 0.0490 \\
+B0 (Unscored BM25 Top-5) & \textbf{\StratumCBZeroAccFive} & \textbf{\StratumCBZeroHits} & \textbf{+6.87 pp} & 0.0490 \\
 A1 (Rerank Seeds Only, $M=10$) & \StratumCAOneAccFive & \StratumCAOneHits & +5.34 pp & 0.0961 \\
 A2 (Depth-Matched BM25, $M \le 50$) & \StratumCATwoAccFive & \StratumCATwoHits & reference & reference \\
-\textbf{A4 (Graph 1-Hop Expansion, $M \le 50$)} & \textbf{\StratumCAFourAccFive} & \textbf{\StratumCAFourHits} & \textbf{\StratumCDeltaPP\ pp} & 0.1250 ($n_{10}=6, n_{01}=1$) \\
+\textbf{A4 (Graph 1-Hop Expansion, $M \le 50$)} & \StratumCAFourAccFive & \StratumCAFourHits & \StratumCDeltaPP\ pp & 0.1250 ($n_{10}=6, n_{01}=1$) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -457,7 +457,7 @@ Table~\ref{tab:reader_mini_test} reports the downstream reader mini-test across 
 \centering
 \footnotesize
 \setlength{\tabcolsep}{4.5pt}
-\caption{\textbf{Downstream edit-location reader mini-test on SWE-bench Verified ($N=100$, descriptive).} ContextHit@5 marks gold target presence in the 5 presented candidates; EditLoc@1 reports model prediction accuracy.}
+\caption{\textbf{Downstream edit-location reader mini-test on SWE-bench Verified ($N=100$, descriptive).} ContextHit@5 marks gold target presence in the 5 presented candidates; EditLoc@1 reports model prediction accuracy. Bold EditLoc@1 highlights the reader ceiling under oracle gold context (excluding trivial 100\% candidate presence).}
 \label{tab:reader_mini_test}
 \begin{tabular}{lccccc}
 \toprule
