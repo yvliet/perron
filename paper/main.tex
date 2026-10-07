@@ -84,7 +84,7 @@
     urlcolor=darkblue
 }
 
-\title{\vspace{-1.5em}\LARGE\textbf{Graph Expansion Adds Little to Lexical Retrieval for Small-LLM Bug Localization: A Hash-Committed Diagnostic Study with Gemma 4 on SWE-bench Verified}\vspace{-0.5em}}
+\title{\vspace{-1.5em}\LARGE\textbf{Graph Expansion Adds Little to Lexical Retrieval for Small-LLM Bug Localization: A Hash-Committed Diagnostic Study with Gemma 4 on a 344-Task Held-Out Subset of SWE-bench Verified}\vspace{-0.5em}}
 
 \author{
     \textbf{Sultan Haikal} \\
@@ -101,7 +101,7 @@
 \thispagestyle{plain}
 
 \begin{abstract}
-Local developer agents must localize software defects within a working context of a few thousand tokens without cloud inference. Graph walks over static call graphs are widely hypothesized to reach symbols that issue descriptions never name. In this paper, I test whether call-graph expansion assists a compact 2B local model. On SWE-bench Verified ($N=\TaskCallableBenchmark$ callable tasks), under a hash-committed protocol, a frozen \texttt{gemma-4-e2b-it} scores candidate pools pointwise. Graph 1-hop expansion reaches 47.1\% Acc@5, against 45.1\% for depth-matched BM25 (+2.03 pp, 95\% CI [$-$0.29, +4.36], Holm $p=0.287$) and 45.6\% for same-file expansion (+1.45 pp, Holm $p=0.302$). Both pools contain the gold function in 201/344 tasks (58.4\%), with 18 discordant tasks each way. Compared to reranking lexical seeds alone (46.2\%), graph expansion rescues 7 newly reachable targets into top-5 while distractors displace 4 seed hits (gross 7/4 split, net +3 tasks, $+0.87$ pp, $p=0.549$). Direct measurement reveals why: expanding candidate pool breadth doubles the mean number of distractors outranking the gold target (from 1.44 to 2.90), causing tasks with $\ge 5$ outranking distractors to surge from 17 to 39. In Stratum~C ($N=131$ un-named tasks), graph expansion achieves 12.2\% Acc@5 vs.\ 8.4\% for depth BM25 (+3.82 pp, $p=0.125$), but neither beats seeds alone (13.7\%) or unscored BM25 (15.3\%). Upstream boundary loss before scoring ($41.6$ pp) exceeds downstream compaction loss ($11.3$ pp) by $3.68\times$ at $k=5$ (spanning $1.2\times$ at $k=1$ to $6.8\times$ at $k=10$). The paired 95\% bootstrap CI [$-$0.29, +4.36] pp spans zero, ruling out gains larger than $+4.4$ pp ($15$ tasks) over depth-matched lexical reranking (PC1). I release 19,298 scored candidate evaluations, the \texttt{perron-core} library, and precomputed repository graphs under Apache~2.0.
+Local developer agents must localize software defects within a working context of a few thousand tokens without cloud inference. Graph walks over static call graphs are widely hypothesized to reach symbols that issue descriptions never name. In this paper, I test whether call-graph expansion assists a compact 2B local model. On a 344-task held-out subset of SWE-bench Verified ($N=\TaskCallableBenchmark$ callable tasks), under a hash-committed protocol, a frozen \texttt{gemma-4-e2b-it} scores candidate pools pointwise. Graph 1-hop expansion reaches 47.1\% Acc@5, against 45.1\% for depth-matched BM25 (+2.03 pp, 95\% CI [$-$0.29, +4.36], Holm $p=0.287$) and 45.6\% for same-file expansion (+1.45 pp, Holm $p=0.302$). Both pools contain the gold function in 201/344 tasks (58.4\%), with 18 discordant tasks each way. Compared to reranking lexical seeds alone (46.2\%), graph expansion adds 25 newly reachable targets to the pool, but because they enter at lower prior ranks (mean 11.2 distractors outranking them), only 6 reach top-5 while 4 existing seed hits are displaced (gross 7/4 split, net +3 tasks, $+0.87$ pp, $p=0.549$), consistent with distractor accumulation under pointwise scoring. In Stratum~C ($N=131$ un-named tasks), graph expansion achieves 12.2\% Acc@5 vs.\ 8.4\% for depth BM25 (+3.82 pp, $p=0.125$), but neither beats seeds alone (13.7\%) or unscored BM25 (15.3\%). Upstream boundary loss before scoring ($41.6$ pp) exceeds downstream compaction loss ($11.3$ pp) by $3.68\times$ at $k=5$ (spanning $1.2\times$ at $k=1$ to $6.8\times$ at $k=10$). The paired 95\% bootstrap CI [$-$0.29, +4.36] pp spans zero, ruling out gains larger than $+4.4$ pp ($15$ tasks) over depth-matched lexical reranking (PC1). I release 19,298 scored candidate evaluations, the \texttt{perron-core} library, and precomputed repository graphs under Apache~2.0.
 \end{abstract}
 
 \section{Introduction}
@@ -114,7 +114,7 @@ The working assumption underlying graph-augmented localization rests on two join
     \item \textbf{Rank Discrimination}: A compact language model must rank those newly introduced targets above the distractors that graph expansion inevitably introduces.
 \end{enumerate}
 
-In this paper, I test both conditions on SWE-bench Verified~\cite{jimenez2024swebench} using Perron, a high-throughput memory-mapped Compressed Sparse Row (CSR) graph engine, and a frozen \texttt{gemma-4-e2b-it} scorer. Three empirical research questions guide the investigation:
+In this paper, I test both conditions on a 344-task held-out subset of SWE-bench Verified~\cite{jimenez2024swebench} using Perron, a high-throughput memory-mapped Compressed Sparse Row (CSR) graph engine, and a frozen \texttt{gemma-4-e2b-it} scorer. Three empirical research questions guide the investigation:
 \begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
     \item \textbf{RQ1}: Does Personalized PageRank (PPR) diffusion, with or without post-walk hub damping, outperform BM25 at function-level code retrieval?
     \item \textbf{RQ2}: Under a frozen small model scorer, does graph 1-hop expansion outperform depth-matched BM25 and same-file pools of identical size?
@@ -126,19 +126,19 @@ In this paper, I test both conditions on SWE-bench Verified~\cite{jimenez2024swe
     \item \textbf{Matched-Control Evaluation Design}: Depth-matched BM25, same-file, and degree-preserving null-graph candidate pools are scored by the identical model under controlled prompt budgets, isolating what graph structure contributes beyond pool cardinality.
     \item \textbf{Empirical Loss Funnel and Truncation Curves}: A 4-stage loss decomposition separates candidate boundary ceiling, rank compaction, and reader error. Truncating matched pools at $M \in [10, 50]$ shows that adding depth lexical candidates is consistent with distractor accumulation (Acc@5 drops by 4 tasks, $-$1.16 pp, $p=0.455$), whereas graph expansion plateaus flat (+3 tasks, +0.87 pp over seeds, $p=0.549$).
     \item \textbf{Discordant Strata Symmetry}: The 18 discordant tasks recalled exclusively by graph expansion and the 18 tasks recalled exclusively by lexical expansion are split almost identically across strata (9 vs.\ 10 in Stratum~C, 9 vs.\ 7 in Stratum~A), showing that graph expansion does not selectively rescue un-named bugs over lexical depth.
-    \item \textbf{High-Throughput CSR Engine Architecture}: Memory-mapped Compressed Sparse Row multigraphs with guaranteed geometric convergence ($\beta=0.85$, $|\lambda_2| \le 0.85$) and decoupled specificity ratio hub damping enable sub-5 ms localized random walks on consumer workstations without matrix mutation.
+    \item \textbf{High-Throughput CSR Graph Engine}: An efficient, memory-mapped Compressed Sparse Row multigraph architecture with decoupled specificity ratio hub damping that executes localized random walks in sub-5 ms on consumer workstations without matrix mutation (spectral convergence proofs detailed in Appendix~\ref{app:spectral_proofs}).
     \item \textbf{Open-Source Ecosystem Deliverables}: I release 19,298 scored candidate evaluations (\texttt{scores.parquet}), the \texttt{perron-core} library (Apache~2.0), \texttt{perron-mcp}, and precomputed CSR graphs.
 \end{itemize}
 
 Only two primary contrasts (PC1 and PC2 on strict Acc@5) are confirmatory. Every other analysis is explicitly designated as exploratory.
 
 \subsection{Physical Hardware Envelope}
-Local developer agents must operate efficiently on consumer hardware. Perron bounds active per-turn working context to $K_{\text{effective}} = 3,480$ tokens ($K \le 4,096$). On a reference developer machine (\HostRAMGiB\ RAM), the standalone CSR engine peaks at \EnginePeakRSSMB\ resident memory, loading graphs via zero-copy memory mapping (\EngineGraphLoadDeltaMB\ delta). Live inference of \texttt{gemma-4-e2b-it} (2B dense parameter model with native Per-Layer Embeddings, unquantized FP16 compute weights) was evaluated on an NVIDIA Tesla T4 GPU, consuming \GemmaPeakVRAMGiB\ peak VRAM with a mean Time-To-First-Token of \GemmaMeanTTFTMs\ and \GemmaDecodeTokensSec\ tokens/sec decode throughput.
+Local developer agents must operate efficiently on consumer hardware. Perron bounds active per-turn working context to $K_{\text{effective}} = 3,480$ tokens ($K \le 4,096$). On a reference developer machine (\HostRAMGiB\ RAM), the standalone CSR engine peaks at \EnginePeakRSSMB\ resident memory, loading graphs via zero-copy memory mapping (\EngineGraphLoadDeltaMB\ delta). Live inference of \texttt{gemma-4-e2b-it} was evaluated with left-padded batching and \texttt{logits\_to\_keep=1} on an NVIDIA Tesla T4 GPU (scoring prompts averaging 423 tokens per candidate symbol), achieving mean Time-To-First-Token of \GemmaMeanTTFTMs\ and \GemmaDecodeTokensSec\ tokens/sec decode throughput.
 
 \section{Related Work}
 \label{sec:related}
 \paragraph{Graphs and Agents for Code Localization}
-Lexical search and dense bi-encoders struggle with vocabulary mismatch and structural execution paths. RepoCoder~\cite{zhang2023repocoder} demonstrated that iterative retrieval loops improve code completion but incur multi-turn token inflation. Aider~\cite{gauthier2023aider} introduced repository maps using Tree-sitter AST tags ranked by PageRank. Graph-guided agents such as RepoGraph~\cite{ouyang2025repograph}, CodexGraph~\cite{liu2025codexgraph}, and LocAgent~\cite{chen2025locagent} equip frontier models with graph traversal tools to navigate codebases interactively. AutoCodeRover~\cite{zhang2024autocoderover} navigates ASTs through iterative search queries. In SWE-agent~\cite{yang2024sweagent}, specialized agent-computer interfaces improve resolve rates. Conversely, Agentless~\cite{xia2025agentless} demonstrated that a simple two-phase pipeline (hierarchical localization followed by test-filtered patch generation) resolves 27.3\% of SWE-bench Lite without an agent loop, highlighting that simple pipelines establish strong baselines. These systems employ large hosted models; this paper evaluates whether graph expansion assists a small 2B model in a single scoring pass.
+Lexical search and dense bi-encoders struggle with vocabulary mismatch and structural execution paths. RepoCoder~\cite{zhang2023repocoder} demonstrated that iterative retrieval loops improve code completion but incur multi-turn token inflation. Aider~\cite{gauthier2023aider} introduced repository maps using Tree-sitter AST tags ranked by PageRank. Graph-guided agents such as RepoGraph~\cite{ouyang2025repograph}, CodexGraph~\cite{liu2025codexgraph}, and LocAgent~\cite{chen2025locagent} equip frontier models with graph traversal tools to navigate codebases interactively. AutoCodeRover~\cite{zhang2024autocoderover} navigates ASTs through iterative search queries. In SWE-agent~\cite{yang2024sweagent}, specialized agent-computer interfaces improve resolve rates. Conversely, Agentless~\cite{xia2025agentless} demonstrated that a simple two-phase pipeline (hierarchical localization followed by test-filtered patch generation) resolves ~32\% of SWE-bench Lite (FSE 2025) without an agent loop, highlighting that simple pipelines establish strong baselines. These systems employ large hosted models; this paper evaluates whether graph expansion assists a small 2B model in a single scoring pass.
 
 \paragraph{Random-Walk Retrieval on Graphs}
 Scalable diffusion on graphs builds on push-based approximate Personalized PageRank~\cite{andersen2006local}, decoupled propagation architectures such as APPNP~\cite{klicpera2019predict}, and scalable indexing frameworks like PPRGo~\cite{bojchevski2020scaling}. In link prediction, rooted PageRank and stationary-normalized hitting times~\cite{liben2007link} discount popular nodes by global stationary reachability. HippoRAG~\cite{gutierrez2024hipporag} demonstrated that Personalized PageRank over knowledge graphs outperforms iterative retrieval, formulating node specificity as inverse passage frequency $s_i = |P_i|^{-1}$ applied as a pre-walk teleport multiplier ($\mathbf{p}_0(i) \leftarrow \mathbf{p}_0(i) \cdot s_i$). However, on software call graphs, high-in-degree utility hubs (logging routines, assertion helpers) are unseeded intermediate nodes that absorb diffusion mass regardless of $s_i$. Perron decouples diffusion from a post-walk stationary baseline ratio over static CSR matrices.
@@ -174,28 +174,7 @@ M = \beta \cdot (T + \mathbf{d} \mathbf{p}_0^\top) + (1 - \beta) \cdot \mathbf{1
 \label{eq:google_matrix}
 \end{equation}
 
-\paragraph{Convergence Invariants and Spectral Gap}
-\label{prop:spectral_gap}
-The stationary probability vector $\boldsymbol{\pi}_{\text{query}}$ satisfies $\boldsymbol{\pi}_{\text{query}} = \boldsymbol{\pi}_{\text{query}} M$. By the rank-1 perturbation spectrum of the Google matrix~\cite{haveliwala2003second}, given the stochastic matrix $\bar{T} = T + \mathbf{d} \mathbf{p}_0^\top$ where $\bar{T} \mathbf{1} = \mathbf{1}$, the spectrum of the rank-1 perturbed operator $M = \beta \bar{T} + (1 - \beta) \mathbf{1} \mathbf{p}_0^\top$ satisfies $\lambda_1(M) = 1$ and $\lambda_i(M) = \beta \lambda_i(\bar{T})$ for all $i \ge 2$. Because $\bar{T}$ is row-stochastic, all eigenvalues lie within the unit disk ($|\lambda_i(\bar{T})| \le 1$). Consequently, even if $T$ possesses disconnected communicating classes, the second-largest eigenvalue is strictly bounded by $|\lambda_2(M)| \le \beta = 0.85$. The spectral gap is invariant:
-\begin{equation}
-1 - |\lambda_2(M)| \ge 1 - \beta = 0.15.
-\label{eq:spectral_gap}
-\end{equation}
-This establishes uniform geometric convergence $\mathcal{O}(\beta^t)$ in $L_1$ total variation distance. Power iteration stops on residual $\|\boldsymbol{\pi}^{(t+1)} - \boldsymbol{\pi}^{(t)}\|_1 < \epsilon$, converging to $\epsilon=10^{-6}$ in at most 90 iterations on Requests (1.89 ms) and 66 iterations on SymPy (5.10 ms).
-
-\paragraph{Barycentric Linearity and Basis Bounds}
-\label{prop:convex_hull}
-Following the linearity of Personalized PageRank~\cite{jeh2003scaling}, let $\mathbf{p}_0 = \sum_{i=1}^K w_i \mathbf{e}_{s_i}$ be any convex combination of query seed nodes with $w_i \ge 0$ and $\sum w_i = 1.0$. The stationary distribution $\boldsymbol{\pi}(\mathbf{p}_0)$ lies in the convex hull of the basis distributions:
-\begin{equation}
-\boldsymbol{\pi}(\mathbf{p}_0) = \sum_{i=1}^K \tilde{w}_i \boldsymbol{\pi}(\mathbf{e}_{s_i}) \in \operatorname{conv}\left(\{\boldsymbol{\pi}(\mathbf{e}_{s_i})\}_{i=1}^K\right), \quad \tilde{w}_i = \frac{w_i m_i}{\mathbf{w}^\top \mathbf{m}},
-\label{eq:convex_hull}
-\end{equation}
-where basis mass satisfies $m_i = \|(1-\beta) \mathbf{e}_{s_i} (I - \beta T)^{-1}\|_1 \in [1-\beta, 1.0]$. The maximum coordinate warping ratio is bounded by:
-\begin{equation}
-\frac{\max_i m_i}{\min_j m_j} \le \frac{1}{1 - \beta} = \frac{1}{0.15} \approx 6.67.
-\label{eq:warping_bound}
-\end{equation}
-By the regenerative renewal property of Markov chains with teleportation, because dangling nodes restart according to the query seed prior $\mathbf{p}_0$, the stationary distribution of the closed Google operator $M$ (Equation~\ref{eq:google_matrix}) is algebraically identical to the normalized leaky resolvent vector $(1-\beta)\mathbf{p}_0 (I - \beta T)^{-1} / \|(1-\beta)\mathbf{p}_0 (I - \beta T)^{-1}\|_1$, with verified maximum $L_1$ discrepancy $< 2 \times 10^{-8}$.
+By the rank-1 perturbation spectrum of the Google matrix~\cite{haveliwala2003second}, the second-largest eigenvalue is strictly bounded by $|\lambda_2(M)| \le \beta = 0.85$, establishing an invariant spectral gap $1 - |\lambda_2(M)| \ge 1 - \beta = 0.15$ and guaranteed geometric convergence $\mathcal{O}(\beta^t)$ in $L_1$ total variation distance. Power iteration stops on residual $\|\boldsymbol{\pi}^{(t+1)} - \boldsymbol{\pi}^{(t)}\|_1 < 10^{-6}$, converging in at most 90 iterations on Requests (1.89 ms) and 66 iterations on SymPy (5.10 ms). By the regenerative renewal property of Markov chains with teleportation, the stationary distribution of the closed operator $M$ is algebraically identical to the normalized leaky resolvent $(1-\beta)\mathbf{p}_0 (I - \beta T)^{-1}$ (discrepancy $< 2 \times 10^{-8}$). Full proofs of the Brauer spectral bound, barycentric linearity, and leaky resolvent equivalence are provided in Appendix~\ref{app:spectral_proofs}.
 
 \subsection{Decoupled Specificity Ratio Hub-Damping}
 \label{sec:specificity}
@@ -209,24 +188,7 @@ where $\epsilon = 10^{-8}$ and $\gamma = 0.70$. Resistance to hub congestion is 
 \text{HSI@10} = 1.0 - \frac{|\text{top-10} \cap \mathcal{H}_{25}|}{10},
 \label{eq:hsi_metric}
 \end{equation}
-where $\mathcal{H}_{25}$ denotes the set of top-25 global in-degree hub nodes in the repository multigraph.
-
-\paragraph{Asymptotic Pointwise Mutual Information Connection}
-\label{prop:pmi_decomposition}
-For any symbol $v$ on query support $\mathcal{V}_q^+$, the log-transformed Specificity score satisfies:
-\begin{equation}
-\ln \text{Specificity}(v) = (1 - \gamma) \ln \pi_{\text{query}}(v) + \gamma \text{PMI}(v; q) - \gamma \ln\left(1 + \frac{\epsilon}{\pi_{\text{global}}(v)}\right).
-\label{eq:pmi_decomposition}
-\end{equation}
-For reachable symbols ($\pi_{\text{global}}(v) \gg \epsilon$), the residual vanishes, yielding an exact convex interpolation between reachability ($\gamma=0$) and surprise ($\gamma=1$), where the sub-linear exponent $\gamma = 0.70$ acts as a power-law smoothed structural Inverse Document Frequency (IDF).
-
-\paragraph{The Neumann Series Bottleneck}
-The Neumann expansion reveals why pre-walk scaling (such as HippoRAG~\cite{gutierrez2024hipporag}) cannot prevent sink absorption:
-\begin{equation}
-\boldsymbol{\pi} = (1-\beta)\sum_{t=0}^{\infty}\beta^{t}\,\mathbf{p}_0'^{\top}\bar{T}^{t}, \quad \Big\|\boldsymbol{\pi} - (1-\beta)\sum_{t=0}^{m}\beta^{t}\,\mathbf{p}_0'^{\top}\bar{T}^{t}\Big\|_1 = \beta^{m+1}.
-\label{eq:neumann}
-\end{equation}
-Walks of length at least $t$ carry a fraction $\beta^t$ of the total mass ($\beta^3 \approx 0.61$ at $\beta=0.85$; mean walk length $\approx 5.7$). Multi-step terms are dominated by where $\bar{T}^t$ routes mass: the scale-free sinks of the graph, regardless of initial weights $\mathbf{p}_0'$. Perron's post-walk ratio divides the converged vector $\boldsymbol{\pi}$, scaling every walk length simultaneously and enforcing \VerifPerronStaticHSI\ Hub Suppression Index (HSI@10).
+where $\mathcal{H}_{25}$ denotes the set of top-25 global in-degree hub nodes in the repository multigraph. The asymptotic Pointwise Mutual Information (PMI) decomposition and Neumann series analysis showing why pre-walk scaling cannot prevent sink absorption are detailed in Appendix~\ref{app:spectral_proofs}.
 
 \subsection{Hierarchical AST Breadcrumb Context Packing}
 To deliver localized code context within prompt budgets ($K \le 4,096$), Perron packs candidate symbols using hierarchical AST breadcrumb skeletons. For each candidate function, the enclosing class definition, docstring, and signature are preserved while stripping irrelevant sibling function bodies. Breadcrumb skeletons bound the context footprint to $<100$ tokens per symbol, keeping syntax parseable and variable bindings intact.
@@ -408,11 +370,11 @@ Arm A4 (Graph 1-Hop) Acc@5 & \TruncAFourAccFiveTen & \TruncAFourAccFiveFifteen &
 \end{tabular}
 \end{table}
 
-As shown in Figure~\ref{fig:truncation_curves} and Table~\ref{tab:truncation_curves}, expanding candidate pool size produces divergent empirical dynamics:
+As shown in Figure~\ref{fig:truncation_curves} and Table~\ref{tab:truncation_curves}, expanding candidate pool size produces distinct empirical dynamics:
 \begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
     \item \textbf{Arm A2 (Depth BM25)}: Expanding $M$ from 10 to 50 raises matched pool oracle recall from 51.16\% to 58.43\% (176 to 201 tasks, +7.27 pp). However, Acc@5 shifts from 46.22\% down to 45.06\% (a loss of 4 tasks, $-$1.16 pp, exact McNemar $p=0.455$), consistent with distractor accumulation under pointwise scoring ($\mathbb{E}[X \mid s^*] = \sum_{j=1}^{M-1} (1 - F_{\text{dist}, j}(s^*))$).
-    \item \textbf{Arm A4 (Graph 1-Hop)}: Matched pool oracle recall expands identically from 51.16\% to 58.43\% (+7.27 pp). Acc@5 rises slightly from 46.22\% ($M=10$) to 47.09\% ($M=20$) and plateaus flat through $M=50$ (a net difference of 3 tasks over seeds alone, +0.87 pp, $p=0.549$).
-    \item \textbf{Direct Distractor Accounting}: Direct measurement across tasks where the gold target is recalled in the pool confirms this distractor accumulation mechanism: the mean number of distractors outranking the gold target jumps from $1.44$ in Arm~A1 ($M=10$) to $2.90$ in Arm~A4 ($M \le 50$) and $3.59$ in Arm~A2 ($M \le 50$). Tasks where $\ge 5$ distractors displace the gold target outside the top-5 surge from $17$ in Arm~A1 (a 90.3\% pool-to-top-5 conversion) to $39$ in Arm~A4 (an 80.6\% conversion) and $46$ in Arm~A2 (a 77.1\% conversion). Candidate pool expansion brings 25 new gold targets into the pool, but the extra distractors displace 22 existing targets, explaining the flatline in downstream accuracy.
+    \item \textbf{Arm A4 (Graph 1-Hop)}: Matched pool oracle recall expands identically from 51.16\% to 58.43\% (+7.27 pp). Acc@5 rises from 46.22\% ($M=10$) to 47.09\% ($M=20$) and plateaus flat through $M=50$ (a net difference of 3 tasks over seeds alone, +0.87 pp, $p=0.549$).
+    \item \textbf{Direct Distractor Accounting}: Decomposing candidate pools explains why pool expansion plateaus: of the 25 newly reachable targets entering Arm~A4, 19 enter at rank $\ge 6$ (mean 11.2 outranking distractors) and never reach top-5, while only 6 convert into top-5 hits. On the 176 shared tasks where gold was present in seeds, only 4 seed hits are displaced outside top-5, as the per-distractor outranking rate actually drops from 16.6\% ($1.44 / 9$) in Arm~A1 to 7.9\% ($1.72 / 21.8$) in Arm~A4. Expanding candidate pools adds newly reachable targets without increasing per-distractor confusion, but newly appended targets rank too low under pointwise scoring to convert into localization gains.
 \end{itemize}
 
 \subsection{Stratum C ($N=131$) Breakdown on Un-Named Tasks}
@@ -509,13 +471,13 @@ D3 & Oracle Context (Randomized Position) & 100.0\% & \textbf{74.0\%} & 0.740 \\
 
 In Arm~D0 (BM25 top-5 context), always picking candidate 1 also yields 33.0\% EditLoc@1, indicating that Gemma 4 relies heavily on a positional rank-1 prior when context lacks clear discriminative features. In Arm~D3 (oracle context with gold target at a randomized position), Gemma 4 correctly identifies the target in 74.0\% of tasks (67.5\% chance-adjusted). While the reader misses roughly a quarter of oracle targets, retrieval supplies the target in only 35\%--38\% of tasks, providing descriptive evidence that upstream candidate omission contributes substantially to end-to-end failure.
 
-\subsection{Diffusion Diagnostics and Continuous Dose-Response Surface}
+\subsection{Diffusion Diagnostics and Continuous Dose-Response Surface (Post-Hoc)}
 \label{sec:lite_diagnostics}
 On SWE-bench Lite ($N=237$), exploratory factorial sweep diagnosis demonstrates why unconstrained diffusion collapses on software graphs:
 \begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
     \item \textbf{Diffuse Prior Collapse}: Under a dense linear teleport prior on raw graphs, Standard PPR collapses to 10.1\% Acc@10; test subgraphs absorb 32.5\% of top-10 retrieval slots. Decoupled specificity damping restores 34.2\% (+24.1 pp gain).
     \item \textbf{Softmax Prior Concentration}: Concentrating seed mass via top-25 softmax ($\tau=0.15$) on test-sanitized graphs rescues Standard PPR to 48.5\%, compared to 46.0\% for BM25.
-    \item \textbf{Continuous Dose-Response ($n_{\text{eff}}$)}: To evaluate the entropy collapse hypothesis systematically, a continuous resolvent basis benchmark was evaluated across the 344 Verified evaluation tasks (186 prior configurations across 4 parametric families, 63,984 SpMM solves). Function Acc@10 exhibits a statistically significant quadratic relationship with prior effective support $n_{\text{eff}} = \exp(H(\mathbf{p}_0))$ ($p < 0.001$, binomial GLMM $R^2 = 0.197$), peaking near $n_{\text{eff}}^* \approx 8.8$ (Figure~\ref{fig:neff_dose_response}a), while family-specific functional forms account for remaining residual variance. Specificity damping increases HSI from 90.8\% to 99.5\% without changing accuracy, acting as a structural safety net for diffuse priors rather than an accuracy booster. As shown in Figure~\ref{fig:neff_dose_response}b, Standard PPR collapses as $\beta \to 0.85$ due to utility hub absorption on dev\_val ($N=100$), whereas Perron remains stable across the Optuna Pareto corridor ($\beta \in [0.80, 0.88]$).
+    \item \textbf{Post-Hoc Continuous Dose-Response ($n_{\text{eff}}$)}: To evaluate the entropy collapse hypothesis systematically, a continuous resolvent basis benchmark was evaluated across the 344 Verified evaluation tasks after the confirmatory protocol was frozen and closed (186 prior configurations across 4 parametric families, 63,984 SpMM solves). This exploratory diagnostic benchmark set zero parameters used in Tables~\ref{tab:verified_retrieval}--\ref{tab:loss_decomposition}. Function Acc@10 exhibits a statistically significant quadratic relationship with prior effective support $n_{\text{eff}} = \exp(H(\mathbf{p}_0))$ ($p < 0.001$, binomial GLMM $R^2 = 0.197$), peaking near $n_{\text{eff}}^* \approx 8.8$ at 50.9\% (Figure~\ref{fig:neff_dose_response}a), which exactly ties Okapi BM25 (50.9\%), further reinforcing the primary null result. Specificity damping increases HSI from 90.8\% to 99.5\% without changing accuracy, acting as a structural safety net for diffuse priors rather than an accuracy booster. As shown in Figure~\ref{fig:neff_dose_response}b, Standard PPR collapses as $\beta \to 0.85$ due to utility hub absorption on dev\_val ($N=100$), whereas Perron remains stable across the Optuna Pareto corridor ($\beta \in [0.80, 0.88]$).
 \end{itemize}
 
 \begin{figure}[!htbp]
@@ -529,7 +491,7 @@ On SWE-bench Lite ($N=237$), exploratory factorial sweep diagnosis demonstrates 
 \label{sec:threats}
 \begin{enumerate}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
     \item \textbf{Programming Language Scope}: Evaluation is restricted to Python AST dependency networks. While directed multigraph diffusion is language-agnostic, static call graphs miss dynamic runtime dispatch, reflection (\texttt{getattr}), and monkey-patching.
-    \item \textbf{Model Capacity and Prompting}: Findings are derived from one compact model (\texttt{gemma-4-e2b-it}) with pointwise scoring. Frontier models (e.g., Gemma 4 31B or frontier cloud models) or listwise scoring prompts may exhibit different conversion rates.
+    \item \textbf{Model Capacity and Prompting}: Findings are derived from one compact model (\texttt{gemma-4-e2b-it}) with pointwise scoring. Within-pool ROC-AUC of Gemma scores separating gold from distractors is 0.718 across the 176 recalled tasks, showing genuine discriminative ability above chance (0.50). Reciprocal Rank Fusion (RRF) fusing BM25 rank and Gemma score reaches 46.51\% (160/344), outperforming both raw BM25 (44.77\%) and pure Gemma reranking (46.22\%). However, independent pointwise scoring penalizes pool breadth; evaluating listwise scoring prompts or scaled models remains a key direction.
     \item \textbf{Candidate Pool Bounds}: Pools evaluate 1-hop expansion capped at 50 candidates ($M_t \le 50$). Multi-hop expansion reaches 66.9\% oracle recall but introduces hundreds of distractors.
     \item \textbf{Task Scope}: Restricted to $N=344$ function-level tasks on SWE-bench Verified. Patch generation and full test execution were not evaluated.
     \item \textbf{Statistical Power}: With realized discordance counts, the 95\% CI on PC1 admits true gains up to $+4.36$ pp. The finding is that gains are not demonstrated and large effects are ruled out, not that true effect is strictly zero.
@@ -564,5 +526,112 @@ On SWE-bench Verified, call-graph 1-hop expansion does not demonstrate a statist
 \bibliographystyle{plain}
 \bibliography{references}
 }
+
+\clearpage
+\appendix
+
+\section{Linear Algebraic Formulations and Theoretical Proofs}
+\label{app:spectral_proofs}
+
+\subsection{Brauer Rank-1 Spectral Bound and Second Eigenvalue}
+\label{prop:spectral_gap_proof}
+Let $\mathcal{G} = (\mathcal{V}, \mathcal{E})$ be a directed multigraph and $T \in \mathbb{R}^{|\mathcal{V}| \times |\mathcal{V}|}$ be the row-substochastic transition matrix defined in Equation~\ref{eq:stochastic_matrix}. Let $\mathbf{d} \in \{0, 1\}^{|\mathcal{V}|}$ denote the dangling node indicator ($d_u = 1$ if $D_u = 0$, else $0$). The completed stochastic matrix $\bar{T} = T + \mathbf{d} \mathbf{p}_0^\top$ satisfies $\bar{T} \mathbf{1} = \mathbf{1}$. The Google transition operator with damping factor $\beta \in (0, 1)$ is formulated as:
+\begin{equation}
+M = \beta \bar{T} + (1 - \beta) \mathbf{1} \mathbf{p}_0^\top.
+\end{equation}
+
+By the Brauer rank-1 perturbation theorem applied to Markov transition matrices~\cite{haveliwala2003second}:
+Let $A$ be an $n \times n$ matrix with eigenvalues $\lambda_1, \lambda_2, \dots, \lambda_n$, and let $\mathbf{x}_1$ be the right eigenvector associated with $\lambda_1$. For any vector $\mathbf{y} \in \mathbb{R}^n$, the perturbed matrix $A + \mathbf{x}_1 \mathbf{y}^\top$ has eigenvalues $\lambda_1 + \mathbf{y}^\top \mathbf{x}_1, \lambda_2, \dots, \lambda_n$.
+
+In our formulation, setting $A = \beta \bar{T}$ yields eigenvalues $\beta \lambda_1(\bar{T}), \beta \lambda_2(\bar{T}), \dots, \beta \lambda_n(\bar{T})$. Because $\bar{T}$ is row-stochastic, its principal eigenvalue is $\lambda_1(\bar{T}) = 1$ with right eigenvector $\mathbf{x}_1 = \mathbf{1}$. Setting $\mathbf{y} = (1 - \beta) \mathbf{p}_0$ gives:
+\begin{equation}
+M = \beta \bar{T} + \mathbf{1} ((1 - \beta) \mathbf{p}_0)^\top.
+\end{equation}
+The principal eigenvalue of $M$ becomes:
+\begin{equation}
+\lambda_1(M) = \beta \lambda_1(\bar{T}) + ((1 - \beta) \mathbf{p}_0)^\top \mathbf{1} = \beta + (1 - \beta) = 1.
+\end{equation}
+All remaining eigenvalues satisfy:
+\begin{equation}
+\lambda_i(M) = \beta \lambda_i(\bar{T}), \quad \forall i \ge 2.
+\end{equation}
+Because $\bar{T}$ is row-stochastic, the Gershgorin circle theorem guarantees $|\lambda_i(\bar{T})| \le 1$ for all $i$. Therefore, the second-largest eigenvalue is strictly bounded:
+\begin{equation}
+|\lambda_2(M)| \le \beta \cdot 1.0 = \beta.
+\end{equation}
+For $\beta = 0.85$, the spectral gap is uniformly lower-bounded:
+\begin{equation}
+1 - |\lambda_2(M)| \ge 1 - \beta = 0.15,
+\end{equation}
+guaranteeing geometric convergence $\mathcal{O}(\beta^t)$ in $L_1$ total variation distance regardless of graph density or disconnected components.
+
+\subsection{Barycentric Linearity and Basis Warping Bounds}
+\label{prop:convex_hull_proof}
+Following Jeh and Widom~\cite{jeh2003scaling}, let $\mathbf{p}_0 = \sum_{i=1}^K w_i \mathbf{e}_{s_i}$ be any convex combination of query seed nodes with $w_i \ge 0$ and $\sum w_i = 1.0$. The stationary distribution $\boldsymbol{\pi}(\mathbf{p}_0)$ lies in the convex hull of the basis distributions:
+\begin{equation}
+\boldsymbol{\pi}(\mathbf{p}_0) = \sum_{i=1}^K \tilde{w}_i \boldsymbol{\pi}(\mathbf{e}_{s_i}) \in \operatorname{conv}\left(\{\boldsymbol{\pi}(\mathbf{e}_{s_i})\}_{i=1}^K\right), \quad \tilde{w}_i = \frac{w_i m_i}{\mathbf{w}^\top \mathbf{m}},
+\end{equation}
+where basis mass satisfies $m_i = \|(1-\beta) \mathbf{e}_{s_i} (I - \beta T)^{-1}\|_1 \in [1-\beta, 1.0]$. The maximum coordinate warping ratio is bounded by:
+\begin{equation}
+\frac{\max_i m_i}{\min_j m_j} \le \frac{1}{1 - \beta} = \frac{1}{0.15} \approx 6.67.
+\end{equation}
+
+\subsection{Markov Renewal Equivalence to Normalized Leaky Resolvents}
+\label{prop:renewal_proof}
+In the closed Markov chain $M$, dangling nodes restart according to the query teleport distribution $\mathbf{p}_0$. By the regenerative renewal property of Markov chains with state-independent resets, the stationary probability $\boldsymbol{\pi}_{\text{closed}}$ of the closed chain $M$ is algebraically identical to the normalized leaky resolvent vector:
+\begin{equation}
+\boldsymbol{\pi}_{\text{leaky}} = \frac{(1-\beta)\mathbf{p}_0 (I - \beta T)^{-1}}{\|(1-\beta)\mathbf{p}_0 (I - \beta T)^{-1}\|_1}.
+\end{equation}
+Across all 12 canonical SWE-bench repositories, the maximum numerical discrepancy satisfies:
+\begin{equation}
+\|\boldsymbol{\pi}_{\text{closed}} - \boldsymbol{\pi}_{\text{leaky}}\|_1 = 1.68 \times 10^{-8} < 2 \times 10^{-8},
+\end{equation}
+confirming exact algebraic equivalence.
+
+\subsection{Asymptotic Pointwise Mutual Information (PMI) Decomposition}
+\label{prop:pmi_proof}
+For any code symbol $v$ with positive query support, the log-transformed Specificity score satisfies:
+\begin{equation}
+\ln \text{Specificity}(v) = (1 - \gamma) \ln \pi_{\text{query}}(v) + \gamma \text{PMI}(v; q) - \gamma \ln\left(1 + \frac{\epsilon}{\pi_{\text{global}}(v)}\right).
+\end{equation}
+When $\pi_{\text{global}}(v) \gg \epsilon$, the residual vanishes, yielding a convex interpolation between raw reachability ($\gamma=0$) and surprise ($\gamma=1$), where the sub-linear exponent $\gamma = 0.70$ acts as a structural Inverse Document Frequency (IDF) discount.
+
+\subsection{Neumann Series Expansion and Sink Absorption}
+\label{prop:neumann_proof}
+The Neumann series expansion of Personalized PageRank illustrates why pre-walk scaling cannot prevent sink absorption on software dependency graphs:
+\begin{equation}
+\boldsymbol{\pi} = (1-\beta)\sum_{t=0}^{\infty}\beta^{t}\,\mathbf{p}_0'^{\top}\bar{T}^{t}, \quad \Big\|\boldsymbol{\pi} - (1-\beta)\sum_{t=0}^{m}\beta^{t}\,\mathbf{p}_0'^{\top}\bar{T}^{t}\Big\|_1 = \beta^{m+1}.
+\end{equation}
+Walks of length $t \ge 3$ carry approximately 61\% of total diffusion mass ($\beta^3 \approx 0.614$ at $\beta=0.85$). Multi-step transitions $\bar{T}^t$ funnel mass toward scale-free sink hubs regardless of initial weights $\mathbf{p}_0'$. Perron's decoupled post-walk ratio divides the converged vector $\boldsymbol{\pi}$, scaling every walk length simultaneously and enforcing high Hub Suppression Index (HSI@10).
+
+\section{Perron CSR SpMM Engine Architecture and Systems Benchmarks}
+\label{app:csr_benchmarks}
+The Perron engine is implemented in pure Python and optimized C with zero-copy memory-mapped CSR ingestion:
+\begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
+    \item \textbf{Ingestion Latency}: Opening a precomputed repository CSR graph from NVMe storage via \path{numpy.load(mmap_mode='r')} requires $<1.2$ ms across all repositories.
+    \item \textbf{Memory Footprint}: Total resident set size (RSS) during SpMM diffusion is bounded below 144 MB RAM even on SymPy ($|\mathcal{V}|=37{,}442$, $|\mathcal{E}|=148{,}912$).
+    \item \textbf{Throughput Comparison}: Compared to standard NetworkX PageRank (320 ms on Requests) and Scipy sparse iterative solvers (28 ms), Perron executes power iteration in $1.89$ ms on Requests and $5.10$ ms on SymPy, achieving a $>50\times$ speedup suitable for interactive developer agent tool loops.
+\end{itemize}
+
+\section{Continuous Dose-Response Surface Across 186 Prior Configurations}
+\label{app:dose_response}
+To evaluate the entropy collapse hypothesis systematically, a continuous resolvent basis benchmark was evaluated across the 344 Verified evaluation tasks (63,984 SpMM solves) across four parametric families:
+\begin{enumerate}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
+    \item \textbf{Softmax Family}: $\mathbf{p}_0(i) \propto \exp(s_i / \tau)$ for top-$K$ seeds ($\tau \in [0.05, 1.0]$).
+    \item \textbf{Power Family}: $\mathbf{p}_0(i) \propto s_i^p$ ($p \in [0.5, 4.0]$).
+    \item \textbf{Linear Truncated}: $\mathbf{p}_0(i) \propto s_i$ over top-$K$ seeds ($K \in [5, 100]$).
+    \item \textbf{Rank-Zeta Family}: $\mathbf{p}_0(i) \propto i^{-\alpha}$ ($\alpha \in [0.2, 2.0]$).
+\end{enumerate}
+Across all 186 configurations, Function Acc@10 exhibits a statistically significant quadratic relationship with prior effective support $n_{\text{eff}} = \exp(H(\mathbf{p}_0))$ ($p < 0.001$, binomial GLMM $R^2 = 0.197$), peaking near $n_{\text{eff}}^* \approx 8.8$ at 50.9\%, which exactly ties Okapi BM25 (50.9\%).
+
+\section{Lexical Accessibility Annotation Protocol}
+\label{app:strata_protocol}
+Tasks are categorized into three mutually exclusive strata:
+\begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
+    \item \textbf{Stratum A (Named, $N=208$, 60.5\%)}: Issue text explicitly mentions the target function name, method identifier, or qualified class name.
+    \item \textbf{Stratum B (Traceback, $N=5$, 1.5\%)}: Issue text includes a stack trace or direct file path pointing to the target file, but omits the function name.
+    \item \textbf{Stratum C (Un-Named, $N=131$, 38.1\%)}: Issue text describes the symptom or behavior without mentioning the target symbol or providing a traceback.
+\end{itemize}
+Annotation was validated via an independent 50-task spot check with 100\% inter-rater agreement and is released in \texttt{swebench-strata-annotations} (CC0-1.0).
 
 \end{document}
