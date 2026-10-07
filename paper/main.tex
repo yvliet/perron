@@ -369,6 +369,13 @@ Comparing graph expansion (A4) directly to seed reranking (A1, 46.2\% Acc@5) yie
 \label{sec:truncation_curves}
 To empirically test the distractor-accumulation mechanism without running new model passes, I evaluated pointwise rankings from \texttt{scores.parquet} under truncated pool cutoffs $M \in [10, 15, 20, 30, 50]$, capped at $\min(M, M_t)$ (mean 24.5 candidates).
 
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.88\linewidth]{figures/truncation_curves.pdf}
+\caption{\textbf{Pointwise candidate pool-size truncation curves on SWE-bench Verified ($N=344$).} Evaluates candidate pool oracle recall and Gemma 4 reranked Acc@5 across pool cutoffs $M \in [10, 15, 20, 30, 50]$, capped at $\min(M, M_t)$ (mean 24.5 candidates). Both arms share an identical recall ceiling at $M=50$ (58.4\%, 201/344 tasks, 18 vs 18 discordant pairs). While depth-expanded BM25 (A2) drops from 46.2\% to 45.1\% Acc@5 due to distractor accumulation under independent pointwise scoring, graph 1-hop expansion (A4) remains stable at 47.1\%.}
+\label{fig:truncation_curves}
+\end{figure}
+
 \begin{table}[t]
 \centering
 \footnotesize
@@ -389,7 +396,7 @@ Arm A4 (Graph 1-Hop) Acc@5 & \TruncAFourAccFiveTen & \TruncAFourAccFiveFifteen &
 \end{tabular}
 \end{table}
 
-As shown in Table~\ref{tab:truncation_curves}, expanding candidate pool size produces divergent empirical dynamics:
+As shown in Figure~\ref{fig:truncation_curves} and Table~\ref{tab:truncation_curves}, expanding candidate pool size produces divergent empirical dynamics:
 \begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
     \item \textbf{Arm A2 (Depth BM25)}: Expanding $M$ from 10 to 50 raises matched pool oracle recall from 51.16\% to 58.43\% (176 to 201 tasks, +7.27 pp). However, Acc@5 shifts from 46.22\% down to 45.06\% (a loss of 4 tasks, $-$1.16 pp, exact McNemar $p=0.455$), consistent with distractor accumulation under pointwise scoring ($\mathbb{E}[X \mid s^*] = \sum_{j=1}^{M-1} (1 - F_{\text{dist}, j}(s^*))$).
     \item \textbf{Arm A4 (Graph 1-Hop)}: Matched pool oracle recall expands identically from 51.16\% to 58.43\% (+7.27 pp). Acc@5 rises slightly from 46.22\% ($M=10$) to 47.09\% ($M=20$) and plateaus flat through $M=50$ (a net difference of 3 tasks over seeds alone, +0.87 pp, $p=0.549$).
@@ -489,14 +496,21 @@ D3 & Oracle Context (Randomized Position) & 100.0\% & \textbf{74.0\%} & 0.740 \\
 
 In Arm~D0 (BM25 top-5 context), always picking candidate 1 also yields 33.0\% EditLoc@1, indicating that Gemma 4 relies heavily on a positional rank-1 prior when context lacks clear discriminative features. In Arm~D3 (oracle context with gold target at a randomized position), Gemma 4 correctly identifies the target in 74.0\% of tasks (67.5\% chance-adjusted). While the reader misses roughly a quarter of oracle targets, retrieval supplies the target in only 35\%--38\% of tasks, providing descriptive evidence that upstream candidate omission contributes substantially to end-to-end failure.
 
-\subsection{Diffusion Diagnostics on SWE-bench Lite ($N=237$)}
+\subsection{Diffusion Diagnostics on SWE-bench Lite ($N=237$) and Entropy Collapse}
 \label{sec:lite_diagnostics}
 On SWE-bench Lite ($N=237$), factorial sweep diagnosis demonstrates why unconstrained diffusion collapses on software graphs:
 \begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
     \item \textbf{Diffuse Prior Collapse}: Under a dense linear teleport prior on raw graphs, Standard PPR collapses to 10.1\% Acc@10; test subgraphs absorb 32.5\% of top-10 retrieval slots. Decoupled specificity damping restores 34.2\% (+24.1 pp gain).
     \item \textbf{Softmax Prior Concentration}: Concentrating seed mass via top-25 softmax ($\tau=0.15$) on test-sanitized graphs rescues Standard PPR to 48.5\%, compared to 46.0\% for BM25.
-    \item \textbf{Support Law ($n_{\text{eff}}$)}: Across 186 prior configurations (63,984 SpMM solves), retrieval accuracy collapses onto an invariant curve governed by effective support $n_{\text{eff}} = \exp(H(\mathbf{p}_0))$, peaking near $n_{\text{eff}}^* \approx 8.8$. Specificity damping increases HSI from 90.8\% to 99.5\% without changing accuracy. It serves as a structural safety net for poorly specified priors, not as an accuracy booster.
+    \item \textbf{Support Law ($n_{\text{eff}}$)}: Across 186 prior configurations (63,984 SpMM solves), retrieval accuracy collapses onto an invariant curve governed by effective support $n_{\text{eff}} = \exp(H(\mathbf{p}_0))$, peaking near $n_{\text{eff}}^* \approx 8.8$ (Figure~\ref{fig:neff_dose_response}a). Specificity damping increases HSI from 90.8\% to 99.5\% without changing accuracy. It serves as a structural safety net for poorly specified priors, not as an accuracy booster. As shown in Figure~\ref{fig:neff_dose_response}b, Standard PPR collapses as $\beta \to 0.85$ due to utility hub absorption, whereas Perron remains stable across the Optuna Pareto corridor ($\beta \in [0.80, 0.88]$).
 \end{itemize}
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.88\linewidth]{figures/neff_dose_response.pdf}
+\caption{\textbf{Continuous dose-response surface across 186 prior configurations and damping sensitivity (63,984 SpMM solves).} (a)~Function Acc@10 collapses onto a unified dose-response curve as a function of prior effective support $n_{\text{eff}} = \exp(H(\mathbf{p}_0))$ across four prior families (softmax, power, linear, rank-zeta) with binomial GLMM fit ($R^2=0.197$) and Okapi BM25 baseline ($50.9\%$), highlighting the GLMM vertex ($n_{\text{eff}}^* \approx 8.8$) and calibrated library default ($n_{\text{eff}} \approx 6.0$). (b)~Damping factor sensitivity ($\beta \in [0.0, 0.85]$) on dev\_val ($N=100$), showing that while Standard PPR collapses as $\beta \to 0.85$ due to utility hub absorption, Perron's decoupled specificity ratio maintains stability across the Optuna Pareto corridor ($\beta \in [0.80, 0.88]$).}
+\label{fig:neff_dose_response}
+\end{figure}
 
 \section{Threats to Validity and Limitations}
 \label{sec:threats}
