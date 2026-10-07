@@ -171,7 +171,7 @@ M = \beta \cdot (T + \mathbf{d} \mathbf{p}_0^\top) + (1 - \beta) \cdot \mathbf{1
 
 \paragraph{Convergence Invariants and Spectral Gap}
 \label{prop:spectral_gap}
-The stationary probability vector $\boldsymbol{\pi}_{\text{query}}$ satisfies $\boldsymbol{\pi}_{\text{query}} = \boldsymbol{\pi}_{\text{query}} M$. By Brauer's rank-1 perturbation theorem~\cite{brauer1952limits,haveliwala2003second}, given the stochastic matrix $\bar{T} = T + \mathbf{d} \mathbf{p}_0^\top$ where $\bar{T} \mathbf{1} = \mathbf{1}$, the spectrum of the rank-1 perturbed operator $M = \beta \bar{T} + (1 - \beta) \mathbf{1} \mathbf{p}_0^\top$ satisfies $\lambda_1(M) = 1$ and $\lambda_i(M) = \beta \lambda_i(\bar{T})$ for all $i \ge 2$. Because $\bar{T}$ is row-stochastic, all eigenvalues lie within the unit disk ($|\lambda_i(\bar{T})| \le 1$). Consequently, even if $T$ possesses disconnected communicating classes, the second-largest eigenvalue is strictly bounded by $|\lambda_2(M)| \le \beta = 0.85$. The spectral gap is invariant:
+The stationary probability vector $\boldsymbol{\pi}_{\text{query}}$ satisfies $\boldsymbol{\pi}_{\text{query}} = \boldsymbol{\pi}_{\text{query}} M$. By the rank-1 perturbation spectrum of the Google matrix~\cite{haveliwala2003second}, given the stochastic matrix $\bar{T} = T + \mathbf{d} \mathbf{p}_0^\top$ where $\bar{T} \mathbf{1} = \mathbf{1}$, the spectrum of the rank-1 perturbed operator $M = \beta \bar{T} + (1 - \beta) \mathbf{1} \mathbf{p}_0^\top$ satisfies $\lambda_1(M) = 1$ and $\lambda_i(M) = \beta \lambda_i(\bar{T})$ for all $i \ge 2$. Because $\bar{T}$ is row-stochastic, all eigenvalues lie within the unit disk ($|\lambda_i(\bar{T})| \le 1$). Consequently, even if $T$ possesses disconnected communicating classes, the second-largest eigenvalue is strictly bounded by $|\lambda_2(M)| \le \beta = 0.85$. The spectral gap is invariant:
 \begin{equation}
 1 - |\lambda_2(M)| \ge 1 - \beta = 0.15.
 \label{eq:spectral_gap}
@@ -207,7 +207,7 @@ For any symbol $v$ on query support $\mathcal{V}_q^+$, the log-transformed Speci
 \ln \text{Specificity}(v) = (1 - \gamma) \ln \pi_{\text{query}}(v) + \gamma \text{PMI}(v; q) - \gamma \ln\left(1 + \frac{\epsilon}{\pi_{\text{global}}(v)}\right).
 \label{eq:pmi_decomposition}
 \end{equation}
-For reachable symbols ($\pi_{\text{global}}(v) \gg \epsilon$), the residual vanishes, yielding an exact convex interpolation between reachability ($\gamma=0$) and surprise ($\gamma=1$). The sub-linear exponent $\gamma = 0.70$ acts as a power-law smoothed structural Inverse Document Frequency (IDF)~\cite{zhou2010solving,mikolov2013distributed,levy2014neural}.
+For reachable symbols ($\pi_{\text{global}}(v) \gg \epsilon$), the residual vanishes, yielding an exact convex interpolation between reachability ($\gamma=0$) and surprise ($\gamma=1$), where the sub-linear exponent $\gamma = 0.70$ acts as a power-law smoothed structural Inverse Document Frequency (IDF).
 
 \paragraph{The Neumann Series Bottleneck}
 The Neumann expansion reveals why pre-walk scaling (such as HippoRAG~\cite{gutierrez2024hipporag}) cannot prevent sink absorption:
