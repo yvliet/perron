@@ -374,8 +374,10 @@ As shown in Figure~\ref{fig:truncation_curves} and Table~\ref{tab:truncation_cur
 \begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
     \item \textbf{Arm A2 (Depth BM25)}: Expanding $M$ from 10 to 50 raises matched pool oracle recall from 51.16\% to 58.43\% (176 to 201 tasks, +7.27 pp). However, Acc@5 shifts from 46.22\% down to 45.06\% (a loss of 4 tasks, $-$1.16 pp, exact McNemar $p=0.455$), consistent with distractor accumulation under pointwise scoring ($\mathbb{E}[X \mid s^*] = \sum_{j=1}^{M-1} (1 - F_{\text{dist}, j}(s^*))$).
     \item \textbf{Arm A4 (Graph 1-Hop)}: Matched pool oracle recall expands identically from 51.16\% to 58.43\% (+7.27 pp). Acc@5 rises from 46.22\% ($M=10$) to 47.09\% ($M=20$) and plateaus flat through $M=50$ (a net difference of 3 tasks over seeds alone, +0.87 pp, $p=0.549$).
-    \item \textbf{Direct Distractor Accounting}: Decomposing candidate pools explains why pool expansion plateaus: of the 25 newly reachable targets entering Arm~A4, 19 enter at rank $\ge 6$ (mean 11.2 outranking distractors) and never reach top-5, while only 6 convert into top-5 hits. On the 176 shared tasks where gold was present in seeds, only 4 seed hits are displaced outside top-5, as the per-distractor outranking rate actually drops from 16.6\% ($1.44 / 9$) in Arm~A1 to 7.9\% ($1.72 / 21.8$) in Arm~A4. Expanding candidate pools adds newly reachable targets without increasing per-distractor confusion, but newly appended targets rank too low under pointwise scoring to convert into localization gains.
 \end{itemize}
+
+\paragraph{Direct Distractor Accounting}
+Decomposing candidate pools explains why pool expansion plateaus: of the 25 newly reachable targets entering Arm~A4, 19 enter at rank $\ge 6$ (mean 11.2 outranking distractors) and never reach top-5, while only 6 convert into top-5 hits. On the 176 shared tasks where gold was present in seeds, only 4 seed hits are displaced outside top-5, as the per-distractor outranking rate actually drops from 16.6\% ($1.44 / 9$) in Arm~A1 to 7.9\% ($1.72 / 21.8$) in Arm~A4. Expanding candidate pools adds newly reachable targets without increasing per-distractor confusion, but newly appended targets rank too low under pointwise scoring to convert into localization gains.
 
 \subsection{Stratum C ($N=131$) Breakdown on Un-Named Tasks}
 \label{sec:stratum_c}
