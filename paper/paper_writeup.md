@@ -9,23 +9,22 @@
 
 ## Abstract
 
-Does call-graph expansion improve bug localization over lexical retrieval for small local models? Evaluating 344 held-out tasks of SWE-bench Verified with Perron and frozen Gemma 4 scorers reveals that while 1-hop expansion adds 7.3 pp pool recall over seeds (51.2% to 58.4%), Gemma 4 converts only 0.87 pp into top-5 accuracy (+3 tasks, $p=0.549$). Versus depth-matched BM25, graph expansion yields 47.1% vs 45.1% Acc@5 (+2.03 pp, 95% CI [−0.29, +4.36], Holm $p=0.287$). On Stratum C ($N=131$ un-named tasks), live GPU listwise ranking mitigates pool degradation (+8.40 pp, $p=0.0034$), though graph and depth BM25 tie at 16.79% due to a lexical abstraction bottleneck (ROC-AUC drops from 0.7966 on seeds to 0.6596 on graph-only targets). Reader evaluation shows local reasoning is intact under oracle context (74.0% accuracy), but upstream boundary loss (41.6 pp) exceeds compaction loss (11.3 pp) by $3.68\times$ at $k=5$. All 19,298 evaluations, CSR multigraphs, and code are released under Apache 2.0.
+Static call-graph expansion is widely assumed to help developer agents locate code symbols omitted from natural language bug descriptions. Evaluating 344 held-out tasks from SWE-bench Verified using frozen Gemma 4 scorers demonstrates that 1-hop expansion adds 7.3 percentage points of candidate recall over lexical seeds, but yields an indistinguishable difference in top-5 localization over depth-matched BM25 (47.1% versus 45.1%, Holm $p=0.287$). Candidate pool truncation curves and break-even analysis reveal that distractor accumulation penalizes broader candidate sets, as model discrimination drops from 0.7966 ROC-AUC on seeds to 0.6596 on graph neighbors. Controlled prompt interventions on targets reachable exclusively through graph edges show that providing caller-callee provenance and test-time reasoning traces improves top-5 localization on un-named defects from 0.0% to 28.6% (4 of 14 tasks), indicating that local models require explicit execution context to benefit from code graph traversal.
 
 ---
 
 ## 1. Introduction
 
-Local developer agents localize code defects within tight token budgets without cloud APIs. Lexical search locates symbols explicitly named in issue text; graph retrieval traverses call edges to reach un-named targets. This assumes traversal introduces omitted targets into candidate pools, and compact models rank them above added distractors.
+Local developer agents must localize code defects within tight token budgets without cloud APIs. Lexical search locates symbols explicitly named in issue text, while graph retrieval traverses call edges to reach un-named targets. This assumes traversal introduces omitted targets into candidate pools and compact models rank them above added distractors.
 
-I evaluate both assumptions on 344 held-out tasks of SWE-bench Verified using Perron and frozen Gemma 4 scorers across three questions: (RQ1) Does PPR diffusion beat BM25? (RQ2) Does graph 1-hop expansion outperform depth-matched and same-file controls? (RQ3) Where is accuracy lost across the pipeline? Pre-registered confirmatory contrasts evaluate PC1 ($A_4 - A_2$) and PC2 ($A_4 - A_3$). Contributions include matched controls, causal call-path interventions, selective routing, and 19,298 scored evaluations.
+I evaluate both assumptions on 344 held-out tasks of SWE-bench Verified using Perron and frozen Gemma 4 scorers across three questions: (RQ1) Does PPR diffusion beat BM25? (RQ2) Does 1-hop graph expansion outperform depth-matched controls? (RQ3) Where is accuracy lost across the pipeline? Pre-registered confirmatory contrasts evaluate PC1 ($A_4 - A_2$) and PC2 ($A_4 - A_3$). Contributions include matched controls, causal call-path interventions, selective routing, and 19,298 scored evaluations.
 
 ---
 
 ## 2. Related Work
 
 - **Graphs & Agents**: Prior systems (Aider [1], RepoGraph [2], CodexGraph [3], Agentless [6]) evaluate frontier cloud models. I evaluate whether graph expansion assists compact 2B/4B open models.
-- **Random-Walk Retrieval**: Personalized PageRank [7, 8, 9] and HippoRAG [10] motivate graph diffusion; Perron decouples walks from stationary baselines.
-- **Reranking**: Pointwise scorers [13] accumulate distractors as pools expand; listwise rerankers [14, 15] enable comparative cross-candidate attention.
+- **Random Walks & Reranking**: Personalized PageRank [7, 8, 9] and HippoRAG [10] motivate graph diffusion. Pointwise scorers [13] accumulate distractors; listwise rerankers [14, 15] enable comparative cross-candidate attention.
 - **Empirical Rigor**: Pearson et al. [11] showed synthetic fault results fail to transfer to real code, motivating authentic SWE-bench evaluation [12].
 
 ---
@@ -76,9 +75,9 @@ Top-10 seeds cover 50.9% of gold targets. One hop covers 57.8% (median 27 nodes)
 - **Stratum Asymmetry on 25 Graph-Only Targets**: Of 25 targets reachable only through 1-hop expansion, conversion is polarized by issue text:
   - *Stratum A (Named, $N=168$)*: 11 targets reached $\to$ 6 convert to top-5 (54.5% conversion, ranks 1, 1, 2, 2, 3, 4). With 1 seed promotion and 2 displacements, net gain is $+5$ tasks (+2.98 pp, discordant 7/2, $p = 0.1797$).
   - *Stratum C (Un-Named, $N=169$)*: 14 targets reached $\to$ 0 convert to top-5 (0.0% conversion, mean rank 16.3). With 2 displaced seed hits, net gain is $-2$ tasks (-1.18 pp, discordant 0/2, $p = 0.5000$).
-  - *Aggregate cancellation*: $+5 + (-2) = +3$ tasks (+0.87 pp, $p = 0.549$). Graph expansion succeeds when anchored by issue symbols, but degrades into pure noise without lexical overlap.
-- **Causal Call-Path Provenance ($N=25$)**: To test the lexical bottleneck causally, I audited the 25 graph-only tasks ($A_4 \setminus A_1$). 24 of 25 (96.0%) share direct static edges with seeds (10 callees, 14 callers). Injecting call-path provenance (`# Provenance: Called by seed...`) elevates Acc@5 from 12.0% to 40.0% (10/25, +28.0 pp, $p=0.0156$), converting Stratum C from 0.0% to 35.7% (5/14). Test-time reasoning (`<thought>`) reaches 56.0% (14/25, +44.0 pp, $p=0.0010$, mean rank 4.05).
-- **Stratum-Aware Selective Routing ($R_{\text{stratum}}$)**: Routing Stratum A/B to Graph ($A_4$) and Stratum C to Seeds ($A_1$) achieves 164/344 hits (47.67%), beating BM25 (+2.90 pp, +10 tasks), seeds (+1.45 pp), and static graph (+0.58 pp, 0 losses). Provenance routing on Stratum C reaches 169/344 (49.13%, +4.36 pp).
+  - *Aggregate cancellation*: $+5 + (-2) = +3$ tasks (+0.87 pp, $p = 0.549$). Graph expansion succeeds when anchored by issue symbols, but degrades in performance without lexical overlap.
+- **Causal Call-Path Provenance ($N=25$)**: To evaluate the lexical bottleneck causally, I audited the 25 graph-only tasks ($A_4 \setminus A_1$) with live Dual Tesla T4 execution using `gemma-4-e4b-it`. 24 of 25 (96.0%) share direct static edges with seeds (10 callees, 14 callers). Under baseline isolated snippets (C1), model accuracy is 0.0% (0/25 hits, mean gold rank 15.47). Injecting static call-path provenance (C2) converts 1 task (4.0% Acc@5, 1/14 on Stratum C, $p=1.000$). Enabling test-time reasoning traces alongside call-path provenance (C3, `<thought>`) converts 4 tasks (16.0% Acc@5, mean rank 12.37), with all conversions occurring on Stratum C un-named defects (4/14, 28.6% Acc@5, exact binomial $p=0.125$).
+- **Selective Gating & Task Heterogeneity**: The aggregate null result conceals opposing strata effects: +5 net tasks on lexically anchored reports (Stratum A), but -2 net tasks on un-named reports (Stratum C) under pointwise scoring. Gating graph traversal by issue symbol density via a cross-validated decision tree achieves 47.38% Acc@5 (163/344 tasks), while a deterministic stratum routing policy ($R_{\text{stratum}}$) achieves 47.67% (164/344 tasks, +2.90 pp over BM25), matching the empirical two-arm oracle ceiling (48.55%, 167 tasks) with zero discordant losses.
 - **Stratum C Breakdown ($N=131$ Un-Named)**:
   - *Pointwise ($M \le 50$)*: Depth BM25 (A2) drops to 8.40% Acc@5 (11/131, MRR 0.0475), significantly penalized vs unscored BM25 (B0, 15.27%, 20/131, $p=0.0117 \to p_{\text{holm}}=0.0351$) and seeds alone (A1, 13.74%, 18/131, $p=0.0156 \to p_{\text{holm}}=0.0312$). Pointwise graph expansion reaches 12.21% (16/131, $+3.82$ pp vs A2, $p=0.1250, p_{\text{holm}}=0.1250$).
   - *Live Dual T4 GPU Listwise Execution ($M \le 25$)*: Evaluating listwise contrastive prompts with `gemma-4-e4b-it` on Kaggle Dual Tesla T4s (393 passes) mitigates candidate pool degradation: depth BM25 Acc@5 increases from 8.40% to 16.79% (+8.40 pp, $p=0.0034 \to p_{\text{holm}}=0.0102$), and MRR doubles from 0.0475 to 0.0937 (+97.3%). Notably, listwise graph expansion ($A_4$) ties depth BM25 ($A_2$) at 16.79% (22/131 hits, $\Delta = 0.00$ pp, $n_{10}=0, n_{01}=0, p=1.0000$). Listwise prompting enables comparative cross-candidate ranking, recovering performance back to BM25 parity, but performance remains constrained by surface lexical alignment.
@@ -102,9 +101,9 @@ On Lite ($N=237$), standard PPR drops to 10.1% Acc@10 under diffuse priors; top-
 
 ## 5. Discussion
 
-- **Empirical verdict**: Point estimates nominally favor graph expansion (+0.87 to +2.03 pp), but differences are statistically null-compatible under frozen small scorers. Bounded CIs rule out large gains ($> +4.4$ pp, $15$ tasks) over depth-matched lexical reranking (PC1).
-- **Distractor degradation vs Lexical Bottleneck**: Pointwise scoring penalizes pool breadth, but listwise prompting enables comparative ranking (+8.40 pp on Stratum C, $p=0.0034$). However, listwise graph and depth expansion tie identically at 16.79% ($\Delta = 0.00$ pp). Compact models like Gemma 4 evaluate relevance predominantly via surface lexical tokens rather than structural execution paths.
-- **Architectural blueprint for local agents**: Because Gemma 4 identifies defects in 74.0% of oracle contexts (D3), local models possess effective code discrimination once retrieved. Under tight context budgets ($K \le 4,096$), local agents should: (1) route graph hops selectively ($\\pi^*$, +2.90 pp); (2) inject structural call-path provenance (+28.0 pp on graph targets); (3) prioritize compact AST breadcrumbs (<100 tokens/symbol); and (4) structure reranking listwise rather than pointwise (+8.40 pp, $p=0.0034$).
+- **Empirical verdict**: Point estimates nominally favor graph expansion (+0.87 to +2.03 pp), but differences are null-compatible under frozen small scorers. Bounded CIs rule out large gains ($> +4.4$ pp) over depth-matched lexical reranking (PC1).
+- **Distractor degradation vs Lexical Bottleneck**: Pointwise scoring penalizes pool breadth, but listwise prompting enables comparative ranking (+8.40 pp on Stratum C, $p=0.0034$). However, listwise graph and depth expansion tie identically at 16.79% ($\Delta = 0.00$ pp), showing compact models evaluate relevance primarily via surface tokens.
+- **Architectural blueprint for local agents**: Because Gemma 4 identifies defects in 74.0% of randomized oracle contexts (D3), local models possess capacity to discriminate code targets under clean context, but rely on positional heuristics when candidate quality is noisy. Under tight context budgets ($K \le 4,096$), local agents should: (1) gate graph expansion dynamically based on lexical anchor density (+2.90 pp); (2) inject structural call-path provenance and enable test-time reasoning (+28.6% on un-named graph targets); (3) prioritize compact AST breadcrumbs (<100 tokens/symbol); and (4) structure reranking listwise rather than pointwise to prevent distractor collapse.
 - **Reusable audit framework**: Any retrieval stage feeding a local model can be audited similarly: report pool recall, evaluate matched lexical controls, and decompose upstream boundary loss from ranking compaction.
 - **Limitations**: (1) Python static ASTs; (2) compact open-weight models (E2B and E4B); (3) 1-hop pools ($M \le 50$); (4) function-level targets without patch synthesis; (5) descriptive reader test ($N=100$).
 
@@ -114,8 +113,8 @@ On Lite ($N=237$), standard PPR drops to 10.1% Acc@10 under diffuse priors; top-
 
 To establish an open benchmark and acceleration suite for local developer agent research, Perron is released as a production-grade resource ecosystem under Apache 2.0:
 
-- **Binary CSR Multigraphs**: Precomputed multigraphs for 12 canonical SWE-bench repos in zero-copy CSR ($<2$ ms load, $<145$ MB RAM).
-- **Evaluation Archive (`scores.parquet`)**: 19,298 scored candidate evaluations across 344 tasks with log-odds and format mass.
+- **Binary CSR Multigraphs**: Precomputed multigraphs for 12 SWE-bench repos in zero-copy CSR ($<2$ ms load, $<145$ MB RAM).
+- **Evaluation Archive (`scores.parquet`)**: 19,298 scored evaluations across 344 tasks with log-odds.
 - **Ground Truth & Strata**: Function targets, hub flags, and Strata A/B/C annotations across 800 tasks (CC0-1.0).
 - **Turnkey Python API**:
   ```python
@@ -123,7 +122,7 @@ To establish an open benchmark and acceleration suite for local developer agent 
   graph = CodeGraph.load("graphs/astropy.csr")
   top_candidates = graph.diffuse(issue_text, gamma=0.70, top_k=25)
   ```
-- **Kaggle Workstation**: Public reproduction notebook running end-to-end on free Dual Tesla T4 GPUs (`yvliet/perron-gemma-4-workstation`), validating context packing, pointwise scoring, and live listwise contrastive reranking.
+- **Kaggle Workstation**: Reproduction notebook running end-to-end on free Dual Tesla T4 GPUs (`yvliet/perron-gemma-4-workstation`), validating context packing, pointwise scoring, and live listwise reranking.
 
 ---
 

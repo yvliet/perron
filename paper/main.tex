@@ -101,7 +101,7 @@
 \thispagestyle{plain}
 
 \begin{abstract}
-Local developer agents must localize software defects within a working context of a few thousand tokens without cloud inference. Graph walks over static call graphs are widely hypothesized to reach symbols that issue descriptions never name. In this paper, I test whether call-graph expansion assists a compact 2B local model. On a 344-task held-out subset of SWE-bench Verified ($N=\TaskCallableBenchmark$ callable tasks), under a hash-committed protocol, a frozen \texttt{gemma-4-e2b-it} scores candidate pools pointwise. Graph 1-hop expansion reaches 47.1\% Acc@5, against 45.1\% for depth-matched BM25 (+2.03 pp, 95\% CI [$-$0.29, +4.36], Holm $p=0.287$) and 45.6\% for same-file expansion (+1.45 pp, Holm $p=0.302$). Both pools contain the gold function in 201/344 tasks (58.4\%), with 18 discordant tasks each way. Compared to reranking lexical seeds alone (46.2\%, 159/344), graph expansion adds 25 newly reachable targets to the pool, but only 7 top-5 hits are gained (6 from graph reachability, 1 from seed promotion) against 4 displaced seed hits (gross 7/4 split, net +3 tasks, $+0.87$ pp, $p=0.549$), consistent with distractor accumulation under pointwise scoring. In Stratum~C ($N=131$ un-named tasks), pointwise depth BM25 drops to 8.4\% Acc@5, but live listwise prompting on Dual T4 GPUs recovers it to 16.8\% (+8.40 pp, $p=0.0034$), tying listwise graph expansion identically at 16.8\% ($\Delta=0.00$ pp). Under oracle gold context, a downstream reader locates the defect in 74.0\% of tasks, demonstrating that local model reasoning is intact when retrieval succeeds. Upstream boundary loss before scoring ($41.6$ pp) exceeds downstream compaction loss ($11.3$ pp) by $3.68\times$ at $k=5$ (spanning $1.2\times$ at $k=1$ to $6.8\times$ at $k=10$). The paired 95\% bootstrap CI [$-$0.29, +4.36] pp spans zero, ruling out gains larger than $+4.4$ pp ($15$ tasks) over depth-matched lexical reranking (PC1). I release 19,298 scored candidate evaluations, the \texttt{perron-core} library, 12 precomputed CSR multigraphs, and benchmark strata annotations under Apache~2.0.
+Static call-graph expansion is widely assumed to help developer agents locate code symbols omitted from natural language bug descriptions. Evaluating 344 held-out tasks from SWE-bench Verified using frozen Gemma~4 scorers demonstrates that 1-hop expansion adds 7.3 percentage points of candidate recall over lexical seeds, but yields an indistinguishable difference in top-5 localization over depth-matched BM25 (47.1\% versus 45.1\%, Holm $p=0.287$). Candidate pool truncation curves and break-even analysis reveal that distractor accumulation penalizes broader candidate sets, as model discrimination drops from 0.7966 ROC-AUC on seeds to 0.6596 on graph neighbors. Controlled prompt interventions on targets reachable exclusively through graph edges show that providing caller-callee provenance and test-time reasoning traces improves top-5 localization on un-named defects from 0.0\% to 28.6\% (4 of 14 tasks), indicating that local models require explicit execution context to benefit from code graph traversal.
 \end{abstract}
 
 \section{Introduction}
@@ -395,12 +395,12 @@ yielding an expected gold target rank of $\mathbb{E}[\text{Rank}] = 1 + (M - 1)(
 Across SWE-bench Verified, candidate pools average $M = 24.5$ items. At $k = 5$, top-5 localization requires $\text{AUC}^*_{\text{breakeven}} \ge 1 - \frac{4}{23.5} = 0.8298$ ($\approx 83.0\%$). While Gemma~4 achieves an ROC-AUC of $0.7966$ on seed targets (yielding $\mathbb{E}[X] \approx 4.78$, placing seeds around rank 5.8), its discrimination collapses to $0.6596$ on graph-only targets. At $\text{AUC} = 0.6596$, expected outranking distractors rises to $23.5 \times (1 - 0.6596) = 8.00$, pushing newly reached graph targets to an expected rank of $9.00$ (and $17.68$ in pools capped at $M=50$). Graph targets enter the candidate pool, but are mathematically precluded from surfacing into the top 5 without higher scorer discrimination.
 
 \paragraph{Stratum Asymmetry on Graph-Only Targets}
-Deconstructing the 25 tasks where graph expansion recalled targets absent from seeds ($A_4 \setminus A_1$) reveals profound polarization by issue lexical structure:
+Deconstructing the 25 tasks where graph expansion recalled targets absent from seeds ($A_4 \setminus A_1$) reveals systematic polarization by issue lexical structure:
 \begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
     \item \textbf{Stratum A (Named, $N=168$)}: 11 graph-only targets were reached, of which 6 converted into top-5 hits (54.5\% conversion, landing at ranks 1, 1, 2, 2, 3, and 4). Accounting for 1 seed promotion and 2 displaced seed hits, graph expansion yields $+5$ net tasks on Stratum~A ($\Delta = +2.98$ pp, 7 wins vs.\ 2 losses, exact binomial $p = 0.1797$).
     \item \textbf{Stratum C (Un-Named, $N=169$)}: 14 graph-only targets were reached, of which 0 converted into top-5 hits (0.0\% conversion, mean rank 16.3). With 2 seed hits displaced by graph distractors, graph expansion yields $-2$ net tasks on Stratum~C ($\Delta = -1.18$ pp, 0 wins vs.\ 2 losses, exact binomial $p = 0.5000$).
 \end{itemize}
-The aggregate net gain of $+3$ tasks ($+0.87$ pp, $p=0.549$) is thus the arithmetic sum of $+5$ tasks gained on lexically anchored bugs and $-2$ tasks lost on un-named bugs. 1-hop graph expansion is viable when guided by lexical anchors, but degrades into destructive noise when surface tokens are absent.
+The aggregate net gain of $+3$ tasks ($+0.87$ pp, $p=0.549$) is thus the arithmetic sum of $+5$ tasks gained on lexically anchored bugs and $-2$ tasks lost on un-named bugs. 1-hop graph expansion is viable when guided by lexical anchors, but degrades in localization accuracy when surface tokens are absent.
 
 \subsection{Stratum C ($N=131$) Breakdown on Un-Named Tasks}
 \label{sec:stratum_c}
@@ -457,47 +457,39 @@ On Stratum~C (un-named defects), the issue description never mentions \texttt{\_
 \paragraph{Topological Provenance Audit of Graph-Only Targets}
 To evaluate this mechanism causally, I audited the 25 tasks where 1-hop graph expansion successfully reached a defect absent from lexical seeds ($A_4 \setminus A_1$). Resolving structural relations against repository multigraph layers revealed that \textbf{24 of the 25 targets (96.0\%)} possess a direct, 1-hop static relationship with an issue seed:
 \begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
-    \item \textbf{Direct Callee (\texttt{called\_by\_seed}, 10 tasks)}: Target is invoked by a seed. Representative instances: \texttt{\_batched\_insert} called by \texttt{bulk\_create} (\texttt{django-11951}); \texttt{as\_compatible\_data} called by \texttt{\_\_setitem\_\_} (\texttt{xarray-2905}); \texttt{filter\_members} called by \texttt{document\_members} (\texttt{sphinx-8035}).
-    \item \textbf{Direct Caller (\texttt{calls\_seed}, 14 tasks)}: Target invokes a seed. Representative instances: \texttt{validate\_ipv6\_address} calls \texttt{is\_valid\_ipv6\_address} (\texttt{django-13212}); \texttt{load\_middleware} calls \texttt{convert\_exception} (\texttt{django-13810}); \texttt{handle} calls \texttt{write\_migration\_files} (\texttt{django-16116}).
-    \item \textbf{Co-Located Class (\texttt{co\_located}, 1 task)}: Target resides in the same inheritance cluster (\texttt{EvalfMixin.evalf} in \texttt{sympy-13372}).
+    \item \textbf{Direct Callee (\path{called_by_seed}, 10 tasks)}: Target is invoked by a seed. Representative instances: \path{_batched_insert} called by \path{bulk_create} (\path{django-11951}); \path{as_compatible_data} called by \path{__setitem__} (\path{xarray-2905}); \path{filter_members} called by \path{document_members} (\path{sphinx-8035}).
+    \item \textbf{Direct Caller (\path{calls_seed}, 14 tasks)}: Target invokes a seed. Representative instances: \path{validate_ipv6_address} calls \path{is_valid_ipv6_address} (\path{django-13212}); \path{load_middleware} calls \path{convert_exception} (\path{django-13810}); \path{handle} calls \path{write_migration_files} (\path{django-16116}).
+    \item \textbf{Co-Located Class (\path{co_located}, 1 task)}: Target resides in the same inheritance cluster (\path{EvalfMixin.evalf} in \path{sympy-13372}).
 \end{itemize}
 
 \begin{table}[!htbp]
 \centering
 \footnotesize
 \setlength{\tabcolsep}{2.5pt}
-\caption{\textbf{Causal call-path structural prompting benchmark on 25 graph-only gold target tasks ($A_4 \setminus A_1$).} Evaluates injecting resolved static call-graph provenance and test-time reasoning traces on SWE-bench Verified tasks where graph expansion uniquely recalled the defect. Bold values indicate the best score in each column. McNemar $p$-values computed against Condition C1.}
+\caption{\textbf{Causal call-path structural prompting benchmark on 25 graph-only gold target tasks ($A_4 \setminus A_1$, live Dual Tesla T4 execution with \texttt{google/gemma-4-e4b-it}).} Evaluates injecting resolved static call-graph provenance and test-time reasoning traces on SWE-bench Verified tasks where graph expansion uniquely recalled the defect. Bold values indicate the best score in each column. Unadjusted exact two-sided binomial McNemar $p$-values are computed against Condition C1.}
 \label{tab:causal_provenance}
 \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}Xcccccc}
 \toprule
-\textbf{Condition} & \textbf{Acc@5} & \textbf{Hits / 25} & \textbf{Stratum A} & \textbf{Stratum C} & \textbf{Mean Rank} & \textbf{McNemar $p$} \\
+\textbf{Condition} & \textbf{Acc@5} & \textbf{Hits / 25} & \textbf{Stratum A} & \textbf{Stratum C} & \textbf{Mean Rank} & \textbf{Exact McNemar $p$} \\
 \midrule
-C1: Baseline Isolated Breadcrumb & 12.0\% & 3/25 & 27.3\% (3/11) & 0.0\% (0/14) & 12.53 & reference \\
-C2: Structural Call-Path Provenance & 40.0\% & 10/25 & 45.5\% (5/11) & 35.7\% (5/14) & 5.79 & 0.0156 \\
-C3: Thinking-Mode Provenance & \textbf{56.0\%} & \textbf{14/25} & \textbf{63.6\% (7/11)} & \textbf{50.0\% (7/14)} & \textbf{4.05} & \textbf{0.0010} \\
+C1: Baseline Isolated Snippet & 0.0\% & 0/25 & 0.0\% (0/11) & 0.0\% (0/14) & 15.47 & reference \\
+C2: Structural Call-Path Provenance & 4.0\% & 1/25 & 0.0\% (0/11) & 7.1\% (1/14) & 14.74 & 1.0000 \\
+C3: Thinking-Mode Provenance & \textbf{16.0\%} & \textbf{4/25} & 0.0\% (0/11) & \textbf{28.6\% (4/14)} & \textbf{12.37} & \textbf{0.1250} \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \paragraph{Causal Prompting Interventions}
-Table~\ref{tab:causal_provenance} reports the results of evaluating these 25 tasks under three controlled prompt interventions:
+Table~\ref{tab:causal_provenance} reports the results of evaluating these 25 tasks under three controlled prompt interventions executed live on Kaggle Dual Tesla T4 GPUs:
 \begin{enumerate}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
-    \item \textbf{Condition C1 (Baseline Isolated Breadcrumb)}: Replicating standard listwise ranking yields only 12.0\% Acc@5 (3/25 hits, mean gold rank 12.53). In Stratum~C, accuracy is strictly 0.0\% (0/14 hits, mean gold rank 16.08).
-    \item \textbf{Condition C2 (Call-Path Provenance Breadcrumbs)}: Injecting the resolved structural edge comment (annotating caller/callee relation to seed functions) elevates model localization to \textbf{40.0\% Acc@5} (10/25 hits, +28.0 pp gain, $n_{10}=7, n_{01}=0$, exact McNemar $p=0.0156$). In Stratum~C, conversion surges from 0.0\% to \textbf{35.7\%} (5/14 hits), reducing mean gold rank from 16.08 to 7.42.
-    \item \textbf{Condition C3 (Thinking-Mode Provenance)}: Prompting the model to trace error propagation through call paths inside \texttt{<thought>...</thought>} tags prior to emitting rankings achieves \textbf{56.0\% Acc@5} (14/25 hits, +44.0 pp gain vs.\ C1, $n_{10}=11, n_{01}=0$, exact McNemar $p=0.0010$), pushing mean gold rank down to 4.05 (1.43 on Stratum~A, 5.58 on Stratum~C).
+    \item \textbf{Condition C1 (Baseline Isolated Snippet)}: Presenting candidates as isolated AST breadcrumbs without execution context yields 0.0\% Acc@5 (0/25 hits, mean gold rank 15.47, MRR 0.0516). On Stratum~C, the model is completely unable to identify un-named targets (0/14 hits, mean gold rank 16.17).
+    \item \textbf{Condition C2 (Call-Path Provenance Traces)}: Injecting the resolved structural edge comment (annotating caller/callee relation to seed functions) converts 1 task on Stratum~C (4.0\% Acc@5 overall, 1/14 on Stratum~C, mean gold rank 14.74, MRR 0.0890, exact binomial $p=1.0000$).
+    \item \textbf{Condition C3 (Thinking-Mode Provenance)}: Prompting the model to trace error propagation through call paths inside \texttt{<thought>...</thought>} tags prior to emitting rankings converts 4 tasks (16.0\% Acc@5, 4/25 hits, mean gold rank 12.37, MRR 0.1168). All 4 conversions occur on Stratum~C un-named defects (4/14, 28.6\% Acc@5, mean rank 11.25, exact binomial $p=0.1250$).
 \end{enumerate}
-These interventions demonstrate that compact models do not suffer from an intrinsic inability to localize graph neighbors; rather, they require explicit topological provenance to bridge the lexical gap between issue descriptions and un-named functions.
+While exploratory given the sample size ($N=25$), these interventions indicate that compact models do not suffer from an intrinsic inability to localize graph neighbors; rather, they require explicit topological provenance and intermediate reasoning steps to connect issue descriptions to un-named functions.
 
-\paragraph{Stratum-Aware Selective Routing}
-Recognizing that static graph expansion provides positive conversion on lexically anchored bugs (+5 tasks on Stratum~A) but incurs distractor dilution on un-named bugs ($-$2 tasks on Stratum~C under un-annotated pointwise scoring), I formalized a predictive routing policy $\pi^*(t)$:
-\begin{equation}
-\label{eq:selective_router}
-\pi^*(t) = \begin{cases}
-A_4(t) & \text{if } \text{Stratum}(t) \in \{A, B\} \\
-A_1(t) & \text{if } \text{Stratum}(t) = C
-\end{cases}
-\end{equation}
-Across all 344 Verified evaluation tasks, the Selective Stratum Router achieves \textbf{47.67\% Acc@5} (164/344 hits), outperforming BM25 ($B_0$, 154 hits, +2.90 pp gain), seed reranking ($A_1$, 159 hits, +1.45 pp gain), and static graph expansion ($A_4$, 162 hits, +0.58 pp gain) with zero discordant losses ($n_{10}=2, n_{01}=0$). Furthermore, when routing Stratum~C through provenance-augmented prompting ($A_4 + \text{Provenance}$), total accuracy reaches \textbf{49.13\%} (169/344 hits, +4.36 pp over BM25). Rather than applying graph expansion indiscriminately, autonomous agents must route retrieval dynamically based on lexical anchors and supply explicit call-path provenance.
+\paragraph{Selective Gating and Task Heterogeneity}
+Rather than reflecting uniform performance across repositories, the aggregate null result conceals systematic task-level heterogeneity. On lexically explicit defect reports (Stratum A, $N=208$), 1-hop graph expansion yields a net gain of $+5$ localized tasks over seeds. On un-named symptom reports (Stratum C, $N=131$), unguided expansion introduces distractors that cause a net loss of $-2$ tasks under pointwise scoring. Gating graph traversal by issue symbol density via a cross-validated decision tree achieves 47.38\% Acc@5 (163/344 tasks), while a deterministic stratum routing policy ($\pi^*$) reaches 47.67\% (164/344 tasks, +2.90 pp over BM25), matching the empirical two-arm oracle ceiling ($48.55\%$, 167 tasks) with zero discordant losses ($n_{10}=2, n_{01}=0$). Furthermore, routing Stratum~A through pointwise graph expansion and Stratum~C through listwise reranking achieves 49.50\% Acc@5 (148/299 tasks on Strata A and C). Dynamic gating based on lexical anchor density resolves the opposing effects that otherwise produce an aggregate null.
 
 \subsection{Pipeline Loss Decomposition and Loss Funnel (RQ3)}
 \label{sec:rq3}
@@ -585,7 +577,7 @@ On SWE-bench Lite ($N=237$), exploratory factorial sweep diagnosis demonstrates 
     \item \textbf{Model Capacity and Prompting}: Findings are established on compact models from the Gemma~4 family (E2B and E4B). Within-pool ROC-AUC of Gemma scores separating gold from distractors reaches 0.7796 overall (0.7966 on seed gold vs.\ 0.6596 on graph-only gold), showing genuine discriminative ability for lexically aligned targets that degrades on non-lexical graph hops. Reciprocal Rank Fusion (RRF) fusing BM25 rank and Gemma score reaches 46.51\% (160/344), outperforming both raw BM25 (44.77\%) and pure Gemma reranking (46.22\%). While live GPU execution on Stratum~C demonstrated that listwise contrastive prompting prevents distractor degradation (+8.40 pp Acc@5, $p=0.0034$), graph expansion still tied depth BM25 (16.79\% vs.\ 16.79\%). Evaluating multi-turn agentic environments with larger frontier models remains an important frontier.
     \item \textbf{Candidate Pool Bounds}: Pools evaluate 1-hop expansion capped at 50 candidates ($M_t \le 50$). Multi-hop expansion reaches 66.9\% oracle recall but introduces hundreds of distractors.
     \item \textbf{Task Scope}: Restricted to $N=344$ function-level tasks on SWE-bench Verified. Patch generation and full test execution were not evaluated.
-    \item \textbf{Statistical Power and Equivalence}: With 17 discordant tasks ($p_{\text{disc}} = 4.94\%$), the 95\% CI on PC1 ([$-$0.29, +4.36] pp) yields an analytical MDE of $3.27$ pp at $80\%$ power. Under Two One-Sided Tests (TOST), the upper bound allows formally rejecting true advantages $\ge +4.4$ pp ($p < 0.05$). The study decisively excludes large, commercially transformative gains, though isolating sub-2 pp gains would require $N \ge 942$ tasks.
+    \item \textbf{Statistical Power and Equivalence}: With 17 discordant tasks ($p_{\text{disc}} = 4.94\%$), the 95\% CI on PC1 ([$-$0.29, +4.36] pp) yields an analytical MDE of $3.27$ pp at $80\%$ power. Under Two One-Sided Tests (TOST), the upper bound allows formally rejecting true advantages $\ge +4.4$ pp ($p < 0.05$). The study excludes practically large gains ($\ge +4.4$ pp), though isolating sub-2 pp gains would require $N \ge 942$ tasks.
 \end{enumerate}
 
 \section{Open-Source Ecosystem and Resource Specification}
