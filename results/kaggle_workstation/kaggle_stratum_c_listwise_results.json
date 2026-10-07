@@ -1,0 +1,74 @@
+{
+  "suite": "stratum_c_listwise_reranking_benchmark",
+  "author": "Sultan Haikal (@yvliet)",
+  "n_tasks": 131,
+  "live_model_executed": true,
+  "model_name": "Gemma4ForConditionalGeneration",
+  "results": {
+    "A4_listwise": {
+      "hits_at_1": 6,
+      "hits_at_3": 13,
+      "hits_at_5": 22,
+      "hits_at_10": 29,
+      "acc_at_1_pct": 4.58,
+      "acc_at_3_pct": 9.92,
+      "acc_at_5_pct": 16.79,
+      "acc_at_10_pct": 22.14,
+      "mrr_50": 0.0934
+    },
+    "A2_listwise": {
+      "hits_at_1": 6,
+      "hits_at_3": 13,
+      "hits_at_5": 22,
+      "hits_at_10": 29,
+      "acc_at_1_pct": 4.58,
+      "acc_at_3_pct": 9.92,
+      "acc_at_5_pct": 16.79,
+      "acc_at_10_pct": 22.14,
+      "mrr_50": 0.0937
+    },
+    "A1_listwise": {
+      "hits_at_1": 4,
+      "hits_at_3": 11,
+      "hits_at_5": 20,
+      "hits_at_10": 28,
+      "acc_at_1_pct": 3.05,
+      "acc_at_3_pct": 8.4,
+      "acc_at_5_pct": 15.27,
+      "acc_at_10_pct": 21.37,
+      "mrr_50": 0.0778
+    }
+  },
+  "contrasts": {
+    "A4_listwise_vs_A2_pointwise": {
+      "delta_pp": 8.4,
+      "n10": 12,
+      "n01": 1,
+      "mcnemar_p_value": 0.0034
+    },
+    "A2_listwise_vs_A2_pointwise": {
+      "delta_pp": 8.4,
+      "n10": 12,
+      "n01": 1,
+      "mcnemar_p_value": 0.0034
+    },
+    "A1_listwise_vs_A2_pointwise": {
+      "delta_pp": 6.87,
+      "n10": 10,
+      "n01": 1,
+      "mcnemar_p_value": 0.0117
+    },
+    "A4_listwise_vs_A2_listwise": {
+      "delta_pp": 0.0,
+      "n10": 0,
+      "n01": 0,
+      "mcnemar_p_value": 1.0
+    },
+    "A4_listwise_vs_A4_pointwise": {
+      "delta_pp": 4.58,
+      "n10": 8,
+      "n01": 2,
+      "mcnemar_p_value": 0.1094
+    }
+  }
+}
