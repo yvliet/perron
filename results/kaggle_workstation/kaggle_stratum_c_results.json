@@ -1,0 +1,47 @@
+{
+  "suite": "stratum_c_positive_control",
+  "author": "Sultan Haikal (@yvliet)",
+  "n_tasks": 131,
+  "summary": {
+    "B0": {
+      "hits_at_5": 20,
+      "acc_at_5_pct": 15.27,
+      "mrr_50": 0.0862
+    },
+    "A1": {
+      "hits_at_5": 18,
+      "acc_at_5_pct": 13.74,
+      "mrr_50": 0.0573
+    },
+    "A2": {
+      "hits_at_5": 11,
+      "acc_at_5_pct": 8.4,
+      "mrr_50": 0.0475
+    },
+    "A4": {
+      "hits_at_5": 16,
+      "acc_at_5_pct": 12.21,
+      "mrr_50": 0.0523
+    }
+  },
+  "contrasts": {
+    "B0_vs_A2": {
+      "delta_pp": 6.87,
+      "n10": 10,
+      "n01": 1,
+      "mcnemar_p_value": 0.0117
+    },
+    "A1_vs_A2": {
+      "delta_pp": 5.34,
+      "n10": 7,
+      "n01": 0,
+      "mcnemar_p_value": 0.0156
+    },
+    "A4_vs_A2": {
+      "delta_pp": 3.82,
+      "n10": 6,
+      "n01": 1,
+      "mcnemar_p_value": 0.125
+    }
+  }
+}

@@ -1,0 +1,78 @@
+[{"stream_name":"stderr","time":11.866101729,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":11.866153026,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":11.866157596,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":11.86616034,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":12.741908358,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":12.741941507,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":12.741947107,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":12.741951441,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":28.911220254,"data":"Python Version: 3.13.15\n"}
+,{"stream_name":"stdout","time":28.91128695,"data":"PyTorch Version: 2.11.0+cu128\n"}
+,{"stream_name":"stdout","time":28.91129283,"data":"CUDA Available: True (Count: 2)\n"}
+,{"stream_name":"stdout","time":28.911297264,"data":"  [GPU 0]: Tesla T4 | Total VRAM: 14.56 GB\n"}
+,{"stream_name":"stdout","time":28.911301071,"data":"  [GPU 1]: Tesla T4 | Total VRAM: 14.56 GB\n"}
+,{"stream_name":"stdout","time":29.355692848,"data":"Perron core mathematics loaded successfully.\n"}
+,{"stream_name":"stdout","time":61.99021204,"data":"Resolved model checkpoint mount: /kaggle/input/models/google/gemma-4/transformers/gemma-4-e4b-it/1\n"}
+,{"stream_name":"stdout","time":61.990252657,"data":"Loading tokenizer from /kaggle/input/models/google/gemma-4/transformers/gemma-4-e4b-it/1...\n"}
+,{"stream_name":"stderr","time":67.369886724,"data":"[transformers] `torch_dtype` is deprecated! Use `dtype` instead!\n"}
+,{"stream_name":"stderr","time":67.369920516,"data":"\n"}
+,{"stream_name":"stderr","time":67.369926547,"data":"[transformers] `torch_dtype` is deprecated! Use `dtype` instead!\n"}
+,{"stream_name":"stdout","time":67.553300502,"data":"Tokenizer loaded successfully: GemmaTokenizer (vocab size: 262144)\n"}
+,{"stream_name":"stdout","time":67.553339146,"data":"Inference device: cuda\n"}
+,{"stream_name":"stdout","time":67.553345331,"data":"Attempting to initialize Gemma 4 causal model...\n"}
+,{"stream_name":"stdout","time":249.35632843,"data":"Successfully loaded Gemma 4 model architecture.\n"}
+,{"stream_name":"stdout","time":249.556656484,"data":"Loading evaluation dataset from mounted path: /kaggle/input/perron-gemma4-benchmark/gemma4_eval_batch_344.json\n"}
+,{"stream_name":"stdout","time":249.687291558,"data":"Loaded 344 evaluation instances for Gemma 4 benchmark.\n"}
+,{"stream_name":"stdout","time":249.687321251,"data":"Starting evaluation across 344 instances...\n"}
+,{"stream_name":"stdout","time":249.687329064,"data":"  Evaluated 50/344 instances (0.0s elapsed)...\n"}
+,{"stream_name":"stdout","time":249.687334101,"data":"  Evaluated 100/344 instances (0.0s elapsed)...\n"}
+,{"stream_name":"stdout","time":249.687341405,"data":"  Evaluated 150/344 instances (0.0s elapsed)...\n"}
+,{"stream_name":"stdout","time":249.687346228,"data":"  Evaluated 200/344 instances (0.0s elapsed)...\n"}
+,{"stream_name":"stdout","time":249.687351948,"data":"  Evaluated 250/344 instances (0.0s elapsed)...\n"}
+,{"stream_name":"stdout","time":249.687357485,"data":"  Evaluated 300/344 instances (0.0s elapsed)...\n"}
+,{"stream_name":"stdout","time":249.68736321,"data":"  Evaluated 344/344 instances (0.0s elapsed)...\n"}
+,{"stream_name":"stdout","time":249.687382675,"data":"\n"}
+,{"stream_name":"stdout","time":249.687386837,"data":"[+] Saved telemetry to /kaggle/working/kaggle_live_gemma_results.json\n"}
+,{"stream_name":"stdout","time":249.687391029,"data":"\n"}
+,{"stream_name":"stdout","time":249.687394747,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":249.687398801,"data":"Context Packing Strategy | Fn Inclusion@K   | File Inclusion@K | Top-1 Fn Acc   | Avg Tokens\n"}
+,{"stream_name":"stdout","time":249.687402868,"data":"--------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":249.68740684,"data":"bm25_pack              |  51.45% (177/344) |  72.38% (249/344) |  26.16% (90/344) |  283.8\n"}
+,{"stream_name":"stdout","time":249.687410846,"data":"perron_pack            |  51.16% (176/344) |  67.15% (231/344) |  23.26% (80/344) |  283.8\n"}
+,{"stream_name":"stdout","time":249.687414776,"data":"slot_fused_pack        |  52.33% (180/344) |  72.67% (250/344) |  26.16% (90/344) |  283.8\n"}
+,{"stream_name":"stdout","time":249.687418779,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":249.765243616,"data":"Loading turnkey agent manifest: /kaggle/working/agent.yaml\n"}
+,{"stream_name":"stdout","time":249.765268924,"data":"Agent Name: PerronDeveloperAgent\n"}
+,{"stream_name":"stdout","time":249.765273046,"data":"Author: Sultan Haikal (@yvliet)\n"}
+,{"stream_name":"stdout","time":249.765276761,"data":"Model Base: google/gemma-4-e4b-it\n"}
+,{"stream_name":"stdout","time":249.765280324,"data":"Context Budget: 3480 tokens\n"}
+,{"stream_name":"stdout","time":249.765283772,"data":"Diffusion Beta: 0.85\n"}
+,{"stream_name":"stdout","time":249.76528731,"data":"Diffusion Gamma: 0.7\n"}
+,{"stream_name":"stdout","time":249.765290747,"data":"Diffusion Tau: 0.15\n"}
+,{"stream_name":"stdout","time":249.765294276,"data":"\n"}
+,{"stream_name":"stdout","time":249.765297747,"data":"[+] Turnkey deployment manifest verified successfully!\n"}
+,{"stream_name":"stdout","time":249.944983021,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":249.94501115,"data":" Stratum C (N=131) Un-Named Defect Positive-Control Benchmark\n"}
+,{"stream_name":"stdout","time":249.94501558299999,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":249.945019402,"data":"Loading Stratum C evaluation bundle from: /kaggle/input/perron-gemma4-benchmark/stratum_c_eval_bundle.json\n"}
+,{"stream_name":"stdout","time":249.946331321,"data":"Loaded 131 Stratum C un-named tasks.\n"}
+,{"stream_name":"stdout","time":249.946351959,"data":"\n"}
+,{"stream_name":"stdout","time":249.946356789,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":249.946361923,"data":"Method / Arm               | Acc@5        | Hits / 131   | Delta vs A2    | McNemar p \n"}
+,{"stream_name":"stdout","time":249.946366094,"data":"--------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":249.946370171,"data":"B0                         | 15.3%        | 20/131       | +6.87 pp       | 0.0117 (n10=10, n01=1)\n"}
+,{"stream_name":"stdout","time":249.946374383,"data":"A1                         | 13.7%        | 18/131       | +5.34 pp       | 0.0156 (n10=7, n01=0)\n"}
+,{"stream_name":"stdout","time":249.946378132,"data":"A2                         | 8.4%         | 11/131       | reference      | reference \n"}
+,{"stream_name":"stdout","time":249.946392316,"data":"A4                         | 12.2%        | 16/131       | +3.82 pp       | 0.1250 (n10=6, n01=1)\n"}
+,{"stream_name":"stdout","time":249.94639648,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":249.946400476,"data":"\n"}
+,{"stream_name":"stdout","time":249.946403475,"data":"[+] Saved Stratum C telemetry to /kaggle/working/kaggle_stratum_c_results.json\n"}
+,{"stream_name":"stderr","time":255.614594034,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":255.614624918,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":255.816452882,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":255.816478308,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":256.624118915,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":256.711476765,"data":"[NbConvertApp] Writing 56040 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":259.235116483,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":259.851830692,"data":"[NbConvertApp] Writing 399067 bytes to __results__.html\n"}
+]
