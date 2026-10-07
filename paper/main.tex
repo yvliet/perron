@@ -127,7 +127,7 @@ In this paper, I test both conditions on a 344-task held-out subset of SWE-bench
     \item \textbf{Empirical Loss Funnel and Truncation Curves}: A 4-stage loss decomposition separates candidate boundary ceiling, rank compaction, and reader error. Truncating matched pools at $M \in [10, 50]$ shows that adding depth lexical candidates is consistent with distractor accumulation (Acc@5 drops by 4 tasks, $-$1.16 pp, $p=0.455$), whereas graph expansion plateaus flat (+3 tasks, +0.87 pp over seeds, $p=0.549$).
     \item \textbf{Discordant Strata Symmetry}: The 18 discordant tasks recalled exclusively by graph expansion and the 18 tasks recalled exclusively by lexical expansion are split almost identically across strata (9 vs.\ 10 in Stratum~C, 9 vs.\ 7 in Stratum~A), showing that graph expansion does not selectively rescue un-named bugs over lexical depth.
     \item \textbf{High-Throughput CSR Graph Engine}: An efficient, memory-mapped Compressed Sparse Row multigraph architecture with decoupled specificity ratio hub damping that executes localized random walks in sub-5 ms on consumer workstations without matrix mutation (spectral convergence proofs detailed in Appendix~\ref{app:spectral_proofs}).
-    \item \textbf{Open-Source Ecosystem Deliverables}: I release 19,298 scored candidate evaluations (\texttt{scores.parquet}), the \texttt{perron-core} library (Apache~2.0), \texttt{perron-mcp}, and precomputed CSR graphs.
+    \item \textbf{Open-Source Ecosystem Deliverables}: I release the \texttt{scores.parquet} archive (19,298 scored candidate evaluations), the Apache~2.0 \texttt{perron-core} library, \texttt{perron-mcp}, and CSR graphs.
 \end{itemize}
 
 Only two primary contrasts (PC1 and PC2 on strict Acc@5) are confirmatory. Every other analysis is explicitly designated as exploratory.
@@ -180,7 +180,7 @@ By the rank-1 perturbation spectrum of the Google matrix~\cite{haveliwala2003sec
 \label{sec:specificity}
 Personalized PageRank concentrates probability mass on high-in-degree hub nodes. To suppress structural popularity without mutating the static matrix $T$, Perron computes a repository-wide stationary baseline $\boldsymbol{\pi}_{\text{global}}$ once per codebase using a uniform prior $\mathbf{p}_{\text{uniform}} = \frac{1}{|\mathcal{V}|} \mathbf{1}$. For any query, the Specificity Score is defined as:
 \begin{equation}
-\text{Specificity}(v) = \frac{\pi_{\text{query}}(v)}{(\pi_{\text{global}}(v) + \epsilon)^{\gamma}},
+\operatorname{Specificity}(v) = \frac{\pi_{\text{query}}(v)}{(\pi_{\text{global}}(v) + \epsilon)^{\gamma}},
 \label{eq:specificity}
 \end{equation}
 where $\epsilon = 10^{-8}$ and $\gamma = 0.70$. Resistance to hub congestion is measured by the Hub Suppression Index at top 10 (HSI@10):
@@ -233,7 +233,7 @@ Candidate pools are generated per task, matched to size $M_t = 10 + \min(|E_t|, 
 A4 achieves candidate pool oracle recall on 201/344 tasks (58.4\%), whereas unweighted 1-hop BFS reachability reaches 199/344 tasks (57.8\%). This 2-task divergence is mechanistically explained by two counterbalancing operations in the pool builder: seed test-node masking replaces test-file seeds with source seeds, rescuing 16 tasks (e.g., \texttt{sympy-13372}), while Filter~$F$ degree-capping and hub pruning drop 14 tasks (e.g., \texttt{sphinx-7590}), yielding a net difference of $+2$ tasks ($199 + 16 - 14 = 201$).
 
 \subsection{Pointwise Gemma 4 Scorer}
-Each candidate symbol is formatted into a prompt context averaging 423.1 tokens (issue description + AST breadcrumb + prompt instructions; breadcrumbs alone average $<100$ tokens). A frozen \texttt{gemma-4-e2b-it} model (FP16, thinking disabled) scores each candidate in a single forward pass: $s(t, v) = \text{logsumexp}(z[Y]) - \text{logsumexp}(z[N])$ on prompt variant P0, chosen on disjoint development data ($N=100$). The evaluation required 19,298 forward passes.
+Each candidate symbol is formatted into a prompt context averaging 423.1 tokens (issue description + AST breadcrumb + prompt instructions; breadcrumbs alone average $<100$ tokens). A frozen \texttt{gemma-4-e2b-it} model (FP16, thinking disabled) scores each candidate in a single forward pass: $s(t, v) = \operatorname{logsumexp}(z[Y]) - \operatorname{logsumexp}(z[N])$ on prompt variant P0, chosen on disjoint development data ($N=100$). The evaluation required 19,298 forward passes.
 
 \subsection{Statistical Analysis}
 A localization hit (Function Acc@$k$) is scored as 1.0 if at least one ground-truth modified function is present in the top-$k$ retrieved symbols, and 0.0 otherwise. The confirmatory family comprises two pre-specified contrasts on strict Acc@5:
@@ -255,7 +255,7 @@ Table~\ref{tab:verified_retrieval} presents standalone retrieval on SWE-bench Ve
 \footnotesize
 \setlength{\tabcolsep}{3.0pt}
 \renewcommand{\arraystretch}{0.95}
-\caption{\textbf{Standalone retrieval evaluation on SWE-bench Verified ($N=344$ callable tasks).} Evaluates top-10 function accuracy, 95\% bootstrap confidence intervals ($B=10{,}000$), top-5 function/file accuracy, and Hub Suppression Index (HSI@10). Bold numerical values indicate the highest score in each column. Holm $p$-values are computed against Perron Static.}
+\caption{\textbf{Standalone retrieval evaluation on SWE-bench Verified ($N=344$ callable tasks).} Evaluates top-10 function accuracy, 95\% bootstrap confidence intervals ($B=10{,}000$), top-5 function/file accuracy, and Hub Suppression Index (HSI@10). Bold row label denotes the primary evaluated graph method (reference baseline); bold numerical values indicate the highest score in each column. Holm $p$-values are computed against Perron Static.}
 \label{tab:verified_retrieval}
 \begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}Xcccccc}
 \toprule
@@ -337,10 +337,10 @@ Graph 1-hop expansion (A4) reaches 47.1\% Acc@5 compared to 45.1\% for depth-mat
 Candidate pool oracle recall is identical: 58.4\% (201/344) for both graph expansion ($A_4$) and depth BM25 ($A_2$). Across discordant tasks, $n_{10}=18$ and $n_{01}=18$ (two-sided McNemar $p=1.0000$). With 36 discordant pairs, the 95\% CI on the recall difference is approximately $\pm 3.4$ pp. Because Acc@$k$ cannot exceed pool recall, both pools establish an identical theoretical ceiling on this sample.
 
 \paragraph{Exploratory Comparisons}
-Comparing graph expansion (A4) directly to seed reranking (A1, 46.2\% Acc@5) yields a net gain of only 3 tasks ($\Delta = +0.87$ pp, $n_{10}=7, n_{01}=4, p=0.549$). Gemma 4 gains 7 top-5 hits (6 from newly reachable targets, 1 from seed promotion) while distractors displace 4 existing seed hits (gross 7/4 split: $159+7-4=162$), requiring 4,988 extra model forward passes (a $2.45\times$ compute increase over seeds). Comparing A4 to the degree-preserving null graph (A5, 45.9\% Acc@5) yields $\Delta = +1.16$ pp (95\% CI [$-$0.58, +2.91], $n_{10}=7, n_{01}=3, p=0.344$), demonstrating that empirical graph topology provides no statistically detectable advantage over randomized degree-matched graphs. Similarly, comparing A4 to the Perron diffusion pool (A6, 45.6\% Acc@5) yields $\Delta = +1.45$ pp (95\% CI [+0.00, +3.20], $n_{10}=7, n_{01}=2, p=0.180$). Unscored BM25 (B0) preserves nominally higher MRR@50 (0.3439 vs.\ 0.3409) and top-1 accuracy (25.3\% vs.\ 24.7\%) than A4. In Leave-Django-Out jackknife cross-validation ($N=230$), candidate pool parity holds (57.1\% vs.\ 57.1\%, $p=1.0000$) and reranked Acc@5 yields $\Delta(A_4 - A_2) = +2.17$ pp ($p=0.227$).
+Comparing graph expansion arm A4 to seed reranking (A1, 46.2\% Acc@5) yields a net gain of 3 tasks ($\Delta = +0.87$ pp, $n_{10}=7, n_{01}=4, p=0.549$). Gemma 4 gains 7 top-5 hits (6 from newly reachable targets, 1 from seed promotion) while distractors displace 4 existing seed hits (gross 7/4 split: $159+7-4=162$), requiring 4,988 extra model forward passes (a $2.45\times$ compute increase over seeds). Comparing A4 to the degree-preserving null graph (A5, 45.9\% Acc@5) yields $\Delta = +1.16$ pp (95\% CI [$-$0.58, +2.91], $n_{10}=7, n_{01}=3, p=0.344$), demonstrating that empirical graph topology provides no statistically detectable advantage over randomized degree-matched graphs. Similarly, comparing A4 to the Perron diffusion pool (A6, 45.6\% Acc@5) yields $\Delta = +1.45$ pp (95\% CI [+0.00, +3.20], $n_{10}=7, n_{01}=2, p=0.180$). Unscored BM25 (B0) preserves nominally higher MRR@50 (0.3439 vs.\ 0.3409) and top-1 accuracy (25.3\% vs.\ 24.7\%) than A4. Leave-Django-Out jackknife cross-validation ($N=230$) maintains candidate pool parity (57.1\% vs.\ 57.1\%, $p=1.0000$) and yields $\Delta = +2.17$ pp for $A_4 - A_2$ ($p=0.227$).
 
 \paragraph{Model Sensitivity and Positive Controls}
-To test whether the flatline reflects an insensitive scorer rather than graph retrieval limits, I evaluated within-pool discrimination and rank fusion directly from \texttt{scores.parquet}. Across all 176 tasks where gold targets are present in candidate pools, Gemma~4 log-odds scores separate gold targets from distractors with an ROC-AUC of \textbf{0.718} (95\% CI [0.682, 0.754]), confirming genuine discriminative ability above chance (0.50). Furthermore, Reciprocal Rank Fusion (RRF, $k_{\text{rrf}}=60$) combining BM25 prior rank with Gemma log-odds score reaches \textbf{46.51\%} Acc@5 (160/344), outperforming both raw BM25 (44.77\%) and pure Gemma reranking (46.22\%). This demonstrates that the empirical plateau is driven by independent pointwise calibration noise across expanded candidate pools rather than model blindness.
+To test whether the flatline reflects an insensitive scorer rather than graph retrieval limits, I evaluated within-pool discrimination directly from the \texttt{scores.parquet} evaluation archive. Across all 176 tasks where gold targets are present in candidate pools, Gemma~4 log-odds scores separate gold targets from distractors with an ROC-AUC of \textbf{0.718} (95\% CI [0.682, 0.754]), confirming genuine discriminative ability above chance (0.50). Furthermore, Reciprocal Rank Fusion (RRF, $k_{\text{rrf}}=60$) combining BM25 prior rank with Gemma log-odds reaches \textbf{46.51\%} Acc@5 (160/344), exceeding both BM25 (44.77\%) and Gemma reranking (46.22\%). This demonstrates that the empirical plateau is driven by independent pointwise calibration noise across expanded candidate pools rather than model blindness.
 
 \subsection{Pointwise Candidate Pool-Size Truncation Curves}
 \label{sec:truncation_curves}
@@ -597,7 +597,7 @@ confirming exact algebraic equivalence.
 \label{prop:pmi_proof}
 For any code symbol $v$ with positive query support, the log-transformed Specificity score satisfies:
 \begin{equation}
-\ln \text{Specificity}(v) = (1 - \gamma) \ln \pi_{\text{query}}(v) + \gamma \text{PMI}(v; q) - \gamma \ln\left(1 + \frac{\epsilon}{\pi_{\text{global}}(v)}\right).
+\ln \operatorname{Specificity}(v) = (1 - \gamma) \ln \pi_{\text{query}}(v) + \gamma \operatorname{PMI}(v; q) - \gamma \ln\left(1 + \frac{\epsilon}{\pi_{\text{global}}(v)}\right).
 \end{equation}
 When $\pi_{\text{global}}(v) \gg \epsilon$, the residual vanishes, yielding a convex interpolation between raw reachability ($\gamma=0$) and surprise ($\gamma=1$), where the sub-linear exponent $\gamma = 0.70$ acts as a structural Inverse Document Frequency (IDF) discount.
 
@@ -613,7 +613,7 @@ Walks of length $t \ge 3$ carry approximately 61\% of total diffusion mass ($\be
 \label{app:csr_benchmarks}
 The Perron engine is implemented in pure Python and optimized C with zero-copy memory-mapped CSR ingestion:
 \begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
-    \item \textbf{Ingestion Latency}: Opening a precomputed repository CSR graph from NVMe storage via \path{numpy.load(mmap_mode='r')} requires $<1.2$ ms across all repositories.
+    \item \textbf{Ingestion Latency}: Loading a precomputed repository CSR graph from NVMe storage via memory-mapped \texttt{numpy.load} takes $<1.2$ ms across all repositories.
     \item \textbf{Memory Footprint}: Total resident set size (RSS) during SpMM diffusion is bounded below 144 MB RAM even on SymPy ($|\mathcal{V}|=37{,}442$, $|\mathcal{E}|=148{,}912$).
     \item \textbf{Throughput Comparison}: Compared to standard NetworkX PageRank (320 ms on Requests) and Scipy sparse iterative solvers (28 ms), Perron executes power iteration in $1.89$ ms on Requests and $5.10$ ms on SymPy, achieving a $>50\times$ speedup suitable for interactive developer agent tool loops.
 \end{itemize}
