@@ -1,0 +1,67 @@
+{
+  "suite": "stratum_c_listwise_reranking_benchmark",
+  "timestamp_utc": "2026-10-07T06:38:14.873727+00:00",
+  "author": "Sultan Haikal (GitHub: @yvliet)",
+  "license": "Apache-2.0",
+  "n_tasks": 131,
+  "model_family": "google/gemma-4-e2b-it",
+  "backend_mode": "sim",
+  "device_name": "cpu",
+  "has_gpu": false,
+  "elapsed_seconds": 1.81,
+  "arms": {
+    "A4": {
+      "hits_at_1": 4,
+      "hits_at_3": 12,
+      "hits_at_5": 20,
+      "hits_at_10": 28,
+      "acc_at_1_pct": 3.05,
+      "acc_at_3_pct": 9.16,
+      "acc_at_5_pct": 15.27,
+      "acc_at_10_pct": 21.37,
+      "mrr_50": 0.0827,
+      "avg_prompt_tokens_est": 1653.2,
+      "max_prompt_tokens_est": 3092
+    },
+    "A2": {
+      "hits_at_1": 4,
+      "hits_at_3": 12,
+      "hits_at_5": 20,
+      "hits_at_10": 28,
+      "acc_at_1_pct": 3.05,
+      "acc_at_3_pct": 9.16,
+      "acc_at_5_pct": 15.27,
+      "acc_at_10_pct": 21.37,
+      "mrr_50": 0.0818,
+      "avg_prompt_tokens_est": 1614.7,
+      "max_prompt_tokens_est": 3073
+    },
+    "A1": {
+      "hits_at_1": 4,
+      "hits_at_3": 12,
+      "hits_at_5": 20,
+      "hits_at_10": 28,
+      "acc_at_1_pct": 3.05,
+      "acc_at_3_pct": 9.16,
+      "acc_at_5_pct": 15.27,
+      "acc_at_10_pct": 21.37,
+      "mrr_50": 0.0785,
+      "avg_prompt_tokens_est": 947.8,
+      "max_prompt_tokens_est": 1815
+    }
+  },
+  "contrasts": {
+    "A4_vs_A2": {
+      "delta_pp": 0.0,
+      "n10": 0,
+      "n01": 0,
+      "mcnemar_p": 1.0
+    },
+    "A1_vs_A2": {
+      "delta_pp": 0.0,
+      "n10": 0,
+      "n01": 0,
+      "mcnemar_p": 1.0
+    }
+  }
+}
