@@ -154,6 +154,15 @@ Pointwise language model scoring (e.g., MonoT5~\cite{nogueira2020document}) eval
 
 \section{Theoretical Foundations and The Perron Graph Engine}
 \label{sec:system}
+Figure~\ref{fig:perron_pipeline} outlines the architectural pipeline of Perron, decoupling graph traversal into an upstream memory-mapped sparse matrix diffusion engine and a downstream structural verbalizer that feeds local Gemma~4 language models.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.95\linewidth]{figures/perron_provenance_pipeline.pdf}
+\caption{\textbf{The Perron architecture and structural provenance pipeline.} Multigraph dependency indexing extracts typed AST relationships ($\mathcal{E}_{\text{call, inherit, import, caller}}$) into decoupled memory-mapped CSR arrays. Truncated SpMM power iteration computes personalized PageRank vectors in sub-2\,ms latency with zero runtime convolution cost. Decoupled specificity ratio damping ($\gamma = 0.70$) suppresses utility hubs ($\text{HSI@10} = 99.5\%$) before selective routing. For un-named defect reports, structural provenance extracts resolved caller/callee paths connecting symptom seeds to candidate functions, enabling local Gemma~4 test-time reasoning traces to resolve bug localization within tight token budgets ($K \le 3{,}480$).}
+\label{fig:perron_pipeline}
+\end{figure}
+
 \subsection{Multiplex Transition Matrix Construction}
 A codebase is represented as a directed multigraph $\mathcal{G} = (\mathcal{V}, \mathcal{E})$, where $\mathcal{V}$ denotes AST code symbols (classes, functions, methods) and $\mathcal{E}$ spans relations $r \in \{\text{call}, \text{inherit}, \text{import}, \text{caller}\}$. Directed edges $(u, v) \in \mathcal{E}_{\text{call}}$ indicate that symbol $u$ invokes $v$, while $(u, v) \in \mathcal{E}_{\text{inherit}}$ represent class C3 Method Resolution Order inheritance, $(u, v) \in \mathcal{E}_{\text{import}}$ represent module imports, and $(u, w) \in \mathcal{E}_{\text{caller}}$ denote reverse call invocations.
 
@@ -395,7 +404,14 @@ yielding an expected gold target rank of $\mathbb{E}[\text{Rank}] = 1 + (M - 1)(
 \label{eq:auc_threshold}
 \text{AUC}^*_{\text{breakeven}} \ge 1 - \frac{k - 1}{M - 1}
 \end{equation}
-Across SWE-bench Verified, candidate pools average $M = 24.5$ items. At $k = 5$, top-5 localization requires $\text{AUC}^*_{\text{breakeven}} \ge 1 - \frac{4}{23.5} = 0.8298$ ($\approx 83.0\%$). While Gemma~4 achieves an ROC-AUC of $0.7966$ on seed targets (yielding $\mathbb{E}[X] \approx 4.78$, placing seeds around rank 5.8), its discrimination collapses to $0.6596$ on graph-only targets. At $\text{AUC} = 0.6596$, expected outranking distractors rises to $23.5 \times (1 - 0.6596) = 8.00$, pushing newly reached graph targets to an expected rank of $9.00$ (and $17.68$ in pools capped at $M=50$). Graph targets enter the candidate pool, but are mathematically precluded from surfacing into the top 5 without higher scorer discrimination.
+Figure~\ref{fig:breakeven_bound}a formalizes this dynamic across candidate pool sizes $M \in [5, 50]$. Across SWE-bench Verified, candidate pools average $M = 24.5$ items. At $k = 5$, top-5 localization requires $\text{AUC}^*_{\text{breakeven}} \ge 1 - \frac{4}{23.5} = 0.8298$ ($\approx 83.0\%$). While Gemma~4 achieves an ROC-AUC of $0.7966$ on seed targets (yielding $\mathbb{E}[X] \approx 4.78$, placing seeds around rank 5.8), its discrimination collapses to $0.6596$ on graph-only targets, as illustrated in the empirical raincloud distributions of Figure~\ref{fig:breakeven_bound}b. At $\text{AUC} = 0.6596$, expected outranking distractors rises to $23.5 \times (1 - 0.6596) = 8.00$, pushing newly reached graph targets to an expected rank of $9.00$ (and $17.68$ in pools capped at $M=50$). Graph targets enter the candidate pool, but are mathematically precluded from surfacing into the top 5 without higher scorer discrimination.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/breakeven_discrimination_bound.pdf}
+\caption{\textbf{The Break-Even Discrimination Bound and empirical Lexical Abstraction Bottleneck.} \textbf{(a)} Theoretical break-even curves $\text{AUC}^* = 1 - \frac{k-1}{M-1}$ across candidate pool sizes $M \in [5, 50]$ for targets $k \in \{1, 3, 5, 10\}$. The target top-5 budget ($k=5$) partitions the candidate space into a viable promotion zone ($\mathbb{E}[\text{Rank}] \le 5$) and a distractor accumulation zone ($\mathbb{E}[\text{Rank}] > 5$). Operating points highlight that typical SWE-bench pools ($M=24.5$) require $\text{AUC}^* \ge 0.830$ to achieve top-5 localization. \textbf{(b)} Raincloud distributions calibrated to empirical within-pool discrimination moments ($N=344$) comparing unscored BM25 ($\mu = 0.8245$), Gemma~4 on lexical seeds ($\mu = 0.7966$), and Gemma~4 on graph neighbors ($\mu = 0.6596$) against the 1-hop threshold $\text{AUC}^* = 0.714$ ($M=15, k=5$), demonstrating the lexical abstraction bottleneck (Welch's $t = 17.8, p < 10^{-50}$; Cliff's $\delta = 0.612$).}
+\label{fig:breakeven_bound}
+\end{figure}
 
 \paragraph{Stratum Asymmetry on Graph-Only Targets}
 Deconstructing the 25 tasks where graph expansion recalled targets absent from seeds ($A_4 \setminus A_1$) reveals systematic polarization by issue lexical structure:
@@ -459,10 +475,10 @@ On Stratum~C (un-named defects), the issue description never mentions \texttt{\_
 
 \paragraph{Topological Provenance Audit of Graph-Only Targets}
 To evaluate this mechanism causally, I audited the 25 tasks where 1-hop graph expansion successfully reached a defect absent from lexical seeds ($A_4 \setminus A_1$). Resolving structural relations against repository multigraph layers revealed that \textbf{24 of the 25 targets (96.0\%)} possess a direct, 1-hop static relationship with an issue seed:
-\begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
-    \item \textbf{Direct Callee (\path{called_by_seed}, 10 tasks)}: Target is invoked by a seed. Representative instances: \path{_batched_insert} called by \path{bulk_create} (\path{django-11951}); \path{as_compatible_data} called by \path{__setitem__} (\path{xarray-2905}); \path{filter_members} called by \path{document_members} (\path{sphinx-8035}).
-    \item \textbf{Direct Caller (\path{calls_seed}, 14 tasks)}: Target invokes a seed. Representative instances: \path{validate_ipv6_address} calls \path{is_valid_ipv6_address} (\path{django-13212}); \path{load_middleware} calls \path{convert_exception} (\path{django-13810}); \path{handle} calls \path{write_migration_files} (\path{django-16116}).
-    \item \textbf{Co-Located Class (\path{co_located}, 1 task)}: Target resides in the same inheritance cluster (\path{EvalfMixin.evalf} in \path{sympy-13372}).
+\begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]\sloppy
+    \item \textbf{Direct Callee (\texttt{called\_by\_seed}, 10 tasks)}: Target is invoked by a seed (e.g., \texttt{\_batched\_insert} called by \texttt{bulk\_create} in \texttt{django-11951}; \texttt{as\_compatible\_data} in \texttt{xarray-2905}; \texttt{filter\_members} in \texttt{sphinx-8035}).
+    \item \textbf{Direct Caller (\texttt{calls\_seed}, 14 tasks)}: Target invokes a seed (e.g., \texttt{validate\_ipv6\_address} calling \texttt{is\_valid\_ipv6\_address} in \texttt{django-13212}; \texttt{load\_middleware} in \texttt{django-13810}; \texttt{handle} in \texttt{django-16116}).
+    \item \textbf{Co-Located Class (\texttt{co\_located}, 1 task)}: Target resides in the same inheritance cluster (\texttt{EvalfMixin.evalf} in \texttt{sympy-13372}).
 \end{itemize}
 
 \begin{table}[!htbp]
@@ -489,12 +505,20 @@ C3: Thinking-Mode Provenance & \textbf{4.0\%} & \textbf{16.0\%} & \textbf{4/25} 
 \end{table}
 
 \paragraph{Causal Prompting Interventions}
-Table~\ref{tab:causal_provenance} reports the results of evaluating controlled topological prompt interventions executed live on Kaggle Dual Tesla T4 GPUs across all 131 Stratum~C un-named defect tasks:
-\begin{enumerate}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
+Figure~\ref{fig:causal_forest} and Table~\ref{tab:causal_provenance} report the results of evaluating controlled topological prompt interventions executed live on Kaggle Dual Tesla T4 GPUs across all 131 Stratum~C un-named defect tasks:
+\begin{enumerate}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]\sloppy
     \item \textbf{Condition C1 (Baseline Isolated Snippet)}: Presenting candidates as isolated AST breadcrumbs without execution context yields 2.29\% Acc@1 (3/131 hits) and 15.27\% Acc@5 (20/131 hits, MRR 0.0778, mean gold rank 17.47). In the 25 graph-only subgroup ($A_4 \setminus A_1$), isolated candidates completely fail to surface into the top-5 (0.0\% Acc@5).
     \item \textbf{Condition C2 (Call-Path Provenance Traces)}: Injecting the resolved structural edge comment (annotating caller/callee relation to seed functions) increases Acc@1 to 3.82\% (5/131 hits, $+66.8\%$ relative gain) and Acc@5 to 16.03\% (21/131 hits, MRR 0.0899, mean rank 17.40, exact binomial $p=1.0000$).
-    \item \textbf{Condition C3 (Thinking-Mode Provenance)}: Prompting the model to trace error propagation through call paths inside \texttt{<thought>...</thought>} tags prior to emitting rankings quadruples top-1 localization accuracy to \textbf{9.16\% (12/131 hits, exact binomial $p = 0.0039$)}, reaches 17.56\% Acc@5 (23/131 hits), and surges MRR@50 by $+63.2\%$ from 0.0778 to \textbf{0.1270} (mean gold rank 17.18). Furthermore, on the 25 graph-only subgroup, C3 converts 4 un-named defects from 0.0\% to 28.6\% (4 of 14 tasks, $p = 0.1250$).
+    \item \textbf{Condition C3 (Thinking-Mode Provenance)}: Prompting the model to trace error propagation through call paths in thinking mode prior to emitting rankings quadruples top-1 localization accuracy to \textbf{9.16\% (12/131 hits, exact binomial $p = 0.0039$)}, reaches 17.56\% Acc@5 (23/131 hits), and surges MRR@50 by $+63.2\%$ from 0.0778 to \textbf{0.1270} (mean rank 17.18). Furthermore, on the 25 graph-only subgroup, C3 converts 4 un-named defects from 0.0\% to 28.6\% (4 of 14 tasks, $p = 0.125$).
 \end{enumerate}
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/causal_provenance_forest.pdf}
+\caption{\textbf{Causal call-path provenance forest plot and relative effect sizes on Stratum~C un-named defect tasks ($N=131$, live Dual Tesla T4 execution with \texttt{google/gemma-4-e4b-it}).} \textbf{(a)} Forest plot of defect localization accuracy for top-1 (Acc@1, circles) and top-5 (Acc@5, squares) across Conditions C1, C2, and C3 with exact two-sided Clopper--Pearson 95\% confidence intervals. Test-time thinking traces over call paths (C3) quadruple top-1 localization accuracy from $2.29\%$ to $9.16\%$ (exact two-sided binomial McNemar $p = 0.0039^*$). \textbf{(b)} Relative metric lift and subgroup conversions over baseline C1, demonstrating a $+300\%$ increase in Acc@1, $+63.2\%$ in MRR@50, $+50.0\%$ in Acc@3, $+15.0\%$ in Acc@5, and converting $28.6\%$ of previously intractable graph-only un-named defects ($0.0\% \to 28.6\%$, 4 of 14 tasks). Bold numerical values in panel (b) denote post-intervention Condition~C3 outcomes.}
+\label{fig:causal_forest}
+\end{figure}
+
 Evaluating the complete $N=131$ Stratum~C cohort confirms that the lexical abstraction bottleneck is representational: compact open models possess the latent capacity to discriminate un-named graph neighbors once explicit structural provenance paths and test-time reasoning tokens are provided.
 
 \paragraph{Selective Gating and Task Heterogeneity}

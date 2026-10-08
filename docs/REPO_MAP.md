@@ -159,6 +159,6 @@ All 14 retrieval baselines are implemented in `benchmarks/baseline_retrievers.py
 | `tests/test_results.py` | `tests/test_results.py` | Unit test verifying provenance metadata keys in serialized results. |
 | `scripts/run_heldout.py` | `scripts/run_heldout.py` | Dedicated runner for held-out evaluation logging to `RUNLOG.md`. |
 | `results/heldout_table2_v1_preaudit.json` | `results/heldout_table2_v1_preaudit.json` | Defined in task G8; archived pre-audit held-out baseline result file. |
-| `scripts/build_instance_graphs.py` | `scripts/export_swebench_graphs.py` | Phase 4 graph builder mapped to existing authoritative export pipeline with `--cleanup-clones`. |
-| `scripts/make_gold.py` | `benchmarks/gold_patch_parser.py` | Phase 4 gold label generation mapped to existing gold parser generating `data_release/gold.jsonl`. |
-| `perron/bench.py` | `benchmarks/hub_gold_ablation.py` | Phase 4 hub-gold benchmark mapped to existing ablation evaluation harness. |
+| `scripts/build_instance_graphs.py` | `scripts/export_swebench_graphs.py` | Canonical graph builder mapped to existing authoritative export pipeline with `--cleanup-clones`. |
+| `scripts/make_gold.py` | `benchmarks/gold_patch_parser.py` | Benchmark gold label generation mapped to existing gold parser generating `data_release/gold.jsonl`. |
+| `perron/bench.py` | `benchmarks/hub_gold_ablation.py` | Hub-gold benchmark harness mapped to existing ablation evaluation harness. |

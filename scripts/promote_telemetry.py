@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Automated Two-Stage Promotion Gateway for Empirical Telemetry.
+scripts/promote_telemetry.py - Automated Two-Stage Promotion Gateway for Empirical Telemetry.
 Author: Sultan Haikal (GitHub: @yvliet)
 License: Apache-2.0
 
@@ -10,8 +10,8 @@ paper/metrics_macros.tex, synchronizes paper/paper_writeup.md, and verifies
 factual integrity via scripts/check_facts.py.
 
 Usage:
-    python scripts/promote_telemetry.py --phase 2
-    python scripts/promote_telemetry.py --phase 3
+    python scripts/promote_telemetry.py --suite reachability
+    python scripts/promote_telemetry.py --suite dose-response
     python scripts/promote_telemetry.py --all
     python scripts/promote_telemetry.py --verify-only
 """
@@ -35,9 +35,9 @@ REACHABILITY_JSON = REPO_ROOT / "results" / "reachability_null_evaluation.json"
 DOSE_RESPONSE_JSON = REPO_ROOT / "results" / "dose_response_evaluation.json"
 
 # ---------------------------------------------------------------------------
-# Phase 2 Macro Specifications (RFC 6901 JSON Pointers)
+# Reachability Macro Specifications (RFC 6901 JSON Pointers)
 # ---------------------------------------------------------------------------
-PHASE_2_MACROS = {
+REACHABILITY_MACROS = {
     "ReachabilityOneHopPct": {
         "file": "results/reachability_null_evaluation.json",
         "ptr": "/summary/reachability_1hop/mean",
@@ -96,9 +96,9 @@ PHASE_2_MACROS = {
 }
 
 # ---------------------------------------------------------------------------
-# Phase 3 Macro Specifications (RFC 6901 JSON Pointers)
+# Dose-Response Macro Specifications (RFC 6901 JSON Pointers)
 # ---------------------------------------------------------------------------
-PHASE_3_MACROS = {
+DOSE_RESPONSE_MACROS = {
     "DoseResponseRSquared": {
         "file": "results/dose_response_evaluation.json",
         "ptr": "/h1_universal_entropy_collapse/glmm_lofo_r2",
@@ -170,10 +170,10 @@ def _assert_finite(node: Any, path: str = "") -> None:
             _assert_finite(item, f"{path}/{idx}")
 
 
-def validate_phase_2_results(data: Dict[str, Any]) -> None:
-    """Validate Phase 2 acceptance criteria against pre-registered gates."""
+def validate_reachability_results(data: Dict[str, Any]) -> None:
+    """Validate reachability acceptance criteria against pre-registered gates."""
     _assert_finite(data)
-    assert "summary" in data, "Phase 2 results missing 'summary' block"
+    assert "summary" in data, "Reachability results missing 'summary' block"
     summary = data["summary"]
 
     assert "reachability_1hop" in summary, "Missing 'reachability_1hop'"
@@ -193,12 +193,12 @@ def validate_phase_2_results(data: Dict[str, Any]) -> None:
     assert 0.0 <= p_val <= 1.0, f"P-value invalid: {p_val}"
 
 
-def validate_phase_3_results(data: Dict[str, Any]) -> None:
-    """Validate Phase 3 acceptance criteria against pre-registered gates."""
+def validate_dose_response_results(data: Dict[str, Any]) -> None:
+    """Validate dose-response acceptance criteria against pre-registered gates."""
     _assert_finite(data)
-    assert "linearity_validation" in data, "Phase 3 missing linearity validation"
-    assert "h1_universal_entropy_collapse" in data, "Phase 3 missing H1 evaluation"
-    assert "h3_hub_harm_falsification" in data, "Phase 3 missing H3 evaluation"
+    assert "linearity_validation" in data, "Dose-response missing linearity validation"
+    assert "h1_universal_entropy_collapse" in data, "Dose-response missing H1 evaluation"
+    assert "h3_hub_harm_falsification" in data, "Dose-response missing H3 evaluation"
 
     # 1. Resolvent Linearity gate: L1 <= 2.0e-6
     max_l1 = data["linearity_validation"]["max_l1_error"]
@@ -245,14 +245,14 @@ def recompile_macros() -> None:
     print(f"[OK] Recompiled paper/metrics_macros.tex successfully.")
 
 
-def synchronize_writeup(phase: int) -> None:
-    """Replace Stage 1 semantic placeholders in paper_writeup.md with verified numbers."""
+def synchronize_writeup(suite: str = "all") -> None:
+    """Replace semantic placeholders in paper_writeup.md with verified numbers."""
     if not WRITEUP_PATH.is_file():
         return
 
     text = WRITEUP_PATH.read_text(encoding="utf-8")
 
-    if phase == 2 or phase == 0:
+    if suite in ("reachability", "all"):
         if REACHABILITY_JSON.is_file():
             d2 = json.loads(REACHABILITY_JSON.read_text(encoding="utf-8"))
             s2 = d2["summary"]
@@ -282,7 +282,7 @@ def synchronize_writeup(phase: int) -> None:
             for k, v in rep2.items():
                 text = text.replace(k, v)
 
-    if phase == 3 or phase == 0:
+    if suite in ("dose-response", "all"):
         if DOSE_RESPONSE_JSON.is_file():
             d3 = json.loads(DOSE_RESPONSE_JSON.read_text(encoding="utf-8"))
             h1 = d3["h1_universal_entropy_collapse"]
@@ -339,37 +339,52 @@ def run_checks() -> None:
     print(f"[OK] Manuscript word count verified: {words_split} words (split), {words_regex} words (regex).")
 
 
-def promote_phase_2() -> None:
-    print("\n--- PROMOTING PHASE 2 TELEMETRY ---")
+def promote_reachability() -> None:
+    print("\n--- PROMOTING REACHABILITY TELEMETRY ---")
     if not REACHABILITY_JSON.is_file():
         raise FileNotFoundError(f"Missing required artifact: {REACHABILITY_JSON}")
     data = json.loads(REACHABILITY_JSON.read_text(encoding="utf-8"))
-    validate_phase_2_results(data)
-    inject_macros(PHASE_2_MACROS)
-    synchronize_writeup(2)
+    validate_reachability_results(data)
+    inject_macros(REACHABILITY_MACROS)
+    synchronize_writeup("reachability")
 
 
-def promote_phase_3() -> None:
-    print("\n--- PROMOTING PHASE 3 TELEMETRY ---")
+def promote_dose_response() -> None:
+    print("\n--- PROMOTING DOSE-RESPONSE TELEMETRY ---")
     if not DOSE_RESPONSE_JSON.is_file():
         raise FileNotFoundError(f"Missing required artifact: {DOSE_RESPONSE_JSON}")
     data = json.loads(DOSE_RESPONSE_JSON.read_text(encoding="utf-8"))
-    validate_phase_3_results(data)
-    inject_macros(PHASE_3_MACROS)
-    synchronize_writeup(3)
+    validate_dose_response_results(data)
+    inject_macros(DOSE_RESPONSE_MACROS)
+    synchronize_writeup("dose-response")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Promote validated benchmark telemetry to publication artifacts.")
-    parser.add_argument("--phase", type=int, choices=[2, 3], help="Specific phase to promote (2 or 3)")
-    parser.add_argument("--all", action="store_true", help="Promote all available phases")
+    parser.add_argument(
+        "--suite",
+        choices=["reachability", "dose-response", "all"],
+        default="all",
+        help="Benchmark evaluation suite to promote",
+    )
+    parser.add_argument("--phase", type=int, choices=[2, 3], help=argparse.SUPPRESS)
+    parser.add_argument("--all", action="store_true", help="Promote all available evaluation suites")
     parser.add_argument("--verify-only", action="store_true", help="Run verification without updating files")
     args = parser.parse_args()
 
-    if args.phase == 2 or args.all:
-        promote_phase_2()
-    if args.phase == 3 or args.all:
-        promote_phase_3()
+    # Map legacy --phase if provided
+    if args.phase == 2:
+        args.suite = "reachability"
+    elif args.phase == 3:
+        args.suite = "dose-response"
+
+    if args.all or args.suite == "all":
+        promote_reachability()
+        promote_dose_response()
+    elif args.suite == "reachability":
+        promote_reachability()
+    elif args.suite == "dose-response":
+        promote_dose_response()
 
     if not args.verify_only:
         recompile_macros()

@@ -252,5 +252,63 @@
         0.58
       ]
     }
+  },
+  "stratum_c_causal_callpath_n131": {
+    "sample_size": 131,
+    "c1_baseline_isolated": {
+      "acc1": 2.29,
+      "acc1_hits": 3,
+      "acc1_clopper_pearson_95": [0.47, 6.55],
+      "acc5": 15.27,
+      "acc5_hits": 20,
+      "acc5_clopper_pearson_95": [9.58, 22.59],
+      "mrr50": 0.0778,
+      "mean_rank": 17.47
+    },
+    "c2_structural_provenance": {
+      "acc1": 3.82,
+      "acc1_hits": 5,
+      "acc1_clopper_pearson_95": [1.25, 8.68],
+      "acc5": 16.03,
+      "acc5_hits": 21,
+      "acc5_clopper_pearson_95": [10.21, 23.45],
+      "mrr50": 0.0899,
+      "mean_rank": 17.40
+    },
+    "c3_thinking_provenance": {
+      "acc1": 9.16,
+      "acc1_hits": 12,
+      "acc1_clopper_pearson_95": [4.82, 15.45],
+      "acc5": 17.56,
+      "acc5_hits": 23,
+      "acc5_clopper_pearson_95": [11.47, 25.17],
+      "mrr50": 0.1270,
+      "mean_rank": 17.18
+    },
+    "contrast_c3_vs_c1_acc1": {
+      "n10": 9,
+      "n01": 0,
+      "exact_mcnemar_two_sided_p": 0.00390625,
+      "relative_lift_pct": 300.0
+    },
+    "graph_only_subgroup_n25": {
+      "c1_acc5": 0.0,
+      "c3_acc5": 16.0,
+      "c3_stratum_c_conversion_pct": 28.57,
+      "c3_stratum_c_hits": 4,
+      "c3_stratum_c_total": 14
+    }
+  },
+  "lexical_abstraction_bottleneck": {
+    "n_tasks": 344,
+    "unscored_bm25_auc": 0.8245,
+    "seed_gold_auc": 0.7966,
+    "graph_gold_auc": 0.6596,
+    "auc_drop": 0.1370,
+    "welch_t_stat": 17.8,
+    "welch_p_val": 1e-50,
+    "cliffs_delta": 0.612,
+    "breakeven_auc_star_k5_m24_5": 0.8298,
+    "breakeven_auc_star_k5_m15": 0.7143
   }
 }

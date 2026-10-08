@@ -450,7 +450,7 @@ if __name__ == "__main__":
     )
 
     print("\n" + "=" * 78)
-    print("PHASE 3 EMPIRICAL PROBE SUMMARY (T3.2, T3.3, T3.4)")
+    print("CONFIRMATORY EMPIRICAL PROBE SUMMARY (T3.2, T3.3, T3.4)")
     print("=" * 78)
     for arm_name, metrics in summary_res["arms"].items():
         print(
