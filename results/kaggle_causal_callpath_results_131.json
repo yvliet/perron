@@ -1,0 +1,96 @@
+{
+  "suite": "causal_callpath_provenance_benchmark_131",
+  "author": "Sultan Haikal (@yvliet)",
+  "license": "Apache-2.0",
+  "n_tasks": 131,
+  "live_model_executed": true,
+  "model_name": "Gemma4ForConditionalGeneration",
+  "results": {
+    "C1_baseline": {
+      "hits_at_1": 3,
+      "hits_at_3": 12,
+      "hits_at_5": 20,
+      "hits_at_10": 28,
+      "acc_at_1_pct": 2.29,
+      "acc_at_3_pct": 9.16,
+      "acc_at_5_pct": 15.27,
+      "acc_at_10_pct": 21.37,
+      "mrr_50": 0.0778,
+      "mean_gold_rank": 17.47,
+      "median_gold_rank": 20.0
+    },
+    "C2_provenance": {
+      "hits_at_1": 5,
+      "hits_at_3": 13,
+      "hits_at_5": 21,
+      "hits_at_10": 28,
+      "acc_at_1_pct": 3.82,
+      "acc_at_3_pct": 9.92,
+      "acc_at_5_pct": 16.03,
+      "acc_at_10_pct": 21.37,
+      "mrr_50": 0.0899,
+      "mean_gold_rank": 17.4,
+      "median_gold_rank": 20.0
+    },
+    "C3_thinking": {
+      "hits_at_1": 12,
+      "hits_at_3": 18,
+      "hits_at_5": 23,
+      "hits_at_10": 28,
+      "acc_at_1_pct": 9.16,
+      "acc_at_3_pct": 13.74,
+      "acc_at_5_pct": 17.56,
+      "acc_at_10_pct": 21.37,
+      "mrr_50": 0.127,
+      "mean_gold_rank": 17.18,
+      "median_gold_rank": 20.0
+    }
+  },
+  "contrasts": {
+    "C2_provenance_vs_C1_baseline": {
+      "delta_pp": 0.76,
+      "n10": 1,
+      "n01": 0,
+      "mcnemar_p_value": 1.0
+    },
+    "C3_thinking_vs_C1_baseline": {
+      "delta_pp": 2.29,
+      "n10": 4,
+      "n01": 1,
+      "mcnemar_p_value": 0.375
+    },
+    "C3_thinking_vs_C2_provenance": {
+      "delta_pp": 1.53,
+      "n10": 3,
+      "n01": 1,
+      "mcnemar_p_value": 0.625
+    }
+  },
+  "selective_router_344": {
+    "B0 (BM25)": {
+      "hits": 154,
+      "total": 344,
+      "pct": 44.77
+    },
+    "A1 (Seeds)": {
+      "hits": 159,
+      "total": 344,
+      "pct": 46.22
+    },
+    "A2 (Depth)": {
+      "hits": 155,
+      "total": 344,
+      "pct": 45.06
+    },
+    "A4 (Graph)": {
+      "hits": 162,
+      "total": 344,
+      "pct": 47.09
+    },
+    "R_stratum (Selective)": {
+      "hits": 164,
+      "total": 344,
+      "pct": 47.67
+    }
+  }
+}
