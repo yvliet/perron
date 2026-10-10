@@ -53,8 +53,8 @@ def generate_figure4(out_dir: Path = FIGURES_DIR):
     apply_serif_style()
     print("Generating Figure 4: Causal Provenance Forest Plot & Effect Sizes...")
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7.2, 3.4), dpi=300,
-                                    gridspec_kw={'width_ratios': [1.08, 0.92]})
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7.4, 3.8), dpi=300,
+                                    gridspec_kw={'width_ratios': [1.10, 0.90]})
 
     # -------------------------------------------------------------
     # Panel A: Forest Plot of Acc@1 and Acc@5 with Clopper-Pearson CIs
@@ -62,10 +62,11 @@ def generate_figure4(out_dir: Path = FIGURES_DIR):
     conditions = [
         ("C1: Baseline Isolated", 3, 20, 0.0778, 17.47, COLOR_SLATE),
         ("C2: Call-Path Provenance", 5, 21, 0.0899, 17.40, COLOR_ORANGE),
+        ("C0: Unguided Thinking", 13, 24, 0.1358, 17.07, COLOR_GREEN),
         ("C3: Provenance + Thinking", 12, 23, 0.1270, 17.18, COLOR_BLUE),
     ]
     n_total = 131
-    y_pos = [1.0, 2.0, 3.0]
+    y_pos = [1.0, 2.0, 3.0, 4.0]
 
     for idx, (name, k1, k5, mrr, rank, col) in enumerate(conditions):
         y = y_pos[idx]
@@ -86,21 +87,29 @@ def generate_figure4(out_dir: Path = FIGURES_DIR):
                      markersize=5.5, label='Acc@5 (Top-5)' if idx == 0 else '_nolegend_', zorder=5)
         ax1.text(p5, y + 0.25, f"{p5:.1f}%", fontsize=6.8, ha='center', va='bottom', color=col, fontweight='bold', zorder=6)
 
-    # Quadrupled Top-1 McNemar Annotation Bracket (terminating cleanly below dots at zorder=1)
+    # Top-1 McNemar Annotation Bracket between C1 and C0
     dot_clearance = 0.08
-    ax1.plot([2.29, 2.29, 9.16, 9.16],
+    ax1.plot([2.29, 2.29, 9.92, 9.92],
              [1.0 - 0.14 - dot_clearance, 0.35, 0.35, 3.0 - 0.14 - dot_clearance],
-             color=COLOR_BLUE, lw=1.1, ls=':', zorder=1)
-    ax1.text(5.725, 0.18, r"$\mathbf{4.0\times\ Lift}$ ($p = 0.0039^*$)" + "\n" + r"($2.29\% \to 9.16\%$)",
-             fontsize=6.5, color=COLOR_BLUE, fontweight='bold', ha='center', va='top', zorder=4,
-             bbox=dict(boxstyle="round,pad=0.22", facecolor=COLOR_BG_CARD, edgecolor=COLOR_BLUE, lw=0.8))
+             color=COLOR_GREEN, lw=1.1, ls=':', zorder=1)
+    ax1.text(6.10, 0.18, r"$\mathbf{4.3\times\ Lift}$ ($p = 0.0063^*$)" + "\n" + r"($2.29\% \to 9.92\%$)",
+             fontsize=6.5, color=COLOR_GREEN, fontweight='bold', ha='center', va='top', zorder=4,
+             bbox=dict(boxstyle="round,pad=0.22", facecolor=COLOR_BG_CARD, edgecolor=COLOR_GREEN, lw=0.8))
+
+    # Factorial Parity Annotation (C3 vs C0) at symmetric bottom baseline
+    ax1.text(22.5, 0.18,
+             r"$\mathbf{Factorial\ Contrast:}$" + "\n" +
+             r"$C_3\ \text{vs.}\ C_0\ \text{Exact}\ p = 1.0000$" + "\n" +
+             r"$\Delta_{\text{interaction}} = -2.29\text{ pp\ (Parity)}$",
+             fontsize=6.2, color=COLOR_BLUE, ha='center', va='top', zorder=4,
+             bbox=dict(boxstyle="round,pad=0.22", facecolor='#F0F9FF', edgecolor=COLOR_BLUE, lw=0.8))
 
     ax1.set_yticks(y_pos)
-    ax1.set_yticklabels([c[0] for c in conditions], fontsize=7.8)
-    ax1.set_xlim(-0.5, 30.0)
-    ax1.set_ylim(-0.50, 3.48)
+    ax1.set_yticklabels([c[0] for c in conditions], fontsize=7.6)
+    ax1.set_xlim(-0.5, 32.0)
+    ax1.set_ylim(-0.45, 4.60)
     ax1.set_xlabel("Defect Localization Accuracy (%)")
-    ax1.set_title(r"$\mathbf{(a)}$ Stratum C Localization ($N=131$)", loc='center', fontsize=9.2, pad=32)
+    ax1.set_title(r"$\mathbf{(a)}$ Stratum C Factorial Localization ($N=131$)", loc='center', fontsize=9.0, pad=32)
 
     leg = ax1.legend(loc='lower center', bbox_to_anchor=(0.5, 1.05), ncol=2, frameon=True,
                      framealpha=0.92, facecolor='white', edgecolor=COLOR_BORDER, fontsize=7.2,
@@ -108,39 +117,39 @@ def generate_figure4(out_dir: Path = FIGURES_DIR):
                      handler_map={ErrorbarContainer: HandlerErrorbar(xerr_size=1.2, marker_pad=0.3)})
 
     # -------------------------------------------------------------
-    # Panel B: Relative Metric Lift & Subgroup Conversion
+    # Panel B: Relative Metric Lift & Factorial Comparison
     # -------------------------------------------------------------
-    metrics = [
-        ("Top-1 Accuracy\n(Acc@1)", 300.0, COLOR_BLUE, r"$\mathbf{4.0\times}$ (Exact $p = 0.0039^*$)"),
-        ("MRR@50\nScore", 63.2, COLOR_BLUE, r"+63.2% (0.0778 $\to$ 0.1270)"),
-        ("Top-3 Accuracy\n(Acc@3)", 50.0, COLOR_GREEN, r"+50.0% (9.16% $\to$ 13.74%)"),
-        ("Top-5 Accuracy\n(Acc@5)", 15.0, COLOR_GREEN, r"+15.0% (15.27% $\to$ 17.56%)"),
+    metrics_data = [
+        ("Top-1 Accuracy\n(Acc@1)", 333.3, 300.0, r"+333% (p=0.0063*)", r"+300% (p=0.0117*)"),
+        ("MRR@50\nScore", 74.6, 63.2, r"+74.6% (0.1358)", r"+63.2% (0.1270)"),
+        ("Top-3 Accuracy\n(Acc@3)", 58.3, 50.0, r"+58.3% (14.5%)", r"+50.0% (13.7%)"),
+        ("Top-5 Accuracy\n(Acc@5)", 20.0, 15.0, r"+20.0% (18.3%)", r"+15.0% (17.6%)"),
     ]
 
-    y_bar = np.arange(len(metrics))
-    bars = ax2.barh(y_bar, [m[1] for m in metrics], height=0.52,
-                    color=[m[2] for m in metrics], alpha=0.85, edgecolor=COLOR_BORDER, lw=0.8)
+    y_bar = np.arange(len(metrics_data))
+    bar_height = 0.30
 
-    for idx, (lbl, val, col, annot) in enumerate(metrics):
-        ax2.text(val + 5.0, idx, annot, fontsize=6.8, color=COLOR_SLATE, va='center', fontweight='bold')
+    bars_c0 = ax2.barh(y_bar + 0.16, [m[1] for m in metrics_data], height=bar_height,
+                       color=COLOR_GREEN, alpha=0.85, edgecolor=COLOR_BORDER, lw=0.8,
+                       label=r'C0: Unguided Thinking')
+    bars_c3 = ax2.barh(y_bar - 0.16, [m[2] for m in metrics_data], height=bar_height,
+                       color=COLOR_BLUE, alpha=0.85, edgecolor=COLOR_BORDER, lw=0.8,
+                       label=r'C3: Prov. + Thinking')
+
+    for idx, (lbl, v0, v3, a0, a3) in enumerate(metrics_data):
+        ax2.text(v0 + 6.0, idx + 0.16, a0, fontsize=6.2, color=COLOR_GREEN, va='center', fontweight='bold')
+        ax2.text(v3 + 6.0, idx - 0.16, a3, fontsize=6.2, color=COLOR_BLUE, va='center', fontweight='bold')
 
     ax2.set_yticks(y_bar)
-    ax2.set_yticklabels([m[0] for m in metrics], fontsize=7.2)
-    ax2.set_xlim(0, 395)
-    ax2.set_xticks([0, 100, 200, 300])
-    ax2.set_ylim(-0.50, 3.48)
-    ax2.set_xlabel("Relative Lift vs Baseline C1 (%)")
-    ax2.set_title(r"$\mathbf{(b)}$ Relative Effect Sizes vs. C1", loc='center', fontsize=9.2, pad=32)
+    ax2.set_yticklabels([m[0] for m in metrics_data], fontsize=7.2)
+    ax2.set_xlim(0, 440)
+    ax2.set_xticks([0, 100, 200, 300, 400])
+    ax2.set_ylim(-0.60, 3.65)
+    ax2.set_xlabel("Relative Lift vs. Baseline C1 (%)")
+    ax2.set_title(r"$\mathbf{(b)}$ Relative Effect Sizes vs. C1", loc='center', fontsize=9.0, pad=32)
 
-    # Subgroup Conversion Header Badge matching panel (a)'s legend outline, position, and height
-    leg2 = ax2.legend(
-        [plt.Line2D([], [], color='none')],
-        [r"$\mathbf{Graph\text{-}Only\ Subgroup:}\ 0.0\% \to 28.6\%\ \text{(4 of 14 tasks)}$"],
-        loc='lower center', bbox_to_anchor=(0.5, 1.0519), frameon=True,
-        framealpha=0.92, facecolor='#FAF5FF', edgecolor=COLOR_BORDER,
-        fontsize=6.5, handlelength=0, handletextpad=0, borderpad=0.484
-    )
-    leg2.get_texts()[0].set_color('#6B21A8')
+    leg2 = ax2.legend(loc='lower center', bbox_to_anchor=(0.5, 1.05), ncol=2, frameon=True,
+                      framealpha=0.92, facecolor='white', edgecolor=COLOR_BORDER, fontsize=6.8)
 
     # Clean despine on both panels (zero top/right borders, identical height L-frames with gap to legends)
     for ax in (ax1, ax2):

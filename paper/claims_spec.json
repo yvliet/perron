@@ -2249,6 +2249,53 @@
       "ptr": "/results/C2_provenance/mrr_50",
       "fmt": "num4"
     },
+    "CausalCOneMeanRank": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C1_baseline/mean_gold_rank",
+      "fmt": "num2"
+    },
+    "CausalCTwoMeanRank": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C2_provenance/mean_gold_rank",
+      "fmt": "num2"
+    },
+    "CausalCZeroAccOne": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C0_thinking/acc_at_1_pct",
+      "fmt": "pct2_raw"
+    },
+    "CausalCZeroHitsOneKN": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C0_thinking/hits_at_1",
+      "fmt": "kn",
+      "n_ptr": "/n_tasks"
+    },
+    "CausalCZeroAccThree": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C0_thinking/acc_at_3_pct",
+      "fmt": "pct2_raw"
+    },
+    "CausalCZeroAccFive": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C0_thinking/acc_at_5_pct",
+      "fmt": "pct2_raw"
+    },
+    "CausalCZeroHitsFiveKN": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C0_thinking/hits_at_5",
+      "fmt": "kn",
+      "n_ptr": "/n_tasks"
+    },
+    "CausalCZeroMRR": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C0_thinking/mrr_50",
+      "fmt": "num4"
+    },
+    "CausalCZeroMeanRank": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C0_thinking/mean_gold_rank",
+      "fmt": "num2"
+    },
     "CausalCThreeAccOne": {
       "file": "results/kaggle_causal_callpath_results_131.json",
       "ptr": "/results/C3_thinking/acc_at_1_pct",
@@ -2281,15 +2328,141 @@
       "ptr": "/results/C3_thinking/mrr_50",
       "fmt": "num4"
     },
+    "CausalCThreeMeanRank": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C3_thinking/mean_gold_rank",
+      "fmt": "num2"
+    },
     "CausalCThreeVsCOnePval": {
       "file": "results/kaggle_causal_callpath_results_131.json",
       "ptr": "/contrasts/C3_thinking_vs_C1_baseline/mcnemar_p_value",
+      "fmt": "pval4"
+    },
+    "CausalCThreeVsCOneAccOnePval": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/contrasts/C3_thinking_vs_C1_baseline_acc1/mcnemar_p_value",
       "fmt": "pval4"
     },
     "CausalCTwoVsCOnePval": {
       "file": "results/kaggle_causal_callpath_results_131.json",
       "ptr": "/contrasts/C2_provenance_vs_C1_baseline/mcnemar_p_value",
       "fmt": "pval4"
+    },
+    "CausalCTwoVsCOneAccOnePval": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/contrasts/C2_provenance_vs_C1_baseline_acc1/mcnemar_p_value",
+      "fmt": "pval4"
+    },
+    "CausalCZeroVsCOnePval": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/contrasts/C0_thinking_vs_C1_baseline/mcnemar_p_value",
+      "fmt": "pval4"
+    },
+    "CausalCZeroVsCOneAccOnePval": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/contrasts/C0_thinking_vs_C1_baseline_acc1/mcnemar_p_value",
+      "fmt": "pval4"
+    },
+    "CausalCThreeVsCZeroPval": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/contrasts/C3_thinking_vs_C0_thinking/mcnemar_p_value",
+      "fmt": "pval4"
+    },
+    "CausalCThreeVsCZeroAccOnePval": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/contrasts/C3_thinking_vs_C0_thinking_acc1/mcnemar_p_value",
+      "fmt": "pval4"
+    },
+    "CausalInteractionDelta": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/interaction/delta_interaction_pp",
+      "fmt": "pct2_raw"
+    },
+    "CausalCZeroMRRLift": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/relative_lifts/C0_mrr_lift_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalCThreeMRRLift": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/relative_lifts/C3_mrr_lift_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalSeedCOneAccOne": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/candidate_pool_subgroups/seed_connected_c1_acc1_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalSeedCOneAccFive": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/candidate_pool_subgroups/seed_connected_c1_acc5_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalSeedCZeroAccOne": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/candidate_pool_subgroups/seed_connected_c0_acc1_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalSeedCZeroAccFive": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/candidate_pool_subgroups/seed_connected_c0_acc5_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalSeedCThreeAccFive": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/candidate_pool_subgroups/seed_connected_c3_acc5_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalCZeroAccOneLift": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/relative_lifts/C0_acc1_lift_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalCThreeAccOneLift": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/relative_lifts/C3_acc1_lift_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalCZeroAccThreeLift": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/relative_lifts/C0_acc3_lift_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalCThreeAccThreeLift": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/relative_lifts/C3_acc3_lift_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalCZeroAccFiveLift": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/relative_lifts/C0_acc5_lift_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalCThreeAccFiveLift": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/relative_lifts/C3_acc5_lift_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalGraphOnlyCZeroAccOne": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/candidate_pool_subgroups/graph_only_c0_acc1_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalGraphOnlyCZeroAccFive": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/candidate_pool_subgroups/graph_only_c0_acc5_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalGraphOnlyCZeroHitsFiveKN": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/candidate_pool_subgroups/graph_only_c0_hits_5",
+      "fmt": "kn",
+      "n_ptr": "/candidate_pool_subgroups/graph_only_n"
+    },
+    "CausalGraphOnlyCThreeAccFive": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/candidate_pool_subgroups/graph_only_c3_acc5_pct",
+      "fmt": "pct1_raw"
     },
     "ListwiseAOneAccFive": {
       "file": "results/kaggle_stratum_c_listwise_results.json",
