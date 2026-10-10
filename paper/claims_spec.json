@@ -2628,6 +2628,11 @@
       "ptr": "/tables/causal_summary/subgroup_conversion_pct",
       "fmt": "pct1_raw"
     },
+    "CausalSubgroupAccOne": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/causal_summary/subgroup_acc_one_pct",
+      "fmt": "pct1_raw"
+    },
     "CausalExactBinomialPval": {
       "file": "results/gemma4_protocol_tables.json",
       "ptr": "/tables/causal_summary/exact_binomial_p",

@@ -197,6 +197,7 @@
     "causal_summary": {
       "mrr_lift_pct": 63.2,
       "subgroup_conversion_pct": 28.6,
+      "subgroup_acc_one_pct": 7.1,
       "exact_binomial_p": 0.0039,
       "subgroup_p": 0.125
     },
