@@ -305,9 +305,9 @@
     "seed_gold_auc": 0.7966,
     "graph_gold_auc": 0.6596,
     "auc_drop": 0.1370,
-    "welch_t_stat": 17.8,
-    "welch_p_val": 1e-50,
-    "cliffs_delta": 0.612,
+    "mann_whitney_u": 2993.0,
+    "mann_whitney_p": 0.00358,
+    "cliffs_delta": 0.3605,
     "breakeven_auc_star_k5_m24_5": 0.8298,
     "breakeven_auc_star_k5_m15": 0.7143
   }

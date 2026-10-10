@@ -20,6 +20,8 @@ from scripts.generate_paper_macros import render_claims  # noqa: E402
 WRITEUP = REPO_ROOT / "paper" / "paper_writeup.md"
 EXEMPT_HEADINGS = ("## 2. Related Work", "## References")
 FIXED_ALLOW = {
+    "0%",
+    "0.0%",
     "95%",
     "80%",
     "100%",
