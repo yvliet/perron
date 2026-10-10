@@ -2169,6 +2169,918 @@
       "file": "results/live_inference_telemetry.json",
       "ptr": "/transmission_coefficient_kappa",
       "fmt": "num2"
+    },
+    "CausalCohortTasks": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/n_tasks",
+      "fmt": "int"
+    },
+    "ListwiseDeltaLift": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/contrasts/A4_listwise_vs_A2_pointwise/delta_pp",
+      "fmt": "pct2_raw"
+    },
+    "ListwisePval": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/contrasts/A4_listwise_vs_A2_pointwise/mcnemar_p_value",
+      "fmt": "pval4"
+    },
+    "CausalCOneAccOne": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C1_baseline/acc_at_1_pct",
+      "fmt": "pct2_raw"
+    },
+    "CausalCOneHitsOneKN": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C1_baseline/hits_at_1",
+      "fmt": "kn",
+      "n_ptr": "/n_tasks"
+    },
+    "CausalCOneAccThree": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C1_baseline/acc_at_3_pct",
+      "fmt": "pct2_raw"
+    },
+    "CausalCOneAccFive": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C1_baseline/acc_at_5_pct",
+      "fmt": "pct2_raw"
+    },
+    "CausalCOneHitsFiveKN": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C1_baseline/hits_at_5",
+      "fmt": "kn",
+      "n_ptr": "/n_tasks"
+    },
+    "CausalCOneMRR": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C1_baseline/mrr_50",
+      "fmt": "num4"
+    },
+    "CausalCTwoAccOne": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C2_provenance/acc_at_1_pct",
+      "fmt": "pct2_raw"
+    },
+    "CausalCTwoHitsOneKN": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C2_provenance/hits_at_1",
+      "fmt": "kn",
+      "n_ptr": "/n_tasks"
+    },
+    "CausalCTwoAccThree": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C2_provenance/acc_at_3_pct",
+      "fmt": "pct2_raw"
+    },
+    "CausalCTwoAccFive": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C2_provenance/acc_at_5_pct",
+      "fmt": "pct2_raw"
+    },
+    "CausalCTwoHitsFiveKN": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C2_provenance/hits_at_5",
+      "fmt": "kn",
+      "n_ptr": "/n_tasks"
+    },
+    "CausalCTwoMRR": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C2_provenance/mrr_50",
+      "fmt": "num4"
+    },
+    "CausalCThreeAccOne": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C3_thinking/acc_at_1_pct",
+      "fmt": "pct2_raw"
+    },
+    "CausalCThreeHitsOneKN": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C3_thinking/hits_at_1",
+      "fmt": "kn",
+      "n_ptr": "/n_tasks"
+    },
+    "CausalCThreeAccThree": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C3_thinking/acc_at_3_pct",
+      "fmt": "pct2_raw"
+    },
+    "CausalCThreeAccFive": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C3_thinking/acc_at_5_pct",
+      "fmt": "pct2_raw"
+    },
+    "CausalCThreeHitsFiveKN": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C3_thinking/hits_at_5",
+      "fmt": "kn",
+      "n_ptr": "/n_tasks"
+    },
+    "CausalCThreeMRR": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/results/C3_thinking/mrr_50",
+      "fmt": "num4"
+    },
+    "CausalCThreeVsCOnePval": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/contrasts/C3_thinking_vs_C1_baseline/mcnemar_p_value",
+      "fmt": "pval4"
+    },
+    "CausalCTwoVsCOnePval": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/contrasts/C2_provenance_vs_C1_baseline/mcnemar_p_value",
+      "fmt": "pval4"
+    },
+    "ListwiseAOneAccFive": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A1_listwise/acc_at_5_pct",
+      "fmt": "pct2_raw"
+    },
+    "ListwiseATwoAccFive": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A2_listwise/acc_at_5_pct",
+      "fmt": "pct2_raw"
+    },
+    "ListwiseAFourAccFive": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A4_listwise/acc_at_5_pct",
+      "fmt": "pct2_raw"
+    },
+    "ListwiseAFourHitsFiveKN": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A4_listwise/hits_at_5",
+      "fmt": "kn",
+      "n_ptr": "/n_tasks"
+    },
+    "ListwiseAFourVsATwoPval": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/stratum_c_listwise_summary/A4_vs_A2_p_value",
+      "fmt": "pval4"
+    },
+    "ProtocolBZeroAccOne": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/B0/acc_1",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolBZeroAccFive": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/B0/acc_5",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolBZeroAccTen": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/B0/acc_10",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolBOneAccOne": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/B1/acc_1",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolBOneAccFive": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/B1/acc_5",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolBOneAccTen": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/B1/acc_10",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolAOneAccOne": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A1/acc_1",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolAOneAccFive": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A1/acc_5",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolAOneAccTen": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A1/acc_10",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolATwoAccOne": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A2/acc_1",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolATwoAccFive": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A2/acc_5",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolATwoAccTen": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A2/acc_10",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolAThreeAccOne": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A3/acc_1",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolAThreeAccFive": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A3/acc_5",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolAThreeAccTen": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A3/acc_10",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolAFourAccOne": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A4/acc_1",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolAFourAccFive": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A4/acc_5",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolAFourAccTen": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A4/acc_10",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolAFiveAccOne": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A5/acc_1",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolAFiveAccFive": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A5/acc_5",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolAFiveAccTen": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A5/acc_10",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolASixAccOne": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A6/acc_1",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolASixAccFive": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A6/acc_5",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolASixAccTen": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A6/acc_10",
+      "fmt": "pct1_raw"
+    },
+    "ProtocolPCOneHolmPval": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_b/PC1/p_holm",
+      "fmt": "pval"
+    },
+    "ProtocolPCTwoHolmPval": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_b/PC2/p_holm",
+      "fmt": "pval"
+    },
+    "ReaderDZeroContextHit": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_e_reader/D0/context_hit_5",
+      "fmt": "pct1_raw"
+    },
+    "ReaderDZeroEditLoc": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_e_reader/D0/edit_loc_1",
+      "fmt": "pct1_raw"
+    },
+    "ReaderDOneContextHit": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_e_reader/D1/context_hit_5",
+      "fmt": "pct1_raw"
+    },
+    "ReaderDOneEditLoc": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_e_reader/D1/edit_loc_1",
+      "fmt": "pct1_raw"
+    },
+    "ReaderDTwoContextHit": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_e_reader/D2/context_hit_5",
+      "fmt": "pct1_raw"
+    },
+    "ReaderDTwoEditLoc": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_e_reader/D2/edit_loc_1",
+      "fmt": "pct1_raw"
+    },
+    "ReaderDThreeContextHit": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_e_reader/D3/context_hit_5",
+      "fmt": "pct1_raw"
+    },
+    "ReaderDThreeEditLoc": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_e_reader/D3/edit_loc_1",
+      "fmt": "pct1_raw"
+    },
+    "StrataDistA": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/strata_distribution/stratum_a_pct",
+      "fmt": "pct1_raw"
+    },
+    "StrataDistB": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/strata_distribution/stratum_b_pct",
+      "fmt": "pct1_raw"
+    },
+    "StrataDistC": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/strata_distribution/stratum_c_pct",
+      "fmt": "pct1_raw"
+    },
+    "ReasoningHeadroomProtocol": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/headroom/reasoning_headroom_pct",
+      "fmt": "pct1_raw"
+    },
+    "AiderFileAccProtocol": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/external_baselines/aider_file_acc_5",
+      "fmt": "pct1_raw"
+    },
+    "DenseFnAccProtocol": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/external_baselines/dense_fn_acc_10",
+      "fmt": "pct1_raw"
+    },
+    "PConeDiscordant": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_b/PC1/n10",
+      "n_ptr": "/tables/table_t_b/PC1/n01",
+      "fmt": "kn"
+    },
+    "PCtwoDiscordant": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_b/PC2/n10",
+      "n_ptr": "/tables/table_t_b/PC2/n01",
+      "fmt": "kn"
+    },
+    "ContrastAFourAOneDiscordant": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/contrasts_exploratory/A4_vs_A1/n10",
+      "n_ptr": "/tables/contrasts_exploratory/A4_vs_A1/n01",
+      "fmt": "kn"
+    },
+    "ContrastAFourAOnePval": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/contrasts_exploratory/A4_vs_A1/p_value",
+      "fmt": "pval"
+    },
+    "ContrastAFourAFivePval": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/contrasts_exploratory/A4_vs_A5/p_value",
+      "fmt": "pval"
+    },
+    "ContrastAFourASixPval": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/contrasts_exploratory/A4_vs_A6/p_value",
+      "fmt": "pval"
+    },
+    "ContrastTOSTPval": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/contrasts_exploratory/tost_equivalence/p_value",
+      "fmt": "pval"
+    },
+    "RRFHitsFraction": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/selective_gating/rrf_hits",
+      "n_ptr": "/sample_n",
+      "fmt": "kn"
+    },
+    "RRFAccPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/selective_gating/rrf_acc_pct",
+      "fmt": "pct2_raw"
+    },
+    "TruncRecallATwoMifty": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A2/recall_50",
+      "fmt": "pct1_raw"
+    },
+    "TruncRecallAFourMfifteen": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A4/recall_15",
+      "fmt": "pct1_raw"
+    },
+    "TruncRecallAFourMifty": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A4/recall_50",
+      "fmt": "pct1_raw"
+    },
+    "TruncAccFiveAFourMfifteen": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A4/acc_5_15",
+      "fmt": "pct1_raw"
+    },
+    "TruncAccFiveAFourMthirty": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A4/acc_5_30",
+      "fmt": "pct1_raw"
+    },
+    "StrataAsymAConversion": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/strata_asymmetry_25/stratum_a/conversion_pct",
+      "fmt": "pct1_raw"
+    },
+    "StrataAsymADiscordant": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/strata_asymmetry_25/stratum_a/n10",
+      "n_ptr": "/tables/strata_asymmetry_25/stratum_a/n01",
+      "fmt": "kn"
+    },
+    "StrataAsymAPval": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/strata_asymmetry_25/stratum_a/p_value",
+      "fmt": "pval4"
+    },
+    "StrataAsymCDiscordant": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/strata_asymmetry_25/stratum_c/n10",
+      "n_ptr": "/tables/strata_asymmetry_25/stratum_c/n01",
+      "fmt": "kn"
+    },
+    "StrataAsymCPval": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/strata_asymmetry_25/stratum_c/p_value",
+      "fmt": "pval4"
+    },
+    "CausalMRRLift": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/causal_summary/mrr_lift_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalSubgroupConversion": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/causal_summary/subgroup_conversion_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalExactBinomialPval": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/causal_summary/exact_binomial_p",
+      "fmt": "pval4"
+    },
+    "CausalSubgroupPval": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/causal_summary/subgroup_p",
+      "fmt": "pval4"
+    },
+    "TreeAccPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/selective_gating/tree_acc_pct",
+      "fmt": "pct2_raw"
+    },
+    "TreeHitsFraction": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/selective_gating/tree_hits",
+      "n_ptr": "/sample_n",
+      "fmt": "kn"
+    },
+    "StratumRouterAccPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/selective_gating/stratum_router_acc_pct",
+      "fmt": "pct2_raw"
+    },
+    "OracleCeilingAccPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/selective_gating/oracle_ceiling_pct",
+      "fmt": "pct2_raw"
+    },
+    "PointwiseATwoHitsKN": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/stratum_c_pointwise/A2_hits",
+      "n_ptr": "/tables/stratum_c_pointwise/total",
+      "fmt": "kn"
+    },
+    "PointwiseAFourHitsKN": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/stratum_c_pointwise/A4_hits",
+      "n_ptr": "/tables/stratum_c_pointwise/total",
+      "fmt": "kn"
+    },
+    "PointwiseAFourAccPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/stratum_c_pointwise/A4_acc_pct",
+      "fmt": "pct2_raw"
+    },
+    "PointwiseAFourPval": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/stratum_c_pointwise/A4_vs_A2_p_value",
+      "fmt": "pval4"
+    },
+    "ListwiseMRRLift": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/stratum_c_listwise_summary/mrr_lift_pct",
+      "fmt": "pct1_raw"
+    },
+    "ListwiseAFourVsATwoPointwisePval": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/stratum_c_listwise_summary/A4_vs_A2_pointwise_p_value",
+      "fmt": "pval4"
+    },
+    "TabOneBMFileAcc": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_one_verified/bm25_file_acc_5",
+      "fmt": "pct1_raw"
+    },
+    "TabOneDegPPRAccFive": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_one_verified/deg_ppr_acc_5",
+      "fmt": "pct1_raw"
+    },
+    "TabOneHippoHSI": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_one_verified/hipporag_hsi",
+      "fmt": "pct1_raw"
+    },
+    "TabOneAiderHSI": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_one_verified/aider_hsi",
+      "fmt": "pct1_raw"
+    },
+    "TabOneDenseFnAcc": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_one_verified/dense_fn_acc_10",
+      "fmt": "pct1_raw"
+    },
+    "TabOneDenseCILo": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_one_verified/dense_ci_lo",
+      "fmt": "pct1_raw"
+    },
+    "TabOneDenseCIHi": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_one_verified/dense_ci_hi",
+      "fmt": "pct1_raw"
+    },
+    "TabOneDenseAccFive": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_one_verified/dense_acc_5",
+      "fmt": "pct1_raw"
+    },
+    "TabOneDenseHSI": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_one_verified/dense_hsi",
+      "fmt": "pct1_raw"
+    },
+    "DiscordantPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/protocol_stats/discordant_pct",
+      "fmt": "pct2_raw"
+    },
+    "DiscordantSeedPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/protocol_stats/discordant_seed_pct",
+      "fmt": "pct1_raw"
+    },
+    "BreakevenAUCPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/protocol_stats/breakeven_auc_pct",
+      "fmt": "pct1_raw"
+    },
+    "SeedLexicalOverlapPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/protocol_stats/seed_lexical_overlap_pct",
+      "fmt": "pct1_raw"
+    },
+    "SameFileContainmentPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/protocol_stats/same_file_containment_pct",
+      "fmt": "pct1_raw"
+    },
+    "OracleCeilingRepoPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/protocol_stats/oracle_ceiling_repo_pct",
+      "fmt": "pct2_raw"
+    },
+    "TruncRecallMTenExact": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/protocol_stats/trunc_recall_m10_exact",
+      "fmt": "pct2_raw"
+    },
+    "TruncRecallMFiftyExact": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/protocol_stats/trunc_recall_m50_exact",
+      "fmt": "pct2_raw"
+    },
+    "TruncAccFiveMTenExact": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/protocol_stats/trunc_acc5_m10_exact",
+      "fmt": "pct2_raw"
+    },
+    "TruncAccFiveMFiftyATwoExact": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/protocol_stats/trunc_acc5_m50_a2_exact",
+      "fmt": "pct2_raw"
+    },
+    "TruncAccFiveMFiftyAFourExact": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/protocol_stats/trunc_acc5_m50_a4_exact",
+      "fmt": "pct2_raw"
+    },
+    "CausalPilotCTwoAccOne": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/protocol_stats/causal_pilot_c2_acc1",
+      "fmt": "pct1_raw"
+    },
+    "CausalPilotCTwoAccFive": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/protocol_stats/causal_pilot_c2_acc5",
+      "fmt": "pct1_raw"
+    },
+    "CausalPilotCThreeAccOne": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/protocol_stats/causal_pilot_c3_acc1",
+      "fmt": "pct1_raw"
+    },
+    "CausalPilotCThreeAccFive": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/protocol_stats/causal_pilot_c3_acc5",
+      "fmt": "pct1_raw"
+    },
+    "TableTABZeroAccThree": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/B0/acc_3",
+      "fmt": "pct1_raw"
+    },
+    "TableTABOneAccThree": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/B1/acc_3",
+      "fmt": "pct1_raw"
+    },
+    "TableTAAOneAccThree": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A1/acc_3",
+      "fmt": "pct1_raw"
+    },
+    "TableTAASixAccThree": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_a/A6/acc_3",
+      "fmt": "pct1_raw"
+    },
+    "ReaderChanceAdjustedPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_e_reader/chance_adjusted_rate",
+      "fmt": "pct1_raw"
+    },
+    "SelectiveRouterBZeroPct": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/selective_router_344/B0 (BM25)/pct",
+      "fmt": "pct2_raw"
+    },
+    "StratumACount": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_counts/A",
+      "fmt": "int"
+    },
+    "StratumAPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/strata_distribution/stratum_a_pct",
+      "fmt": "pct1_raw"
+    },
+    "StratumBCount": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_counts/B",
+      "fmt": "int"
+    },
+    "StratumBPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/strata_distribution/stratum_b_pct",
+      "fmt": "pct1_raw"
+    },
+    "StratumCCount": {
+      "file": "results/verified_confirmatory_evaluation.json",
+      "ptr": "/strata_counts/C",
+      "fmt": "int"
+    },
+    "StratumCPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/strata_distribution/stratum_c_pct",
+      "fmt": "pct1_raw"
+    },
+    "RerankTotalForwardPasses": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/rerank_total_forward_passes",
+      "fmt": "thousands"
+    },
+    "RerankAFourExtraPasses": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/rerank_a4_extra_passes",
+      "fmt": "thousands"
+    },
+    "RerankPoolOracleRecall": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/rerank_pool_oracle_recall_pct",
+      "fmt": "pct1_raw"
+    },
+    "RerankPoolOracleHitsKN": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/rerank_pool_oracle_hits",
+      "n_ptr": "/tables/authoritative_constants/rerank_pool_oracle_total",
+      "fmt": "kn"
+    },
+    "RerankBoundaryLossPP": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/rerank_boundary_loss_pp",
+      "fmt": "num1"
+    },
+    "RerankCompactionLossPP": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/rerank_compaction_loss_pp",
+      "fmt": "num1"
+    },
+    "RerankBottleneckRatio": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/rerank_bottleneck_ratio",
+      "fmt": "ratio_x"
+    },
+    "RerankWilcoxonW": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/rerank_wilcoxon_w",
+      "fmt": "thousands"
+    },
+    "RerankWilcoxonP": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/rerank_wilcoxon_p",
+      "fmt": "pval2"
+    },
+    "RerankDiscordantNZeroOne": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/rerank_discordant_n01",
+      "fmt": "int"
+    },
+    "RerankDiscordantNOneZero": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/rerank_discordant_n10",
+      "fmt": "int"
+    },
+    "RerankDiscordantMcNemarP": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/rerank_discordant_mcnemar_p",
+      "fmt": "pval4"
+    },
+    "NonDjangoTasks": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/non_django_tasks",
+      "fmt": "int"
+    },
+    "NonDjangoDeltaPP": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/non_django_delta_pp",
+      "fmt": "delta_pp"
+    },
+    "NonDjangoMcNemarP": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/non_django_mcnemar_p",
+      "fmt": "pval3"
+    },
+    "NonDjangoPoolParityPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/non_django_pool_parity_pct",
+      "fmt": "pct1_raw"
+    },
+    "TruncATwoRecallTen": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A2/recall_10",
+      "fmt": "pct1_raw"
+    },
+    "TruncATwoAccFiveTen": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A2/acc_5_10",
+      "fmt": "pct1_raw"
+    },
+    "TruncATwoRecallFifteen": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A2/recall_15",
+      "fmt": "pct1_raw"
+    },
+    "TruncATwoAccFiveFifteen": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A2/acc_5_15",
+      "fmt": "pct1_raw"
+    },
+    "TruncATwoRecallTwenty": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A2/recall_20",
+      "fmt": "pct1_raw"
+    },
+    "TruncATwoAccFiveTwenty": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A2/acc_5_20",
+      "fmt": "pct1_raw"
+    },
+    "TruncATwoRecallThirty": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A2/recall_30",
+      "fmt": "pct1_raw"
+    },
+    "TruncATwoAccFiveThirty": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A2/acc_5_30",
+      "fmt": "pct1_raw"
+    },
+    "TruncATwoRecallFifty": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A2/recall_50",
+      "fmt": "pct1_raw"
+    },
+    "TruncATwoAccFiveFifty": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A2/acc_5_50",
+      "fmt": "pct1_raw"
+    },
+    "TruncAFourRecallTen": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A4/recall_10",
+      "fmt": "pct1_raw"
+    },
+    "TruncAFourAccFiveTen": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A4/acc_5_10",
+      "fmt": "pct1_raw"
+    },
+    "TruncAFourRecallFifteen": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A4/recall_15",
+      "fmt": "pct1_raw"
+    },
+    "TruncAFourAccFiveFifteen": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A4/acc_5_15",
+      "fmt": "pct1_raw"
+    },
+    "TruncAFourRecallTwenty": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A4/recall_20",
+      "fmt": "pct1_raw"
+    },
+    "TruncAFourAccFiveTwenty": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A4/acc_5_20",
+      "fmt": "pct1_raw"
+    },
+    "TruncAFourRecallThirty": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A4/recall_30",
+      "fmt": "pct1_raw"
+    },
+    "TruncAFourAccFiveThirty": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A4/acc_5_30",
+      "fmt": "pct1_raw"
+    },
+    "TruncAFourRecallFifty": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A4/recall_50",
+      "fmt": "pct1_raw"
+    },
+    "TruncAFourAccFiveFifty": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_c_truncation/A4/acc_5_50",
+      "fmt": "pct1_raw"
+    },
+    "DiscordantGraphOnlyStratumAPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/discordant_strata_breakdown/graph_only_a_pct",
+      "fmt": "pct1_raw"
+    },
+    "DiscordantGraphOnlyStratumBPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/discordant_strata_breakdown/graph_only_b_pct",
+      "fmt": "pct1_raw"
+    },
+    "DiscordantGraphOnlyStratumCPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/discordant_strata_breakdown/graph_only_c_pct",
+      "fmt": "pct1_raw"
+    },
+    "DiscordantLexicalOnlyStratumAPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/discordant_strata_breakdown/lexical_only_a_pct",
+      "fmt": "pct1_raw"
+    },
+    "DiscordantLexicalOnlyStratumBPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/discordant_strata_breakdown/lexical_only_b_pct",
+      "fmt": "pct1_raw"
+    },
+    "DiscordantLexicalOnlyStratumCPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/discordant_strata_breakdown/lexical_only_c_pct",
+      "fmt": "pct1_raw"
     }
   }
 }

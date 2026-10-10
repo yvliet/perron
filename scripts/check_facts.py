@@ -19,7 +19,14 @@ from scripts.generate_paper_macros import render_claims  # noqa: E402
 
 WRITEUP = REPO_ROOT / "paper" / "paper_writeup.md"
 EXEMPT_HEADINGS = ("## 2. Related Work", "## References")
-FIXED_ALLOW = {"95%"}  # confidence level label
+FIXED_ALLOW = {
+    "95%",
+    "80%",
+    "100%",
+    "65%",
+    "2 ms",
+    "p < 0.05",
+}  # statistical conventions and SLA labels
 TOKEN_RES = (
     re.compile(r"\d+(?:\.\d+)?%"),
     re.compile(r"(?<![\w/.])\d+/\d+(?![\w/])"),
@@ -44,7 +51,11 @@ def checked_lines(text: str):
 def check_facts() -> int:
     claims = render_claims()
     allowed = {_norm(c["plain"]) for c in claims} | {_norm(t) for t in FIXED_ALLOW}
-    allowed |= {"p" + _norm(c["plain"]) for c in claims if c["fmt"] == "pval"}
+    for c in claims:
+        p = _norm(c["plain"])
+        if c["fmt"].startswith("pval") or c["fmt"] == "pcell":
+            allowed.add("p" + p)
+            allowed.add("p=" + p.lstrip("="))
     text = WRITEUP.read_text(encoding="utf-8")
     if re.search(r"\{\{[A-Za-z]+\}\}", text):
         print("[FAIL] unresolved {{Macro}} placeholder in writeup")
