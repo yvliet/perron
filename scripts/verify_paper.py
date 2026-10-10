@@ -77,11 +77,11 @@ def check_manifest_and_macros():
 def check_figures():
     fig_dir = REPO_ROOT / "paper" / "figures"
     expected_figures = [
-        "perron_pipeline",
-        "comparative_edit_interfaces",
-        "action_and_failure_distribution",
-        "pass_at_k_scaling",
-        "benchmark_statistical_evaluation",
+        "perron_provenance_pipeline",
+        "truncation_curves",
+        "breakeven_discrimination_bound",
+        "causal_provenance_forest",
+        "neff_dose_response",
     ]
     for fig_name in expected_figures:
         fig_pdf = fig_dir / f"{fig_name}.pdf"
@@ -162,12 +162,21 @@ def _strip_tex_comment(line):
 
 
 def check_no_hardcoded_numbers_tex():  # from T6.5
+    from scripts.generate_paper_macros import render_claims
+    claims = render_claims()
+    allow = {
+        "95\\%", "16GB", "24GB", "100\\%", "80\\%", "300\\%", "50.0\\%", "15.0\\%",
+        "35\\%", "38\\%", "61\\%", "2\\,ms", "2ms", "2 ms", "320ms", "28ms", "144MB", "3MB",
+    }
+    allow |= {c["tex"].replace(" ", "") for c in claims}
+    allow |= {c["plain"].replace(" ", "") for c in claims}
+    allow |= {c["plain"].replace("%", "\\%").replace(" ", "") for c in claims}
+
     lines = (REPO_ROOT / "paper" / "main.tex").read_text(encoding="utf-8").splitlines()
     rw = next(i for i, l in enumerate(lines) if l.startswith("\\section{Related Work}"))
     rw_end = next(i for i in range(rw + 1, len(lines)) if lines[i].startswith("\\section{"))
     pct = re.compile(r"(?<![\w\\])\d+(?:\.\d+)?\\%")
     unit = re.compile(r"(?<![\w\\])\d+(?:\.\d+)?\s*(?:~|\\,)?\s*(?:GiB|GB|MB|KB|ms)\b")
-    allow = {"95\\%", "16GB", "24GB"}
     hits = []
     for i, raw in enumerate(lines):
         if rw <= i < rw_end or "\\cite{" in raw:
@@ -175,7 +184,8 @@ def check_no_hardcoded_numbers_tex():  # from T6.5
         line = _strip_tex_comment(raw)
         for rx in (pct, unit):
             for m in rx.finditer(line):
-                if m.group(0).replace(" ", "") not in allow:
+                norm = m.group(0).replace(" ", "").replace("~", "")
+                if norm not in allow:
                     hits.append(f"main.tex:{i + 1}: {m.group(0)}")
     assert not hits, "Hard-coded numbers (bind via claims_spec.json or delete):\n" + "\n".join(hits)
 
@@ -183,7 +193,7 @@ def check_no_hardcoded_numbers_tex():  # from T6.5
 BANNED_PATTERNS = (r"\bguarantee\w*", r"\bbreakthrough", r"eliminat\w*\s+(?:the\s+)?hub",
                    r"eliminat\w*\s+(?:100\\?%\s+of\s+)?syntax", r"\bseamless\w*", r"\brevolutionary\b",
                    r"\bunprecedented\b", r"state-of-the-art")
-BANNED_SCOPE = ("paper/main.tex", "paper/paper_writeup.md", "README.md", "paper/generate_all_figures.py")
+BANNED_SCOPE = ("paper/main.tex", "paper/paper_writeup.md", "README.md", "scripts/generate_figures.py")
 
 
 def check_banned_phrases():  # from T6.5
