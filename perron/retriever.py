@@ -481,6 +481,8 @@ class CodeGraph:
 
         return cls(cache_path, nodes, t_matrix, symbols, metadata, dangling, pi_global)
 
+    from_repository = from_directory
+
     def close(self) -> None:
         """Close memory-mapped array buffers safely."""
         close_mmap_csr(self.t_matrix, self.dangling, self.pi_global)

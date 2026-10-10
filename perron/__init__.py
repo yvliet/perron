@@ -51,6 +51,11 @@ from perron.retriever import (
     CodeGraph,
     PerronRetriever,
 )
+from perron.api import (
+    CandidateResult,
+    RetrievalResult,
+    diffuse_with_provenance,
+)
 
 __all__ = [
     "build_static_transition_matrix",
@@ -78,6 +83,9 @@ __all__ = [
     "TurnTelemetry",
     "CodeGraph",
     "PerronRetriever",
+    "CandidateResult",
+    "RetrievalResult",
+    "diffuse_with_provenance",
     "__version__",
 ]
 
