@@ -2443,6 +2443,16 @@
       "ptr": "/relative_lifts/C3_acc5_lift_pct",
       "fmt": "pct1_raw"
     },
+    "CausalGraphOnlyCOneAccOne": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/candidate_pool_subgroups/graph_only_c1_acc1_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalGraphOnlyCOneAccFive": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/candidate_pool_subgroups/graph_only_c1_acc5_pct",
+      "fmt": "pct1_raw"
+    },
     "CausalGraphOnlyCZeroAccOne": {
       "file": "results/kaggle_causal_callpath_results_131.json",
       "ptr": "/candidate_pool_subgroups/graph_only_c0_acc1_pct",
