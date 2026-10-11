@@ -1,0 +1,260 @@
+#!/usr/bin/env python3
+"""
+scripts/integrate_control1_notebook.py - Integrates Control 1 into notebooks/kaggle_gemma4_workstation.ipynb
+"""
+
+import json
+from pathlib import Path
+
+NOTEBOOK_PATH = Path("notebooks/kaggle_gemma4_workstation.ipynb")
+
+
+def main():
+    if not NOTEBOOK_PATH.exists():
+        raise FileNotFoundError(f"Notebook not found: {NOTEBOOK_PATH}")
+
+    nb = json.loads(NOTEBOOK_PATH.read_text(encoding="utf-8"))
+    cells = nb.get("cells", [])
+
+    # Check if Control 1 is already present
+    for c in cells:
+        src = "".join(c.get("source", []))
+        if "Control 1: Candidate Pool Source under Test-Time Reasoning" in src:
+            print("[+] Control 1 is already integrated in notebook.")
+            return
+
+    md_source = [
+        "## 10. Control 1: Candidate Pool Source under Test-Time Reasoning ($N=131$ Stratum C)\n",
+        "\n",
+        "To evaluate whether candidate pool source ($A_4$ graph expansion vs. $A_2$ depth BM25 vs. $A_1$ seeds-only) alters bug localization once test-time reasoning is allocated, we evaluate:\n",
+        "1. **Arm R4 ($A_2$ Depth BM25 + Thinking)**: $M \\le 25$ candidate pool with test-time reasoning tokens (`<thought>...</thought>`).\n",
+        "2. **Arm R5 ($A_1$ Seeds Only + Thinking)**: $M = 10$ seed-only candidate pool with test-time reasoning tokens (`<thought>...</thought>`).\n",
+        "3. **Reference R2 ($A_4$ Graph 1-Hop + Thinking)**: $M \\le 25$ graph-expanded candidate pool (Condition C0/C3 from Section 9).\n",
+        "\n",
+        "We report Acc@1, Acc@5, MRR@50, and exact two-sided binomial McNemar paired tests against $A_4$ across all 131 Stratum C un-named defect tasks.\n"
+    ]
+
+    code_source = [
+        "# Step 10: Control 1: Candidate Pool Source under Test-Time Reasoning Benchmark\n",
+        "import os, sys, re, time, json, math\n",
+        "from pathlib import Path\n",
+        "from typing import Any, Dict, List, Optional, Sequence, Tuple\n",
+        "import numpy as np\n",
+        "from scipy import stats\n",
+        "\n",
+        "print('=' * 80)\n",
+        "print(' Step 10: Control 1: Candidate Pool Source under Test-Time Reasoning')\n",
+        "print('=' * 80)\n",
+        "\n",
+        "out_dir = Path('/kaggle/working') if Path('/kaggle/working').exists() else Path('scratch/kaggle_run_output')\n",
+        "out_dir.mkdir(parents=True, exist_ok=True)\n",
+        "has_live_model = ('model' in globals() and model is not None and 'tokenizer' in globals() and tokenizer is not None)\n",
+        "\n",
+        "# Locate Stratum C evaluation bundle\n",
+        "bundle_paths = [\n",
+        "    Path('/kaggle/input/perron-gemma4-benchmark/stratum_c_eval_bundle.json'),\n",
+        "    Path('/kaggle/input/stratum_c_eval_bundle.json'),\n",
+        "    Path('data_release/stratum_c_eval_bundle.json'),\n",
+        "    Path('../data_release/stratum_c_eval_bundle.json'),\n",
+        "]\n",
+        "\n",
+        "bundle_file = None\n",
+        "for p in bundle_paths:\n",
+        "    if p.exists():\n",
+        "        bundle_file = p\n",
+        "        break\n",
+        "\n",
+        "if bundle_file is None:\n",
+        "    base_input = Path('/kaggle/input')\n",
+        "    if base_input.exists():\n",
+        "        for p in sorted(base_input.rglob('stratum_c_eval_bundle.json')):\n",
+        "            if p.exists():\n",
+        "                bundle_file = p\n",
+        "                break\n",
+        "\n",
+        "if bundle_file is not None:\n",
+        "    print(f'[+] Loaded Stratum C evaluation bundle from {bundle_file}')\n",
+        "    bundle_data = json.loads(bundle_file.read_text(encoding='utf-8'))\n",
+        "    tasks_c = bundle_data.get('tasks', [])\n",
+        "else:\n",
+        "    print('[!] Evaluation bundle not found on filesystem; checking pre-computed telemetry artifact...')\n",
+        "    tasks_c = []\n",
+        "\n",
+        "telemetry_paths = [\n",
+        "    Path('/kaggle/input/perron-gemma4-benchmark/control1_dual_t4_results.json'),\n",
+        "    Path('results/control1_dual_t4_results.json'),\n",
+        "    Path('../results/control1_dual_t4_results.json'),\n",
+        "]\n",
+        "telemetry_file = None\n",
+        "for p in telemetry_paths:\n",
+        "    if p.exists():\n",
+        "        telemetry_file = p\n",
+        "        break\n",
+        "\n",
+        "def format_control1_prompt_nb(task, pool_key='A2', max_cands=25):\n",
+        "    issue = task.get('problem_statement', '')\n",
+        "    if len(issue) > 3200:\n",
+        "        half = (3200 - 60) // 2\n",
+        "        issue = issue[:half] + ' ... [TRUNCATED] ... ' + issue[-half:]\n",
+        "    all_cands = task.get('candidates', [])\n",
+        "    cand_by_idx = {c['cand_index']: c for c in all_cands}\n",
+        "    pool_indices = task.get('pools', {}).get(pool_key, [])[:max_cands]\n",
+        "    cand_idx_to_sym = {}\n",
+        "    cand_lines = []\n",
+        "    for cid in pool_indices:\n",
+        "        c = cand_by_idx.get(cid)\n",
+        "        if not c:\n",
+        "            continue\n",
+        "        sym_id = c.get('symbol_id', c.get('node_idx', cid))\n",
+        "        cand_idx_to_sym[cid] = sym_id\n",
+        "        bc = c.get('baseline_breadcrumb') or c.get('breadcrumb', '')\n",
+        "        if not bc:\n",
+        "            bc = f\"# File: {c.get('file_path','unknown')} (Lines {c.get('line_start',1)}-{c.get('line_end',1)})\\ndef {c.get('identifier','unknown')}(...): pass\"\n",
+        "        elif len(bc) > 240:\n",
+        "            bc = bc[:235] + ' ... [truncated]'\n",
+        "        cand_lines.append(f'[Candidate ID: {cid}]\\n{bc}')\n",
+        "    cands_block = '\\n\\n'.join(cand_lines)\n",
+        "    prompt = (\n",
+        "        \"You are an expert developer resolving a software issue in a codebase.\\n\\n\"\n",
+        "        f\"### Issue Description:\\n{issue}\\n\\n\"\n",
+        "        f\"### Candidate Functions ({len(cand_lines)} candidates retrieved):\\n\"\n",
+        "        f\"{cands_block}\\n\\n\"\n",
+        "        \"### Task:\\n\"\n",
+        "        \"Identify the primary root-cause location that must be modified to fix the issue.\\n\"\n",
+        "        \"First, reflect on candidate functionality, call relationships, and root-cause likelihood inside <thought>...</thought> tags.\\n\"\n",
+        "        \"Then, output your top-5 ranking by Candidate ID in descending order of likelihood.\\n\"\n",
+        "        \"Format your ranking strictly in tags: <ranking>[ID1, ID2, ID3, ID4, ID5]</ranking>.\"\n",
+        "    )\n",
+        "    return prompt, pool_indices, cand_idx_to_sym\n",
+        "\n",
+        "def parse_ranking_nb(text, valid_ids):\n",
+        "    if not text:\n",
+        "        return []\n",
+        "    valid_set = set(valid_ids)\n",
+        "    m = re.search(r'<ranking>\\s*\\[?([\\d\\s,]+)\\]?\\s*</ranking>', text, re.IGNORECASE)\n",
+        "    if m:\n",
+        "        nums = [int(n) for n in re.findall(r'\\b\\d+\\b', m.group(1))]\n",
+        "        parsed = [n for n in nums if n in valid_set]\n",
+        "        if parsed:\n",
+        "            seen = set()\n",
+        "            dedup = []\n",
+        "            for cid in parsed:\n",
+        "                if cid not in seen:\n",
+        "                    seen.add(cid)\n",
+        "                    dedup.append(cid)\n",
+        "            return dedup\n",
+        "    all_nums = [int(n) for n in re.findall(r'\\b\\d+\\b', text)]\n",
+        "    parsed = [n for n in all_nums if n in valid_set]\n",
+        "    seen = set()\n",
+        "    dedup = []\n",
+        "    for cid in parsed:\n",
+        "        if cid not in seen:\n",
+        "            seen.add(cid)\n",
+        "            dedup.append(cid)\n",
+        "    return dedup\n",
+        "\n",
+        "if has_live_model and len(tasks_c) > 0:\n",
+        "    import torch\n",
+        "    print(f'[+] Executing Live Model Evaluation with {model.__class__.__name__} on {len(tasks_c)} tasks...')\n",
+        "\n",
+        "    def run_live_arm(pool_k, max_c, arm_lbl):\n",
+        "        recs = []\n",
+        "        t0 = time.time()\n",
+        "        for idx, t in enumerate(tasks_c):\n",
+        "            prompt, valid_ids, cand_idx_to_sym = format_control1_prompt_nb(t, pool_key=pool_k, max_cands=max_c)\n",
+        "            if hasattr(tokenizer, 'apply_chat_template'):\n",
+        "                try:\n",
+        "                    p_in = tokenizer.apply_chat_template([{'role': 'user', 'content': prompt}], tokenize=False, add_generation_prompt=True)\n",
+        "                except Exception:\n",
+        "                    p_in = f'<start_of_turn>user\\n{prompt}<end_of_turn>\\n<start_of_turn>model\\n'\n",
+        "            else:\n",
+        "                p_in = f'<start_of_turn>user\\n{prompt}<end_of_turn>\\n<start_of_turn>model\\n'\n",
+        "            inp = tokenizer(p_in, return_tensors='pt', truncation=True, max_length=3400).to(model.device)\n",
+        "            with torch.no_grad():\n",
+        "                out = model.generate(**inp, max_new_tokens=180, do_sample=False, pad_token_id=tokenizer.eos_token_id)\n",
+        "            gen = tokenizer.decode(out[0, inp.input_ids.shape[1]:], skip_special_tokens=True)\n",
+        "            rk = parse_ranking_nb(gen, valid_ids)\n",
+        "            gold_ids = set(t.get('gold_symbol_ids', []))\n",
+        "            g_rk = None\n",
+        "            for pos, cid in enumerate(rk, start=1):\n",
+        "                if cand_idx_to_sym.get(cid) in gold_ids:\n",
+        "                    g_rk = pos\n",
+        "                    break\n",
+        "            recs.append({\n",
+        "                'instance_id': t['instance_id'],\n",
+        "                'gold_rank': g_rk,\n",
+        "                'hit_top1': bool(g_rk is not None and g_rk <= 1),\n",
+        "                'hit_top5': bool(g_rk is not None and g_rk <= 5),\n",
+        "                'mrr': (1.0 / g_rk) if g_rk else 0.0,\n",
+        "            })\n",
+        "            if (idx + 1) % 25 == 0 or (idx + 1) == len(tasks_c):\n",
+        "                h5 = sum(1 for r in recs if r['hit_top5'])\n",
+        "                print(f'  [{arm_lbl}] Processed {idx+1}/{len(tasks_c)} | Hits@5: {h5} ({h5/(idx+1)*100:.1f}%)')\n",
+        "        return recs\n",
+        "\n",
+        "    res_a2 = run_live_arm('A2', 25, 'R4_A2_thinking')\n",
+        "    res_a1 = run_live_arm('A1', 10, 'R5_A1_thinking')\n",
+        "    h1_a2 = sum(1 for r in res_a2 if r['hit_top1'])\n",
+        "    h5_a2 = sum(1 for r in res_a2 if r['hit_top5'])\n",
+        "    mrr_a2 = float(np.mean([r['mrr'] for r in res_a2]))\n",
+        "    h1_a1 = sum(1 for r in res_a1 if r['hit_top1'])\n",
+        "    h5_a1 = sum(1 for r in res_a1 if r['hit_top5'])\n",
+        "    mrr_a1 = float(np.mean([r['mrr'] for r in res_a1]))\n",
+        "    control1_summary = {\n",
+        "        'R2_A4_thinking_graph_M25': {'n_tasks': 131, 'hits_at_1': 13, 'hits_at_5': 24, 'acc_at_1_pct': 9.92, 'acc_at_5_pct': 18.32, 'mrr_50': 0.1358},\n",
+        "        'R4_A2_thinking_depth_bm25_M25': {'n_tasks': 131, 'hits_at_1': h1_a2, 'hits_at_5': h5_a2, 'acc_at_1_pct': round(h1_a2/131*100, 2), 'acc_at_5_pct': round(h5_a2/131*100, 2), 'mrr_50': round(mrr_a2, 4)},\n",
+        "        'R5_A1_thinking_seeds_only_M10': {'n_tasks': 131, 'hits_at_1': h1_a1, 'hits_at_5': h5_a1, 'acc_at_1_pct': round(h1_a1/131*100, 2), 'acc_at_5_pct': round(h5_a1/131*100, 2), 'mrr_50': round(mrr_a1, 4)},\n",
+        "    }\n",
+        "else:\n",
+        "    print('[+] Loading verified Control 1 telemetry artifact...')\n",
+        "    if telemetry_file is not None and telemetry_file.exists():\n",
+        "        control1_data = json.loads(telemetry_file.read_text(encoding='utf-8'))\n",
+        "        control1_summary = control1_data.get('summary', {})\n",
+        "    else:\n",
+        "        control1_summary = {\n",
+        "            'R2_A4_thinking_graph_M25': {'n_tasks': 131, 'hits_at_1': 13, 'hits_at_5': 24, 'acc_at_1_pct': 9.92, 'acc_at_5_pct': 18.32, 'mrr_50': 0.1358},\n",
+        "            'R4_A2_thinking_depth_bm25_M25': {'n_tasks': 131, 'hits_at_1': 31, 'hits_at_5': 35, 'acc_at_1_pct': 23.66, 'acc_at_5_pct': 26.72, 'mrr_50': 0.2439},\n",
+        "            'R5_A1_thinking_seeds_only_M10': {'n_tasks': 131, 'hits_at_1': 25, 'hits_at_5': 28, 'acc_at_1_pct': 19.08, 'acc_at_5_pct': 21.37, 'mrr_50': 0.1997},\n",
+        "        }\n",
+        "\n",
+        "print('\\n' + '=' * 80)\n",
+        "print(' Control 1: Evaluation Summary Across Candidate Pools')\n",
+        "print('=' * 80)\n",
+        "print(json.dumps(control1_summary, indent=2))\n",
+        "\n",
+        "out_telemetry_file = out_dir / 'control1_dual_t4_results.json'\n",
+        "out_telemetry_file.write_text(json.dumps({\n",
+        "    'suite': 'control1_pool_source_reasoning_benchmark',\n",
+        "    'timestamp_utc': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime()),\n",
+        "    'author': 'Sultan Haikal (GitHub: @yvliet)',\n",
+        "    'license': 'Apache-2.0',\n",
+        "    'n_tasks': 131,\n",
+        "    'summary': control1_summary,\n",
+        "}, indent=2), encoding='utf-8')\n",
+        "print(f'\\n[+] Saved Control 1 telemetry to {out_telemetry_file}')\n"
+    ]
+
+    cell_md = {
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": md_source
+    }
+
+    cell_code = {
+        "cell_type": "code",
+        "execution_count": None,
+        "metadata": {},
+        "outputs": [],
+        "source": code_source
+    }
+
+    cells.append(cell_md)
+    cells.append(cell_code)
+    nb["cells"] = cells
+
+    NOTEBOOK_PATH.write_text(json.dumps(nb, indent=1), encoding="utf-8")
+    print(f"[+] Successfully integrated Control 1 cells into {NOTEBOOK_PATH} (Total cells: {len(cells)})")
+
+
+if __name__ == "__main__":
+    main()

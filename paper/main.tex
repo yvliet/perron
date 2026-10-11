@@ -63,7 +63,7 @@
 % Headers
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\textit{Unlocking Code Graphs for Small Language Models: Provenance-Guided Reasoning}}
+\fancyhead[L]{\small\textit{Does Graph Expansion Help Small Code Models Localize Bugs?}}
 \fancyhead[R]{\small\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \fancypagestyle{plain}{%
@@ -84,7 +84,7 @@
     urlcolor=darkblue
 }
 
-\title{\vspace{-1.5em}\LARGE\textbf{Unlocking Code Graphs for Small Language Models: Provenance-Guided Reasoning and Spectral Diffusion with Gemma 4}\vspace{-0.5em}}
+\title{\vspace{-1.5em}\LARGE\textbf{Does Graph Expansion Help Small Code Models Localize Bugs? A Pre-registered Study of Candidate Pools, Scorer Discrimination, and Test-Time Reasoning with Gemma 4 on SWE-bench Verified}\vspace{-0.5em}}
 
 \author{
     \textbf{Sultan Haikal} \\
@@ -169,7 +169,7 @@ Figure~\ref{fig:perron_pipeline} outlines the architectural pipeline of Perron, 
 \begin{figure}[!htbp]
 \centering
 \includegraphics[width=0.95\linewidth]{figures/perron_provenance_pipeline.pdf}
-\caption{\textbf{The Perron architecture and structural provenance pipeline.} Multigraph dependency indexing extracts typed AST relationships ($\mathcal{E}_{\text{call, inherit, import, caller}}$) into decoupled memory-mapped CSR arrays. Truncated SpMM power iteration computes personalized PageRank vectors with sub-millisecond step latency ($0.17\text{--}0.45$\,ms) with zero runtime convolution cost. Decoupled specificity ratio damping ($\gamma = 0.70$) suppresses utility hubs ($\text{HSI@10} = 99.5\%$) before selective routing. For un-named defect reports, structural provenance extracts resolved caller/callee paths connecting symptom seeds to candidate functions, enabling local Gemma~4 test-time reasoning traces to resolve bug localization within tight token budgets ($K \le 3{,}480$).}
+\caption{\textbf{The Perron architecture and candidate provenance pipeline.} Multigraph dependency indexing extracts typed AST relationships ($\mathcal{E}_{\text{call, inherit, import, caller}}$) into decoupled memory-mapped CSR arrays. Truncated SpMM power iteration computes personalized PageRank vectors with step latency ($0.17\text{--}0.45$\,ms) with zero runtime convolution cost. Decoupled specificity ratio damping ($\gamma = 0.70$) suppresses utility hubs ($\text{HSI@10} = 99.5\%$) before candidate pool extraction. For un-named defect reports, context-budgeted breadcrumb packing bounds candidate functions within tight prompt budgets ($K \le 3{,}480$), enabling local Gemma~4 test-time reasoning traces (\texttt{<thought>}) to quadruple top-1 localization accuracy from \CausalCOneAccOne\ to \CausalCZeroAccOne\ (exact binomial $p = 0.0063^*$).}
 \label{fig:perron_pipeline}
 \end{figure}
 
@@ -236,7 +236,7 @@ To evaluate whether graph traversal selectively assists un-named defect localiza
 The study operates under two hash-committed protocol locks:
 \begin{enumerate}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
     \item \textbf{Retrieval Protocol Lock}: Frozen and publicly pushed at Git commit \href{https://github.com/yvliet/perron/commit/6908e78}{\texttt{6908e78}} on October 5, 2026 (protocol SHA-256: \texttt{89416e40\dots}; split SHA-256: \texttt{95c7ef3c\dots}).
-    \item \textbf{Gemma 4 Pointwise Protocol Lock}: Frozen in two cryptographic stages (\path{benchmarks/protocol/gemma4_protocol_v1.yaml}, raw SHA-256: \texttt{96af1621\dots}; Stage~2 lock \path{gemma4_lock_v1.json}, raw SHA-256: \texttt{dbbf2920\dots}) under Gate~G0 commit \href{https://github.com/yvliet/perron/commit/29e0066}{\texttt{29e0066}} on October 6, 2026.
+    \item \textbf{Gemma 4 Pointwise Protocol Lock}: Frozen in two cryptographic stages (\path{benchmarks/protocol/gemma4_protocol_v1.yaml}, raw SHA-256: \texttt{96af1621\dots}; Stage~2 lock \path{gemma4_lock_v1.json}, raw SHA-256: \texttt{dbbf2920\dots}) under Gate~G0 protocol commits \href{https://github.com/yvliet/perron/commit/a13ab34}{\texttt{a13ab34}} (Stage~1 freeze) and \href{https://github.com/yvliet/perron/commit/9abe405}{\texttt{9abe405}} (Stage~2 cryptographic lock) on October 6, 2026.
 \end{enumerate}
 
 \subsection{Candidate Pools and Matched-Control Arms}

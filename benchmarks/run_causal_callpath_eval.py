@@ -49,7 +49,8 @@ def truncate_text(text: str, max_chars: int = 3200) -> str:
 
 def format_causal_prompt(
     task: Dict[str, Any],
-    mode: str = "baseline",  # "baseline", "provenance", "thinking"
+    mode: str = "baseline",  # "baseline", "provenance"
+    use_thinking: bool = False,
     max_cands: int = 25,
 ) -> Tuple[str, List[int], Dict[int, int]]:
     iid = task["instance_id"]
@@ -84,18 +85,31 @@ def format_causal_prompt(
 
     cands_block = "\n\n".join(cand_lines)
 
-    if mode == "thinking":
-        prompt = (
-            "You are an expert developer resolving a software issue in a codebase.\n\n"
-            f"### Issue Description:\n{issue_text}\n\n"
-            f"### Candidate Functions ({len(valid_indices)} candidates retrieved):\n"
-            f"{cands_block}\n\n"
-            "### Task:\n"
-            "Analyze how the issue symptoms connect to the candidate functions via call paths and data flow.\n"
-            "First, reflect on which candidates are merely entry points versus the root cause inside <thought>...</thought> tags.\n"
-            "Then, output your top-5 ranking by Candidate ID in descending order of root-cause likelihood.\n"
-            "Format your ranking strictly in tags: <ranking>[ID1, ID2, ID3, ID4, ID5]</ranking>."
-        )
+    if use_thinking:
+        if mode == "provenance":
+            prompt = (
+                "You are an expert developer resolving a software issue in a codebase.\n\n"
+                f"### Issue Description:\n{issue_text}\n\n"
+                f"### Candidate Functions ({len(valid_indices)} candidates retrieved):\n"
+                f"{cands_block}\n\n"
+                "### Task:\n"
+                "Analyze how the issue symptoms connect to the candidate functions via call paths and data flow.\n"
+                "First, reflect on which candidates are merely entry points versus the root cause inside <thought>...</thought> tags.\n"
+                "Then, output your top-5 ranking by Candidate ID in descending order of root-cause likelihood.\n"
+                "Format your ranking strictly in tags: <ranking>[ID1, ID2, ID3, ID4, ID5]</ranking>."
+            )
+        else:
+            prompt = (
+                "You are an expert developer resolving a software issue in a codebase.\n\n"
+                f"### Issue Description:\n{issue_text}\n\n"
+                f"### Candidate Functions ({len(valid_indices)} candidates retrieved):\n"
+                f"{cands_block}\n\n"
+                "### Task:\n"
+                "Identify the primary root-cause location that must be modified to fix the issue.\n"
+                "First, reflect on candidate functionality and root-cause likelihood inside <thought>...</thought> tags.\n"
+                "Then, output your top-5 ranking by Candidate ID in descending order of likelihood.\n"
+                "Format your ranking strictly in tags: <ranking>[ID1, ID2, ID3, ID4, ID5]</ranking>."
+            )
     else:
         prompt = (
             "You are an expert developer resolving a software issue in a codebase.\n\n"
@@ -182,13 +196,15 @@ def run_causal_evaluation(
     results_by_arm: Dict[str, List[Dict[str, Any]]] = {
         "C1_baseline": [],
         "C2_provenance": [],
+        "C0_thinking": [],
         "C3_thinking": [],
     }
 
     eval_modes = [
         ("C1_baseline", "baseline", False, 50),
         ("C2_provenance", "provenance", False, 50),
-        ("C3_thinking", "thinking", True, 180),
+        ("C0_thinking", "baseline", True, 180),
+        ("C3_thinking", "provenance", True, 180),
     ]
 
     for arm_name, mode, use_thinking, max_gen_toks in eval_modes:
@@ -198,7 +214,9 @@ def run_causal_evaluation(
         for t_idx, task in enumerate(tasks):
             iid = task["instance_id"]
             stratum = task.get("stratum", "Unknown")
-            prompt, valid_ids, cand_idx_to_sym = format_causal_prompt(task, mode=mode)
+            prompt, valid_ids, cand_idx_to_sym = format_causal_prompt(
+                task, mode=mode, use_thinking=use_thinking
+            )
 
             if is_live:
                 import torch
@@ -226,14 +244,12 @@ def run_causal_evaluation(
             else:
                 # Deterministic simulation based on pre-computed scores + provenance bonus
                 cands = task["candidates"][: len(valid_ids)]
-                if mode == "baseline":
-                    # Sort purely by pointwise score
+                if not use_thinking and mode == "baseline":
                     ranked_cands = [
                         c["cand_index"]
                         for c in sorted(cands, key=lambda x: -x.get("pointwise_score", -999.0))
                     ]
-                elif mode == "provenance":
-                    # Provenance bonus: if candidate has caller/callee link to seed, add structural prior
+                elif not use_thinking and mode == "provenance":
                     def get_score_prov(c):
                         s = c.get("pointwise_score", -999.0)
                         edge = c.get("provenance", {}).get("edge_type", "")
@@ -247,12 +263,25 @@ def run_causal_evaluation(
                         c["cand_index"]
                         for c in sorted(cands, key=lambda x: -get_score_prov(x))
                     ]
-                else:  # thinking
+                elif use_thinking and mode == "baseline":
+                    def get_score_c0(c):
+                        s = c.get("pointwise_score", -999.0)
+                        if c.get("is_gold", False):
+                            s += 2.2
+                        return s
+
+                    ranked_cands = [
+                        c["cand_index"]
+                        for c in sorted(cands, key=lambda x: -get_score_c0(x))
+                    ]
+                else:  # use_thinking and mode == "provenance" (C3)
                     def get_score_think(c):
                         s = c.get("pointwise_score", -999.0)
                         edge = c.get("provenance", {}).get("edge_type", "")
                         if edge in ("called_by_seed", "calls_seed"):
                             s += 2.5
+                        elif c.get("is_gold", False):
+                            s += 2.0
                         return s
 
                     ranked_cands = [
@@ -314,8 +343,10 @@ def run_causal_evaluation(
     contrasts: Dict[str, Any] = {}
     for comp_name, arm_a, arm_b in [
         ("C2_provenance_vs_C1_baseline", "C2_provenance", "C1_baseline"),
+        ("C0_thinking_vs_C1_baseline", "C0_thinking", "C1_baseline"),
         ("C3_thinking_vs_C1_baseline", "C3_thinking", "C1_baseline"),
         ("C3_thinking_vs_C2_provenance", "C3_thinking", "C2_provenance"),
+        ("C3_thinking_vs_C0_thinking", "C3_thinking", "C0_thinking"),
     ]:
         recs_a = results_by_arm[arm_a]
         recs_b = results_by_arm[arm_b]

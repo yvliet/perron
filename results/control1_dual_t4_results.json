@@ -1,0 +1,52 @@
+{
+  "suite": "control1_pool_source_reasoning_benchmark",
+  "timestamp_utc": "2026-10-11T14:51:35Z",
+  "author": "Sultan Haikal (GitHub: @yvliet)",
+  "license": "Apache-2.0",
+  "n_tasks": 131,
+  "summary": {
+    "R2_A4_thinking_graph_M25": {
+      "n_tasks": 131,
+      "hits_at_1": 13,
+      "hits_at_5": 24,
+      "acc_at_1_pct": 9.92,
+      "acc_at_5_pct": 18.32,
+      "mrr_50": 0.1358
+    },
+    "R4_A2_thinking_depth_bm25_M25": {
+      "n_tasks": 131,
+      "hits_at_1": 9,
+      "hits_at_5": 17,
+      "acc_at_1_pct": 6.87,
+      "acc_at_5_pct": 12.98,
+      "mrr_50": 0.0967
+    },
+    "R5_A1_thinking_seeds_only_M10": {
+      "n_tasks": 131,
+      "hits_at_1": 9,
+      "hits_at_5": 14,
+      "acc_at_1_pct": 6.87,
+      "acc_at_5_pct": 10.69,
+      "mrr_50": 0.0865
+    }
+  },
+  "live_model_executed": true,
+  "device": "NvidiaTeslaT4",
+  "contrasts": {
+    "A4_thinking_vs_A2_thinking_acc5": {
+      "delta_pp": 5.34,
+      "hits_a4": 24,
+      "hits_a2": 17
+    },
+    "A4_thinking_vs_A1_thinking_acc5": {
+      "delta_pp": 7.63,
+      "hits_a4": 24,
+      "hits_a1": 14
+    },
+    "A2_thinking_vs_A1_thinking_acc5": {
+      "delta_pp": 2.29,
+      "hits_a2": 17,
+      "hits_a1": 14
+    }
+  }
+}

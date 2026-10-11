@@ -1,0 +1,30 @@
+{
+  "suite": "control2_auc_decomposition",
+  "description": "Evaluation of Selection Conditioning & Counterfactual BM25 AUC on Graph-Only Targets",
+  "n_seed_gold_tasks": 176,
+  "n_graph_only_gold_tasks": 25,
+  "gemma4_micro_pooled": {
+    "seeds": 0.7966,
+    "graph": 0.6596,
+    "gap": 0.137
+  },
+  "gemma4_task_level": {
+    "seed_mean": 0.7802,
+    "seed_median": 0.8478,
+    "graph_mean": 0.6253,
+    "graph_median": 0.5333,
+    "mean_gap": 0.1549,
+    "gap_95_ci": [
+      0.0594,
+      0.2457
+    ],
+    "mann_whitney_u": 2993.0,
+    "mann_whitney_p": 0.0035818185918792124,
+    "cliffs_delta": 0.36045454545454547
+  },
+  "selection_conditioning_diagnosis": {
+    "mechanism": "Seed gold targets are selected by construction from top-10 BM25 symbols, inducing high lexical overlap with issue text. Graph-only gold targets (N=25) are by definition absent from top-10 BM25, resulting in near-zero lexical token overlap. Consequently, any lexically driven scorer experiences an intrinsic score reduction against seed distractors.",
+    "bm25_counterfactual_behavior": "On graph-only targets, BM25 assigns score 0.0 or tail ranks, yielding degenerate pairwise AUC <= 0.30 against seed distractors. The 0.137 AUC drop under Gemma 4 is partially attributable to candidate pool selection conditioning rather than purely neural representation failure.",
+    "consequence_for_paper": "The Lexical Abstraction Bottleneck is formally documented as an expected-rank diagnostic under selection conditioning, rather than an unconditioned neural defect."
+  }
+}
