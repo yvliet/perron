@@ -1,122 +1,151 @@
-[{"stream_name":"stderr","time":8.463064619,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
-,{"stream_name":"stderr","time":8.463114405,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
-,{"stream_name":"stderr","time":8.46311904,"data":"0.00s - to python to disable frozen modules.\n"}
-,{"stream_name":"stderr","time":8.463121579,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
-,{"stream_name":"stderr","time":9.126581751,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
-,{"stream_name":"stderr","time":9.126609926,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
-,{"stream_name":"stderr","time":9.12661527,"data":"0.00s - to python to disable frozen modules.\n"}
-,{"stream_name":"stderr","time":9.126619049,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
-,{"stream_name":"stdout","time":19.014464465,"data":"Python Version: 3.13.15\n"}
-,{"stream_name":"stdout","time":19.014494738,"data":"PyTorch Version: 2.11.0+cu128\n"}
-,{"stream_name":"stdout","time":19.014501157,"data":"CUDA Available: True (Count: 2)\n"}
-,{"stream_name":"stdout","time":19.01450459,"data":"  [GPU 0]: Tesla T4 | Total VRAM: 14.56 GB\n"}
-,{"stream_name":"stdout","time":19.014508042,"data":"  [GPU 1]: Tesla T4 | Total VRAM: 14.56 GB\n"}
-,{"stream_name":"stdout","time":19.299338714,"data":"Perron core mathematics loaded successfully.\n"}
-,{"stream_name":"stdout","time":41.046078743,"data":"Resolved model checkpoint mount: /kaggle/input/models/google/gemma-4/transformers/gemma-4-e4b-it/1\n"}
-,{"stream_name":"stdout","time":41.046110722,"data":"Loading tokenizer from /kaggle/input/models/google/gemma-4/transformers/gemma-4-e4b-it/1...\n"}
-,{"stream_name":"stderr","time":45.288764855,"data":"[transformers] `torch_dtype` is deprecated! Use `dtype` instead!\n"}
-,{"stream_name":"stderr","time":45.288801523,"data":"\n"}
-,{"stream_name":"stderr","time":45.28880759,"data":"[transformers] `torch_dtype` is deprecated! Use `dtype` instead!\n"}
-,{"stream_name":"stdout","time":45.473142417,"data":"Tokenizer loaded successfully: GemmaTokenizer (vocab size: 262144)\n"}
-,{"stream_name":"stdout","time":45.473169059,"data":"Inference device: cuda\n"}
-,{"stream_name":"stdout","time":45.473172717,"data":"Attempting to initialize Gemma 4 causal model...\n"}
-,{"stream_name":"stdout","time":107.401822966,"data":"Successfully loaded Gemma 4 model architecture.\n"}
-,{"stream_name":"stdout","time":107.531710174,"data":"Loading evaluation dataset from mounted path: /kaggle/input/perron-gemma4-benchmark/gemma4_eval_batch_344.json\n"}
-,{"stream_name":"stdout","time":107.531749264,"data":"Loaded 344 evaluation instances for Gemma 4 benchmark.\n"}
-,{"stream_name":"stdout","time":107.531757359,"data":"Starting evaluation across 344 instances...\n"}
-,{"stream_name":"stdout","time":107.531762562,"data":"  Evaluated 50/344 instances (0.0s elapsed)...\n"}
-,{"stream_name":"stdout","time":107.531767469,"data":"  Evaluated 100/344 instances (0.0s elapsed)...\n"}
-,{"stream_name":"stdout","time":107.531775645,"data":"  Evaluated 150/344 instances (0.0s elapsed)...\n"}
-,{"stream_name":"stdout","time":107.531781165,"data":"  Evaluated 200/344 instances (0.0s elapsed)...\n"}
-,{"stream_name":"stdout","time":107.531785299,"data":"  Evaluated 250/344 instances (0.0s elapsed)...\n"}
-,{"stream_name":"stdout","time":107.531794645,"data":"  Evaluated 300/344 instances (0.0s elapsed)...\n"}
-,{"stream_name":"stdout","time":107.531798498,"data":"  Evaluated 344/344 instances (0.0s elapsed)...\n"}
-,{"stream_name":"stdout","time":107.531810969,"data":"\n"}
-,{"stream_name":"stdout","time":107.531813359,"data":"[+] Saved telemetry to /kaggle/working/kaggle_live_gemma_results.json\n"}
-,{"stream_name":"stdout","time":107.531815667,"data":"\n"}
-,{"stream_name":"stdout","time":107.531817765,"data":"================================================================================\n"}
-,{"stream_name":"stdout","time":107.53182042,"data":"Context Packing Strategy | Fn Inclusion@K   | File Inclusion@K | Top-1 Fn Acc   | Avg Tokens\n"}
-,{"stream_name":"stdout","time":107.53182269,"data":"--------------------------------------------------------------------------------\n"}
-,{"stream_name":"stdout","time":107.531824941,"data":"bm25_pack              |  51.45% (177/344) |  72.38% (249/344) |  26.16% (90/344) |  283.8\n"}
-,{"stream_name":"stdout","time":107.531827194,"data":"perron_pack            |  51.16% (176/344) |  67.15% (231/344) |  23.26% (80/344) |  283.8\n"}
-,{"stream_name":"stdout","time":107.5318295,"data":"slot_fused_pack        |  52.33% (180/344) |  72.67% (250/344) |  26.16% (90/344) |  283.8\n"}
-,{"stream_name":"stdout","time":107.531831753,"data":"================================================================================\n"}
-,{"stream_name":"stdout","time":107.601708089,"data":"Loading turnkey agent manifest: /kaggle/working/agent.yaml\n"}
-,{"stream_name":"stdout","time":107.601731479,"data":"Agent Name: PerronDeveloperAgent\n"}
-,{"stream_name":"stdout","time":107.601736139,"data":"Author: Sultan Haikal (@yvliet)\n"}
-,{"stream_name":"stdout","time":107.601746414,"data":"Model Base: google/gemma-4-e4b-it\n"}
-,{"stream_name":"stdout","time":107.601750137,"data":"Context Budget: 3480 tokens\n"}
-,{"stream_name":"stdout","time":107.601753475,"data":"Diffusion Beta: 0.85\n"}
-,{"stream_name":"stdout","time":107.601756882,"data":"Diffusion Gamma: 0.7\n"}
-,{"stream_name":"stdout","time":107.601760469,"data":"Diffusion Tau: 0.15\n"}
-,{"stream_name":"stdout","time":107.601764263,"data":"\n"}
-,{"stream_name":"stdout","time":107.601767529,"data":"[+] Turnkey deployment manifest verified successfully!\n"}
-,{"stream_name":"stdout","time":107.650018463,"data":"================================================================================\n"}
-,{"stream_name":"stdout","time":107.650043863,"data":" Stratum C (N=131) Un-Named Defect Positive-Control Benchmark\n"}
-,{"stream_name":"stdout","time":107.650047424,"data":"================================================================================\n"}
-,{"stream_name":"stdout","time":107.650049901,"data":"Loading Stratum C evaluation bundle from: /kaggle/input/perron-gemma4-benchmark/stratum_c_eval_bundle.json\n"}
-,{"stream_name":"stdout","time":107.764465294,"data":"Loaded 131 Stratum C un-named tasks.\n"}
-,{"stream_name":"stdout","time":107.764490185,"data":"\n"}
-,{"stream_name":"stdout","time":107.76449529,"data":"================================================================================\n"}
-,{"stream_name":"stdout","time":107.764499498,"data":"Method / Arm               | Acc@5        | Hits / 131   | Delta vs A2    | McNemar p \n"}
-,{"stream_name":"stdout","time":107.764503684,"data":"--------------------------------------------------------------------------------\n"}
-,{"stream_name":"stdout","time":107.764507866,"data":"B0                         | 15.3%        | 20/131       | +6.87 pp       | 0.0117 (n10=10, n01=1)\n"}
-,{"stream_name":"stdout","time":107.764511716,"data":"A1                         | 13.7%        | 18/131       | +5.34 pp       | 0.0156 (n10=7, n01=0)\n"}
-,{"stream_name":"stdout","time":107.764515444,"data":"A2                         | 8.4%         | 11/131       | reference      | reference \n"}
-,{"stream_name":"stdout","time":107.764529348,"data":"A4                         | 12.2%        | 16/131       | +3.82 pp       | 0.1250 (n10=6, n01=1)\n"}
-,{"stream_name":"stdout","time":107.764533227,"data":"================================================================================\n"}
-,{"stream_name":"stdout","time":107.7645369,"data":"\n"}
-,{"stream_name":"stdout","time":107.764540178,"data":"[+] Saved Stratum C telemetry to /kaggle/working/kaggle_stratum_c_results.json\n"}
-,{"stream_name":"stdout","time":107.808955767,"data":"================================================================================\n"}
-,{"stream_name":"stdout","time":107.80898366,"data":" Stratum C (N=131) Listwise Contrastive Reranking Benchmark\n"}
-,{"stream_name":"stdout","time":107.809009236,"data":"================================================================================\n"}
-,{"stream_name":"stdout","time":107.94995328,"data":"Evaluating 131 Stratum C tasks for listwise reranking...\n"}
-,{"stream_name":"stdout","time":107.950015005,"data":"Model Status: live_model=True | model_type=Gemma4ForConditionalGeneration\n"}
-,{"stream_name":"stdout","time":107.95002425,"data":"\n"}
-,{"stream_name":"stdout","time":107.950027838,"data":"[+] Running Arm A4 Listwise (N=131)...\n"}
-,{"stream_name":"stdout","time":281.892729569,"data":"  [A4] Evaluated 25/131 tasks (173.8s elapsed, Acc@5=16.0%)...\n"}
-,{"stream_name":"stdout","time":452.793910166,"data":"  [A4] Evaluated 50/131 tasks (344.7s elapsed, Acc@5=14.0%)...\n"}
-,{"stream_name":"stdout","time":627.344385657,"data":"  [A4] Evaluated 75/131 tasks (519.3s elapsed, Acc@5=17.3%)...\n"}
-,{"stream_name":"stdout","time":807.279425865,"data":"  [A4] Evaluated 100/131 tasks (699.2s elapsed, Acc@5=19.0%)...\n"}
-,{"stream_name":"stdout","time":983.71611675,"data":"  [A4] Evaluated 125/131 tasks (875.6s elapsed, Acc@5=16.8%)...\n"}
-,{"stream_name":"stdout","time":1023.020122659,"data":"  [A4] Evaluated 131/131 tasks (915.0s elapsed, Acc@5=16.8%)...\n"}
-,{"stream_name":"stdout","time":1023.02016878,"data":"\n"}
-,{"stream_name":"stdout","time":1023.020174991,"data":"[+] Running Arm A2 Listwise (N=131)...\n"}
-,{"stream_name":"stdout","time":1197.509212472,"data":"  [A2] Evaluated 25/131 tasks (174.5s elapsed, Acc@5=16.0%)...\n"}
-,{"stream_name":"stdout","time":1370.796826347,"data":"  [A2] Evaluated 50/131 tasks (347.8s elapsed, Acc@5=14.0%)...\n"}
-,{"stream_name":"stdout","time":1546.951346055,"data":"  [A2] Evaluated 75/131 tasks (523.9s elapsed, Acc@5=17.3%)...\n"}
-,{"stream_name":"stdout","time":1727.6871397,"data":"  [A2] Evaluated 100/131 tasks (704.7s elapsed, Acc@5=19.0%)...\n"}
-,{"stream_name":"stdout","time":1904.734090919,"data":"  [A2] Evaluated 125/131 tasks (881.7s elapsed, Acc@5=16.8%)...\n"}
-,{"stream_name":"stdout","time":1944.218261337,"data":"  [A2] Evaluated 131/131 tasks (921.2s elapsed, Acc@5=16.8%)...\n"}
-,{"stream_name":"stdout","time":1944.218295373,"data":"\n"}
-,{"stream_name":"stdout","time":1944.218301392,"data":"[+] Running Arm A1 Listwise (N=131)...\n"}
-,{"stream_name":"stdout","time":2109.051309608,"data":"  [A1] Evaluated 25/131 tasks (164.8s elapsed, Acc@5=16.0%)...\n"}
-,{"stream_name":"stdout","time":2272.143091025,"data":"  [A1] Evaluated 50/131 tasks (327.9s elapsed, Acc@5=14.0%)...\n"}
-,{"stream_name":"stdout","time":2435.387300198,"data":"  [A1] Evaluated 75/131 tasks (491.2s elapsed, Acc@5=16.0%)...\n"}
-,{"stream_name":"stdout","time":2602.650154825,"data":"  [A1] Evaluated 100/131 tasks (658.4s elapsed, Acc@5=18.0%)...\n"}
-,{"stream_name":"stdout","time":2769.477324569,"data":"  [A1] Evaluated 125/131 tasks (825.3s elapsed, Acc@5=16.0%)...\n"}
-,{"stream_name":"stdout","time":2807.629167542,"data":"  [A1] Evaluated 131/131 tasks (863.6s elapsed, Acc@5=15.3%)...\n"}
-,{"stream_name":"stdout","time":2807.629206738,"data":"\n"}
-,{"stream_name":"stdout","time":2807.629212355,"data":"================================================================================\n"}
-,{"stream_name":"stdout","time":2807.629217216,"data":"Arm / Mode               | Acc@5      | Hits / 131   | MRR@50     | Delta vs A2    | McNemar p \n"}
-,{"stream_name":"stdout","time":2807.629222236,"data":"--------------------------------------------------------------------------------\n"}
-,{"stream_name":"stdout","time":2807.629228989,"data":"B0 (pointwise)           | 15.3%      | 20/131       | 0.0862     | +0.00 pp       | 1.0000    \n"}
-,{"stream_name":"stdout","time":2807.629233889,"data":"A1 (pointwise)           | 13.7%      | 18/131       | 0.0573     | +0.00 pp       | 1.0000    \n"}
-,{"stream_name":"stdout","time":2807.629240428,"data":"A2 (pointwise)           | 8.4%       | 11/131       | 0.0475     | reference      | reference \n"}
-,{"stream_name":"stdout","time":2807.629245852,"data":"A4 (pointwise)           | 12.2%      | 16/131       | 0.0523     | +0.00 pp       | 1.0000    \n"}
-,{"stream_name":"stdout","time":2807.629251084,"data":"--------------------------------------------------------------------------------\n"}
-,{"stream_name":"stdout","time":2807.629256288,"data":"A1_listwise              | 15.3%      | 20/131       | 0.0778     | +6.87 pp       | 0.0117    \n"}
-,{"stream_name":"stdout","time":2807.62926181,"data":"A2_listwise              | 16.8%      | 22/131       | 0.0937     | +8.40 pp       | 0.0034    \n"}
-,{"stream_name":"stdout","time":2807.62926719,"data":"A4_listwise              | 16.8%      | 22/131       | 0.0934     | +8.40 pp       | 0.0034    \n"}
-,{"stream_name":"stdout","time":2807.629278035,"data":"================================================================================\n"}
-,{"stream_name":"stdout","time":2807.629282906,"data":"\n"}
-,{"stream_name":"stdout","time":2807.629287462,"data":"[+] Saved Stratum C Listwise telemetry to /kaggle/working/kaggle_stratum_c_listwise_results.json\n"}
-,{"stream_name":"stderr","time":2813.132191742,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
-,{"stream_name":"stderr","time":2813.13224868,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
-,{"stream_name":"stderr","time":2813.311044875,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
-,{"stream_name":"stderr","time":2813.311091505,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
-,{"stream_name":"stderr","time":2814.108377649,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
-,{"stream_name":"stderr","time":2814.196050201,"data":"[NbConvertApp] Writing 75330 bytes to __notebook__.ipynb\n"}
-,{"stream_name":"stderr","time":2816.702704686,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
-,{"stream_name":"stderr","time":2817.404030644,"data":"[NbConvertApp] Writing 468481 bytes to __results__.html\n"}
+[{"stream_name":"stderr","time":6.499010248,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":6.4990772119999995,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":6.49908283,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":6.499086748,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":7.0711157,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":7.071142976,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":7.071148004,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":7.071151705,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":14.284623074,"data":"Python Version: 3.13.15\n"}
+,{"stream_name":"stdout","time":14.284653618,"data":"PyTorch Version: 2.11.0+cu128\n"}
+,{"stream_name":"stdout","time":14.28465865,"data":"CUDA Available: True (Count: 2)\n"}
+,{"stream_name":"stdout","time":14.284662154,"data":"  [GPU 0]: Tesla T4 | Total VRAM: 14.56 GB\n"}
+,{"stream_name":"stdout","time":14.284665643,"data":"  [GPU 1]: Tesla T4 | Total VRAM: 14.56 GB\n"}
+,{"stream_name":"stdout","time":14.515676588,"data":"Perron core mathematics loaded successfully.\n"}
+,{"stream_name":"stdout","time":32.456210655,"data":"Resolved model checkpoint mount: /kaggle/input/models/google/gemma-4/transformers/gemma-4-e4b-it/1\n"}
+,{"stream_name":"stdout","time":32.456231935,"data":"Loading tokenizer from /kaggle/input/models/google/gemma-4/transformers/gemma-4-e4b-it/1...\n"}
+,{"stream_name":"stderr","time":36.433351162,"data":"[transformers] `torch_dtype` is deprecated! Use `dtype` instead!\n"}
+,{"stream_name":"stderr","time":36.433380657,"data":"\n"}
+,{"stream_name":"stderr","time":36.433384967,"data":"[transformers] `torch_dtype` is deprecated! Use `dtype` instead!\n"}
+,{"stream_name":"stdout","time":36.618656393,"data":"Tokenizer loaded successfully: GemmaTokenizer (vocab size: 262144)\n"}
+,{"stream_name":"stdout","time":36.618693171,"data":"Inference device: cuda\n"}
+,{"stream_name":"stdout","time":36.61869875,"data":"Attempting to initialize Gemma 4 causal model...\n"}
+,{"stream_name":"stdout","time":84.569023409,"data":"Successfully loaded Gemma 4 model architecture.\n"}
+,{"stream_name":"stdout","time":84.723876627,"data":"Loading evaluation dataset from mounted path: /kaggle/input/perron-gemma4-benchmark/gemma4_eval_batch_344.json\n"}
+,{"stream_name":"stdout","time":84.723899367,"data":"Loaded 344 evaluation instances for Gemma 4 benchmark.\n"}
+,{"stream_name":"stdout","time":84.723903003,"data":"Starting evaluation across 344 instances...\n"}
+,{"stream_name":"stdout","time":84.723905991,"data":"  Evaluated 50/344 instances (0.0s elapsed)...\n"}
+,{"stream_name":"stdout","time":84.72390883,"data":"  Evaluated 100/344 instances (0.0s elapsed)...\n"}
+,{"stream_name":"stdout","time":84.723911654,"data":"  Evaluated 150/344 instances (0.0s elapsed)...\n"}
+,{"stream_name":"stdout","time":84.723914477,"data":"  Evaluated 200/344 instances (0.0s elapsed)...\n"}
+,{"stream_name":"stdout","time":84.723917228,"data":"  Evaluated 250/344 instances (0.0s elapsed)...\n"}
+,{"stream_name":"stdout","time":84.723920011,"data":"  Evaluated 300/344 instances (0.0s elapsed)...\n"}
+,{"stream_name":"stdout","time":84.723922754,"data":"  Evaluated 344/344 instances (0.0s elapsed)...\n"}
+,{"stream_name":"stdout","time":84.723936222,"data":"\n"}
+,{"stream_name":"stdout","time":84.723938606,"data":"[+] Saved telemetry to /kaggle/working/kaggle_live_gemma_results.json\n"}
+,{"stream_name":"stdout","time":84.723940897,"data":"\n"}
+,{"stream_name":"stdout","time":84.723943005,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":84.723945334,"data":"Context Packing Strategy | Fn Inclusion@K   | File Inclusion@K | Top-1 Fn Acc   | Avg Tokens\n"}
+,{"stream_name":"stdout","time":84.723947587,"data":"--------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":84.723949834,"data":"bm25_pack              |  51.45% (177/344) |  72.38% (249/344) |  26.16% (90/344) |  283.8\n"}
+,{"stream_name":"stdout","time":84.723952069,"data":"perron_pack            |  51.16% (176/344) |  67.15% (231/344) |  23.26% (80/344) |  283.8\n"}
+,{"stream_name":"stdout","time":84.723954379,"data":"slot_fused_pack        |  52.33% (180/344) |  72.67% (250/344) |  26.16% (90/344) |  283.8\n"}
+,{"stream_name":"stdout","time":84.723956639,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":84.814001362,"data":"Loading turnkey agent manifest: /kaggle/working/agent.yaml\n"}
+,{"stream_name":"stdout","time":84.814051163,"data":"Agent Name: PerronDeveloperAgent\n"}
+,{"stream_name":"stdout","time":84.814056404,"data":"Author: Sultan Haikal (@yvliet)\n"}
+,{"stream_name":"stdout","time":84.814060408,"data":"Model Base: google/gemma-4-e4b-it\n"}
+,{"stream_name":"stdout","time":84.814064526,"data":"Context Budget: 3480 tokens\n"}
+,{"stream_name":"stdout","time":84.814068134,"data":"Diffusion Beta: 0.85\n"}
+,{"stream_name":"stdout","time":84.81407208,"data":"Diffusion Gamma: 0.7\n"}
+,{"stream_name":"stdout","time":84.814075389,"data":"Diffusion Tau: 0.15\n"}
+,{"stream_name":"stdout","time":84.814078741,"data":"\n"}
+,{"stream_name":"stdout","time":84.814081901,"data":"[+] Turnkey deployment manifest verified successfully!\n"}
+,{"stream_name":"stdout","time":84.949030199,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":84.949058841,"data":" Stratum C (N=131) Un-Named Defect Positive-Control Benchmark\n"}
+,{"stream_name":"stdout","time":84.949079306,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":84.949081882,"data":"Loading Stratum C evaluation bundle from: /kaggle/input/perron-gemma4-benchmark/stratum_c_eval_bundle.json\n"}
+,{"stream_name":"stdout","time":84.949112724,"data":"Loaded 131 Stratum C un-named tasks.\n"}
+,{"stream_name":"stdout","time":84.949119971,"data":"\n"}
+,{"stream_name":"stdout","time":84.949124091,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":84.949128133,"data":"Method / Arm               | Acc@5        | Hits / 131   | Delta vs A2    | McNemar p \n"}
+,{"stream_name":"stdout","time":84.949131699,"data":"--------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":84.949135102,"data":"B0                         | 15.3%        | 20/131       | +6.87 pp       | 0.0117 (n10=10, n01=1)\n"}
+,{"stream_name":"stdout","time":84.949138521,"data":"A1                         | 13.7%        | 18/131       | +5.34 pp       | 0.0156 (n10=7, n01=0)\n"}
+,{"stream_name":"stdout","time":84.949141886,"data":"A2                         | 8.4%         | 11/131       | reference      | reference \n"}
+,{"stream_name":"stdout","time":84.949155514,"data":"A4                         | 12.2%        | 16/131       | +3.82 pp       | 0.1250 (n10=6, n01=1)\n"}
+,{"stream_name":"stdout","time":84.949162579,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":84.949164974,"data":"\n"}
+,{"stream_name":"stdout","time":84.949167039,"data":"[+] Saved Stratum C telemetry to /kaggle/working/kaggle_stratum_c_results.json\n"}
+,{"stream_name":"stdout","time":84.989799148,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":84.989824041,"data":" Stratum C (N=131) Listwise Contrastive Reranking Benchmark\n"}
+,{"stream_name":"stdout","time":84.989828395,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":84.989832126,"data":"Loading authenticated benchmark telemetry from: /kaggle/input/perron-gemma4-benchmark/kaggle_stratum_c_listwise_results.json\n"}
+,{"stream_name":"stdout","time":84.989836071,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":84.989839679,"data":"Arm / Mode               | Acc@5      | Hits / 131   | MRR@50     | Delta vs A2    | McNemar p \n"}
+,{"stream_name":"stdout","time":84.989843063,"data":"--------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":84.989846499,"data":"B0 (pointwise)           | 15.3%      | 20/131       | 0.0862     | +0.00 pp       | 1.0000    \n"}
+,{"stream_name":"stdout","time":84.989850462,"data":"A1 (pointwise)           | 13.7%      | 18/131       | 0.0573     | +0.00 pp       | 1.0000    \n"}
+,{"stream_name":"stdout","time":84.989853941,"data":"A2 (pointwise)           | 8.4%       | 11/131       | 0.0475     | reference      | reference \n"}
+,{"stream_name":"stdout","time":84.989857339,"data":"A4 (pointwise)           | 12.2%      | 16/131       | 0.0523     | +0.00 pp       | 1.0000    \n"}
+,{"stream_name":"stdout","time":84.989860856,"data":"--------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":84.989864406,"data":"A1_listwise              | 15.3%      | 20/131       | 0.0778     | +6.87 pp       | 0.0117    \n"}
+,{"stream_name":"stdout","time":84.989867868,"data":"A2_listwise              | 16.8%      | 22/131       | 0.0937     | +8.40 pp       | 0.0034    \n"}
+,{"stream_name":"stdout","time":84.989872417,"data":"A4_listwise              | 16.8%      | 22/131       | 0.0934     | +8.40 pp       | 0.0034    \n"}
+,{"stream_name":"stdout","time":84.989875918,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":84.989879307,"data":"\n"}
+,{"stream_name":"stdout","time":84.989882552,"data":"[+] Verified Stratum C Listwise telemetry preserved at /kaggle/working/kaggle_stratum_c_listwise_results.json\n"}
+,{"stream_name":"stdout","time":85.428930116,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":85.428961933,"data":" Step 9: Causal Call-Path Provenance \u0026 Reasoning Benchmark (N=131 Stratum C Tasks)\n"}
+,{"stream_name":"stdout","time":85.428965688,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":85.428968096,"data":"Loaded causal bundle from disk: /kaggle/input/perron-gemma4-benchmark/causal_callpath_eval_bundle_131.json\n"}
+,{"stream_name":"stdout","time":85.42898008,"data":"Ready to evaluate 131 Stratum C un-named tasks across conditions C1, C2, C3.\n"}
+,{"stream_name":"stdout","time":85.428982533,"data":"\n"}
+,{"stream_name":"stdout","time":85.42898465,"data":"[+] Executing Condition C1_baseline (N=131)...\n"}
+,{"stream_name":"stdout","time":249.425322734,"data":"  [C1_baseline] Evaluated 25/131 tasks (163.9s elapsed, Acc@5=16.0%)...\n"}
+,{"stream_name":"stdout","time":408.243727625,"data":"  [C1_baseline] Evaluated 50/131 tasks (322.7s elapsed, Acc@5=14.0%)...\n"}
+,{"stream_name":"stdout","time":570.623507177,"data":"  [C1_baseline] Evaluated 75/131 tasks (485.1s elapsed, Acc@5=14.7%)...\n"}
+,{"stream_name":"stdout","time":737.402789503,"data":"  [C1_baseline] Evaluated 100/131 tasks (651.9s elapsed, Acc@5=17.0%)...\n"}
+,{"stream_name":"stdout","time":900.997914628,"data":"  [C1_baseline] Evaluated 125/131 tasks (815.5s elapsed, Acc@5=15.2%)...\n"}
+,{"stream_name":"stdout","time":936.483409663,"data":"  [C1_baseline] Evaluated 131/131 tasks (850.9s elapsed, Acc@5=15.3%)...\n"}
+,{"stream_name":"stdout","time":936.483447895,"data":"[+] Executing Condition C2_provenance (N=131)...\n"}
+,{"stream_name":"stdout","time":1104.854758816,"data":"  [C2_provenance] Evaluated 25/131 tasks (168.4s elapsed, Acc@5=16.0%)...\n"}
+,{"stream_name":"stdout","time":1269.312983017,"data":"  [C2_provenance] Evaluated 50/131 tasks (332.8s elapsed, Acc@5=14.0%)...\n"}
+,{"stream_name":"stdout","time":1438.046434276,"data":"  [C2_provenance] Evaluated 75/131 tasks (501.6s elapsed, Acc@5=16.0%)...\n"}
+,{"stream_name":"stdout","time":1612.755537582,"data":"  [C2_provenance] Evaluated 100/131 tasks (676.3s elapsed, Acc@5=18.0%)...\n"}
+,{"stream_name":"stdout","time":1780.881761956,"data":"  [C2_provenance] Evaluated 125/131 tasks (844.4s elapsed, Acc@5=16.0%)...\n"}
+,{"stream_name":"stdout","time":1817.563988028,"data":"  [C2_provenance] Evaluated 131/131 tasks (881.1s elapsed, Acc@5=16.0%)...\n"}
+,{"stream_name":"stdout","time":1817.564013831,"data":"[+] Executing Condition C0_thinking (N=131)...\n"}
+,{"stream_name":"stdout","time":2372.644053463,"data":"  [C0_thinking] Evaluated 25/131 tasks (555.1s elapsed, Acc@5=12.0%)...\n"}
+,{"stream_name":"stdout","time":2923.352549964,"data":"  [C0_thinking] Evaluated 50/131 tasks (1105.8s elapsed, Acc@5=12.0%)...\n"}
+,{"stream_name":"stdout","time":3489.662806021,"data":"  [C0_thinking] Evaluated 75/131 tasks (1672.1s elapsed, Acc@5=18.7%)...\n"}
+,{"stream_name":"stdout","time":4053.559402517,"data":"  [C0_thinking] Evaluated 100/131 tasks (2236.0s elapsed, Acc@5=21.0%)...\n"}
+,{"stream_name":"stdout","time":4621.633059175,"data":"  [C0_thinking] Evaluated 125/131 tasks (2804.1s elapsed, Acc@5=18.4%)...\n"}
+,{"stream_name":"stdout","time":4753.328818049,"data":"  [C0_thinking] Evaluated 131/131 tasks (2935.8s elapsed, Acc@5=18.3%)...\n"}
+,{"stream_name":"stdout","time":4753.328856782,"data":"[+] Executing Condition C3_thinking (N=131)...\n"}
+,{"stream_name":"stdout","time":5318.744889515,"data":"  [C3_thinking] Evaluated 25/131 tasks (565.4s elapsed, Acc@5=12.0%)...\n"}
+,{"stream_name":"stdout","time":5882.135763646,"data":"  [C3_thinking] Evaluated 50/131 tasks (1128.8s elapsed, Acc@5=12.0%)...\n"}
+,{"stream_name":"stdout","time":6448.234847053,"data":"  [C3_thinking] Evaluated 75/131 tasks (1694.9s elapsed, Acc@5=18.7%)...\n"}
+,{"stream_name":"stdout","time":7017.649772327,"data":"  [C3_thinking] Evaluated 100/131 tasks (2264.3s elapsed, Acc@5=20.0%)...\n"}
+,{"stream_name":"stdout","time":7580.972605671,"data":"  [C3_thinking] Evaluated 125/131 tasks (2827.6s elapsed, Acc@5=17.6%)...\n"}
+,{"stream_name":"stdout","time":7713.084708907,"data":"  [C3_thinking] Evaluated 131/131 tasks (2960.0s elapsed, Acc@5=17.6%)...\n"}
+,{"stream_name":"stdout","time":7713.084762594,"data":"\n"}
+,{"stream_name":"stdout","time":7713.084768518,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":7713.084772716,"data":"Condition          | Acc@5    | Hits/131   | Delta vs C1  | Mean Rank  | Exact p   \n"}
+,{"stream_name":"stdout","time":7713.084776649,"data":"--------------------------------------------------------------------------------\n"}
+,{"stream_name":"stdout","time":7713.08478116,"data":"C1_baseline        | 15.3   % | 20/131     | reference    | 17.47      | reference \n"}
+,{"stream_name":"stdout","time":7713.084785752,"data":"C2_provenance      | 16.0   % | 21/131     | +0.76 pp     | 17.40      | 1.0000    \n"}
+,{"stream_name":"stdout","time":7713.08478985,"data":"C0_thinking        | 18.3   % | 24/131     | +3.05 pp     | 17.07      | 0.2188    \n"}
+,{"stream_name":"stdout","time":7713.084793989,"data":"C3_thinking        | 17.6   % | 23/131     | +2.29 pp     | 17.18      | 0.3750    \n"}
+,{"stream_name":"stdout","time":7713.084797924,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":7713.084801763,"data":"\n"}
+,{"stream_name":"stdout","time":7713.084805299,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":7713.08480989,"data":" Selective Stratum Router Performance on SWE-bench Verified (N=344)\n"}
+,{"stream_name":"stdout","time":7713.08481372,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":7713.08481745,"data":"  B0 (BM25)                | 154/344 (44.77%) | Delta vs B0: +0.00 pp\n"}
+,{"stream_name":"stdout","time":7713.084821288,"data":"  A1 (Seeds)               | 159/344 (46.22%) | Delta vs B0: +1.45 pp\n"}
+,{"stream_name":"stdout","time":7713.084824924,"data":"  A2 (Depth)               | 155/344 (45.06%) | Delta vs B0: +0.29 pp\n"}
+,{"stream_name":"stdout","time":7713.084828406,"data":"  A4 (Graph)               | 162/344 (47.09%) | Delta vs B0: +2.32 pp\n"}
+,{"stream_name":"stdout","time":7713.084832039,"data":"  R_stratum (Selective)    | 164/344 (47.67%) | Delta vs B0: +2.90 pp\n"}
+,{"stream_name":"stdout","time":7713.084835584,"data":"================================================================================\n"}
+,{"stream_name":"stdout","time":7713.084839988,"data":"\n"}
+,{"stream_name":"stdout","time":7713.084843738,"data":"[+] Saved Causal Call-Path telemetry to /kaggle/working/kaggle_causal_callpath_results.json and /kaggle/working/kaggle_causal_callpath_results_131.json\n"}
+,{"stream_name":"stderr","time":7718.368351455,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":7718.368384335,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":7718.518582278,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":7718.518606782,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":7719.224250727,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":7719.318154608,"data":"[NbConvertApp] Writing 632431 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":7721.764110669,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":7722.416722444,"data":"[NbConvertApp] Writing 1041128 bytes to __results__.html\n"}
 ]
