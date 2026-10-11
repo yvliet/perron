@@ -345,7 +345,7 @@ python scripts/verify_paper.py               # Verify quality checks (figures, c
 
 ## 7. Author & License
 
-- **Author**: Sultan Haikal (GitHub: [@yvliet](https://github.com/yvliet))
+- **Author**: Sultan Haikal (GitHub: [@yvliet](https://github.com/yvliet), Email: `recrified@gmail.com`)
 - **License**: Apache License, Version 2.0 (see [LICENSE](LICENSE))
 
 ---

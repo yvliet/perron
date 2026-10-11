@@ -96,6 +96,6 @@ Following the **Datasheets for Datasets** framework proposed by Gebru et al. (20
 ## 7. Maintenance
 
 - **Who supports and maintains the dataset?**  
-  Sultan Haikal (GitHub: `@yvliet`, `yvliet@users.noreply.github.com`).
+  Sultan Haikal (GitHub: `@yvliet`, `recrified@gmail.com`).
 - **How can errors or errata be reported?**  
   Via GitHub Issues at `https://github.com/yvliet/perron`.

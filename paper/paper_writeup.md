@@ -1,7 +1,7 @@
 # Unlocking Code Graphs for Small Language Models: Provenance-Guided Reasoning and Spectral Diffusion with Gemma 4
 **Diagnostic study, theoretical bounds, and turnkey CSR diffusion on SWE-bench Verified**
 
-**Author**: Sultan Haikal ([@yvliet](https://github.com/yvliet)) · **Code**: [https://github.com/yvliet/perron](https://github.com/yvliet/perron) · **License**: Apache 2.0
+**Author**: Sultan Haikal (recrified@gmail.com · [@yvliet](https://github.com/yvliet)) · **Code**: [https://github.com/yvliet/perron](https://github.com/yvliet/perron) · **License**: Apache 2.0
 
 *Official Writeup (≤ 3,000 words). Target Tracks: Overall Best Paper & Best New Resource. Repo: https://github.com/yvliet/perron.*
 
