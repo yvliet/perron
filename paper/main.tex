@@ -641,14 +641,14 @@ On SWE-bench Lite ($N=237$), exploratory factorial sweep diagnosis demonstrates 
 \section{Open-Source Ecosystem and Resource Specification}
 \label{sec:ecosystem}
 To establish an open benchmark and acceleration suite for local developer agent research, Perron is released as a production-grade resource ecosystem under Apache~2.0:
-\begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
+\begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]\sloppy
     \item \textbf{\path{scores.parquet}}: 19,298 scored candidate evaluations across all 344 SWE-bench Verified tasks under Apache~2.0 (\url{https://github.com/yvliet/perron}).
     \item \textbf{\path{perron-core} v0.3.0}: High-throughput Python library providing zero-copy memory-mapped CSR ingestion, prior normalization, and AST breadcrumb packing on PyPI (\url{https://pypi.org/project/perron-core/}).
     \item \textbf{\path{perron-mcp}}: JSON-RPC stdio server enabling any MCP-compliant agent or IDE (VS Code, Claude Desktop, Cursor) to execute spectral diffusion and provenance extraction locally via \texttt{npx} or \texttt{python -m perron.mcp}.
     \item \textbf{Turnkey 3-Line Python API}: Drop-in interface (\texttt{diffuse\_with\_provenance}) enabling developer agent frameworks (Aider, Agentless, SWE-agent) to replace static repository tag maps with high-throughput CSR diffusion and caller-callee provenance.
     \item \textbf{\path{swebench-codegraphs}}: Precomputed CSR graphs for all 12 canonical SWE-bench repositories (covering both Lite and Verified tasks, built with \path{scripts/export_swebench_graphs.py}).
     \item \textbf{\path{swebench-strata-annotations}}: 800 lexical accessibility annotations across SWE-bench (300 Lite + 500 Verified tasks; 344 callable Verified benchmark tasks, CC0-1.0).
-    \item \textbf{Kaggle Demonstration Workstation}: Interactive reproduction notebook executing end-to-end on free Dual Tesla T4 GPUs in 259.8 seconds (~4.3 minutes), validating the 344-task context packing and 131-task Stratum~C positive control at \url{https://www.kaggle.com/code/yvliet/perron-gemma-4-workstation}.
+    \item \textbf{Kaggle Demonstration Workstation}: Interactive reproduction workstation executing on free Dual Tesla T4 GPUs, validating 344-task context packing and full $2 \times 2$ factorial causal evaluation at \url{https://www.kaggle.com/code/yvliet/perron-gemma-4-workstation}.
 \end{itemize}
 
 \section{Conclusion}
