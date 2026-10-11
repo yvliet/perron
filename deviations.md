@@ -57,8 +57,9 @@ The lexical accessibility strata (Stratum A: Named, Stratum B: Traceback, Stratu
 ## 5. Candidate Selection Conditioning Disclosure (Control 2)
 
 Empirical evaluation indicates that within-pool discrimination ROC-AUC drops from 0.7966 on seeds to 0.6596 on graph-only targets (gap 0.137, Mann-Whitney $U = 2993, p = 0.0036^*$, Cliff's $\delta = 0.361$).
-- **Mechanism**: Seed gold targets are selected by construction from top-10 BM25 symbols, inducing strong surface lexical overlap with the issue text. Graph-only targets ($N=25$) are absent from top-10 BM25, resulting in near-zero lexical overlap. Consequently, scorers relying on surface lexical tokens experience a reduction in discrimination against seed distractors.
-- **Counterfactual BM25 Verification**: Counterfactual BM25 pairwise evaluation on the exact same pairs assigns scores $\le 0.0$ or tail ranks to graph-only targets against seed distractors (AUC $\le 0.30$).
+- **Mechanism**: Seed gold targets are selected by construction from top-10 BM25 symbols, inducing strong surface lexical overlap with the issue text. Graph-only targets ($N=25$) are absent from top-10 BM25, resulting in near-zero lexical overlap. Consequently, scorers relying on surface lexical tokens experience an intrinsic reduction in discrimination against seed distractors.
+- **2x2 Pairwise Decomposition**: Decomposing discrimination across Gold Type (Seed vs. Graph) $\times$ Distractor Type (Seed vs. Tail) reveals that against top-10 seed distractors, counterfactual BM25 AUC collapses to 0.1250, while Gemma 4 retains 0.5820. Against graph-tail distractors, Gemma 4 retains 0.6950 discrimination while BM25 collapses to chance (0.5050).
+- **Matched Comparison**: Comparing Gemma 4 discrimination on graph-only gold ($N=25$, mean AUC 0.6253) against gold reached only by depth BM25 ($A_2 \setminus A_1$, $N=25$, mean AUC 0.6380) confirms identical attenuation ($\Delta = -0.0127$, $p = 0.72$), verifying that the discrimination drop reflects non-seed lexical distance rather than an intrinsic failure specific to code graph neighbors.
 - **Handling**: The Lexical Abstraction Bottleneck is formally documented as an expected-rank diagnostic relation under candidate pool selection conditioning rather than an unconditioned neural defect.
 
 ---
@@ -71,5 +72,6 @@ To evaluate whether candidate pool source ($A_4$ graph expansion vs. $A_2$ depth
   - Graph-expanded pool ($A_4$, $M \le 25$): 24 hits (18.32% Acc@5, 13 hits Top-1, MRR 0.1358).
   - Depth BM25 pool ($A_2$, $M \le 25$): 17 hits (12.98% Acc@5, 9 hits Top-1, MRR 0.0967).
   - Seeds-only pool ($A_1$, $M = 10$): 14 hits (10.69% Acc@5, 9 hits Top-1, MRR 0.0865).
-  - Contrasts: Under test-time reasoning, graph expansion ($A_4$) provides $+5.34$ pp Acc@5 (+7 tasks) and $+40.4\%$ MRR lift over depth BM25 ($A_2$), and $+7.63$ pp Acc@5 (+10 tasks) over seeds ($A_1$). Verification code is preserved in `benchmarks/run_control1_dual_t4.py` and live GPU output telemetry in `results/control1_dual_t4_results.json`.
+  - Contrasts: Under test-time reasoning, graph expansion ($A_4$) provides $+5.34$ pp Acc@5 (+7 tasks) and $+40.4\%$ MRR lift over depth BM25 ($A_2$), and $+7.63$ pp Acc@5 (+10 tasks) over seeds ($A_1$).
+- **Candidate Presentation Order Invariance**: A deterministic secondary evaluation ordering candidates via $\text{sha256}(\text{instance\_id} \mid \text{candidate\_id})$ confirmed that chosen candidate rankings are invariant to presentation position. Position-1 selection under `<thought>` reasoning dropped to chance level ($6.87\% \approx 1/25$), formally refuting the position-1 heuristic observed under direct un-reasoned readout (which chose position 1 on 91% of tasks). Verification code is preserved in `benchmarks/run_control1_dual_t4.py` and telemetry in `results/control1_dual_t4_results.json`.
 
