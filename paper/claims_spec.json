@@ -3269,6 +3269,128 @@
       "file": "results/gemma4_protocol_tables.json",
       "ptr": "/tables/discordant_strata_breakdown/lexical_only_c_pct",
       "fmt": "pct1_raw"
+    },
+    "ControlOneAFourThinkingAccFive": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R2_A4_thinking_graph_M25/acc_at_5_pct",
+      "fmt": "pct2_raw"
+    },
+    "ControlOneAFourThinkingHitsFive": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R2_A4_thinking_graph_M25/hits_at_5",
+      "fmt": "int"
+    },
+    "ControlOneAFourThinkingAccOne": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R2_A4_thinking_graph_M25/acc_at_1_pct",
+      "fmt": "pct2_raw"
+    },
+    "ControlOneAFourThinkingHitsOne": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R2_A4_thinking_graph_M25/hits_at_1",
+      "fmt": "int"
+    },
+    "ControlOneAFourThinkingMRR": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R2_A4_thinking_graph_M25/mrr_50",
+      "fmt": "num4"
+    },
+    "ControlOneATwoThinkingAccFive": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R4_A2_thinking_depth_bm25_M25/acc_at_5_pct",
+      "fmt": "pct2_raw"
+    },
+    "ControlOneATwoThinkingHitsFive": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R4_A2_thinking_depth_bm25_M25/hits_at_5",
+      "fmt": "int"
+    },
+    "ControlOneATwoThinkingAccOne": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R4_A2_thinking_depth_bm25_M25/acc_at_1_pct",
+      "fmt": "pct2_raw"
+    },
+    "ControlOneATwoThinkingHitsOne": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R4_A2_thinking_depth_bm25_M25/hits_at_1",
+      "fmt": "int"
+    },
+    "ControlOneATwoThinkingMRR": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R4_A2_thinking_depth_bm25_M25/mrr_50",
+      "fmt": "num4"
+    },
+    "ControlOneAOneThinkingAccFive": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R5_A1_thinking_seeds_only_M10/acc_at_5_pct",
+      "fmt": "pct2_raw"
+    },
+    "ControlOneAOneThinkingHitsFive": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R5_A1_thinking_seeds_only_M10/hits_at_5",
+      "fmt": "int"
+    },
+    "ControlOneAOneThinkingAccOne": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R5_A1_thinking_seeds_only_M10/acc_at_1_pct",
+      "fmt": "pct2_raw"
+    },
+    "ControlOneAOneThinkingHitsOne": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R5_A1_thinking_seeds_only_M10/hits_at_1",
+      "fmt": "int"
+    },
+    "ControlOneAOneThinkingMRR": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R5_A1_thinking_seeds_only_M10/mrr_50",
+      "fmt": "num4"
+    },
+    "ControlOneAFourVsATwoDeltaPP": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/contrasts/A4_thinking_vs_A2_thinking_acc5/delta_pp",
+      "fmt": "delta_pp"
+    },
+    "ControlOneAFourVsAOneDeltaPP": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/contrasts/A4_thinking_vs_A1_thinking_acc5/delta_pp",
+      "fmt": "delta_pp"
+    },
+    "ControlTwoMicroGap": {
+      "file": "results/control2_auc_decomposition.json",
+      "ptr": "/gemma4_micro_pooled/gap",
+      "fmt": "num3"
+    },
+    "ControlTwoSeedAuc": {
+      "file": "results/control2_auc_decomposition.json",
+      "ptr": "/gemma4_micro_pooled/seeds",
+      "fmt": "num4"
+    },
+    "ControlTwoGraphAuc": {
+      "file": "results/control2_auc_decomposition.json",
+      "ptr": "/gemma4_micro_pooled/graph",
+      "fmt": "num4"
+    },
+    "ControlTwoMannWhitneyP": {
+      "file": "results/control2_auc_decomposition.json",
+      "ptr": "/gemma4_task_level/mann_whitney_p",
+      "fmt": "pval"
+    },
+    "ControlTwoCliffsDelta": {
+      "file": "results/control2_auc_decomposition.json",
+      "ptr": "/gemma4_task_level/cliffs_delta",
+      "fmt": "num3"
+    },
+    "ControlOneATwoThinkingHitsFiveKN": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R4_A2_thinking_depth_bm25_M25/hits_at_5",
+      "fmt": "kn",
+      "n_ptr": "/n_tasks"
+    },
+    "ControlOneAOneThinkingHitsFiveKN": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R5_A1_thinking_seeds_only_M10/hits_at_5",
+      "fmt": "kn",
+      "n_ptr": "/n_tasks"
     }
   }
 }
