@@ -2,7 +2,7 @@
 
 **Author**: Sultan Haikal ([@yvliet](https://github.com/yvliet))  
 **Project**: Perron (`perron-core` v0.3.0)  
-**Target**: Track 2 (Gemma 4 Developer Agent Paper Track)  
+**Scope**: Research Manuscript and Technical Report  
 **Status**: Complete & Verified (19/19 Verification Gates Passing)
 
 ---
@@ -47,8 +47,8 @@ Every quantitative claim in both the manuscript (`paper/main.tex`) and the offic
   - **No Hardcoded Numbers**: All manuscript percentages and units bound to verifiable results leaves.
 
 ### D. Multi-Tokenizer Word Count Compliance
-- Audited and streamlined [`paper/paper_writeup.md`](file:///c:/Users/sultan%20haikal/Downloads/gemma_4_papers/paper/paper_writeup.md) to ensure strict adherence to competition word ceilings:
-  - `split()` word count: **2,637 words** (ceiling: 2,750 buffer, 3,000 Kaggle hard limit).
+- Audited and streamlined [`paper/paper_writeup.md`](file:///c:/Users/sultan%20haikal/Downloads/gemma_4_papers/paper/paper_writeup.md) to ensure strict adherence to publication word limits:
+  - `split()` word count: **2,637 words** (ceiling: 2,750 buffer, 3,000 hard limit).
   - Regex token count: **2,943 words** (safety limit: 2,950 tokens).
 
 ---

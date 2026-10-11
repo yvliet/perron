@@ -3,7 +3,7 @@
 
 **Author**: Sultan Haikal (recrified@gmail.com · [@yvliet](https://github.com/yvliet)) · **Code**: [https://github.com/yvliet/perron](https://github.com/yvliet/perron) · **License**: Apache 2.0
 
-*Official Writeup (≤ 3,000 words). Target Tracks: Overall Best Paper & Best New Resource. Repo: https://github.com/yvliet/perron.*
+*Research report and reference implementation. Source code and precomputed artifacts: https://github.com/yvliet/perron.*
 
 ---
 
