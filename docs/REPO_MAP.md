@@ -36,12 +36,12 @@
 | Path | Purpose | Tests |
 | :--- | :--- | :--- |
 | `benchmarks/baseline_retrievers.py` | Complete suite of 14 retrieval baselines and graph algorithms on CSR matrices. | `tests/test_baselines_and_ablation.py` |
-| `benchmarks/compile_real_graphs.py` | Offline pipeline compiling Requests and SymPy repositories into binary zero-copy mmap CSR matrices. | None (offline data compilation) |
+| `benchmarks/compile_graphs.py` | Pipeline compiling Requests and SymPy repositories into binary zero-copy mmap CSR matrices. | None (offline data compilation) |
 | `benchmarks/compute_pareto_frontier.py` | Empirical Pareto frontier and Optuna parameter sensitivity surface generator. | None (analytical script) |
 | `benchmarks/diagnostic.py` | Benchmark diagnostic suite testing CSR validity, Perron diffusion, and spectral convergence. | None (standalone diagnostic) |
 | `benchmarks/eval_harness.py` | Task-grounded benchmark evaluation harness computing Hit@k, MRR, Precision, and Recall against gold patches. | `tests/test_baselines_and_ablation.py`, `tests/test_evaluation_invariants.py` |
 | `benchmarks/evaluate_editor_interfaces.py` | Empirical evaluation comparing search-and-replace, unified diff, and full rewrite editing interfaces. | None (benchmark script) |
-| `benchmarks/extract_real_graph.py` | CLI extractor transforming local repository checkouts into Perron AST graphs. | None (CLI tool) |
+| `benchmarks/extract_graph.py` | CLI extractor transforming local repository checkouts into Perron AST graphs. | None (CLI tool) |
 | `benchmarks/generate_rigorous_artifacts.py` | Publication-grade statistical analysis and visualization generator for empirical artifacts. | None (visualization script) |
 | `benchmarks/gold_patch_parser.py` | Canonical parser converting SWE-bench gold diffs into ground-truth modified AST node IDs. | `tests/test_evaluation_invariants.py` |
 | `benchmarks/hub_gold_ablation.py` | Ablation analysis script isolating hub-gold nodes from non-hub-gold nodes across retrieval baselines. | None (ablation script) |
@@ -50,7 +50,7 @@
 | `benchmarks/profile_hardware_telemetry.py` | Hardware telemetry profiler capturing CPU, RAM, GPU VRAM, and per-step latency. | None (profiling script) |
 | `benchmarks/repair_eval.py` | Deterministic AST scaffold and agent repair evaluation harness. | None (evaluation harness) |
 | `benchmarks/rigorous_significance_test.py` | Rigorous statistical significance testing engine running bootstrap and permutation tests. | None (statistical tool) |
-| `benchmarks/run_real_evaluation.py` | End-to-end evaluation runner executing the Perron agent across real SWE-bench instances. | `tests/test_agent_runtime.py` |
+| `benchmarks/run_evaluation.py` | End-to-end evaluation runner executing the Perron agent across SWE-bench instances. | `tests/test_agent_runtime.py` |
 | `benchmarks/run_retrieval_sweep.py` | Full 300-instance batch retrieval sweep running 14 baselines on SWE-bench Lite. | None (evaluation script) |
 | `benchmarks/run_swebench_lite.py` | Automated batch evaluation runner orchestrating SWE-bench Lite problem solving. | None (batch runner) |
 | `benchmarks/stat_engine.py` | Statistical analysis engine calculating bootstrap confidence intervals, Cliff's delta, and p-values. | None (library utility) |
@@ -87,7 +87,7 @@
 | `tests/test_adversarial_fuzzer.py` | Maximum-entropy adversarial fuzzing suite testing edge-case graphs and inputs. | `perron.diffusion`, `perron.editor`, `perron.matrix`, `perron.packer`, `perron.specificity`, `perron.tester` |
 | `tests/test_agent.py` | Unit tests for agent lifecycle, state transitions, tool execution, and prompt assembly. | `perron.agent`, `perron.backends.base`, `perron.backends.replay`, `perron.graph` |
 | `tests/test_agent_history.py` | Unit tests for history compaction, context budgeting, and XML thinking tag preservation. | `perron.agent` |
-| `tests/test_agent_runtime.py` | Runtime tests for inference backends, prefix-cache stability, and agent loops. | `perron.agent`, `perron.backends.base`, `perron.backends.replay`, `benchmarks.run_real_evaluation` |
+| `tests/test_agent_runtime.py` | Runtime tests for inference backends, prefix-cache stability, and agent loops. | `perron.agent`, `perron.backends.base`, `perron.backends.replay`, `benchmarks.run_evaluation` |
 | `tests/test_baselines_and_ablation.py` | Unit tests verifying numerical accuracy, ranking order, and invariants of retrieval baselines. | `benchmarks.baseline_retrievers`, `benchmarks.eval_harness`, `perron.specificity` |
 | `tests/test_boundary_invariants.py` | Boundary invariance battery testing mathematical properties under extreme limits. | `perron.diffusion`, `perron.editor`, `perron.matrix`, `perron.packer`, `perron.specificity`, `perron.tester` |
 | `tests/test_dataset_reconstruction.py` | Verification tests for dataset hydration, checksum verification, and license compliance. | `scripts.reconstruct_dataset` |
@@ -132,7 +132,7 @@ All 14 retrieval baselines are implemented in `benchmarks/baseline_retrievers.py
 
 | Component | Authoritative File Paths | Authoritative Functions / Classes |
 | :--- | :--- | :--- |
-| **Graph Building** | `perron/graph.py`<br>`perron/polyglot/treesitter.py`<br>`benchmarks/extract_real_graph.py` | `PerronGraph`, `build_graph_from_repo`<br>`TreeSitterExtractor`<br>`extract_repository_graph` |
+| **Graph Building** | `perron/graph.py`<br>`perron/polyglot/treesitter.py`<br>`benchmarks/extract_graph.py` | `PerronGraph`, `build_graph_from_repo`<br>`TreeSitterExtractor`<br>`extract_repository_graph` |
 | **Retriever** | `perron/retriever.py`<br>`benchmarks/baseline_retrievers.py`<br>`perron/diffusion.py`<br>`perron/specificity.py` | `HybridRetriever`<br>`RepositoryRetrievalEngine`<br>`personalized_pagerank_power_iteration`<br>`calculate_specificity_scores` |
 | **Packer** | `perron/packer.py` | `ContextPacker`, `pack_subgraph_context` |
 | **Editor** | `perron/editor.py`<br>`perron/patch.py` | `ASTRangeEditor`, `apply_ast_replacement`<br>`create_patch`, `apply_patch` |
@@ -141,24 +141,17 @@ All 14 retrieval baselines are implemented in `benchmarks/baseline_retrievers.py
 | **Polyglot** | `perron/polyglot/treesitter.py`<br>`perron/polyglot/__init__.py` | `TreeSitterExtractor`, `extract_polyglot_symbols` |
 | **Dataset Scripts** | `benchmarks/swebench_loader.py`<br>`benchmarks/gold_patch_parser.py`<br>`scripts/reconstruct_dataset.py`<br>`scripts/export_swebench_graphs.py` | `SWEBenchLoader`<br>`GoldPatchParser`<br>`reconstruct_dataset`<br>`export_graphs` |
 | **Split File** | `data/swebench_lite_split.json` | Tri-partition: `dev_pilot` (50), `dev_val` (100), `heldout` (150). Total 300 instances. Disjoint partitions. |
-| **Evaluation Scripts** | `benchmarks/run_retrieval_sweep.py`<br>`benchmarks/run_swebench_lite.py`<br>`benchmarks/run_real_evaluation.py`<br>`benchmarks/eval_harness.py`<br>`benchmarks/evaluate_editor_interfaces.py`<br>`benchmarks/hub_gold_ablation.py`<br>`benchmarks/repair_eval.py`<br>`benchmarks/diagnostic.py`<br>`benchmarks/rigorous_significance_test.py`<br>`benchmarks/compute_pareto_frontier.py` | Full empirical benchmark evaluation suite for retrieval, code editing, and end-to-end task completion. |
+| **Evaluation Scripts** | `benchmarks/run_retrieval_sweep.py`<br>`benchmarks/run_swebench_lite.py`<br>`benchmarks/run_evaluation.py`<br>`benchmarks/eval_harness.py`<br>`benchmarks/evaluate_editor_interfaces.py`<br>`benchmarks/hub_gold_ablation.py`<br>`benchmarks/repair_eval.py`<br>`benchmarks/diagnostic.py`<br>`benchmarks/rigorous_significance_test.py`<br>`benchmarks/compute_pareto_frontier.py` | Full empirical benchmark evaluation suite for retrieval, code editing, and end-to-end task completion. |
 
 ---
 
-## 7. Plan Path Cross-References & Discrepancies
+## 7. Dataset Manifests & Static Assets
 
-| Plan Reference | Repository Real Path | Status / Plan Usage |
+| Path | Purpose | Integrity Check |
 | :--- | :--- | :--- |
-| `data/swebench_lite_split.json` | `data/swebench_lite_split.json` | Exists and verified. Partition sizes: 50 pilot / 100 dev_val / 150 heldout. SHA256: `18a947a0e8a7941231ab15f11c1eee335adc58f8d03cbce742637452c9a23418`. |
-| `Makefile` | `Makefile` | Defined in task T0.2; runs `pytest -q` and `python scripts/check_facts.py`. |
-| `tests/test_split_frozen.py` | `tests/test_split_frozen.py` | Defined in task T0.2; validates hardcoded SHA256 hash and partition integrity. |
-| `RUNLOG.md` | `RUNLOG.md` | Defined in task T0.2; markdown table logging all benchmark and held-out runs. |
-| `facts.json` | `facts.json` | Defined in task T0.2; skeleton facts database for paper verifier. |
-| `scripts/check_facts.py` | `scripts/check_facts.py` | Assertion script verifying numerical consistency in paper. |
-| `perron/results.py` | `perron/results.py` | Standardized results serialization helper capturing provenance metadata. |
-| `tests/test_results.py` | `tests/test_results.py` | Unit test verifying provenance metadata keys in serialized results. |
-| `scripts/run_heldout.py` | `scripts/run_heldout.py` | Dedicated runner for held-out evaluation logging to `RUNLOG.md`. |
-| `results/heldout_table2_v1_preaudit.json` | `results/heldout_table2_v1_preaudit.json` | Defined in task G8; archived pre-audit held-out baseline result file. |
-| `scripts/build_instance_graphs.py` | `scripts/export_swebench_graphs.py` | Canonical graph builder mapped to existing authoritative export pipeline with `--cleanup-clones`. |
-| `scripts/make_gold.py` | `benchmarks/gold_patch_parser.py` | Benchmark gold label generation mapped to existing gold parser generating `data_release/gold.jsonl`. |
-| `perron/bench.py` | `benchmarks/hub_gold_ablation.py` | Hub-gold benchmark harness mapped to existing ablation evaluation harness. |
+| `data/swebench_lite_split.json` | Authoritative tri-partition: `dev_pilot` (50), `dev_val` (100), `heldout` (150). | SHA-256 verified in `tests/test_split_frozen.py`. |
+| `data/swebench_lite_cache.jsonl` | Local offline cache of 300 SWE-bench Lite problem statements. | Validated in `scripts/verify_paper.py`. |
+| `data/strata.json` | Deterministic lexical findability classification (Strata A, B, C). | Validated in `tests/test_strata.py`. |
+| `data/real_graphs/requests/` | Zero-copy CSR graph matrices and symbol table for Requests. | Validated in `scripts/verify_paper.py`. |
+| `data/real_graphs/sympy/` | Zero-copy CSR graph matrices and symbol table for SymPy. | Validated in `scripts/verify_paper.py`. |
+| `data_release/gold.jsonl` | Canonical gold patch AST ground-truth modifications. | Validated in `tests/test_evaluation_invariants.py`. |

@@ -11,7 +11,7 @@ import pytest
 from perron.agent import PerronAgent
 from perron.backends.base import BackendResponse, ModelBackend
 from perron.backends.replay import OfflineReplayBackend
-from benchmarks.run_real_evaluation import EphemeralWorktree, run_instance
+from benchmarks.run_evaluation import EphemeralWorktree, run_instance
 
 
 def test_thinking_tag_normalization_both_closing_tags():

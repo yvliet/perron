@@ -4,8 +4,8 @@ Comprehensive Research Paper & Reproduction Verifier.
 
 Audits:
 1. Test suite integrity (pytest tests/).
-2. Real repository graph assets (Requests & SymPy CSR matrices).
-3. Real SWE-bench Lite cache (300 instances).
+2. Repository call graph assets (Requests & SymPy CSR matrices).
+3. SWE-bench Lite task cache (300 instances).
 4. Data manifest & LaTeX macro bindings integrity (data_manifest.json & metrics_macros.tex).
 5. Publication figures generation.
 6. LaTeX paper build (paper/main.pdf).
@@ -39,7 +39,7 @@ def run_check(name: str, check_fn) -> bool:
         return False
 
 
-def check_real_graphs():
+def check_repository_graphs():
     req_dir = REPO_ROOT / "data" / "real_graphs" / "requests"
     sym_dir = REPO_ROOT / "data" / "real_graphs" / "sympy"
     for d in [req_dir, sym_dir]:
@@ -161,7 +161,7 @@ def _strip_tex_comment(line):
     return re.sub(r"(?<!\\)%.*$", "", line)
 
 
-def check_no_hardcoded_numbers_tex():  # from T6.5
+def check_no_hardcoded_numbers_tex():
     from scripts.generate_paper_macros import render_claims
     claims = render_claims()
     allow = {
@@ -190,23 +190,31 @@ def check_no_hardcoded_numbers_tex():  # from T6.5
     assert not hits, "Hard-coded numbers (bind via claims_spec.json or delete):\n" + "\n".join(hits)
 
 
-BANNED_PATTERNS = (r"\bguarantee\w*", r"\bbreakthrough", r"eliminat\w*\s+(?:the\s+)?hub",
-                   r"eliminat\w*\s+(?:100\\?%\s+of\s+)?syntax", r"\bseamless\w*", r"\brevolutionary\b",
-                   r"\bunprecedented\b", r"state-of-the-art")
-BANNED_SCOPE = ("paper/main.tex", "paper/paper_writeup.md", "README.md", "scripts/generate_figures.py")
+EDITORIAL_STYLE_PATTERNS = (
+    r"\bguarantee\w*",
+    r"\bbreakthrough",
+    r"eliminat\w*\s+(?:the\s+)?hub",
+    r"eliminat\w*\s+(?:100\\?%\s+of\s+)?syntax",
+    r"\bseamless\w*",
+    r"\brevolutionary\b",
+    r"\bunprecedented\b",
+    r"state-of-the-art",
+)
+EDITORIAL_SCOPE = ("paper/main.tex", "paper/paper_writeup.md", "README.md", "scripts/generate_figures.py")
 
 
-def check_banned_phrases():  # from T6.5
+def check_style_guidelines():
+    """Verify academic tone standards and prevent ungrounded superlatives."""
     hits = []
-    for rel in BANNED_SCOPE:
+    for rel in EDITORIAL_SCOPE:
         text = (REPO_ROOT / rel).read_text(encoding="utf-8")
-        for pat in BANNED_PATTERNS:
+        for pat in EDITORIAL_STYLE_PATTERNS:
             for m in re.finditer(pat, text, flags=re.IGNORECASE):
                 hits.append(f"{rel}:{text.count(chr(10), 0, m.start()) + 1}: {m.group(0)}")
-    assert not hits, "Banned phrasing:\n" + "\n".join(hits)
+    assert not hits, "Editorial style issues:\n" + "\n".join(hits)
 
 
-def check_typography():  # from T6.5
+def check_typography():
     hits = []
     for rel in ("paper/main.tex", "paper/paper_writeup.md", "README.md"):
         if "\u2014" in (REPO_ROOT / rel).read_text(encoding="utf-8"):
@@ -222,7 +230,7 @@ def check_typography():  # from T6.5
     assert not hits, "\n".join(hits)
 
 
-def check_build_log():  # from T6.5
+def check_build_log():
     log = REPO_ROOT / "paper" / "main.log"
     tex = REPO_ROOT / "paper" / "main.tex"
     assert log.is_file() and log.stat().st_mtime >= tex.stat().st_mtime, "paper/main.log missing or stale; run scripts/compile.py"
@@ -232,7 +240,7 @@ def check_build_log():  # from T6.5
     assert not over and not undef, "\n".join(over + undef)
 
 
-def check_pdf_date():  # from T6.5
+def check_pdf_date():
     from pypdf import PdfReader
     meta = PdfReader(str(REPO_ROOT / "paper" / "main.pdf")).metadata or {}
     created = str(meta.get("/CreationDate", ""))
@@ -240,7 +248,7 @@ def check_pdf_date():  # from T6.5
     assert "\\date{October 2026}" in (REPO_ROOT / "paper" / "main.tex").read_text(encoding="utf-8")
 
 
-def check_privacy_repo_wide():  # from T6.5
+def check_privacy_repo_wide():
     res = subprocess.run(["git", "grep", "-nIE", r"[A-Za-z]:\\\\Users\\\\|/home/[A-Za-z]", "--",
                           "paper", "README.md", "results", "scripts", "benchmarks", "perron",
                           ":!scripts/verify_paper.py", ":!benchmarks/data"],
@@ -253,7 +261,7 @@ TELEMETRY_RESIDUE = (r"10\.4\s*~?\s*GB", r"5\.28?\s*~?\s*GB", r"3\.6\s*~?\s*GB",
                      r"\$>\$\s*30\s*s", r">\s*30\s*s\b", r"<\s*0\.5\s*~?\s*ms", r"BitsAndBytes")
 
 
-def check_telemetry_consistency():  # from T6.3
+def check_telemetry_consistency():
     tel = json.loads((REPO_ROOT / "results" / "live_inference_telemetry.json").read_text(encoding="utf-8"))
     spec = json.loads((REPO_ROOT / "paper" / "claims_spec.json").read_text(encoding="utf-8"))["macros"]
     gemma = [k for k in spec if k.startswith("Gemma")]
@@ -304,8 +312,8 @@ def main():
     print("=" * 70)
 
     checks = [
-        ("Real Repository Call Graphs", check_real_graphs),
-        ("Real SWE-bench Lite Cache", check_swebench_cache),
+        ("Repository Call Graph Assets", check_repository_graphs),
+        ("SWE-bench Task Cache", check_swebench_cache),
         ("Data Manifest & LaTeX Macros", check_manifest_and_macros),
         ("Macro Idempotence", check_macro_idempotence),
         ("Publication Statistical Figures", check_figures),
@@ -318,7 +326,7 @@ def main():
         ("Turnkey Agent Runner CLI & Manifest Verification", check_runner_cli),
         ("Telemetry Consistency", check_telemetry_consistency),
         ("No Hardcoded Numbers in TeX", check_no_hardcoded_numbers_tex),
-        ("Banned Phrasing Audit", check_banned_phrases),
+        ("Editorial Style & Terminology Standards", check_style_guidelines),
         ("Typography Standards", check_typography),
         ("Build Log Diagnostics", check_build_log),
         ("PDF Creation Date & Metadata", check_pdf_date),

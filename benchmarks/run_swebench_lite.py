@@ -19,7 +19,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
 from benchmarks.repair_eval import BENCHMARK_CASES
-from benchmarks.run_real_evaluation import run_evaluation_suite
+from benchmarks.run_evaluation import run_evaluation_suite
 from perron.backends.replay import OfflineReplayBackend
 from perron.backends.transformers_backend import TransformersBackend
 from perron.backends.vllm_backend import VllmBackend

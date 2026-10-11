@@ -1,10 +1,10 @@
 """
-Evaluate BM25 + Perron fusion methods on dev_val and execute pre-registered selection (T2.3).
+Evaluate BM25 + Perron fusion methods on dev_val and execute pre-registered selection.
 
 Selection Rule (fixed in advance):
 - Evaluate w in {0.0, 0.1, ..., 1.0} and RRF (k=60).
 - Choose the w with highest Fn Acc@10 on dev_val; ties go to smaller w.
-- Output: results/dev_val_fusion.json with full G5 metadata.
+- Output: results/dev_val_fusion.json with full execution metadata.
 """
 
 from __future__ import annotations

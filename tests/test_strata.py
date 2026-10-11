@@ -1,5 +1,5 @@
 """
-Unit tests for deterministic lexical stratification (T2.1).
+Unit tests for deterministic lexical stratification.
 
 Verifies:
 - 6 hand-written test examples (2 per stratum: A_named, B_trace, C_unnamed).

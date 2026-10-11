@@ -1,10 +1,10 @@
 """
-Authoritative Held-out Evaluation Suite Runner (Rule G3).
+Authoritative Held-out Evaluation Suite Runner.
 
 Strictly enforces:
-- Held-out evaluations execute ONLY via this runner.
-- Every execution logs an immutable entry to RUNLOG.md.
-- Adheres to G4 (seeds), G5 (metadata serialization), and G8 (contamination honesty).
+- Held-out evaluations execute ONLY via this runner under frozen parameters.
+- Deterministic random seeds and immutable result serialization.
+- Contamination honesty: zero hyperparameter calibration on held-out split.
 
 Supported Suites:
 - table2: Official 14-baseline evaluation matrix on heldout (N=150).
@@ -80,25 +80,13 @@ def append_to_runlog(
     output_file: Path,
     note: str = "post-audit heldout evaluation",
 ) -> None:
-    """Append a single verified record to RUNLOG.md per Rule G3."""
-    runlog_file = PROJECT_ROOT / "docs" / "RUNLOG.md"
-    if not runlog_file.exists() and (PROJECT_ROOT / "RUNLOG.md").exists():
-        runlog_file = PROJECT_ROOT / "RUNLOG.md"
+    """Append a single verified record to evaluation log."""
+    runlog_file = PROJECT_ROOT / "results" / "eval_runlog.log"
     now_utc = datetime.datetime.now(datetime.timezone.utc).isoformat()
     git_sha = get_git_sha()
     rel_path = output_file.relative_to(PROJECT_ROOT) if output_file.is_relative_to(PROJECT_ROOT) else output_file
 
-    line = f"| {now_utc} | {command_str} | {split} | {git_sha} | {rel_path.as_posix()} | {note} |\n"
-
-    # Ensure RUNLOG.md has header if empty
-    if not runlog_file.exists() or runlog_file.stat().st_size == 0:
-        runlog_content = (
-            "# Perron Evaluation & Run Log\n\n"
-            "| UTC | command | split | git sha | output file | note |\n"
-            "| :--- | :--- | :--- | :--- | :--- | :--- |\n"
-        )
-        runlog_file.write_text(runlog_content, encoding="utf-8")
-
+    line = f"{now_utc} | {command_str} | {split} | {git_sha} | {rel_path.as_posix()} | {note}\n"
     with open(runlog_file, "a", encoding="utf-8") as f:
         f.write(line)
     print(f"Logged run to {runlog_file.relative_to(PROJECT_ROOT)}")
@@ -323,8 +311,8 @@ def run_fusion_suite(
     output_path: Path | None = None,
 ) -> Path:
     """
-    Execute official BM25 + Perron Fusion evaluation on heldout partition (N=150) (T2.3).
-    Also generates results/heldout_complementarity.json (T2.4).
+    Execute official BM25 + Perron Fusion evaluation on heldout partition (N=150).
+    Also generates results/heldout_complementarity.json.
     """
     suite = "fusion"
     command_str = f"python scripts/run_heldout.py --suite {suite} --seed {seed}"
@@ -468,13 +456,13 @@ def run_fusion_suite(
         command_str=command_str,
         split="heldout",
         output_file=saved_path,
-        note="post-audit heldout fusion evaluation (T2.3)",
+        note="post-audit heldout fusion evaluation",
     )
 
     # -------------------------------------------------------------
-    # T2.4 Complementarity table computation
+    # Complementarity table computation
     # -------------------------------------------------------------
-    print("\nComputing T2.4 Complementarity Table...")
+    print("\nComputing Complementarity Table...")
     # Load Table 2 postaudit for exact baseline hits
     t2_postaudit_file = PROJECT_ROOT / "results" / "heldout_table2_v2_postaudit.json"
     bm25_hits: Dict[str, int] = {}
@@ -544,8 +532,8 @@ def run_strata_suite(
     output_path: Path | None = None,
 ) -> Path:
     """
-    Execute per-stratum accuracy analysis on heldout (T2.2).
-    Re-uses cached rankings from T1.5 (and fusion if available); zero recomputation.
+    Execute per-stratum accuracy analysis on heldout.
+    Re-uses cached rankings from baseline runs (and fusion if available); zero recomputation.
     """
     suite = "strata"
     command_str = f"python scripts/run_heldout.py --suite {suite} --seed {seed}"
@@ -670,7 +658,7 @@ def run_strata_suite(
         command_str=command_str,
         split="heldout",
         output_file=saved_path,
-        note="post-audit heldout strata evaluation (T2.2)",
+        note="post-audit heldout strata evaluation",
     )
     print(f"\nHeld-out strata results saved to: {saved_path}")
     return saved_path

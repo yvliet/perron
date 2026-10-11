@@ -1,48 +1,47 @@
 """
-Perron Real Repository AST Graph Extractor.
+Perron Repository AST Graph Extractor.
 
-Extracts real call/caller graphs from Python packages, constructs row-stochastic
+Extracts call/caller graphs from Python packages, constructs row-stochastic
 CSR transition matrices, and benchmarks physical binary size, zero-copy mmap latency,
 and CPU power iteration diffusion.
 """
 
 from __future__ import annotations
 
-import sys
-from pathlib import Path
-
-# Ensure package root is in sys.path
-REPO_ROOT = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(REPO_ROOT))
-
 import ast
 import json
 import os
+import sys
 import time
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
+from pathlib import Path
 from typing import Dict, List, Optional, Set, Tuple
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(REPO_ROOT))
+
 import numpy as np
 from scipy.sparse import csr_matrix
 
-from perron.matrix import (
-    build_static_transition_matrix,
-    save_mmap_csr,
-    load_mmap_csr,
-    close_mmap_csr,
-)
 from perron.diffusion import (
     compute_softmax_teleport_prior,
     personalized_pagerank_power_iteration,
 )
-from perron.specificity import (
-    compute_global_pagerank,
-    calculate_specificity_scores,
+from perron.matrix import (
+    build_static_transition_matrix,
+    close_mmap_csr,
+    load_mmap_csr,
+    save_mmap_csr,
 )
 from perron.packer import ASTContextSymbol
+from perron.specificity import (
+    calculate_specificity_scores,
+    compute_global_pagerank,
+)
 
 
 @dataclass
-class RealGraphTelemetry:
+class GraphTelemetry:
     package_name: str
     num_symbols: int
     num_call_edges: int
@@ -63,7 +62,7 @@ class CodebaseASTVisitor(ast.NodeVisitor):
         self.file_path = file_path
         self.rel_path = str(Path(file_path).relative_to(base_dir)).replace("\\", "/")
         self.symbols: List[dict] = []
-        self.calls: List[Tuple[str, str]] = []  # (caller_name, callee_name)
+        self.calls: List[Tuple[str, str]] = []
         self.current_class: Optional[str] = None
         self.current_function: Optional[str] = None
 
@@ -115,7 +114,7 @@ class CodebaseASTVisitor(ast.NodeVisitor):
         self.generic_visit(node)
 
 
-def extract_real_graph_from_directory(
+def extract_graph_from_directory(
     directory: Path,
     package_name: str = "python_stdlib_net",
     max_files: Optional[int] = None,
@@ -132,21 +131,20 @@ def extract_real_graph_from_directory(
     )
 
     symbols = [s.to_context_symbol() for s in sym_nodes]
-
     return symbols, call_edges, caller_edges, id_to_canonical
 
 
-def profile_real_graph(
+def profile_graph(
     directory: Path,
     output_dir: Path,
     package_name: str = "stdlib_core",
-) -> RealGraphTelemetry:
+) -> GraphTelemetry:
     """
-    Profile real AST extraction, build CSR, benchmark mmap and CPU diffusion.
+    Profile AST extraction, build CSR, benchmark mmap and CPU diffusion.
     """
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    symbols, call_edges, caller_edges, id_to_name = extract_real_graph_from_directory(
+    symbols, call_edges, caller_edges, id_to_name = extract_graph_from_directory(
         directory=directory,
         package_name=package_name,
     )
@@ -163,23 +161,19 @@ def profile_real_graph(
     node_to_id = {name: nid for nid, name in id_to_name.items()}
     save_mmap_csr(output_dir, t_matrix, dangling, node_to_id, id_to_name)
 
-    # Compute physical disk size
     files_to_check = ["data.npy", "indices.npy", "indptr.npy", "dangling.npy"]
     total_bytes = sum((output_dir / f).stat().st_size for f in files_to_check if (output_dir / f).exists())
 
-    # Measure zero-copy mmap load latency
     t0 = time.perf_counter()
     loaded_t, loaded_dang, _, _ = load_mmap_csr(output_dir)
     t1 = time.perf_counter()
     mmap_ms = (t1 - t0) * 1000.0
 
-    # Measure global PPR latency
     t2 = time.perf_counter()
     pi_global = compute_global_pagerank(loaded_t, loaded_dang, beta=0.85, max_iter=100)
     t3 = time.perf_counter()
     global_ms = (t3 - t2) * 1000.0
 
-    # Measure query-directed PPR latency
     p_0 = np.zeros(num_nodes, dtype=np.float32)
     p_0[0] = 1.0
     t4 = time.perf_counter()
@@ -187,7 +181,6 @@ def profile_real_graph(
     t5 = time.perf_counter()
     query_ms = (t5 - t4) * 1000.0
 
-    # Compute in-degree distribution to verify power law
     in_degrees: Dict[int, int] = {}
     for _, v in call_edges:
         in_degrees[v] = in_degrees.get(v, 0) + 1
@@ -198,7 +191,7 @@ def profile_real_graph(
 
     close_mmap_csr(loaded_t, loaded_dang)
 
-    return RealGraphTelemetry(
+    return GraphTelemetry(
         package_name=package_name,
         num_symbols=num_nodes,
         num_call_edges=len(call_edges),
@@ -211,27 +204,28 @@ def profile_real_graph(
         mmap_load_time_ms=round(mmap_ms, 3),
         global_ppr_time_ms=round(global_ms, 2),
         query_ppr_time_ms=round(query_ms, 2),
-        fits_in_l3_cache=(total_bytes < 12 * 1024 * 1024),  # 12 MB Intel Smart Cache
+        fits_in_l3_cache=(total_bytes < 12 * 1024 * 1024),
     )
 
 
-if __name__ == "__main__":
-    # Target real stdlib packages: urllib, http, email, json
+def main() -> None:
     import sysconfig
     stdlib_lib = Path(sysconfig.get_path("stdlib"))
     if not (stdlib_lib / "urllib").is_dir():
         import urllib
         stdlib_lib = Path(urllib.__file__).parent.parent
-    target_dirs = [stdlib_lib / "urllib", stdlib_lib / "http", stdlib_lib / "email"]
 
-    # Also test perron package itself
     perron_dir = REPO_ROOT / "perron"
     out_dir = REPO_ROOT / "benchmarks" / "real_graphs_out"
 
-    print("Extracting real AST call graph from perron codebase...")
-    telemetry_perron = profile_real_graph(perron_dir, out_dir / "perron", "perron_core")
+    print("Extracting AST call graph from perron codebase...")
+    telemetry_perron = profile_graph(perron_dir, out_dir / "perron", "perron_core")
     print(f"[PERRON] Symbols: {telemetry_perron.num_symbols}, Edges: {telemetry_perron.total_edges}, CSR Size: {telemetry_perron.csr_disk_size_kb} KB, mmap: {telemetry_perron.mmap_load_time_ms} ms, diffusion: {telemetry_perron.query_ppr_time_ms} ms, L3 Cache: {telemetry_perron.fits_in_l3_cache}")
 
-    print("Extracting real AST call graph from Python stdlib networking & HTTP stack...")
-    telemetry_stdlib = profile_real_graph(stdlib_lib / "urllib", out_dir / "urllib", "stdlib_urllib")
+    print("Extracting AST call graph from Python stdlib networking & HTTP stack...")
+    telemetry_stdlib = profile_graph(stdlib_lib / "urllib", out_dir / "urllib", "stdlib_urllib")
     print(f"[STDLIB_URLLIB] Symbols: {telemetry_stdlib.num_symbols}, Edges: {telemetry_stdlib.total_edges}, Max In-Degree: {telemetry_stdlib.max_in_degree}, Top Hubs: {telemetry_stdlib.top_5_hubs[:3]}, CSR Size: {telemetry_stdlib.csr_disk_size_kb} KB, mmap: {telemetry_stdlib.mmap_load_time_ms} ms, diffusion: {telemetry_stdlib.query_ppr_time_ms} ms, L3 Cache: {telemetry_stdlib.fits_in_l3_cache}")
+
+
+if __name__ == "__main__":
+    main()

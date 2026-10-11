@@ -1,5 +1,5 @@
 """
-Sweep gamma parameter on dev_val partition (T2.5).
+Sweep gamma parameter on dev_val partition.
 
 Evaluates Perron Static across gammas in [0.0, 1.0]:
 score(v) = pi_query(v) / (pi_global(v) + 1e-8)^gamma
@@ -8,7 +8,7 @@ Computes:
 - Fn Acc@10 with 95% bootstrap CI
 - HSI@10 with 95% bootstrap CI
 - File Acc@5, Coverage@4k
-Saves results to results/dev_val_gamma_sweep.json with G5 metadata.
+Saves results to results/dev_val_gamma_sweep.json with execution metadata.
 """
 
 from __future__ import annotations
@@ -69,7 +69,7 @@ def run_gamma_sweep(
     """Execute gamma sweep on the specified split partition."""
     if split == "heldout":
         raise PermissionError(
-            "Held-out gamma sweep is prohibited by Rule G3. Use dev_val for tuning."
+            "Held-out gamma sweep is prohibited to prevent data snooping. Use dev_val for tuning."
         )
 
     if output_path is None:

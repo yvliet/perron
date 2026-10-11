@@ -1,5 +1,5 @@
 """
-Deterministic regex-based instance stratification (T2.1).
+Deterministic regex-based instance stratification.
 
 Labels each instance by how findable it is lexically in issue text:
 - A_named (A): Issue text contains the exact gold function name (or qualified name or Class.method).

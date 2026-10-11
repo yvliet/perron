@@ -1,5 +1,5 @@
 """
-Real benchmark evaluation runner for Perron on SWE-bench and real repository issue instances.
+Benchmark evaluation runner for Perron on SWE-bench repository issue instances.
 Supports running against local Gemma 4 backends (TransformersBackend, VllmBackend) and OfflineReplayBackend.
 Provides ephemeral git worktree isolation to guarantee clean repository state across benchmark instances.
 """
@@ -21,7 +21,7 @@ from typing import Any, Dict, List, Optional
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT))
 
-logger = logging.getLogger("real_eval")
+logger = logging.getLogger("eval_runner")
 
 from perron.agent import PerronAgent, TrajectoryResult
 from perron.backends.base import ModelBackend
@@ -123,7 +123,7 @@ def run_instance(
             # Initialize git so diff calculation and worktrees function
             subprocess.run(["git", "init"], cwd=str(inst_repo), capture_output=True, check=False)
             subprocess.run(["git", "config", "user.name", "Sultan Haikal"], cwd=str(inst_repo), capture_output=True, check=False)
-            subprocess.run(["git", "config", "user.email", "recrified@gmail.com"], cwd=str(inst_repo), capture_output=True, check=False)
+            subprocess.run(["git", "config", "user.email", "yvliet@users.noreply.github.com"], cwd=str(inst_repo), capture_output=True, check=False)
             subprocess.run(["git", "add", "."], cwd=str(inst_repo), capture_output=True, check=False)
             subprocess.run(["git", "commit", "-m", "initial commit"], cwd=str(inst_repo), capture_output=True, check=False)
 
@@ -235,16 +235,15 @@ def run_evaluation_suite(
     return summary
 
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Perron Real Evaluation Runner")
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Perron Evaluation Harness Runner")
     parser.add_argument("--repo-dir", type=str, default=".", help="Target repository directory")
-    parser.add_argument("--output", type=str, default="benchmarks/real_eval_results.json")
+    parser.add_argument("--output", type=str, default="benchmarks/eval_results.json")
     parser.add_argument("--manifest", type=str, default=None, help="Task manifest path")
     parser.add_argument("--limit", type=int, default=None, help="Maximum instances to evaluate")
     args = parser.parse_args()
 
     target_repo = Path(args.repo_dir).resolve()
-    
     model_backend = OfflineReplayBackend()
 
     instances = []
@@ -274,3 +273,7 @@ if __name__ == "__main__":
         assume_resolved_without_test=False,
     )
     print(f"Evaluation complete: {summary_res['resolved_count']}/{summary_res['total_instances']} resolved ({summary_res['resolve_rate']*100:.1f}%).")
+
+
+if __name__ == "__main__":
+    main()

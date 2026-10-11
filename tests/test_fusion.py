@@ -1,5 +1,5 @@
 """
-Unit tests for BM25 and Perron Fusion engine (T2.3).
+Unit tests for BM25 and Perron Fusion engine.
 """
 
 from __future__ import annotations

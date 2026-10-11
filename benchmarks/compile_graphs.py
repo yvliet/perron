@@ -1,6 +1,8 @@
 """
-Compile real repository graphs for Requests and SymPy into zero-copy mmap CSR matrices.
+Compile repository graphs for Requests and SymPy into zero-copy mmap CSR matrices.
 """
+
+from __future__ import annotations
 
 import json
 from pathlib import Path
@@ -12,7 +14,8 @@ from perron.matrix import build_static_transition_matrix, save_mmap_csr
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 
-def compile_real_graphs():
+
+def compile_graphs() -> None:
     out_base = REPO_ROOT / "data" / "real_graphs"
     out_base.mkdir(parents=True, exist_ok=True)
 
@@ -77,5 +80,10 @@ def compile_real_graphs():
         json.dump([s.__dict__ for s in all_syms], f, indent=2)
     print(f"Compiled SymPy: {len(all_syms)} symbols, {s_t.nnz} edges into {sym_dir}")
 
+
+def main() -> None:
+    compile_graphs()
+
+
 if __name__ == "__main__":
-    compile_real_graphs()
+    main()

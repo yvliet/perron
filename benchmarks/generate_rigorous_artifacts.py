@@ -81,8 +81,8 @@ def load_or_build_real_repo_environment(repo_name: str) -> dict:
     real_graph_dir = REPO_ROOT / "data" / "real_graphs" / repo_name
     if not (real_graph_dir / "data.npy").exists():
         print(f"Pre-compiled graph missing for {repo_name}. Compiling now...")
-        from benchmarks.compile_real_graphs import compile_real_graphs
-        compile_real_graphs()
+        from benchmarks.compile_graphs import compile_graphs
+        compile_graphs()
 
     t_matrix, dangling, node_to_id, id_to_node = load_mmap_csr(real_graph_dir)
     with open(real_graph_dir / "symbols.json", "r", encoding="utf-8") as f:
