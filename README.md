@@ -3,7 +3,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyPI](https://img.shields.io/pypi/v/perron-core.svg)](https://pypi.org/project/perron-core/)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Tests: Passing](https://img.shields.io/badge/tests-104%2F104%20passing-brightgreen.svg)]()
+[![Tests: Passing](https://img.shields.io/badge/tests-239%2F239%20passing-brightgreen.svg)]()
 
 Perron is a high-throughput AST subgraph slicing and graph retrieval engine designed for open-weights developer agents (such as Gemma 4 E4B and Gemma 4 31B) operating under strict hardware and context-window constraints.
 
@@ -246,7 +246,7 @@ python -m pytest tests/ -v
 ```
 Output:
 ```
-============================= 104 passed in 20.45s =============================
+============================= 239 passed in 66.40s =============================
 ```
 
 ### Running the Diagnostic Benchmark
@@ -332,7 +332,7 @@ Perron includes a single-command master pipeline for generating figures, compili
 python scripts/build_paper.py --all
 
 # Or run individual stages:
-python scripts/generate_figures.py           # Regenerate Figures 1-5 (PDF + PNG)
+python scripts/generate_figures.py           # Regenerate Figures 1-6 (PDF + PNG)
 python scripts/compile.py paper/main.tex     # Compile LaTeX to paper/main.pdf
 python scripts/verify_paper.py               # Verify quality checks (figures, citations, typography)
 
@@ -356,7 +356,7 @@ If you use Perron or the SWE-bench Lite Multigraph Resource in your research, pl
 
 ```bibtex
 @article{haikal2026perron,
-  title={Perron: Scale-Free Spectral Code Graph Diffusion for Autonomous Developer Agents},
+  title={When Code Graphs Break Down: Empirical Limits, Representation Bottlenecks, and Structural Provenance in Local Developer Agents},
   author={Haikal, Sultan},
   year={2026},
   url={https://github.com/yvliet/perron}
