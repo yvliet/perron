@@ -157,7 +157,7 @@ def run_worker():
     ) if cuda_available else None
 
     logger.info(f"Loading model: {args.model_id} (Target Path: {target_path}, Local: {is_local}, NF4: {cuda_available})")
-    load_kwargs = {"trust_remote_code": True}
+    load_kwargs = {"trust_remote_code": False}
     if not is_local and hf_token:
         load_kwargs["token"] = hf_token
 
@@ -170,7 +170,7 @@ def run_worker():
         model_kwargs = {
             "quantization_config": bnb_config,
             "device_map": "auto",
-            "trust_remote_code": True,
+            "trust_remote_code": False,
             "torch_dtype": torch.float16,
         }
         if not is_local and hf_token:
@@ -182,6 +182,25 @@ def run_worker():
 
     y_ids, n_ids = resolve_yes_no_token_ids(tokenizer)
     logger.info(f"Resolved classification tokens: Yes={y_ids}, No={n_ids}")
+
+    # Pre-Flight Smoke Test Probe (Validate Multi-GPU Device Placement and Generation)
+    logger.info(f"Executing Pre-Flight Smoke Test for {args.model_id}...")
+    smoke_text = "Problem Statement: Verification.\n\nCandidate: def test(): pass\n\nDoes this cause the bug? Answer Yes or No."
+    smoke_inp = tokenizer(smoke_text, return_tensors="pt", max_length=512, truncation=True)
+    if cuda_available and model is not None:
+        smoke_inp = smoke_inp.to("cuda")
+        with torch.inference_mode():
+            smoke_out = model(**smoke_inp)
+            smoke_logits = smoke_out.logits[:, -1, :]
+            smoke_y = torch.tensor(y_ids, dtype=torch.long, device=smoke_logits.device)
+            smoke_n = torch.tensor(n_ids, dtype=torch.long, device=smoke_logits.device)
+            smoke_score = (torch.logsumexp(smoke_logits[:, smoke_y], dim=-1) - torch.logsumexp(smoke_logits[:, smoke_n], dim=-1)).cpu().item()
+        logger.info(f"Smoke test forward pass succeeded (sample log-odds: {smoke_score:.4f})")
+        if args.tier == "hybrid_anchor":
+            with torch.inference_mode():
+                _ = model.generate(**smoke_inp, max_new_tokens=5, temperature=0.0, do_sample=False, pad_token_id=tokenizer.eos_token_id)
+            logger.info("Smoke test autoregressive generation succeeded.")
+    logger.info("Pre-Flight Smoke Test PASSED.")
 
     # Track metrics
     task_results = []
@@ -231,10 +250,12 @@ def run_worker():
                 t0 = time.perf_counter()
                 with torch.inference_mode():
                     outputs = model(**inputs)
-                    # Extract last-token logits
+                    # Extract last-token logits with device-aligned index tensors
                     next_token_logits = outputs.logits[:, -1, :]
-                    y_logits = torch.logsumexp(next_token_logits[:, y_ids], dim=-1)
-                    n_logits = torch.logsumexp(next_token_logits[:, n_ids], dim=-1)
+                    y_tensor = torch.tensor(y_ids, dtype=torch.long, device=next_token_logits.device)
+                    n_tensor = torch.tensor(n_ids, dtype=torch.long, device=next_token_logits.device)
+                    y_logits = torch.logsumexp(next_token_logits[:, y_tensor], dim=-1)
+                    n_logits = torch.logsumexp(next_token_logits[:, n_tensor], dim=-1)
                     log_odds = (y_logits - n_logits).cpu().numpy().tolist()
                 t1 = time.perf_counter()
                 forward_latencies.append((t1 - t0) / len(b_prompts))
@@ -298,21 +319,34 @@ def run_worker():
                 "Think carefully inside <thought>...</thought> tags, then state the single best candidate index: [INDEX]."
             )
 
+            if hasattr(tokenizer, "apply_chat_template"):
+                try:
+                    formatted_prompt = tokenizer.apply_chat_template(
+                        [{"role": "user", "content": prompt_text}],
+                        add_generation_prompt=True,
+                        tokenize=False,
+                    )
+                except Exception:
+                    formatted_prompt = prompt_text
+            else:
+                formatted_prompt = prompt_text
+
             if model is not None and cuda_available:
-                inputs = tokenizer(prompt_text, return_tensors="pt", max_length=3000, truncation=True).to("cuda")
+                inputs = tokenizer(formatted_prompt, return_tensors="pt", max_length=3000, truncation=True).to("cuda")
                 with torch.inference_mode():
                     gen_tokens = model.generate(
                         **inputs,
                         max_new_tokens=180,
                         temperature=0.0,
                         do_sample=False,
+                        pad_token_id=tokenizer.eos_token_id,
                     )
                 out_str = tokenizer.decode(gen_tokens[0][inputs.input_ids.shape[1]:], skip_special_tokens=True)
             else:
                 out_str = "<thought>dry run</thought> [1]"
 
             pred_idx = 1
-            m = re.search(r"\[(\d+)\]", out_str)
+            m = re.search(r'(?:candidate\s*:?\s*|index\s*:?\s*|\[)\s*(\d+)', out_str, re.IGNORECASE)
             if m:
                 pred_idx = int(m.group(1))
 
