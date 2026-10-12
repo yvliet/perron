@@ -1,0 +1,19 @@
+{
+  "id": "yvliet/perron-scaling-benchmark",
+  "title": "perron-scaling-benchmark",
+  "code_file": "kaggle_scaling_benchmark.ipynb",
+  "language": "python",
+  "kernel_type": "notebook",
+  "is_private": false,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "dataset_sources": [
+    "yvliet/perron-swebench-graphs",
+    "yvliet/swebench-strata-annotations",
+    "yvliet/perron-gemma4-benchmark"
+  ],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
