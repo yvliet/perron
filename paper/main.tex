@@ -416,13 +416,6 @@ yielding an expected gold target rank of $\mathbb{E}[\text{Rank}] = 1 + (M - 1)(
 \end{equation}
 Figure~\ref{fig:breakeven_bound}a formalizes this dynamic across candidate pool sizes $M \in [5, 50]$. This formulation provides an expected-rank diagnostic bound for two-stage retrieve-and-rerank architectures: whenever candidate pool expansion outpaces scorer discrimination, expanding candidate recall dilutes precision through distractor accumulation. Across SWE-bench Verified, candidate pools average $M = 24.5$ items. At $k = 5$, maintaining an expected rank within the top-5 requires $\text{AUC}^*_{\text{breakeven}} \ge 1 - \frac{4}{23.5} = 0.8298$ ($\approx 83.0\%$). While Gemma~4 achieves an ROC-AUC of $0.7966$ on seed targets (yielding $\mathbb{E}[X] \approx 4.78$, placing seeds around expected rank 5.8), its discrimination degrades to $0.6596$ on graph-only targets ($N=25$, 95\% CI [0.552, 0.767]), as illustrated in the empirical raincloud distributions of Figure~\ref{fig:breakeven_bound}b. At $\text{AUC} = 0.6596$, expected outranking distractors rises to $23.5 \times (1 - 0.6596) = 8.00$, pushing newly reached graph targets to an expected rank of $9.00$ (and $17.68$ in pools capped at $M=50$). Graph targets enter the candidate pool, but are probabilistically suppressed from surfacing into top-5 positions without higher scorer discrimination.
 
-\begin{figure}[!htbp]
-\centering
-\includegraphics[width=\linewidth]{figures/breakeven_discrimination_bound.pdf}
-\caption{\textbf{The Break-Even Discrimination Bound, empirical Lexical Abstraction Bottleneck, and Cross-Architecture Scaling Surface.} \textbf{(a)} Theoretical break-even curves $\text{AUC}^* = 1 - \frac{k-1}{M-1}$ across candidate pool sizes $M \in [5, 50]$ for targets $k \in \{1, 3, 5, 10\}$. The target top-5 budget ($k=5$) partitions the candidate space into a viable promotion zone ($\mathbb{E}[\text{Rank}] \le 5$) and a distractor accumulation zone ($\mathbb{E}[\text{Rank}] > 5$). Operating points highlight that typical SWE-bench pools ($M=24.5$) require $\text{AUC}^* \ge 0.830$ to achieve expected top-5 localization. \textbf{(b)} Raincloud distributions reflecting within-pool discrimination moments ($N=344$) comparing unscored BM25 ($\mu = 0.8245$, median 0.850), Gemma~4 on lexical seeds ($\mu = 0.7966$, median 0.821), and Gemma~4 on graph neighbors ($\mu = 0.6596$, median 0.667; $N=25$ graph-only targets) against the 1-hop threshold $\text{AUC}^* = 0.714$ ($M=15, k=5$), illustrating the lexical abstraction bottleneck (Mann-Whitney $U = 2993, p = 0.0036^*$, Cliff's $\delta = 0.361$). \textbf{(c)} Cross-architecture scaling surface across held-out Stratum~C defect tasks ($N=58$, live Dual Tesla T4 execution under \texttt{PREREG-SCALING-v1}), showing monotonic intra-family scaling in Gemma~4 ($0.8544 \to 0.9274$), representational efficiency over Phi-4-mini ($0.7836$) and DeepSeek-R1-Distill-7B ($0.6489$), and the consumer hardware quantization boundary on Gemma~4 26B-A4B ($44.0$~GB required VRAM due to fused 3D expert parameter tensors bypassing 4-bit \texttt{bitsandbytes} quantization).}
-\label{fig:breakeven_bound}
-\end{figure}
-
 \paragraph{Stratum Asymmetry on Graph-Only Targets}
 Deconstructing the 25 tasks where graph expansion recalled targets absent from seeds ($A_4 \setminus A_1$) reveals systematic polarization by issue lexical structure:
 \begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
@@ -431,6 +424,14 @@ Deconstructing the 25 tasks where graph expansion recalled targets absent from s
 \end{itemize}
 The aggregate net gain of $+3$ tasks ($+0.87$ pp, $p=0.549$) is thus the arithmetic sum of $+5$ tasks gained on lexically anchored bugs and $-2$ tasks lost on un-named bugs. 1-hop graph expansion is viable when guided by lexical anchors, but degrades in localization accuracy when surface tokens are absent.
 
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/breakeven_discrimination_bound.pdf}
+\caption{\textbf{Break-Even Discrimination Bound, Lexical Bottleneck, and Scaling Surface.} \textbf{(a)} Theoretical break-even curves $\text{AUC}^* = 1 - \frac{k-1}{M-1}$ ($M \in [5, 50], k \in \{1, 3, 5, 10\}$); mean $M=24.5$ requires $\text{AUC}^* \ge 0.830$ for top-5 localization. \textbf{(b)} Within-pool discrimination ($N=344$) for BM25 ($\mu = 0.825$), Gemma~4 seeds ($\mu = 0.797$), and graph neighbors ($\mu = 0.660, N=25$) vs.\ threshold $\text{AUC}^* = 0.714$ ($U = 2993, p = 0.0036^*$, Cliff's $\delta = 0.361$). \textbf{(c)} Cross-architecture scaling surface on Stratum~C ($N=58$, Dual T4 execution under \texttt{PREREG-SCALING-v1}), showing Gemma~4 scaling ($0.8544 \to 0.9274$), efficiency over Phi-4-mini ($0.7836$) and DeepSeek-7B ($0.6489$), and the 26B-A4B MoE 44~GB consumer hardware boundary.}
+\label{fig:breakeven_bound}
+\end{figure}
+
+\FloatBarrier
 \subsection{Cross-Architecture Scaling Surface and Consumer Hardware Bounds}
 \label{sec:scaling_surface}
 To evaluate whether the Lexical Abstraction Bottleneck reflects the compact capacity of 2B-parameter models or persists across architectural scaling, protocol \texttt{PREREG-SCALING-v1} evaluates pointwise candidate discrimination on held-out Stratum~C tasks across a model capacity gradient executed on Kaggle Dual Tesla T4 GPUs (Table~\ref{tab:scaling_surface} and Figure~\ref{fig:breakeven_bound}c).
@@ -438,29 +439,32 @@ To evaluate whether the Lexical Abstraction Bottleneck reflects the compact capa
 \begin{table}[!htbp]
 \centering
 \footnotesize
-\setlength{\tabcolsep}{3.5pt}
-\caption{\textbf{Cross-architecture scaling surface across held-out Stratum C un-named defect tasks ($N=58$, live Dual Tesla T4 execution).} Evaluates pointwise candidate discrimination ($\text{AUC}_{\text{tail}}$) and peak GPU VRAM on dual Tesla T4 hardware ($29.12$~GB aggregate VRAM) under protocol \texttt{PREREG-SCALING-v1}.}
+\setlength{\tabcolsep}{4.5pt}
+\renewcommand{\arraystretch}{0.92}
+\caption{\textbf{Cross-architecture scaling surface on held-out Stratum C defects ($N=58$, live Dual T4 execution).} Evaluates pointwise discrimination ($\text{AUC}_{\text{tail}}$) and peak VRAM on dual Tesla T4s ($29.12$~GB VRAM) under \texttt{PREREG-SCALING-v1}.}
 \label{tab:scaling_surface}
-\begin{tabular}{lccccc}
+\begin{tabular}{llcccc}
 \toprule
-\textbf{Model Identifier} & \textbf{Architecture Archetype} & \textbf{Parameters (Active / Total)} & \textbf{Graph ROC-AUC} & \textbf{Peak VRAM} & \textbf{Runtime} \\
+\textbf{Model Identifier} & \textbf{Architecture} & \textbf{Active / Total} & \textbf{Graph AUC} & \textbf{Peak VRAM} & \textbf{Runtime} \\
 \midrule
-\texttt{google/gemma-4-e2b-it} & Dense PLE Edge & 2.0B / 2.0B & \ScalingGemmaETwoBAuc & \ScalingGemmaETwoBVRAM & 1,798s \\
-\texttt{google/gemma-4-e4b-it} & Dense PLE Edge & 4.0B / 4.0B & \textbf{\ScalingGemmaEFourBAuc} & \ScalingGemmaEFourBVRAM & 6,250s \\
-\texttt{microsoft/Phi-4-mini-instruct} & Synthetic Reasoning & 3.8B / 3.8B & \ScalingPhiFourAuc & \ScalingPhiFourVRAM & 2,854s \\
-\texttt{deepseek-ai/DeepSeek-R1-Distill-Qwen-7B} & RL Reasoning Distill & 7.0B / 7.0B & \ScalingDeepSeekSevenBAuc & \ScalingDeepSeekSevenBVRAM & 5,231s \\
+\texttt{gemma-4-e2b-it} & Dense PLE Edge & 2.0B / 2.0B & \ScalingGemmaETwoBAuc & \ScalingGemmaETwoBVRAM & 1,798s \\
+\texttt{gemma-4-e4b-it} & Dense PLE Edge & 4.0B / 4.0B & \textbf{\ScalingGemmaEFourBAuc} & \ScalingGemmaEFourBVRAM & 6,250s \\
+\texttt{Phi-4-mini-instruct} & Synthetic Reasoning & 3.8B / 3.8B & \ScalingPhiFourAuc & \ScalingPhiFourVRAM & 2,854s \\
+\texttt{DeepSeek-R1-Distill-7B} & RL Reasoning Distill & 7.0B / 7.0B & \ScalingDeepSeekSevenBAuc & \ScalingDeepSeekSevenBVRAM & 5,231s \\
 \midrule
-\texttt{google/gemma-4-26b-a4b-it} & Dynamic Sparse MoE (128 experts) & 3.8B active / 26.0B total & \multicolumn{3}{c}{\textit{Hardware Bound: \ScalingMoERequiredVRAM~GB req.\ vs \ScalingMoEAvailableVRAM~GB avail.}} \\
+\texttt{gemma-4-26b-a4b-it} & Dynamic Sparse MoE & 3.8B / 26.0B & \multicolumn{3}{c}{\textit{Hardware Bound: \ScalingMoERequiredVRAM\ req.\ vs \ScalingMoEAvailableVRAM\ avail.}} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 This empirical scaling evaluation exposes three core findings:
-\begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
-    \item \textbf{Intra-Family Monotonic Scaling}: Within the Gemma~4 Per-Layer Embedding (PLE) architecture, graph candidate discrimination scales monotonically with parameter capacity, rising from $\text{AUC} = \ScalingGemmaETwoBAuc$ at 2B to $\text{AUC} = \ScalingGemmaEFourBAuc$ at 4B, confirming pre-registered Hypothesis $H_1$.
-    \item \textbf{Representational Efficiency over External Controls}: Gemma~4 E4B (4.0B) significantly outperforms larger 2025 external controls, exceeding \texttt{Phi-4-mini} (3.8B, $\text{AUC} = \ScalingPhiFourAuc$) by $+0.144$ and \texttt{DeepSeek-R1-Distill-7B} (7.0B, $\text{AUC} = \ScalingDeepSeekSevenBAuc$) by $+0.279$. DeepSeek-7B falls squarely below the Lexical Abstraction ceiling ($0.6489 \le 0.6596$), demonstrating that general reasoning distillation alone does not overcome the deficit of structural graph representations on un-named targets.
-    \item \textbf{Sparse MoE Quantization Boundary on Consumer Hardware}: Evaluating Gemma~4 26B-A4B identifies an empirical systems boundary. In \texttt{transformers}, the 128 dynamic MoE experts are packed as fused 3D \texttt{nn.Parameter} tensors rather than individual \texttt{nn.Linear} modules. Because standard \texttt{bitsandbytes} 4-bit quantization scans strictly for linear layers, the 128 experts bypass quantization and remain in 16-bit precision ($44.0$~GB required VRAM, \ScalingMoERequiredVRAM~GB). This physically overflows dual Tesla T4 capacity ($29.12$~GB, \ScalingMoEAvailableVRAM~GB), forcing execution halts. While dense edge models ($\le 4$B) run cleanly under consumer GPU budgets ($\le 9.6$~GB), deploying sparse MoE agents offline on consumer hardware requires native pre-quantized expert formats rather than runtime quantization wrappers.
+\begin{itemize}[noitemsep,topsep=1pt,parsep=0pt,partopsep=0pt]
+    \item \textbf{Intra-Family Monotonic Scaling}: Within the Gemma~4 PLE architecture, graph candidate discrimination scales monotonically with capacity, rising from $\text{AUC} = \ScalingGemmaETwoBAuc$ at 2B to $\text{AUC} = \ScalingGemmaEFourBAuc$ at 4B, confirming pre-registered Hypothesis $H_1$.
+    \item \textbf{Representational Efficiency over External Controls}: Gemma~4 E4B (4.0B) outperforms larger 2025 controls, exceeding \texttt{Phi-4-mini} (3.8B, $\text{AUC} = \ScalingPhiFourAuc$) by $+0.144$ and \texttt{DeepSeek-R1-Distill-7B} (7.0B, $\text{AUC} = \ScalingDeepSeekSevenBAuc$) by $+0.279$. DeepSeek-7B falls below the Lexical Abstraction ceiling ($0.6489 \le 0.6596$), demonstrating that general reasoning distillation does not replace structural code multigraph representations.
+    \item \textbf{Sparse MoE Quantization Boundary on Consumer Hardware}: Evaluating Gemma~4 26B-A4B exposes an architectural boundary: 128 dynamic experts packed as fused 3D \texttt{nn.Parameter} tensors bypass \texttt{bitsandbytes} 4-bit quantization loops. In 16-bit float, weights require \ScalingMoERequiredVRAM, physically exceeding dual Tesla T4 capacity (\ScalingMoEAvailableVRAM). While dense edge models ($\le 4$B) operate cleanly within consumer budgets ($\le 9.6$~GB), offline sparse MoE agents require native pre-quantized formats.
 \end{itemize}
+
+\FloatBarrier
 
 \subsection{Diagnostic Investigations \& Exploratory Provenance Reasoning (N=131)}
 \label{sec:stratum_c}
@@ -638,6 +642,7 @@ Table~\ref{tab:reader_mini_test} reports the downstream reader mini-test across 
 \centering
 \footnotesize
 \setlength{\tabcolsep}{4.5pt}
+\renewcommand{\arraystretch}{0.92}
 \caption{\textbf{Downstream edit-location reader mini-test on SWE-bench Verified ($N=100$, descriptive).} ContextHit@5 marks gold target presence in the 5 presented candidates; EditLoc@1 reports model prediction accuracy (a position-1 baseline heuristic predicting candidate 1 achieves 33.0\% under BM25 top-5 context). Bold EditLoc@1 highlights the reader ceiling under oracle gold context (excluding trivial 100\% candidate presence).}
 \label{tab:reader_mini_test}
 \begin{tabular}{lcccc}

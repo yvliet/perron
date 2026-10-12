@@ -45,7 +45,7 @@ def generate_figure3(out_dir: Path = FIGURES_DIR):
     apply_serif_style()
     print("Generating Figure 3: Break-Even Discrimination Bound, Lexical Bottleneck & Scaling Surface...")
 
-    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(10.5, 3.2), dpi=300, gridspec_kw={'width_ratios': [1.0, 1.0, 1.15]})
+    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(10.5, 2.75), dpi=300, gridspec_kw={'width_ratios': [1.0, 1.0, 1.15]})
 
     # -------------------------------------------------------------
     # Panel A: Theoretical Break-Even Bound AUC*(M, k)
