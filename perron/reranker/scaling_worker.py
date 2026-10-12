@@ -166,19 +166,34 @@ def run_worker():
         tokenizer.pad_token = tokenizer.eos_token
     tokenizer.padding_side = "left"
 
+def get_input_target_device(model) -> torch.device:
+    if hasattr(model, "get_input_embeddings") and model.get_input_embeddings() is not None:
+        emb = model.get_input_embeddings()
+        if hasattr(emb, "weight") and emb.weight is not None:
+            return emb.weight.device
+    if hasattr(model, "device"):
+        return model.device
+    return next(model.parameters()).device
+
+
     if cuda_available:
+        num_gpus = torch.cuda.device_count()
+        target_dmap = "auto" if (num_gpus > 1 and "26b" in args.model_id.lower()) else "cuda:0"
         model_kwargs = {
             "quantization_config": bnb_config,
-            "device_map": "auto",
+            "device_map": target_dmap,
             "trust_remote_code": False,
-            "torch_dtype": torch.float16,
+            "dtype": torch.float16,
         }
         if not is_local and hf_token:
             model_kwargs["token"] = hf_token
         model = AutoModelForCausalLM.from_pretrained(target_path, **model_kwargs)
+        input_device = get_input_target_device(model)
+        logger.info(f"Model loaded with device_map='{target_dmap}' | Input device: {input_device}")
     else:
         logger.warning("Operating in fallback CPU mode (for dry-run testing only)")
         model = None
+        input_device = torch.device("cpu")
 
     y_ids, n_ids = resolve_yes_no_token_ids(tokenizer)
     logger.info(f"Resolved classification tokens: Yes={y_ids}, No={n_ids}")
@@ -188,7 +203,7 @@ def run_worker():
     smoke_text = "Problem Statement: Verification.\n\nCandidate: def test(): pass\n\nDoes this cause the bug? Answer Yes or No."
     smoke_inp = tokenizer(smoke_text, return_tensors="pt", max_length=512, truncation=True)
     if cuda_available and model is not None:
-        smoke_inp = smoke_inp.to("cuda")
+        smoke_inp = smoke_inp.to(input_device)
         with torch.inference_mode():
             smoke_out = model(**smoke_inp)
             smoke_logits = smoke_out.logits[:, -1, :]
@@ -245,7 +260,7 @@ def run_worker():
                     padding=True,
                     truncation=True,
                     max_length=2048,
-                ).to("cuda")
+                ).to(input_device)
 
                 t0 = time.perf_counter()
                 with torch.inference_mode():
@@ -332,7 +347,7 @@ def run_worker():
                 formatted_prompt = prompt_text
 
             if model is not None and cuda_available:
-                inputs = tokenizer(formatted_prompt, return_tensors="pt", max_length=3000, truncation=True).to("cuda")
+                inputs = tokenizer(formatted_prompt, return_tensors="pt", max_length=3000, truncation=True).to(input_device)
                 with torch.inference_mode():
                     gen_tokens = model.generate(
                         **inputs,
