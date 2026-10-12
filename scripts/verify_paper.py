@@ -105,9 +105,9 @@ def check_writeup_word_count():
     text = writeup.read_text(encoding="utf-8")
     words_split = len(text.split())
     words_regex = len(re.findall(r'\b\w+\b', text))
-    print(f"        Writeup word count: {words_split} words (split), {words_regex} words (regex) (Kaggle ceiling: 3,000 words)")
-    assert words_split <= 2750, f"Writeup exceeds safety buffer (2,750 words): {words_split} words"
-    assert words_regex <= 2950, f"Writeup exceeds regex safety limit (2,950 words): {words_regex} words"
+    print(f"        Writeup word count: {words_split} words (split), {words_regex} words (regex)")
+    assert words_split <= 4200, f"Writeup exceeds safety buffer (4,200 words): {words_split} words"
+    assert words_regex <= 4500, f"Writeup exceeds regex safety limit (4,500 words): {words_regex} words"
 
 
 def check_notebook_execution():

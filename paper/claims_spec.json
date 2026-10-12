@@ -3441,6 +3441,255 @@
       "file": "results/scaling_curve_complete_results.json",
       "ptr": "/systems_boundary/available_vram_gb",
       "fmt": "gb2"
+    },
+    "CausalObfNatAccOne": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/A_O0_natural_nothink/acc_1",
+      "fmt": "pct2_raw"
+    },
+    "CausalObfNatAccFive": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/A_O0_natural_nothink/acc_5",
+      "fmt": "pct2_raw"
+    },
+    "CausalObfNatMRR": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/A_O0_natural_nothink/mrr",
+      "fmt": "num4"
+    },
+    "CausalObfModAccOne": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/A_O1_obfuscated_nothink/acc_1",
+      "fmt": "pct2_raw"
+    },
+    "CausalObfModAccFive": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/A_O1_obfuscated_nothink/acc_5",
+      "fmt": "pct2_raw"
+    },
+    "CausalObfModMRR": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/A_O1_obfuscated_nothink/mrr",
+      "fmt": "num4"
+    },
+    "CausalEncBaselineAccOne": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e0_nothink/acc_1",
+      "fmt": "pct2_raw"
+    },
+    "CausalEncBaselineAccFive": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e0_nothink/acc_5",
+      "fmt": "pct2_raw"
+    },
+    "CausalEncBaselineMRR": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e0_nothink/mrr",
+      "fmt": "num4"
+    },
+    "CausalEncCommentAccOne": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e1_nothink/acc_1",
+      "fmt": "pct2_raw"
+    },
+    "CausalEncCommentAccFive": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e1_nothink/acc_5",
+      "fmt": "pct2_raw"
+    },
+    "CausalEncCommentMRR": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e1_nothink/mrr",
+      "fmt": "num4"
+    },
+    "CausalEncLinearAccOne": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e2_nothink/acc_1",
+      "fmt": "pct2_raw"
+    },
+    "CausalEncLinearAccFive": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e2_nothink/acc_5",
+      "fmt": "pct2_raw"
+    },
+    "CausalEncLinearMRR": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e2_nothink/mrr",
+      "fmt": "num4"
+    },
+    "CausalEncEdgeListAccOne": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e3_nothink/acc_1",
+      "fmt": "pct2_raw"
+    },
+    "CausalEncEdgeListAccFive": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e3_nothink/acc_5",
+      "fmt": "pct2_raw"
+    },
+    "CausalEncEdgeListMRR": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e3_nothink/mrr",
+      "fmt": "num4"
+    },
+    "CausalEncAdjacencyAccOne": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e4_nothink/acc_1",
+      "fmt": "pct2_raw"
+    },
+    "CausalEncAdjacencyAccFive": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e4_nothink/acc_5",
+      "fmt": "pct2_raw"
+    },
+    "CausalEncAdjacencyMRR": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e4_nothink/mrr",
+      "fmt": "num4"
+    },
+    "CausalEncCommentVsBaseTopOneP": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/statistical_contrasts/e1_vs_e0_top1/mcnemar_p",
+      "fmt": "pval"
+    },
+    "CausalEncCommentVsBaseTopFiveP": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/statistical_contrasts/e1_vs_e0_top5/mcnemar_p",
+      "fmt": "pval"
+    },
+    "CausalEncCommentVsBaseMRRP": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/statistical_contrasts/e1_vs_e0_mrr/wilcoxon_p",
+      "fmt": "pval"
+    },
+    "CausalEncCommentLiftTopOne": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/statistical_contrasts/e1_vs_e0_top1/lift_pp",
+      "fmt": "delta_pp"
+    },
+    "CausalEncCommentLiftTopFive": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/statistical_contrasts/e1_vs_e0_top5/lift_pp",
+      "fmt": "delta_pp"
+    },
+    "CausalEncCommentLiftMRRPct": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/statistical_contrasts/e1_vs_e0_mrr/relative_lift_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalObfNatHitsOneKN": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/A_O0_natural_nothink/hits_1",
+      "fmt": "kn",
+      "n_ptr": "/A_O0_natural_nothink/n"
+    },
+    "CausalObfModHitsOneKN": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/A_O1_obfuscated_nothink/hits_1",
+      "fmt": "kn",
+      "n_ptr": "/A_O1_obfuscated_nothink/n"
+    },
+    "CausalEncBaselineHitsOneKN": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e0_nothink/hits_1",
+      "fmt": "kn",
+      "n_ptr": "/B_e0_nothink/n"
+    },
+    "CausalEncCommentHitsOneKN": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e1_nothink/hits_1",
+      "fmt": "kn",
+      "n_ptr": "/B_e1_nothink/n"
+    },
+    "CausalEncLinearHitsOneKN": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e2_nothink/hits_1",
+      "fmt": "kn",
+      "n_ptr": "/B_e2_nothink/n"
+    },
+    "CausalEncEdgeListHitsOneKN": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e3_nothink/hits_1",
+      "fmt": "kn",
+      "n_ptr": "/B_e3_nothink/n"
+    },
+    "CausalEncAdjacencyHitsOneKN": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e4_nothink/hits_1",
+      "fmt": "kn",
+      "n_ptr": "/B_e4_nothink/n"
+    },
+    "CausalEncCommentVsBaseTopOnePvalFour": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/statistical_contrasts/e1_vs_e0_top1/mcnemar_p",
+      "fmt": "pval4"
+    },
+    "CausalEncCommentVsBaseMRRPvalFour": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/statistical_contrasts/e1_vs_e0_mrr/wilcoxon_p",
+      "fmt": "pval4"
+    },
+    "CausalEncCommentVsBaseTopFivePvalFour": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/statistical_contrasts/e1_vs_e0_top5/mcnemar_p",
+      "fmt": "pval4"
+    },
+    "CausalObfNatHitsFiveKN": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/A_O0_natural_nothink/hits_5",
+      "fmt": "kn",
+      "n_ptr": "/A_O0_natural_nothink/n"
+    },
+    "CausalObfModHitsFiveKN": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/A_O1_obfuscated_nothink/hits_5",
+      "fmt": "kn",
+      "n_ptr": "/A_O1_obfuscated_nothink/n"
+    },
+    "CausalEncBaselineHitsFiveKN": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e0_nothink/hits_5",
+      "fmt": "kn",
+      "n_ptr": "/B_e0_nothink/n"
+    },
+    "CausalEncCommentHitsFiveKN": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e1_nothink/hits_5",
+      "fmt": "kn",
+      "n_ptr": "/B_e1_nothink/n"
+    },
+    "CausalEncLinearHitsFiveKN": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e2_nothink/hits_5",
+      "fmt": "kn",
+      "n_ptr": "/B_e2_nothink/n"
+    },
+    "CausalEncEdgeListHitsFiveKN": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e3_nothink/hits_5",
+      "fmt": "kn",
+      "n_ptr": "/B_e3_nothink/n"
+    },
+    "CausalEncAdjacencyHitsFiveKN": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/B_e4_nothink/hits_5",
+      "fmt": "kn",
+      "n_ptr": "/B_e4_nothink/n"
+    },
+    "CausalEncLinearVsBaseTopOnePvalFour": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/statistical_contrasts/e2_vs_e0_top1/mcnemar_p",
+      "fmt": "pval4"
+    },
+    "CausalEncEdgeListVsBaseTopOnePvalFour": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/statistical_contrasts/e3_vs_e0_top1/mcnemar_p",
+      "fmt": "pval4"
+    },
+    "CausalEncAdjacencyVsBaseTopOnePvalFour": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/statistical_contrasts/e4_vs_e0_top1/mcnemar_p",
+      "fmt": "pval4"
     }
   }
 }
