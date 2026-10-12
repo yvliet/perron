@@ -77,6 +77,47 @@ def resolve_yes_no_token_ids(tokenizer: Any) -> Tuple[List[int], List[int]]:
     return sorted(list(y_ids)), sorted(list(n_ids))
 
 
+def resolve_model_path(model_id: str) -> str:
+    if Path(model_id).exists() and (Path(model_id) / "config.json").exists():
+        return model_id
+    base_in = Path("/kaggle/input")
+    if base_in.exists():
+        slug = model_id.split("/")[-1].lower()
+        for p in base_in.rglob("config.json"):
+            if slug in str(p.parent).lower():
+                logger.info(f"Resolved local Kaggle mount for {model_id}: {p.parent}")
+                return str(p.parent)
+        if "gemma" in slug:
+            for variant in ["e2b", "e4b", "26b", "31b", "12b"]:
+                if variant in slug:
+                    for p in base_in.rglob("config.json"):
+                        p_str = str(p.parent).lower()
+                        if variant in p_str and "gemma" in p_str:
+                            logger.info(f"Resolved local mount for {model_id} via keyword {variant}: {p.parent}")
+                            return str(p.parent)
+    return model_id
+
+
+def get_hf_token() -> Optional[str]:
+    try:
+        from kaggle_secrets import UserSecretsClient
+        secrets = UserSecretsClient()
+        token = secrets.get_secret("HF_TOKEN")
+        if token:
+            return token
+    except Exception:
+        pass
+    return os.environ.get("HF_TOKEN") or os.environ.get("HUGGING_FACE_HUB_TOKEN")
+
+
+def purge_hf_cache():
+    import shutil
+    for cdir in [Path("/root/.cache/huggingface/hub"), Path(os.path.expanduser("~/.cache/huggingface/hub"))]:
+        if cdir.exists():
+            logger.info(f"Purging Hugging Face cache at {cdir} to reclaim scratch disk...")
+            shutil.rmtree(cdir, ignore_errors=True)
+
+
 def run_worker():
     parser = argparse.ArgumentParser(description="Perron Scaling Model Worker")
     parser.add_argument("--model_id", required=True, help="HuggingFace model ID")
@@ -104,6 +145,10 @@ def run_worker():
     device_name = torch.cuda.get_device_name(0) if cuda_available else "CPU"
     logger.info(f"CUDA Available: {cuda_available} | Device: {device_name}")
 
+    target_path = resolve_model_path(args.model_id)
+    is_local = Path(target_path).exists()
+    hf_token = get_hf_token()
+
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
@@ -111,20 +156,26 @@ def run_worker():
         bnb_4bit_use_double_quant=True,
     ) if cuda_available else None
 
-    logger.info(f"Loading model: {args.model_id} (NF4 quant={cuda_available})")
-    tokenizer = AutoTokenizer.from_pretrained(args.model_id, trust_remote_code=True)
+    logger.info(f"Loading model: {args.model_id} (Target Path: {target_path}, Local: {is_local}, NF4: {cuda_available})")
+    load_kwargs = {"trust_remote_code": True}
+    if not is_local and hf_token:
+        load_kwargs["token"] = hf_token
+
+    tokenizer = AutoTokenizer.from_pretrained(target_path, **load_kwargs)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
     tokenizer.padding_side = "left"
 
     if cuda_available:
-        model = AutoModelForCausalLM.from_pretrained(
-            args.model_id,
-            quantization_config=bnb_config,
-            device_map="auto",
-            trust_remote_code=True,
-            torch_dtype=torch.float16,
-        )
+        model_kwargs = {
+            "quantization_config": bnb_config,
+            "device_map": "auto",
+            "trust_remote_code": True,
+            "torch_dtype": torch.float16,
+        }
+        if not is_local and hf_token:
+            model_kwargs["token"] = hf_token
+        model = AutoModelForCausalLM.from_pretrained(target_path, **model_kwargs)
     else:
         logger.warning("Operating in fallback CPU mode (for dry-run testing only)")
         model = None
@@ -327,6 +378,8 @@ def run_worker():
     gc.collect()
     if cuda_available:
         torch.cuda.empty_cache()
+    if not is_local:
+        purge_hf_cache()
 
 
 if __name__ == "__main__":
