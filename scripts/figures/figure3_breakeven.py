@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
 """
-scripts/figures/figure3_breakeven.py - Figure 3: Break-Even Discrimination Bound & Abstraction Bottleneck.
+scripts/figures/figure3_breakeven.py - Figure 3: Break-Even Discrimination Bound, Abstraction Bottleneck, and Cross-Architecture Scaling.
 
 Generates:
   - paper/figures/breakeven_discrimination_bound.{pdf, png}
 
 Panel (a): Theoretical break-even curves AUC*(M, k) across candidate pool sizes.
 Panel (b): Empirical within-pool discrimination distributions (Raincloud: jitter + boxplot + KDE) on N=344.
+Panel (c): Cross-architecture scaling surface & consumer hardware MoE boundary across Dual Tesla T4 models (N=58).
 
 Author: Sultan Haikal (@yvliet)
 License: Apache-2.0
 """
 
 import sys
+import json
 from pathlib import Path
 import numpy as np
 import scipy.stats as stats
@@ -39,11 +41,11 @@ from scripts.figures.common import (
 
 
 def generate_figure3(out_dir: Path = FIGURES_DIR):
-    """Generate Figure 3: Break-Even Discrimination Bound & Abstraction Bottleneck."""
+    """Generate Figure 3: Break-Even Discrimination Bound, Lexical Bottleneck, and Scaling Surface."""
     apply_serif_style()
-    print("Generating Figure 3: Break-Even Discrimination Bound & Lexical Bottleneck...")
+    print("Generating Figure 3: Break-Even Discrimination Bound, Lexical Bottleneck & Scaling Surface...")
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7.2, 3.2), dpi=300, gridspec_kw={'width_ratios': [1.1, 0.9]})
+    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(10.5, 3.2), dpi=300, gridspec_kw={'width_ratios': [1.0, 1.0, 1.15]})
 
     # -------------------------------------------------------------
     # Panel A: Theoretical Break-Even Bound AUC*(M, k)
@@ -60,52 +62,51 @@ def generate_figure3(out_dir: Path = FIGURES_DIR):
     ax1.fill_between(M, auc_k5, 1.0, color=COLOR_BLUE, alpha=0.08, label='_nolegend_')
     ax1.fill_between(M, 0.5, auc_k5, color=COLOR_VERMILION, alpha=0.05, label='_nolegend_')
 
-    ax1.text(28, 0.94, r"Viable Promotion Zone ($\mathbb{E}[\mathrm{Rank}] \leq 5$)",
-             fontsize=7.2, color=COLOR_BLUE, fontweight='bold', ha='center',
+    ax1.text(28, 0.94, r"Viable Zone ($\mathbb{E}[\mathrm{R}] \leq 5$)",
+             fontsize=6.8, color=COLOR_BLUE, fontweight='bold', ha='center',
              bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_BLUE, alpha=0.85, lw=0.6))
-    ax1.text(28, 0.54, r"Distractor Accumulation Zone ($\mathbb{E}[\mathrm{Rank}] > 5$)",
-             fontsize=7.2, color=COLOR_VERMILION, fontweight='bold', ha='center',
+    ax1.text(28, 0.54, r"Distractor Zone ($\mathbb{E}[\mathrm{R}] > 5$)",
+             fontsize=6.8, color=COLOR_VERMILION, fontweight='bold', ha='center',
              bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_VERMILION, alpha=0.85, lw=0.6))
 
     # Plot Curves
-    ax1.plot(M, auc_k1, color=COLOR_SLATE, lw=1.2, ls=':', label=r'$k=1$ (Top-1, Extreme)')
-    ax1.plot(M, auc_k3, color=COLOR_PURPLE, lw=1.3, ls='-.', label=r'$k=3$ (Top-3)')
-    ax1.plot(M, auc_k5, color=COLOR_BLUE, lw=2.0, ls='-', label=r'$k=5$ (Top-5, Target Budget)')
-    ax1.plot(M, auc_k10, color=COLOR_GREEN, lw=1.3, ls='--', label=r'$k=10$ (Top-10)')
+    ax1.plot(M, auc_k1, color=COLOR_SLATE, lw=1.1, ls=':', label=r'$k=1$ (Top-1)')
+    ax1.plot(M, auc_k3, color=COLOR_PURPLE, lw=1.2, ls='-.', label=r'$k=3$ (Top-3)')
+    ax1.plot(M, auc_k5, color=COLOR_BLUE, lw=1.8, ls='-', label=r'$k=5$ (Top-5)')
+    ax1.plot(M, auc_k10, color=COLOR_GREEN, lw=1.2, ls='--', label=r'$k=10$ (Top-10)')
 
     # Operating Points for k=5
     operating_points = [
-        (10, 1.0 - 4.0 / 9.0, "M=10\n(0.556)", (12, -4), 'left', 'top'),
-        (15, 1.0 - 4.0 / 14.0, "M=15 (1-Hop)\n(0.714)", (0, 11), 'center', 'bottom'),
-        (24.5, 1.0 - 4.0 / 23.5, "M=24.5 (Mean)\n(0.830)", (0, 11), 'center', 'bottom'),
-        (50, 1.0 - 4.0 / 49.0, "M=50 (Cap)\n(0.918)", (-2, -18), 'right', 'top'),
+        (10, 1.0 - 4.0 / 9.0, "M=10 (0.556)", (8, -6), 'left', 'top'),
+        (15, 1.0 - 4.0 / 14.0, "M=15 (0.714)", (0, 8), 'center', 'bottom'),
+        (24.5, 1.0 - 4.0 / 23.5, "M=24.5 (0.830)", (0, 8), 'center', 'bottom'),
+        (50, 1.0 - 4.0 / 49.0, "M=50 (0.918)", (-2, -14), 'right', 'top'),
     ]
     for m_pt, auc_pt, lbl, xy_off, ha_pos, va_pos in operating_points:
-        ax1.scatter([m_pt], [auc_pt], color=COLOR_BLUE, s=32, zorder=5)
+        ax1.scatter([m_pt], [auc_pt], color=COLOR_BLUE, s=26, zorder=5)
         ax1.annotate(lbl, (m_pt, auc_pt), textcoords="offset points", xytext=xy_off,
-                     ha=ha_pos, va=va_pos, fontsize=6.8, color=COLOR_SLATE, zorder=6,
-                     bbox=dict(boxstyle="round,pad=0.25", facecolor="white", edgecolor=COLOR_BORDER, lw=0.6))
+                     ha=ha_pos, va=va_pos, fontsize=6.2, color=COLOR_SLATE, zorder=6,
+                     bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_BORDER, lw=0.5))
 
     # Empirical Gemma 4 Lines
-    ax1.axhline(0.7966, color=COLOR_GREEN, lw=1.1, ls='--', alpha=0.9)
-    ax1.text(5.5, 0.806, "Seed AUC (0.7966)", fontsize=7.0, color=COLOR_GREEN, fontweight='bold')
+    ax1.axhline(0.7966, color=COLOR_GREEN, lw=1.0, ls='--', alpha=0.85)
+    ax1.text(5.5, 0.806, "Seed AUC (0.797)", fontsize=6.5, color=COLOR_GREEN, fontweight='bold')
 
-    ax1.axhline(0.6596, color=COLOR_VERMILION, lw=1.1, ls='--', alpha=0.9)
-    ax1.text(5.5, 0.668, "Graph AUC (0.6596)", fontsize=7.0, color=COLOR_VERMILION, fontweight='bold')
+    ax1.axhline(0.6596, color=COLOR_VERMILION, lw=1.0, ls='--', alpha=0.85)
+    ax1.text(5.5, 0.668, "Graph AUC (0.660)", fontsize=6.5, color=COLOR_VERMILION, fontweight='bold')
 
     ax1.set_xlim(5, 52)
     ax1.set_ylim(0.50, 1.02)
-    ax1.set_xlabel("Candidate Pool Size ($M$)")
-    ax1.set_ylabel("Pairwise Discrimination (ROC-AUC)")
-    ax1.set_title(r"$\mathbf{(a)}$ Break-Even Bound $\mathrm{AUC}^* = 1 - \frac{k-1}{M-1}$", loc='center')
-    ax1.legend(loc='lower right', framealpha=0.92, facecolor='white', edgecolor=COLOR_BORDER)
+    ax1.set_xlabel("Candidate Pool Size ($M$)", fontsize=8)
+    ax1.set_ylabel("Pairwise Discrimination (ROC-AUC)", fontsize=8)
+    ax1.set_title(r"$\mathbf{(a)}$ Break-Even Bound $\mathrm{AUC}^* = 1 - \frac{k-1}{M-1}$", loc='center', fontsize=8.5)
+    ax1.legend(loc='lower right', framealpha=0.92, facecolor='white', edgecolor=COLOR_BORDER, fontsize=6.5)
 
     # -------------------------------------------------------------
     # Panel B: Empirical Within-Pool Discrimination Distributions
     # -------------------------------------------------------------
     aucs_file = REPO_ROOT / "results" / "empirical_task_aucs.json"
     if aucs_file.exists():
-        import json
         auc_data = json.loads(aucs_file.read_text(encoding="utf-8"))
         data_bm25 = np.array(auc_data["bm25_task_aucs"])
         data_seeds = np.array(auc_data["seed_task_aucs"])
@@ -122,9 +123,9 @@ def generate_figure3(out_dir: Path = FIGURES_DIR):
         cliffs_delta = 0.3605
 
     categories = [
-        (f"Unscored BM25\nBaseline ($n={len(data_bm25)}$)", data_bm25, COLOR_SLATE, 0.8245),
-        (f"Gemma 4 Seeds\n($n={len(data_seeds)}$)", data_seeds, COLOR_GREEN, 0.7966),
-        (f"Gemma 4 Neighbors\n($n={len(data_graph)}$)", data_graph, COLOR_VERMILION, 0.6596),
+        (f"BM25\n($n={len(data_bm25)}$)", data_bm25, COLOR_SLATE, 0.8245),
+        (f"Seeds\n($n={len(data_seeds)}$)", data_seeds, COLOR_GREEN, 0.7966),
+        (f"Neighbors\n($n={len(data_graph)}$)", data_graph, COLOR_VERMILION, 0.6596),
     ]
 
     positions = [1, 2, 3]
@@ -134,45 +135,110 @@ def generate_figure3(out_dir: Path = FIGURES_DIR):
 
         # 1. Jittered Raw Points
         np.random.seed(42 + idx)
-        jitter = np.random.uniform(-0.18, -0.05, size=len(vals))
-        ax2.scatter(pos + jitter, vals, color=col, alpha=0.35 if len(vals) < 50 else 0.22,
-                    s=14 if len(vals) < 50 else 6, edgecolors='none', zorder=2)
+        jitter = np.random.uniform(-0.16, -0.04, size=len(vals))
+        ax2.scatter(pos + jitter, vals, color=col, alpha=0.35 if len(vals) < 50 else 0.20,
+                    s=12 if len(vals) < 50 else 5, edgecolors='none', zorder=2)
 
         # 2. Boxplot
-        bp = ax2.boxplot(vals, positions=[pos], widths=0.15, patch_artist=True,
-                         showfliers=False, zorder=3,
-                         boxprops=dict(facecolor='white', edgecolor=col, lw=1.2),
-                         whiskerprops=dict(color=col, lw=1.0),
-                         capprops=dict(color=col, lw=1.0),
-                         medianprops=dict(color=col, lw=1.8))
+        ax2.boxplot(vals, positions=[pos], widths=0.14, patch_artist=True,
+                    showfliers=False, zorder=3,
+                    boxprops=dict(facecolor='white', edgecolor=col, lw=1.1),
+                    whiskerprops=dict(color=col, lw=0.9),
+                    capprops=dict(color=col, lw=0.9),
+                    medianprops=dict(color=col, lw=1.6))
 
         # 3. Half-Violin / KDE
         kde = stats.gaussian_kde(vals)
         y_eval = np.linspace(np.min(vals), np.max(vals), 100)
         density = kde(y_eval)
-        density_scaled = (density / np.max(density)) * 0.28
-        ax2.fill_betweenx(y_eval, pos, pos + density_scaled, facecolor=col, alpha=0.25, edgecolor=col, lw=1.0, zorder=2)
+        density_scaled = (density / np.max(density)) * 0.26
+        ax2.fill_betweenx(y_eval, pos, pos + density_scaled, facecolor=col, alpha=0.22, edgecolor=col, lw=0.9, zorder=2)
 
         # Micro-pooled Mean Marker
-        ax2.scatter([pos], [mean_val], color=col, s=32, marker='D', edgecolor='white', lw=0.8, zorder=4)
-        ax2.text(pos + 0.16, mean_val, f"$\\mu={mean_val:.4f}$", fontsize=7.2, color=col,
+        ax2.scatter([pos], [mean_val], color=col, s=28, marker='D', edgecolor='white', lw=0.7, zorder=4)
+        ax2.text(pos + 0.15, mean_val, f"$\\mu={mean_val:.3f}$", fontsize=6.8, color=col,
                  fontweight='bold', va='center')
 
     # Break-Even Threshold Line for typical 1-Hop Pool (M=15, k=5 -> AUC* = 0.714)
-    ax2.axhline(0.7143, color=COLOR_BLUE, lw=1.3, ls='--', alpha=0.9, zorder=4)
-    ax2.text(0.65, 0.722, r"$\mathrm{AUC}^* = 0.714$ ($M=15, k=5$)", fontsize=7.0, color=COLOR_BLUE, fontweight='bold')
+    ax2.axhline(0.7143, color=COLOR_BLUE, lw=1.2, ls='--', alpha=0.85, zorder=4)
+    ax2.text(0.60, 0.724, r"$\mathrm{AUC}^* = 0.714$", fontsize=6.5, color=COLOR_BLUE, fontweight='bold')
 
     # Non-parametric empirical statistics annotation
-    ax2.text(2.5, 0.38, f"Mann-Whitney $U = {int(u_stat)}, p = {p_val:.4f}^*$\nCliff's $\\delta = {cliffs_delta:.3f}$ ($n_s={len(data_seeds)}, n_g={len(data_graph)}$)",
-             fontsize=6.8, ha='center', va='center', color=COLOR_SLATE,
-             bbox=dict(boxstyle="round,pad=0.3", facecolor=COLOR_BG_CARD, edgecolor=COLOR_BORDER, lw=0.6))
+    ax2.text(2.0, 0.25, f"$U={int(u_stat)}, p={p_val:.4f}^*$\nCliff's $\\delta={cliffs_delta:.3f}$",
+             fontsize=6.5, ha='center', va='center', color=COLOR_SLATE,
+             bbox=dict(boxstyle="round,pad=0.25", facecolor=COLOR_BG_CARD, edgecolor=COLOR_BORDER, lw=0.5))
 
     ax2.set_xticks(positions)
     ax2.set_xticklabels([c[0] for c in categories], fontsize=7.2)
-    ax2.set_xlim(0.5, 3.6)
-    ax2.set_ylim(0.20, 1.05)
-    ax2.set_ylabel("Within-Pool Discrimination (ROC-AUC)")
-    ax2.set_title(r"$\mathbf{(b)}$ Lexical Abstraction Bottleneck ($N=344$)", loc='center')
+    ax2.set_xlim(0.4, 3.6)
+    ax2.set_ylim(0.18, 1.05)
+    ax2.set_ylabel("Within-Pool Discrimination (ROC-AUC)", fontsize=8)
+    ax2.set_title(r"$\mathbf{(b)}$ Lexical Abstraction Bottleneck", loc='center', fontsize=8.5)
+
+    # -------------------------------------------------------------
+    # Panel C: Cross-Architecture Scaling Surface & MoE Hardware Boundary
+    # -------------------------------------------------------------
+    scaling_file = REPO_ROOT / "results" / "scaling_curve_complete_results.json"
+    if scaling_file.exists():
+        sc_data = json.loads(scaling_file.read_text(encoding="utf-8"))
+        models = sc_data["models"]
+    else:
+        models = [
+            {"name": "Gemma 4 E2B", "params_b": 2.0, "mean_graph_auc": 0.8544, "peak_vram_mb": 6698.9},
+            {"name": "Gemma 4 E4B", "params_b": 4.0, "mean_graph_auc": 0.9274, "peak_vram_mb": 9648.4},
+            {"name": "Phi-4-mini", "params_b": 3.8, "mean_graph_auc": 0.7836, "peak_vram_mb": 4135.9},
+            {"name": "DeepSeek R1 7B", "params_b": 7.0, "mean_graph_auc": 0.6489, "peak_vram_mb": 6594.6},
+        ]
+
+    # Model Coordinates
+    gemma_x = [2.0, 4.0]
+    gemma_y = [models[0]["mean_graph_auc"], models[1]["mean_graph_auc"]]
+
+    phi_x, phi_y = models[2]["params_b"], models[2]["mean_graph_auc"]
+    ds_x, ds_y = models[3]["params_b"], models[3]["mean_graph_auc"]
+
+    # Monotonic scaling curve for Gemma 4
+    ax3.plot(gemma_x, gemma_y, color=COLOR_BLUE, lw=1.8, marker='o', markersize=6, zorder=5, label='Gemma 4 (PLE Dense)')
+    ax3.scatter([phi_x], [phi_y], color=COLOR_PURPLE, s=42, marker='s', zorder=5, label='Phi-4-mini (3.8B)')
+    ax3.scatter([ds_x], [ds_y], color=COLOR_SLATE, s=48, marker='^', zorder=5, label='DeepSeek-R1-7B')
+
+    # Annotate Points with VRAM & AUC
+    ax3.annotate(f"E2B (2B)\nAUC: {gemma_y[0]:.4f}\n6.7 GB VRAM", (gemma_x[0], gemma_y[0]),
+                 textcoords="offset points", xytext=(-12, 10), ha='center', fontsize=6.2, color=COLOR_BLUE,
+                 bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_BLUE, alpha=0.9, lw=0.5))
+
+    ax3.annotate(f"E4B (4B)\nAUC: {gemma_y[1]:.4f}\n9.6 GB VRAM", (gemma_x[1], gemma_y[1]),
+                 textcoords="offset points", xytext=(-14, 10), ha='center', fontsize=6.2, color=COLOR_BLUE,
+                 bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_BLUE, alpha=0.9, lw=0.5))
+
+    ax3.annotate(f"Phi-4 (3.8B)\nAUC: {phi_y:.4f}\n4.1 GB VRAM", (phi_x, phi_y),
+                 textcoords="offset points", xytext=(12, -18), ha='center', fontsize=6.2, color=COLOR_PURPLE,
+                 bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_PURPLE, alpha=0.9, lw=0.5))
+
+    ax3.annotate(f"DeepSeek 7B\nAUC: {ds_y:.4f}\n6.6 GB VRAM", (ds_x, ds_y),
+                 textcoords="offset points", xytext=(0, -22), ha='center', fontsize=6.2, color=COLOR_SLATE,
+                 bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_SLATE, alpha=0.9, lw=0.5))
+
+    # Reference lines
+    ax3.axhline(0.6596, color=COLOR_VERMILION, lw=1.0, ls=':', alpha=0.85)
+    ax3.text(1.2, 0.642, "Lexical Bottleneck (0.660)", fontsize=6.0, color=COLOR_VERMILION, fontweight='bold')
+
+    ax3.axhline(0.830, color=COLOR_BLUE, lw=1.0, ls='--', alpha=0.6)
+    ax3.text(1.2, 0.812, r"$\mathrm{AUC}^*=0.830$ ($M=24.5$)", fontsize=6.0, color=COLOR_BLUE)
+
+    # 26B-A4B Systems Hardware Boundary at x=26.0 (or visual boundary strip)
+    ax3.axvspan(10.5, 14.5, color=COLOR_VERMILION, alpha=0.08, hatch='//')
+    ax3.axvline(12.5, color=COLOR_VERMILION, lw=1.2, ls='--')
+    ax3.text(12.5, 0.78, "26B-A4B MoE Boundary\nReq: 44 GB VRAM\n(Fused 3D Experts)",
+             fontsize=6.2, color=COLOR_VERMILION, ha='center', fontweight='bold',
+             bbox=dict(boxstyle="round,pad=0.25", facecolor="white", edgecolor=COLOR_VERMILION, alpha=0.9, lw=0.6))
+
+    ax3.set_xlim(1.0, 15.0)
+    ax3.set_ylim(0.55, 1.02)
+    ax3.set_xlabel("Model Capacity / Active Scale (B)", fontsize=8)
+    ax3.set_ylabel("Stratum C Graph ROC-AUC", fontsize=8)
+    ax3.set_title(r"$\mathbf{(c)}$ Cross-Architecture Scaling Surface", loc='center', fontsize=8.5)
+    ax3.legend(loc='lower left', framealpha=0.92, facecolor='white', edgecolor=COLOR_BORDER, fontsize=6.2)
 
     plt.tight_layout()
     save_figure(fig, "breakeven_discrimination_bound", out_dir=out_dir)

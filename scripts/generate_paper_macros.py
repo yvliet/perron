@@ -63,6 +63,8 @@ FORMATS = {
     "pval4": lambda v, n: f"= {v:.4f}",
     "pcell": lambda v, n: _cell(v),
     "gib2": lambda v, n: f"{v:.2f}~GiB",
+    "gb1": lambda v, n: f"{v:.1f}~GB",
+    "gb2": lambda v, n: f"{v:.2f}~GB",
     "mb1": lambda v, n: f"{v:.1f}~MB",
     "mb2": lambda v, n: f"{v:.2f}~MB",
     "ms1": lambda v, n: f"{v:.1f}~ms",

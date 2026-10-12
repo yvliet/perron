@@ -3391,6 +3391,56 @@
       "ptr": "/summary/R5_A1_thinking_seeds_only_M10/hits_at_5",
       "fmt": "kn",
       "n_ptr": "/n_tasks"
+    },
+    "ScalingGemmaETwoBAuc": {
+      "file": "results/scaling_curve_complete_results.json",
+      "ptr": "/models/0/mean_graph_auc",
+      "fmt": "num4"
+    },
+    "ScalingGemmaEFourBAuc": {
+      "file": "results/scaling_curve_complete_results.json",
+      "ptr": "/models/1/mean_graph_auc",
+      "fmt": "num4"
+    },
+    "ScalingPhiFourAuc": {
+      "file": "results/scaling_curve_complete_results.json",
+      "ptr": "/models/2/mean_graph_auc",
+      "fmt": "num4"
+    },
+    "ScalingDeepSeekSevenBAuc": {
+      "file": "results/scaling_curve_complete_results.json",
+      "ptr": "/models/3/mean_graph_auc",
+      "fmt": "num4"
+    },
+    "ScalingGemmaETwoBVRAM": {
+      "file": "results/scaling_curve_complete_results.json",
+      "ptr": "/models/0/peak_vram_mb",
+      "fmt": "mb1"
+    },
+    "ScalingGemmaEFourBVRAM": {
+      "file": "results/scaling_curve_complete_results.json",
+      "ptr": "/models/1/peak_vram_mb",
+      "fmt": "mb1"
+    },
+    "ScalingPhiFourVRAM": {
+      "file": "results/scaling_curve_complete_results.json",
+      "ptr": "/models/2/peak_vram_mb",
+      "fmt": "mb1"
+    },
+    "ScalingDeepSeekSevenBVRAM": {
+      "file": "results/scaling_curve_complete_results.json",
+      "ptr": "/models/3/peak_vram_mb",
+      "fmt": "mb1"
+    },
+    "ScalingMoERequiredVRAM": {
+      "file": "results/scaling_curve_complete_results.json",
+      "ptr": "/systems_boundary/required_vram_gb",
+      "fmt": "gb1"
+    },
+    "ScalingMoEAvailableVRAM": {
+      "file": "results/scaling_curve_complete_results.json",
+      "ptr": "/systems_boundary/available_vram_gb",
+      "fmt": "gb2"
     }
   }
 }
