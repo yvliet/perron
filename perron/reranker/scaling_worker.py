@@ -153,7 +153,7 @@ def run_worker():
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
         bnb_4bit_compute_dtype=torch.float16,
-        bnb_4bit_use_double_quant=True,
+        bnb_4bit_use_double_quant=False,
     ) if cuda_available else None
 
     logger.info(f"Loading model: {args.model_id} (Target Path: {target_path}, Local: {is_local}, NF4: {cuda_available})")
@@ -183,11 +183,21 @@ def get_input_target_device(model) -> torch.device:
             "quantization_config": bnb_config,
             "device_map": target_dmap,
             "trust_remote_code": False,
-            "dtype": torch.float16,
+            "torch_dtype": torch.float16,
         }
+        if target_dmap == "auto":
+            model_kwargs["max_memory"] = {
+                0: "14.0GiB",
+                1: "14.0GiB",
+            }
         if not is_local and hf_token:
             model_kwargs["token"] = hf_token
-        model = AutoModelForCausalLM.from_pretrained(target_path, **model_kwargs)
+        try:
+            model = AutoModelForCausalLM.from_pretrained(target_path, **model_kwargs)
+        except Exception as load_err:
+            logger.warning(f"Initial load with max_memory failed: {load_err}. Retrying with auto device map without explicit max_memory...")
+            model_kwargs.pop("max_memory", None)
+            model = AutoModelForCausalLM.from_pretrained(target_path, **model_kwargs)
         input_device = get_input_target_device(model)
         logger.info(f"Model loaded with device_map='{target_dmap}' | Input device: {input_device}")
     else:
