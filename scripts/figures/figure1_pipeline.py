@@ -543,8 +543,8 @@ def figure1(outdir=None):
     check(ax, xc5 + 88, 82, s=4.2, lw=0.9)
     T(ax, xc5 + 95, 82, "Top-1", size=5.2, weight="bold", color=GREEN, ha="left")
     
-    T(ax, xc5 + 75, 45, r"Acc@1: 2.3% $\rightarrow$ 9.2%  (p=0.0039, 4$\times$ Lift)", size=5.6, weight="bold", color=INK)
-    T(ax, xc5 + 75, 29, "28.6% of graph-only bugs converted", size=5.0, color=MUTED)
+    T(ax, xc5 + 75, 45, r"Acc@1: 4.6% $\rightarrow$ 9.9%  (p=0.039, 2.2$\times$ Lift)", size=5.6, weight="bold", color=INK)
+    T(ax, xc5 + 75, 29, "Matched graph pool: +45.4% MRR", size=5.0, color=MUTED)
 
     # Save to targets
     paper_fig_dir = os.path.join("paper", "figures")

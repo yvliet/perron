@@ -3690,6 +3690,221 @@
       "file": "results/causal_ablation_results.json",
       "ptr": "/statistical_contrasts/e4_vs_e0_top1/mcnemar_p",
       "fmt": "pval4"
+    },
+    "MatchedGraphDirectHitsOne": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/matched_graph_pool_thinking_lift/direct_hits_1",
+      "fmt": "int"
+    },
+    "MatchedGraphDirectAccOne": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/matched_graph_pool_thinking_lift/direct_acc_1_pct",
+      "fmt": "pct2_raw"
+    },
+    "MatchedGraphDirectHitsFive": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/matched_graph_pool_thinking_lift/direct_hits_5",
+      "fmt": "int"
+    },
+    "MatchedGraphDirectAccFive": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/matched_graph_pool_thinking_lift/direct_acc_5_pct",
+      "fmt": "pct2_raw"
+    },
+    "MatchedGraphDirectMRR": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/matched_graph_pool_thinking_lift/direct_mrr",
+      "fmt": "num4"
+    },
+    "MatchedGraphThinkingHitsOne": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/matched_graph_pool_thinking_lift/thinking_hits_1",
+      "fmt": "int"
+    },
+    "MatchedGraphThinkingAccOne": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/matched_graph_pool_thinking_lift/thinking_acc_1_pct",
+      "fmt": "pct2_raw"
+    },
+    "MatchedGraphThinkingHitsFive": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/matched_graph_pool_thinking_lift/thinking_hits_5",
+      "fmt": "int"
+    },
+    "MatchedGraphThinkingAccFive": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/matched_graph_pool_thinking_lift/thinking_acc_5_pct",
+      "fmt": "pct2_raw"
+    },
+    "MatchedGraphThinkingMRR": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/matched_graph_pool_thinking_lift/thinking_mrr",
+      "fmt": "num4"
+    },
+    "MatchedGraphDeltaAccOnePp": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/matched_graph_pool_thinking_lift/delta_acc_1_pp",
+      "fmt": "delta_pp"
+    },
+    "MatchedGraphRelLiftAccOnePct": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/matched_graph_pool_thinking_lift/relative_lift_acc_1_pct",
+      "fmt": "pct1_raw"
+    },
+    "MatchedGraphRelLiftAccOneRatio": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/matched_graph_pool_thinking_lift/relative_lift_acc_1_ratio",
+      "fmt": "ratio_x"
+    },
+    "MatchedGraphDeltaAccFivePp": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/matched_graph_pool_thinking_lift/delta_acc_5_pp",
+      "fmt": "delta_pp"
+    },
+    "MatchedGraphRelLiftAccFivePct": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/matched_graph_pool_thinking_lift/relative_lift_acc_5_pct",
+      "fmt": "pct1_raw"
+    },
+    "MatchedGraphRelLiftMRRPct": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/matched_graph_pool_thinking_lift/relative_lift_mrr_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalEncCommentHolmP": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/statistical_contrasts/e1_vs_e0_top1_holm_p",
+      "fmt": "pval4"
+    },
+    "CausalEncCommentVsEdgeListP": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/statistical_contrasts/e1_vs_e3_top1/mcnemar_p",
+      "fmt": "pval4"
+    },
+    "CausalEncCommentVsEdgeListLift": {
+      "file": "results/causal_ablation_results.json",
+      "ptr": "/statistical_contrasts/e1_vs_e3_top1/lift_pp",
+      "fmt": "delta_pp"
+    },
+    "ListwiseAOneAccOne": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A1_listwise/acc_at_1_pct",
+      "fmt": "pct2_raw"
+    },
+    "ListwiseAOneHitsOne": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A1_listwise/hits_at_1",
+      "fmt": "int"
+    },
+    "ListwiseAOneHitsFive": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A1_listwise/hits_at_5",
+      "fmt": "int"
+    },
+    "ListwiseAOneAccTen": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A1_listwise/acc_at_10_pct",
+      "fmt": "pct2_raw"
+    },
+    "ListwiseAOneHitsTen": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A1_listwise/hits_at_10",
+      "fmt": "int"
+    },
+    "ListwiseAOneMRR": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A1_listwise/mrr_50",
+      "fmt": "num4"
+    },
+    "ListwiseATwoAccOne": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A2_listwise/acc_at_1_pct",
+      "fmt": "pct2_raw"
+    },
+    "ListwiseATwoHitsOne": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A2_listwise/hits_at_1",
+      "fmt": "int"
+    },
+    "ListwiseATwoHitsFive": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A2_listwise/hits_at_5",
+      "fmt": "int"
+    },
+    "ListwiseATwoAccTen": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A2_listwise/acc_at_10_pct",
+      "fmt": "pct2_raw"
+    },
+    "ListwiseATwoHitsTen": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A2_listwise/hits_at_10",
+      "fmt": "int"
+    },
+    "ListwiseATwoMRR": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A2_listwise/mrr_50",
+      "fmt": "num4"
+    },
+    "ListwiseAFourAccOne": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A4_listwise/acc_at_1_pct",
+      "fmt": "pct2_raw"
+    },
+    "ListwiseAFourHitsOne": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A4_listwise/hits_at_1",
+      "fmt": "int"
+    },
+    "ListwiseAFourHitsFive": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A4_listwise/hits_at_5",
+      "fmt": "int"
+    },
+    "ListwiseAFourAccTen": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A4_listwise/acc_at_10_pct",
+      "fmt": "pct2_raw"
+    },
+    "ListwiseAFourHitsTen": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A4_listwise/hits_at_10",
+      "fmt": "int"
+    },
+    "ListwiseAFourMRR": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/results/A4_listwise/mrr_50",
+      "fmt": "num4"
+    },
+    "ControlOneAFourThinkingAccTen": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R2_A4_thinking_graph_M25/acc_at_10_pct",
+      "fmt": "pct2_raw"
+    },
+    "ControlOneAFourThinkingHitsTen": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R2_A4_thinking_graph_M25/hits_at_10",
+      "fmt": "int"
+    },
+    "ControlOneATwoThinkingAccTen": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R4_A2_thinking_depth_bm25_M25/acc_at_10_pct",
+      "fmt": "pct2_raw"
+    },
+    "ControlOneATwoThinkingHitsTen": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R4_A2_thinking_depth_bm25_M25/hits_at_10",
+      "fmt": "int"
+    },
+    "ControlOneAOneThinkingAccTen": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R5_A1_thinking_seeds_only_M10/acc_at_10_pct",
+      "fmt": "pct2_raw"
+    },
+    "ControlOneAOneThinkingHitsTen": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R5_A1_thinking_seeds_only_M10/hits_at_10",
+      "fmt": "int"
     }
   }
 }

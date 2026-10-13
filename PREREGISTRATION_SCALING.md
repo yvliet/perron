@@ -2,10 +2,10 @@
 
 - **Protocol Identifier**: `PREREG-SCALING-v1`
 - **Author**: Sultan Haikal (GitHub: `@yvliet`)
-- **Affiliation**: Independent Research / Gemma 4 Developer Agent Track 2 Submission
+- **Affiliation**: Independent Research / Autonomous Developer Agent Systems
 - **Timestamp**: October 12, 2026
 - **Status**: Pre-Registered & Locked Prior to Experimental Execution
-- **Target Venue**: Google DeepMind Developer Agent Competition Track 2 ($35,000 Prize Pool)
+- **Target Research Scope**: Gemma 4 Developer Agent Technical Report
 - **Primary Evaluator Alignment**: Graph-ML Peer Review Criteria (Bryan Perozzi, Benedek Rózemberczki, Mikhail Galkin)
 
 ---

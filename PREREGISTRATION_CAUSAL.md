@@ -2,10 +2,10 @@
 
 - **Protocol Identifier**: `PREREG-CAUSAL-v1`
 - **Author**: Sultan Haikal (GitHub: `@yvliet`)
-- **Affiliation**: Independent Research / Gemma 4 Developer Agent Track 2 Submission
+- **Affiliation**: Independent Research / Autonomous Developer Agent Systems
 - **Timestamp**: October 12, 2026
 - **Status**: Pre-Registered & Locked Prior to Experimental Execution
-- **Target Venue**: Google DeepMind Developer Agent Competition Track 2 ($35,000 Prize Pool)
+- **Target Research Scope**: Gemma 4 Developer Agent Technical Report
 - **Primary Evaluator Alignment**: Graph-ML Peer Review Criteria (Bryan Perozzi, Benedek Rózemberczki, Mikhail Galkin)
 
 ---
@@ -17,11 +17,11 @@ In Phase 1 and Phase 2, we established two foundational empirical findings:
 2. **The Break-Even Discrimination Bound**: When candidate pools expand from $M=3$ to $M=25$, the minimum discrimination required to sustain bug localization jumps from $0.50$ to $0.875$.
 3. **Reasoning Compute Multiplier**: Allocating test-time `<thought>` tokens raises Top-1 accuracy on Stratum C from $2.29\%$ to $9.92\%$ (exact binomial McNemar $p = 0.0063^*$).
 
-### The Dual Unresolved Critiques
-- **Critique A (Correlational vs. Causal Lexical Mechanism)**: Is the collapse on graph neighbors driven causally by the absence of surface lexical overlap, or is it an artifact of structural complexity in non-seed code?
-- **Critique B (Prompt Encoding Sensitivity / *Talk Like a Graph*)**: Does graph provenance fail without thinking compute merely because a comment-style annotation (`# Provenance: ...`) is sub-optimal? Would alternative graph serializations (Edge Lists, Adjacency Maps, Linearized Traversal Paths) allow the model to trace relationships zero-shot?
+### The Dual Open Methodological Questions
+- **Question A (Correlational vs. Causal Lexical Mechanism)**: Is the collapse on graph neighbors driven causally by the absence of surface lexical overlap, or is it an artifact of structural complexity in non-seed code?
+- **Question B (Prompt Encoding Sensitivity / *Talk Like a Graph*)**: Does graph provenance fail without thinking compute merely because a comment-style annotation (`# Provenance: ...`) is sub-optimal? Would alternative graph serializations (Edge Lists, Adjacency Maps, Linearized Traversal Paths) allow the model to trace relationships zero-shot?
 
-This protocol defines the formal experimental design, hypotheses, and decision rules to resolve both critiques via controlled intervention.
+This protocol defines the formal experimental design, hypotheses, and decision rules to resolve both questions via controlled intervention.
 
 ---
 

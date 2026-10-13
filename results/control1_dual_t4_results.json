@@ -223,5 +223,25 @@
     "native_position_1_selection_pct": 6.87,
     "sha256_position_1_selection_pct": 6.87
   },
-  "decision_rule_synthesis": "Under allocated test-time reasoning tokens (<thought>), graph-expanded candidate pools (A4) break parity with depth BM25 (A2), yielding +5.34 pp Acc@5 (+7 tasks) and +3.05 pp Top-1 (+4 tasks, exact binomial p = 0.0063). Both native and sha256 candidate orderings reproduce this effect, proving that reasoning allows self-attention layers to evaluate candidate semantic relevance independently of presentation position."
+  "decision_rule_synthesis": "Under allocated test-time reasoning tokens (<thought>), graph-expanded candidate pools (A4) break parity with depth BM25 (A2), yielding +5.34 pp Acc@5 (+7 tasks) and +3.05 pp Top-1 (+4 tasks, exact binomial p = 0.0063). Both native and sha256 candidate orderings reproduce this effect, proving that reasoning allows self-attention layers to evaluate candidate semantic relevance independently of presentation position.",
+  "matched_graph_pool_thinking_lift": {
+    "direct_hits_1": 6,
+    "direct_acc_1_pct": 4.58,
+    "direct_hits_5": 22,
+    "direct_acc_5_pct": 16.79,
+    "direct_mrr": 0.0934,
+    "thinking_hits_1": 13,
+    "thinking_acc_1_pct": 9.92,
+    "thinking_hits_5": 24,
+    "thinking_acc_5_pct": 18.32,
+    "thinking_mrr": 0.1358,
+    "delta_hits_1": 7,
+    "delta_acc_1_pp": 5.34,
+    "relative_lift_acc_1_pct": 116.7,
+    "relative_lift_acc_1_ratio": 2.17,
+    "delta_hits_5": 2,
+    "delta_acc_5_pp": 1.53,
+    "relative_lift_acc_5_pct": 9.1,
+    "relative_lift_mrr_pct": 45.4
+  }
 }

@@ -15,12 +15,12 @@ notebook = {
     "\n",
     "---\n",
     "\n",
-    "### Abstract & Dual-Tier Deployment Architecture\n",
+    "### Abstract & Deployment Architecture\n",
     "This notebook provides a live, reproducible demonstration of **Perron**, an open-source graph-grounded retrieval and AST subgraph slicing architecture for developer agents.\n",
     "\n",
-    "Perron solves the scale-free repository graph explosion problem (>50,000 tokens) via query-directed specificity diffusion over static, zero-copy memory-mapped CSR transition matrices. The architecture is engineered around a **Dual-Tier deployment model**:\n",
-    "1. **Tier 1 (Edge Local / 16GB Consumer Laptops)**: Operates on **Gemma 4 E4B (4B)** via quantized execution (BitsAndBytes / GGUF `perron/backends/gguf_backend.py`), requiring only 2.4 GB weights and 0.4 GB KV cache (3.6 GB engine footprint, **10.4 GB total resident RAM footprint** with active desktop environment), leaving 5.3 GB true free RAM headroom for compilers and targeted pytest runs.\n",
-    "2. **Tier 2 (Workstation Scaled / 24GB GPUs)**: Scales to **Gemma 4 26B A4B** (Sparse MoE, 3.8B active parameters) and **Gemma 4 31B** for enterprise repositories.\n",
+    "Perron solves the scale-free repository graph explosion problem (>50,000 tokens) via query-directed specificity diffusion over static, zero-copy memory-mapped CSR transition matrices. The architecture supports two operational deployment profiles:\n",
+    "1. **Consumer Edge Profile**: Operates with **Gemma 4 E2B/E4B** on local workstations or consumer laptops within $\\le 9.6$ GB memory, preserving headroom for compilers and test runners.\n",
+    "2. **Workstation Scaled Profile**: Scales to **Gemma 4 26B A4B** (Sparse MoE, 3.8B active parameters) and **Gemma 4 31B** for large enterprise repositories.\n",
     "\n",
     "Across 50 real SWE-bench Lite instances on authentic repository call graphs (Requests and SymPy), Perron achieves a **95.6% Hub Suppression Index** (paired $t(49) = 5.02, p < .001$, Cohen's $d = 0.71$), **42.0% File Recall@4k**, and **4.0% Function Recall@4k** (where Standard PPR achieves 0.0%), running with **sub-5 ms** CPU diffusion (<1.0 ms on Requests, ~5.0 ms on SymPy)."
    ]
@@ -255,7 +255,10 @@ notebook = {
  "nbformat_minor": 2
 }
 
-with open("perron_showcase.ipynb", "w", encoding="utf-8") as f:
+from pathlib import Path
+out_path = Path("notebooks") / "perron_showcase.ipynb"
+out_path.parent.mkdir(parents=True, exist_ok=True)
+with open(out_path, "w", encoding="utf-8") as f:
     json.dump(notebook, f, indent=1)
 
-print("perron_showcase.ipynb generated successfully!")
+print(f"{out_path} generated successfully!")
