@@ -87,12 +87,12 @@ def generate_figure4(out_dir: Path = FIGURES_DIR):
                      markersize=5.5, label='Acc@5 (Top-5)' if idx == 0 else '_nolegend_', zorder=5)
         ax1.text(p5, y + 0.25, f"{p5:.1f}%", fontsize=6.8, ha='center', va='bottom', color=col, fontweight='bold', zorder=6)
 
-    # Top-1 McNemar Annotation Bracket between C1 and C0
+    # Top-1 McNemar Annotation Bracket for Matched Lift (A4 Direct to C0 Thinking)
     dot_clearance = 0.08
-    ax1.plot([2.29, 2.29, 9.92, 9.92],
+    ax1.plot([4.58, 4.58, 9.92, 9.92],
              [1.0 - 0.14 - dot_clearance, 0.35, 0.35, 3.0 - 0.14 - dot_clearance],
              color=COLOR_GREEN, lw=1.1, ls=':', zorder=1)
-    ax1.text(6.10, 0.18, r"$\mathbf{4.3\times\ Lift}$ ($p = 0.0063^*$)" + "\n" + r"($2.29\% \to 9.92\%$)",
+    ax1.text(7.25, 0.18, r"$\mathbf{2.17\times\ Matched\ Lift}$ ($p = 0.039^*$)" + "\n" + r"($4.58\% \to 9.92\%$)",
              fontsize=6.5, color=COLOR_GREEN, fontweight='bold', ha='center', va='top', zorder=4,
              bbox=dict(boxstyle="round,pad=0.22", facecolor=COLOR_BG_CARD, edgecolor=COLOR_GREEN, lw=0.8))
 
@@ -117,13 +117,12 @@ def generate_figure4(out_dir: Path = FIGURES_DIR):
                      handler_map={ErrorbarContainer: HandlerErrorbar(xerr_size=1.2, marker_pad=0.3)})
 
     # -------------------------------------------------------------
-    # Panel B: Relative Metric Lift & Factorial Comparison
+    # Panel B: Relative Metric Lift vs. Matched Graph Baseline (A4)
     # -------------------------------------------------------------
     metrics_data = [
-        ("Top-1 Accuracy\n(Acc@1)", 333.3, 300.0, r"+333% (p=0.0063*)", r"+300% (p=0.0117*)"),
-        ("MRR@50\nScore", 74.6, 63.2, r"+74.6% (0.1358)", r"+63.2% (0.1270)"),
-        ("Top-3 Accuracy\n(Acc@3)", 58.3, 50.0, r"+58.3% (14.5%)", r"+50.0% (13.7%)"),
-        ("Top-5 Accuracy\n(Acc@5)", 20.0, 15.0, r"+20.0% (18.3%)", r"+15.0% (17.6%)"),
+        ("Top-1 Accuracy\n(Acc@1)", 116.7, 100.0, r"+116.7% (p=0.039*)", r"+100.0% (p=0.012*)"),
+        ("MRR@50\nScore", 45.4, 36.0, r"+45.4% (0.1358)", r"+36.0% (0.1270)"),
+        ("Top-5 Accuracy\n(Acc@5)", 9.1, 4.5, r"+9.1% (p=0.688)", r"+4.5% (p=1.000)"),
     ]
 
     y_bar = np.arange(len(metrics_data))
@@ -137,16 +136,16 @@ def generate_figure4(out_dir: Path = FIGURES_DIR):
                        label=r'C3: Prov. + Thinking')
 
     for idx, (lbl, v0, v3, a0, a3) in enumerate(metrics_data):
-        ax2.text(v0 + 6.0, idx + 0.16, a0, fontsize=6.2, color=COLOR_GREEN, va='center', fontweight='bold')
-        ax2.text(v3 + 6.0, idx - 0.16, a3, fontsize=6.2, color=COLOR_BLUE, va='center', fontweight='bold')
+        ax2.text(v0 + 4.0, idx + 0.16, a0, fontsize=6.2, color=COLOR_GREEN, va='center', fontweight='bold')
+        ax2.text(v3 + 4.0, idx - 0.16, a3, fontsize=6.2, color=COLOR_BLUE, va='center', fontweight='bold')
 
     ax2.set_yticks(y_bar)
     ax2.set_yticklabels([m[0] for m in metrics_data], fontsize=7.2)
-    ax2.set_xlim(0, 440)
-    ax2.set_xticks([0, 100, 200, 300, 400])
-    ax2.set_ylim(-0.60, 3.65)
-    ax2.set_xlabel("Relative Lift vs. Baseline C1 (%)")
-    ax2.set_title(r"$\mathbf{(b)}$ Relative Effect Sizes vs. C1", loc='center', fontsize=9.0, pad=32)
+    ax2.set_xlim(0, 160)
+    ax2.set_xticks([0, 40, 80, 120, 160])
+    ax2.set_ylim(-0.60, 2.85)
+    ax2.set_xlabel("Relative Lift vs. Matched Baseline A4 (%)")
+    ax2.set_title(r"$\mathbf{(b)}$ Relative Effect Sizes vs. Matched $A_4$", loc='center', fontsize=9.0, pad=32)
 
     leg2 = ax2.legend(loc='lower center', bbox_to_anchor=(0.5, 1.05), ncol=2, frameon=True,
                       framealpha=0.92, facecolor='white', edgecolor=COLOR_BORDER, fontsize=6.8)

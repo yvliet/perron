@@ -3774,7 +3774,7 @@
     "CausalEncCommentHolmP": {
       "file": "results/causal_ablation_results.json",
       "ptr": "/statistical_contrasts/e1_vs_e0_top1_holm_p",
-      "fmt": "pval4"
+      "fmt": "num4"
     },
     "CausalEncCommentVsEdgeListP": {
       "file": "results/causal_ablation_results.json",
