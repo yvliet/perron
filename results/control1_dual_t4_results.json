@@ -243,5 +243,16 @@
     "delta_acc_5_pp": 1.53,
     "relative_lift_acc_5_pct": 9.1,
     "relative_lift_mrr_pct": 45.4
+  },
+  "pooled_top1_headline": {
+    "direct_hits_1": 16,
+    "direct_acc_1_pct": 4.07,
+    "thinking_hits_1": 31,
+    "thinking_acc_1_pct": 7.89,
+    "delta_hits_1": 15,
+    "delta_acc_1_pp": 3.82,
+    "relative_lift_ratio": 1.94,
+    "pooled_n_evals": 393,
+    "pooled_sign_p": 6.1e-05
   }
 }

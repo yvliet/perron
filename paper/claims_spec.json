@@ -3905,6 +3905,71 @@
       "file": "results/control1_dual_t4_results.json",
       "ptr": "/summary/R5_A1_thinking_seeds_only_M10/hits_at_10",
       "fmt": "int"
+    },
+    "PooledTopOneDirectHits": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/pooled_top1_headline/direct_hits_1",
+      "fmt": "int"
+    },
+    "PooledTopOneDirectAcc": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/pooled_top1_headline/direct_acc_1_pct",
+      "fmt": "pct2_raw"
+    },
+    "PooledTopOneThinkingHits": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/pooled_top1_headline/thinking_hits_1",
+      "fmt": "int"
+    },
+    "PooledTopOneThinkingAcc": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/pooled_top1_headline/thinking_acc_1_pct",
+      "fmt": "pct2_raw"
+    },
+    "PooledTopOneDeltaHits": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/pooled_top1_headline/delta_hits_1",
+      "fmt": "int"
+    },
+    "PooledTopOneDeltaPp": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/pooled_top1_headline/delta_acc_1_pp",
+      "fmt": "delta_pp"
+    },
+    "PooledTopOneRelLiftRatio": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/pooled_top1_headline/relative_lift_ratio",
+      "fmt": "ratio_x"
+    },
+    "PooledTopOneSignPval": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/pooled_top1_headline/pooled_sign_p",
+      "fmt": "pval"
+    },
+    "CausalSeedAFourDirectHitsOne": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/candidate_pool_subgroups/seed_connected_a4_direct_hits_1",
+      "fmt": "int"
+    },
+    "CausalSeedAFourDirectAccOne": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/candidate_pool_subgroups/seed_connected_a4_direct_acc1_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalSeedAFourDirectLiftPp": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/candidate_pool_subgroups/seed_connected_a4_direct_lift_pp",
+      "fmt": "delta_pp"
+    },
+    "CausalCZeroVsAFourDirectAccOnePval": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/contrasts/C0_thinking_vs_A4_direct_acc1/mcnemar_p_value",
+      "fmt": "pval4"
+    },
+    "CausalCThreeVsAFourDirectAccOnePval": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/contrasts/C3_thinking_vs_A4_direct_acc1/mcnemar_p_value",
+      "fmt": "pval4"
     }
   }
 }

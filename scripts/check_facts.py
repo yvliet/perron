@@ -28,6 +28,8 @@ FIXED_ALLOW = {
     "65%",
     "2 ms",
     "p < 0.05",
+    "p < 0.001",
+    "p < .001",
 }  # statistical conventions and SLA labels
 TOKEN_RES = (
     re.compile(r"\d+(?:\.\d+)?%"),
