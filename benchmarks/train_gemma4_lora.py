@@ -209,20 +209,24 @@ def train_lora_pipeline(
     dtype = torch.float16 if use_fp16 else torch.float32
     model = AutoModelForCausalLM.from_pretrained(
         model_name,
-        torch_dtype=dtype,
+        dtype=dtype,
         trust_remote_code=True,
     ).to(device)
+
+    # Disable KV cache during gradient checkpointing to prevent warnings
+    if hasattr(model, "config"):
+        model.config.use_cache = False
 
     # Enable gradient checkpointing and input gradients
     model.gradient_checkpointing_enable()
     if hasattr(model, "enable_input_require_grads"):
         model.enable_input_require_grads()
 
-    # Configure LoRA
+    # Configure LoRA targeting language model attention projections
     peft_config = LoraConfig(
         r=lora_r,
         lora_alpha=lora_alpha,
-        target_modules=["q_proj", "v_proj", "k_proj", "o_proj"],
+        target_modules=r".*language_model.*(q_proj|v_proj|k_proj|o_proj)$",
         lora_dropout=0.05,
         bias="none",
         task_type="CAUSAL_LM",
