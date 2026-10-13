@@ -3437,6 +3437,11 @@
       "ptr": "/systems_boundary/required_vram_gb",
       "fmt": "gb1"
     },
+    "ScalingMoERuntimeVRAM": {
+      "file": "results/scaling_curve_complete_results.json",
+      "ptr": "/systems_boundary/runtime_vram_gb",
+      "fmt": "gb1"
+    },
     "ScalingMoEAvailableVRAM": {
       "file": "results/scaling_curve_complete_results.json",
       "ptr": "/systems_boundary/available_vram_gb",
@@ -3969,6 +3974,38 @@
     "CausalCThreeVsAFourDirectAccOnePval": {
       "file": "results/kaggle_causal_callpath_results_131.json",
       "ptr": "/contrasts/C3_thinking_vs_A4_direct_acc1/mcnemar_p_value",
+      "fmt": "pval4"
+    },
+    "ProtocolPCOneExactPval": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/table_t_b/PC1/p_exact",
+      "fmt": "pval4"
+    },
+    "MatchedGraphHolmPval": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/matched_graph_pool_thinking_lift/mcnemar_holm_p",
+      "fmt": "pval4"
+    },
+    "MatchedGraphDirectHitsOneKN": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/matched_graph_pool_thinking_lift/direct_hits_1",
+      "n_ptr": "/n_tasks",
+      "fmt": "kn"
+    },
+    "ControlOneAOneThinkingHitsOneKN": {
+      "file": "results/control1_dual_t4_results.json",
+      "ptr": "/summary/R5_A1_thinking_seeds_only_M10/hits_at_1",
+      "n_ptr": "/n_tasks",
+      "fmt": "kn"
+    },
+    "BZeroVsAFourDirectPval": {
+      "file": "results/kaggle_stratum_c_listwise_results.json",
+      "ptr": "/contrasts/A4_listwise_vs_B0_plain/mcnemar_p_value",
+      "fmt": "pval2"
+    },
+    "CausalCThreeVsCZeroTOSTPval": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/contrasts/C3_thinking_vs_C0_thinking_acc1/tost_p_value",
       "fmt": "pval4"
     }
   }

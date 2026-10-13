@@ -69,6 +69,12 @@
       "n10": 8,
       "n01": 2,
       "mcnemar_p_value": 0.1094
+    },
+    "A4_listwise_vs_B0_plain": {
+      "delta_pp": 1.53,
+      "n10": 4,
+      "n01": 2,
+      "mcnemar_p_value": 0.75
     }
   }
 }

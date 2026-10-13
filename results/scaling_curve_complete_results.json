@@ -79,7 +79,8 @@
     "archetype": "Dynamic Sparse MoE (128 experts)",
     "status": "hardware_quantization_boundary",
     "required_vram_gb": 44.0,
+    "runtime_vram_gb": 52.0,
     "available_vram_gb": 29.12,
-    "mechanism": "128 fused 3D expert parameter tensors bypass bitsandbytes nn.Linear 4-bit quantization, requiring 44.0 GB 16-bit VRAM, physically overflowing dual Tesla T4 capacity (29.12 GB)"
+    "mechanism": "128 fused 3D expert parameter tensors bypass bitsandbytes nn.Linear 4-bit quantization, requiring 52.0 GB unquantized 16-bit runtime VRAM (44.0 GB disk checkpoint), physically overflowing dual Tesla T4 capacity (29.12 GB)"
   }
 }

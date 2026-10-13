@@ -242,7 +242,8 @@
     "delta_hits_5": 2,
     "delta_acc_5_pp": 1.53,
     "relative_lift_acc_5_pct": 9.1,
-    "relative_lift_mrr_pct": 45.4
+    "relative_lift_mrr_pct": 45.4,
+    "mcnemar_holm_p": 0.046875
   },
   "pooled_top1_headline": {
     "direct_hits_1": 16,

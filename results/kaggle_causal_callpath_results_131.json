@@ -118,7 +118,8 @@
       "delta_pp": -0.76,
       "n10": 1,
       "n01": 2,
-      "mcnemar_p_value": 1.0
+      "mcnemar_p_value": 1.0,
+      "tost_p_value": 0.1745
     },
     "C0_thinking_vs_A4_direct_acc1": {
       "delta_pp": 5.34,
