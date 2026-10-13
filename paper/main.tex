@@ -60,12 +60,12 @@
     tabsize=4
 }
 
-% Section and heading typography (Bryan Perozzi / DeepMind aesthetic)
+% Section and heading typography (Bryan Perozzi / ICLR style)
 \usepackage{titlesec}
-\titleformat{\section}{\large\sffamily\bfseries}{\thesection}{0.75em}{}
-\titleformat{\subsection}{\normalsize\sffamily\bfseries}{\thesubsection}{0.65em}{}
-\titleformat{\subsubsection}{\normalsize\sffamily\bfseries\itshape}{\thesubsubsection}{0.55em}{}
-\titleformat{\paragraph}[runin]{\normalsize\sffamily\bfseries}{}{0pt}{}[.]
+\titleformat{\section}{\large\scshape\raggedright}{\thesection}{0.8em}{}
+\titleformat{\subsection}{\normalsize\scshape\raggedright}{\thesubsection}{0.7em}{}
+\titleformat{\subsubsection}{\normalsize\scshape\raggedright}{\thesubsubsection}{0.6em}{}
+\titleformat{\paragraph}[runin]{\normalsize\bfseries}{}{0pt}{}[.]
 \titlespacing*{\section}{0pt}{1.8ex plus 0.4ex minus 0.2ex}{0.8ex plus 0.2ex}
 \titlespacing*{\subsection}{0pt}{1.4ex plus 0.3ex minus 0.2ex}{0.6ex plus 0.2ex}
 \titlespacing*{\subsubsection}{0pt}{1.2ex plus 0.3ex minus 0.2ex}{0.4ex plus 0.2ex}
@@ -74,12 +74,12 @@
 % Headers
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\sffamily\textit{Does Graph Expansion Help Small Code Models Localize Bugs?}}
-\fancyhead[R]{\small\sffamily\thepage}
+\fancyhead[L]{\small\textit{Does Graph Expansion Help Small Code Models Localize Bugs?}}
+\fancyhead[R]{\small\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \fancypagestyle{plain}{%
   \fancyhf{}%
-  \fancyfoot[C]{\small\sffamily\thepage}%
+  \fancyfoot[C]{\small\thepage}%
   \renewcommand{\headrulewidth}{0pt}%
 }
 
