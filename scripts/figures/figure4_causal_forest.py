@@ -92,22 +92,22 @@ def generate_figure4(out_dir: Path = FIGURES_DIR):
     ax1.plot([4.58, 4.58, 9.92, 9.92],
              [1.0 - 0.14 - dot_clearance, 0.35, 0.35, 3.0 - 0.14 - dot_clearance],
              color=COLOR_GREEN, lw=1.1, ls=':', zorder=1)
-    ax1.text(7.25, 0.18, r"$\mathbf{2.17\times\ Matched\ Lift}$ ($p = 0.039^*$)" + "\n" + r"($4.58\% \to 9.92\%$)",
-             fontsize=6.5, color=COLOR_GREEN, fontweight='bold', ha='center', va='top', zorder=4,
+    ax1.text(6.8, 0.18, r"$\mathbf{2.17\times\ Matched\ Lift}$" + "\n" + r"($4.58\% \to 9.92\%$)" + "\n" + r"($p = 0.039^*$)",
+             fontsize=6.2, color=COLOR_GREEN, fontweight='bold', ha='center', va='top', zorder=4,
              bbox=dict(boxstyle="round,pad=0.22", facecolor=COLOR_BG_CARD, edgecolor=COLOR_GREEN, lw=0.8))
 
     # Factorial Parity Annotation (C3 vs C0) at symmetric bottom baseline
-    ax1.text(22.5, 0.18,
+    ax1.text(23.2, 0.18,
              r"$\mathbf{Factorial\ Contrast:}$" + "\n" +
              r"$C_3\ \text{vs.}\ C_0\ \text{Exact}\ p = 1.0000$" + "\n" +
              r"$\Delta_{\text{interaction}} = -2.29\text{ pp\ (Parity)}$",
-             fontsize=6.2, color=COLOR_BLUE, ha='center', va='top', zorder=4,
+             fontsize=6.0, color=COLOR_BLUE, ha='center', va='top', zorder=4,
              bbox=dict(boxstyle="round,pad=0.22", facecolor='#F0F9FF', edgecolor=COLOR_BLUE, lw=0.8))
 
     ax1.set_yticks(y_pos)
     ax1.set_yticklabels([c[0] for c in conditions], fontsize=7.6)
     ax1.set_xlim(-0.5, 32.0)
-    ax1.set_ylim(-0.45, 4.60)
+    ax1.set_ylim(-0.55, 4.60)
     ax1.set_xlabel("Defect Localization Accuracy (%)")
     ax1.set_title(r"$\mathbf{(a)}$ Stratum C Factorial Localization ($N=131$)", loc='center', fontsize=9.0, pad=32)
 

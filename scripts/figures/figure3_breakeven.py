@@ -173,7 +173,7 @@ def generate_figure3(out_dir: Path = FIGURES_DIR):
     ax2.set_xlim(0.4, 3.6)
     ax2.set_ylim(0.18, 1.05)
     ax2.set_ylabel("Within-Pool Discrimination (ROC-AUC)", fontsize=8)
-    ax2.set_title(r"$\mathbf{(b)}$ Lexical Abstraction Bottleneck", loc='center', fontsize=8.5)
+    ax2.set_title(r"$\mathbf{(b)}$ Topological Disambiguation Deficit", loc='center', fontsize=8.5)
 
     # -------------------------------------------------------------
     # Panel C: Cross-Architecture Scaling Surface & MoE Hardware Boundary
@@ -204,15 +204,15 @@ def generate_figure3(out_dir: Path = FIGURES_DIR):
 
     # Annotate Points with VRAM & AUC
     ax3.annotate(f"E2B (2B)\nAUC: {gemma_y[0]:.4f}\n6.7 GB VRAM", (gemma_x[0], gemma_y[0]),
-                 textcoords="offset points", xytext=(-12, 10), ha='center', fontsize=6.2, color=COLOR_BLUE,
+                 textcoords="offset points", xytext=(-15, 12), ha='center', fontsize=6.2, color=COLOR_BLUE,
                  bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_BLUE, alpha=0.9, lw=0.5))
 
     ax3.annotate(f"E4B (4B)\nAUC: {gemma_y[1]:.4f}\n9.6 GB VRAM", (gemma_x[1], gemma_y[1]),
-                 textcoords="offset points", xytext=(-14, 10), ha='center', fontsize=6.2, color=COLOR_BLUE,
+                 textcoords="offset points", xytext=(14, 6), ha='left', fontsize=6.2, color=COLOR_BLUE,
                  bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_BLUE, alpha=0.9, lw=0.5))
 
     ax3.annotate(f"Phi-4 (3.8B)\nAUC: {phi_y:.4f}\n4.1 GB VRAM", (phi_x, phi_y),
-                 textcoords="offset points", xytext=(12, -18), ha='center', fontsize=6.2, color=COLOR_PURPLE,
+                 textcoords="offset points", xytext=(14, -14), ha='left', fontsize=6.2, color=COLOR_PURPLE,
                  bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_PURPLE, alpha=0.9, lw=0.5))
 
     ax3.annotate(f"DeepSeek 7B\nAUC: {ds_y:.4f}\n6.6 GB VRAM", (ds_x, ds_y),
@@ -221,10 +221,10 @@ def generate_figure3(out_dir: Path = FIGURES_DIR):
 
     # Reference lines
     ax3.axhline(0.6596, color=COLOR_VERMILION, lw=1.0, ls=':', alpha=0.85)
-    ax3.text(1.2, 0.642, "Lexical Bottleneck (0.660)", fontsize=6.0, color=COLOR_VERMILION, fontweight='bold')
+    ax3.text(0.7, 0.668, "Lexical Bottleneck (0.660)", fontsize=6.0, color=COLOR_VERMILION, fontweight='bold')
 
     ax3.axhline(0.830, color=COLOR_BLUE, lw=1.0, ls='--', alpha=0.6)
-    ax3.text(1.2, 0.812, r"$\mathrm{AUC}^*=0.830$ ($M=24.5$)", fontsize=6.0, color=COLOR_BLUE)
+    ax3.text(0.7, 0.810, r"$\mathrm{AUC}^*=0.830$ ($M=24.5$)", fontsize=6.0, color=COLOR_BLUE)
 
     # 26B-A4B Systems Hardware Boundary at x=26.0 (or visual boundary strip)
     ax3.axvspan(10.5, 14.5, color=COLOR_VERMILION, alpha=0.08, hatch='//')
@@ -233,12 +233,12 @@ def generate_figure3(out_dir: Path = FIGURES_DIR):
              fontsize=6.2, color=COLOR_VERMILION, ha='center', fontweight='bold',
              bbox=dict(boxstyle="round,pad=0.25", facecolor="white", edgecolor=COLOR_VERMILION, alpha=0.9, lw=0.6))
 
-    ax3.set_xlim(1.0, 15.0)
-    ax3.set_ylim(0.55, 1.02)
+    ax3.set_xlim(0.5, 15.0)
+    ax3.set_ylim(0.55, 1.05)
     ax3.set_xlabel("Model Capacity / Active Scale (B)", fontsize=8)
     ax3.set_ylabel("Stratum C Graph ROC-AUC", fontsize=8)
     ax3.set_title(r"$\mathbf{(c)}$ Cross-Architecture Scaling Surface", loc='center', fontsize=8.5)
-    ax3.legend(loc='lower left', framealpha=0.92, facecolor='white', edgecolor=COLOR_BORDER, fontsize=6.2)
+    ax3.legend(loc='upper left', bbox_to_anchor=(0.48, 0.98), framealpha=0.95, facecolor='white', edgecolor=COLOR_BORDER, fontsize=6.2)
 
     plt.tight_layout()
     save_figure(fig, "breakeven_discrimination_bound", out_dir=out_dir)
