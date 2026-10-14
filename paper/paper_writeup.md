@@ -6,7 +6,7 @@
 
 ## Abstract
 
-Across 344 held-out SWE-bench Verified tasks, naive Personalized PageRank expansion yields bug localization statistically indistinguishable from lexical retrieval (Acc@5 47.1% vs 45.1%, exact binomial McNemar $p = 0.1435$, Holm $p = 0.287$; 95% CI excludes advantages $\ge +4.4$ pp). We characterize this limitation via an expected-rank **Break-Even Discrimination Bound** ($\text{AUC}^* \ge 1 - \frac{k-1}{M-1}$), observing that Gemma 4 pairwise discrimination falls from $\text{AUC} = 0.7966$ on seeds to $0.6596$ on graph neighbors, turning expanded pools into distractor sets under compact scorers. Across 131 un-named defects, test-time reasoning ($\le 180$ tokens) doubles Top-1 on matched graphs ($6 \to 13$ hits, Holm $p = 0.0469^*$) via distractor immunity on lexical seeds, while Top-5 remains null-compatible ($p = 0.6875$) under backfilling. We release depth-matched control pools, 19,298 scored candidate evaluations, and the Perron Compressed Sparse Row diffusion engine.
+Across 344 held-out SWE-bench Verified tasks, naive Personalized PageRank expansion yields bug localization statistically indistinguishable from lexical retrieval (Acc@5 47.1% vs 45.1%, exact binomial McNemar $p = 0.1435$, Holm $p = 0.287$; 95% CI excludes advantages $\ge +4.4$ pp). I characterize this limitation via an expected-rank **Break-Even Discrimination Bound** ($\text{AUC}^* \ge 1 - \frac{k-1}{M-1}$), observing that Gemma 4 pairwise discrimination falls from $\text{AUC} = 0.7966$ on seeds to $0.6596$ on graph neighbors, turning expanded pools into distractor sets under compact scorers. Across 131 un-named defects, test-time reasoning ($\le 180$ tokens) doubles Top-1 on matched graphs ($6 \to 13$ hits, Holm $p = 0.0469^*$) via distractor immunity on lexical seeds, while Top-5 remains null-compatible ($p = 0.6875$) under backfilling. I release depth-matched control pools, 19,298 scored candidate evaluations, and the Perron Compressed Sparse Row diffusion engine.
 
 ---
 
@@ -14,19 +14,19 @@ Across 344 held-out SWE-bench Verified tasks, naive Personalized PageRank expans
 
 Local developer agents must localize defects within tight context budgets ($K \le 4,096$) without cloud APIs. Graph localization assumes: (1) **Recall Expansion** finds targets missed by lexical search; and (2) **Rank Discrimination** ranks them above distractors. On 344 held-out SWE-bench Verified tasks with frozen `gemma-4-e2b-it`, 1-hop expansion adds +7.3 pp recall over seeds, yet top-5 accuracy matches depth BM25 (47.1% vs 45.1%, Holm $p=0.287$).
 
-We investigate this disconnect through five core contributions:
+I investigate this disconnect through five core contributions:
 1. **Matched-Control Parity**: PPR expansion yields no statistical advantage over lexical retrieval across 19,298 evaluations (RQ1, RQ2).
 2. **Predictive Bound**: The Break-Even Bound ($\text{AUC}^* \ge 1 - \frac{k-1}{M-1}$) reveals that discrimination drops to 0.6596 on graph targets via selection conditioning, creating distractors (RQ3).
 3. **Scaling Surface**: Monotonic Gemma 4 scaling ($0.8544 \to 0.9274$) on reachable targets and the sparse MoE 52.0 GB runtime VRAM boundary.
 4. **Reasoning Lift & Distractor Immunity**: On matched graphs ($A_4$), reasoning traces double Top-1 from 4.58% to 9.92% ($+5.34$ pp, Holm $p=0.0469^*$; MRR $+45.4\%$). Subgroup conversion reveals gains concentrate in lexical seeds (converting 6 of 28 seeds [21.4%] to 12 of 28 [42.9%], $p=0.0312^*$) rather than pure graph targets (0 of 7 to 1 of 7, 14.3%, $p=1.0000$), demonstrating distractor immunity. Backfilling restores lexical recall parity (+1.53 pp contrast, $p=0.6875$).
-5. **Open Resource**: Perron provides a 0.76--1.89 ms CSR diffusion engine and AST editor.
+5. **Open Resource**: Perron provides a 0.76-1.89 ms CSR diffusion engine and AST editor.
 
 ---
 
 ## 2. Related Work
 
 - **Decoupled Diffusion**: PPRGo and APPNP [7] decouple PageRank propagation from neural prediction; HippoRAG applies PPR to knowledge graphs, and Dong et al. [10] show graph reranking connects chunks in RAG. Perron extends this lineage to code multigraphs in zero-copy CSR.
-- **Graph Complexity & Reasoning**: Fatemi et al. [8] showed verbalization shifts LLM reasoning by 61.8%; Sanford et al. [9] proved connectivity requires logarithmic depth or intermediate reasoning tokens. RepoGraph [2] noted 2-hop flattening degrades resolution from 29.67% to 26.00%. Our audit shows 96.0% of graph targets are direct 1-hop callers or callees.
+- **Graph Complexity & Reasoning**: Fatemi et al. [8] showed verbalization shifts LLM reasoning by 61.8%; Sanford et al. [9] proved connectivity requires logarithmic depth or intermediate reasoning tokens. RepoGraph [2] noted 2-hop flattening degrades resolution from 29.67% to 26.00%. My audit shows 96.0% of graph targets are direct 1-hop callers or callees.
 - **Agent Pipelines**: Aider [1], CodexGraph [3], and Agentless [5] show structured localization matches complex agent loops; LocAgent [4] fine-tunes graph agents on SWE-bench [6]. Perron evaluates zero-shot graph expansion under compact 2B/4B open models.
 
 ---
@@ -86,9 +86,9 @@ Protocol `PREREG-SCALING-v1` evaluated pointwise discrimination on Dual Tesla T4
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
 | Unscored BM25 ($B_0$, $M=25$) | Plain Order | 2.29% | 15.27% / 15.27% | 20 | 0.0862 | baseline |
 | Seeds Only ($A_1^{(10)}$, $M=10$) | Direct Readout | 3.05% | 15.27% / 15.27% | 20 | 0.0778 | reference |
-| Seeds Only ($A_1^{(10)}$, $M=10$) | Thinking Traces | 6.87% | 10.69% / 15.27% | 14 | 0.0865 | $-4.58$ pp raw ($\pm 0.00$ pp backfill) |
+| Seeds Only ($A_1^{(10)}$, $M=10$) | Thinking Traces | 6.87% | 10.69% / 15.27% | 14 / 20 | 0.0865 | $-4.58$ pp raw ($\pm 0.00$ pp backfill) |
 | Depth BM25 ($A_2^{(25)}$, $M=25$) | Direct Readout | 4.58% | 16.79% / 16.79% | 22 | 0.0937 | reference |
-| Depth BM25 ($A_2^{(25)}$, $M=25$) | Thinking Traces | 6.87% | 12.98% / 16.79% | 17 | 0.0967 | $-3.82$ pp raw ($\pm 0.00$ pp backfill) |
+| Depth BM25 ($A_2^{(25)}$, $M=25$) | Thinking Traces | 6.87% | 12.98% / 16.79% | 17 / 22 | 0.0967 | $-3.82$ pp raw ($\pm 0.00$ pp backfill) |
 | Graph 1-Hop ($A_4^{(25)}$, $M=25$) | Direct Readout | 4.58% | 16.79% / 16.79% | 22 | 0.0934 | reference |
 | Graph 1-Hop ($A_4^{(25)}$, $M=25$) | Thinking Traces ($C_0$) | **9.92%** | **18.32% / 18.32%** | **24** | **0.1358** | **+1.53 pp (+2 tasks)** |
 

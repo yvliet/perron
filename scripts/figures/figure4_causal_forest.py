@@ -60,7 +60,7 @@ def generate_figure4(out_dir: Path = FIGURES_DIR):
     # Panel A: Forest Plot of Acc@1 and Acc@5 with Clopper-Pearson CIs
     # -------------------------------------------------------------
     conditions = [
-        ("C1: Baseline Isolated", 3, 20, 0.0778, 17.47, COLOR_SLATE),
+        ("A4 Direct (Matched Base)", 6, 22, 0.0934, 17.40, COLOR_SLATE),
         ("C2: Call-Path Provenance", 5, 21, 0.0899, 17.40, COLOR_ORANGE),
         ("C0: Unguided Thinking", 13, 24, 0.1358, 17.07, COLOR_GREEN),
         ("C3: Provenance + Thinking", 12, 23, 0.1270, 17.18, COLOR_BLUE),
@@ -100,7 +100,7 @@ def generate_figure4(out_dir: Path = FIGURES_DIR):
     ax1.text(23.2, 0.18,
              r"$\mathbf{Factorial\ Contrast:}$" + "\n" +
              r"$C_3\ \text{vs.}\ C_0\ \text{Exact}\ p = 1.0000$" + "\n" +
-             r"$\Delta_{\text{interaction}} = -2.29\text{ pp\ (Parity)}$",
+             r"$\Delta_{\text{interaction}} = 0.00\text{ pp\ (Parity)}$",
              fontsize=6.0, color=COLOR_BLUE, ha='center', va='top', zorder=4,
              bbox=dict(boxstyle="round,pad=0.22", facecolor='#F0F9FF', edgecolor=COLOR_BLUE, lw=0.8))
 

@@ -422,9 +422,9 @@ def figure1(outdir=None):
     line(ax, [ax0 + 120, ax0 + 122, ax0 + 122, ax0 + 120], [256.5, 256.5, 277.5, 277.5], color=MUTED, lw=0.5)
     T(ax, ax0 + 125, 267, "hubs:\nhigh $\\pi_g$", size=4.8, color=MUTED, ha="left", linespacing=1.15)
     
-    # Corrected power iteration formula: row-stochastic T and beta = 0.85
-    T(ax, xb4 + 78, 248, r"$\mathbf{p}_{t+1}=\beta\,T^{\top}\mathbf{p}_{t}+(1-\beta)\,\mathbf{p}_{0} \quad (\beta=0.85)$", size=5.6)
-    T(ax, xb4 + 89, 233, r"$\leq$ 1.6 ms SpMM  |  $\leq$ 3 MB RAM  |  Zero-Copy mmap",
+    # Corrected power iteration formula: completed row-stochastic T_bar and beta = 0.85
+    T(ax, xb4 + 78, 248, r"$\mathbf{p}_{t+1}=\beta\,\bar{T}^{\top}\mathbf{p}_{t}+(1-\beta)\,\mathbf{p}_{0} \quad (\beta=0.85)$", size=5.6)
+    T(ax, xb4 + 89, 233, r"$\leq$ 1.6 ms SpMV  |  $\leq$ 3 MB RAM  |  Zero-Copy mmap",
       size=5.6, weight="bold", color=INK)
 
     # =========================================================================
