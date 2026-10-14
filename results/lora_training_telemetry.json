@@ -1,0 +1,36 @@
+{
+  "model": "google/gemma-4-e2b-it",
+  "adapter_repo": "yvliet/perron-gemma4-e2b-lora",
+  "architecture": "LoRA (r=16, alpha=32, target=q,k,v,o)",
+  "hardware": "Dual Tesla T4 (sharded pipeline)",
+  "loss_function": "Provenance-Conditioned Ranking Cross-Entropy",
+  "active_loss_slicing_logits": 24,
+  "epochs": 3,
+  "validation_pairs": 50,
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 0.6390760301951947,
+      "val_acc1": 0.98,
+      "val_acc5": 1.0,
+      "total": 50
+    },
+    {
+      "epoch": 2,
+      "loss": 0.007422251842068694,
+      "val_acc1": 1.0,
+      "val_acc5": 1.0,
+      "total": 50
+    },
+    {
+      "epoch": 3,
+      "loss": 0.0002075356263614739,
+      "val_acc1": 1.0,
+      "val_acc5": 1.0,
+      "total": 50
+    }
+  ],
+  "final_loss": 0.0002075356263614739,
+  "final_val_acc1": 1.0,
+  "final_val_acc5": 1.0
+}

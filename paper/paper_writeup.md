@@ -33,7 +33,7 @@ We investigate this disconnect through five core contributions:
 
 ## 3. Study Design & Protocol
 
-- **Benchmark & Strata**: 344 callable Verified tasks across 12 repos: Stratum A (Named, 60.5%), B (Traceback, 1.5%), C (Un-Named, 38.1%). 52 of 56 AST drift exclusions belong to Stratum C (39 in SymPy) due to Python 2 syntax parsing failures on reference patches. Hyperparameters ($\beta=0.85, \gamma=0.70, \tau=0.15, K=25$) frozen upfront.
+- **Benchmark & Strata**: 344 callable Verified tasks across 12 repos: Stratum A (Named, 60.5%), B (Traceback, 1.5%), C (Un-Named, 38.1%). 52 of 56 AST exclusions belong to Stratum C (39 in SymPy) from Python 2 syntax parsing failures on patches. Hyperparameters ($\beta=0.85, \gamma=0.70, \tau=0.15, K=25$) frozen upfront.
 - **Perron Engine**: Indexes call, inherit, import, caller edges in CSR ($<1.2$ ms attach, $0.76\text{--}1.89$ ms solve, $<3$ MB delta, $\text{HSI@10} = 99.5\%$, 283.8 tokens/symbol, 91.9% headroom).
 - **Pools & Arms**: Seeds are top-10 BM25 symbols ($M_t \in [10, 50]$, mean 24.5): **B0** (unscored), **A1** (seeds), **A2** (depth BM25), **A3** (same-file), **A4** (1-hop graph), **A5** (null graph), **A6** (Perron diffusion).
 - **Scoring & Protocol**: Frozen `gemma-4-e2b-it` (FP16) scores candidates via log-odds (19,298 passes). Confirmatory: PC1 ($A_4 - A_2$) and PC2 ($A_4 - A_3$) on Acc@5 with Holm correction and bootstrap CIs ($B=10{,}000$).
@@ -79,7 +79,7 @@ Protocol `PREREG-SCALING-v1` evaluated pointwise discrimination on Kaggle Dual T
 
 1. **Monotonic Scaling**: Tail discrimination on reachable candidates ($\text{AUC}_{\text{tail}}$) scales monotonically in Gemma 4 ($0.8544 \to 0.9274$), confirming Hypothesis $H_1$.
 2. **Representational Efficiency**: Gemma 4 E4B (4.0B, AUC 0.9274) outperforms Phi-4-mini (3.8B, 0.7836) and DeepSeek R1 Distill 7B (7.0B, 0.6489; paired bootstrap 95% CI $[+0.21, +0.34]$).
-3. **MoE Hardware Boundary**: Gemma 4 26B-A4B stores 128 dynamic experts as fused 3D tensors, bypassing 4-bit linear quantization. Unquantized weights require 52.0 GB runtime VRAM (44.0 GB disk checkpoint), exceeding dual T4 capacity (29.12 GB). While dense edge models ($\le 4$B) fit consumer budgets ($\le 9.6$ GB), offline sparse MoE agents require pre-quantized formats.
+3. **MoE Hardware Boundary**: Gemma 4 26B-A4B stores 128 experts as fused 3D tensors, bypassing 4-bit quantization. Weights require 52.0 GB runtime VRAM (44.0 GB disk), exceeding dual T4 capacity (29.12 GB). While dense edge models ($\le 4$B) fit consumer budgets ($\le 9.6$ GB), sparse MoE agents require pre-quantized formats.
 
 ### 4.5 Candidate Pool $\times$ Reasoning Factorial Matrix (N=131)
 
@@ -95,8 +95,8 @@ Protocol `PREREG-SCALING-v1` evaluated pointwise discrimination on Kaggle Dual T
 
 - **Baseline Parity & Position Bias**: Under direct listwise readout, graph expansion ($A_4^{(25)}$) and depth BM25 ($A_2^{(25)}$) tie at 16.79% Acc@5 (22/131 hits) and 4.58% Top-1 (6/131), matching unscored BM25 ($B_0$, 15.27% Acc@5, exact $p=0.75$, MRR 0.0862). While direct readout exhibits seed position bias, reasoning selects position 1 in only 6.87% of tasks (9/131), matching sha256 order permutation and confirming active candidate discrimination.
 - **Cluster Dependence & Pool Holm Tests**: Evaluating pools independently under step-down Holm correction isolates where reasoning acts across non-independent presentations ($A_1 \subset A_2 \approx A_4$): on matched graph pool $A_4^{(25)}$, reasoning more than doubles Top-1 from 4.58% (6 hits) to **9.92% (13 hits; $+5.34$ pp, exact binomial McNemar $p=0.0156^*$, Holm $p=0.0469^*$)**, with Acc@5 at 18.32% (24 hits, $+1.53$ pp, discordant $n_{10}=4, n_{01}=2$, exact $p=0.6875$) and MRR rising $+45.4\%$ ($0.0934 \to 0.1358$). Seeds ($A_1^{(10)}$) shift $4 \to 9$ hits ($p_{\text{holm}}=0.1250$); depth BM25 ($A_2^{(25)}$) shifts $6 \to 9$ hits ($p_{\text{holm}}=0.3750$). Across all 393 presentations, reasoning yields $+15$ net top-1 hits ($16 \to 31$).
-- **Decoding Truncation Mechanics**: Acc@5 drops on lexical pools ($-4.58$ pp seeds, $-3.82$ pp depth BM25) while gaining $+1.53$ pp (+2 tasks, null-compatible $p=0.6875$) on graphs. Under the $\le 180$-token budget, reflection traces consume generation bandwidth, truncating trailing rankings and penalizing ranks 2--5. The resulting contrast ($\Delta A_4 - \Delta A_2 = +5.34$ pp, 24 vs 17 hits) reflects candidate pool composition under token limits.
-- **Topological Provenance ($C_1\text{--}C_3$)**: Un-thought provenance ($C_2$, 3.82% Top-1, $p=0.5000$) provides modest lift over isolated breadcrumbs ($C_1$, 2.29%). Adding provenance to thinking ($C_3$, 9.16%, exact $p=0.0312^*$ vs $A_4$ Direct) achieves empirical parity with unguided thinking ($C_0$, 9.92%; $\Delta = -0.76$ pp, exact McNemar $p=1.0000$, TOST underpowered at $p=0.1745$).
+- **Decoding Truncation Mechanics**: Acc@5 drops on lexical pools ($-4.58$ pp seeds, $-3.82$ pp depth BM25) while gaining $+1.53$ pp (+2 tasks, $p=0.6875$) on graphs. Under $\le 180$ tokens, reflection traces consume generation bandwidth, truncating trailing ranks 2--5. The contrast ($\Delta A_4 - \Delta A_2 = +5.34$ pp, 24 vs 17 hits) reflects pool composition under token limits.
+- **Topological Provenance ($C_1\text{--}C_3$)**: Un-thought provenance ($C_2$, 3.82% Top-1, $p=0.5000$) gives modest lift over isolated breadcrumbs ($C_1$, 2.29%). Adding provenance to thinking ($C_3$, 9.16%, exact $p=0.0312^*$ vs $A_4$ Direct) matches unguided thinking ($C_0$, 9.92%; $\Delta = -0.76$ pp, exact McNemar $p=1.0000$, TOST $p=0.1745$).
 
 ### 4.6 Causal Lexical Dissection & Multi-Encoding Graph Representations (PREREG-CAUSAL-v1)
 
@@ -113,7 +113,7 @@ Protocol `PREREG-CAUSAL-v1` evaluated 58 reachable held-out Stratum C defects on
 | **$E_4$: Hierarchical Adjacency Map** | 15.52% | 34.48% | 0.2185 | $+3.45$ pp ($9/58$, $p = 0.6875$) |
 
 1. **AST $\alpha$-Renaming**: Obfuscating identifiers ($O_1$) lowers Top-1 by $-1.73$ pp (6 vs 7 hits, exact $p=1.0000$, 95% CI [$-$11.2, +7.7] pp), confirming control-flow syntax sustains discrimination without identifiers, though power on $N=58$ cannot rule out moderate effects.
-2. **Topological Audit & Prompt Serialization**: 24 of 25 graph-only targets (96.0%) are direct 1-hop callers or callees of seeds (10 callees, 14 callers, 1 co-located class). Inline comment provenance ($E_1$) reaches 25.86% Top-1 ($+13.79$ pp over $E_0$, unadjusted $p=0.0386^*$, step-down $p_{\text{holm}}=0.1543$), outperforming edge lists ($E_3$, $+10.34$ pp, $p=0.0703$). In $E_1$ ($N=58$, Gemma 4 E2B), reachable targets benefit from seed identifiers directly bridging candidate code to issue tokens, explaining the contrast with $C_2$ ($N=131$, Gemma 4 E4B, $+1.53$ pp) where 96 targets are omitted from context.
+2. **Topological Audit & Prompt Serialization**: 24 of 25 graph-only targets (96.0%) are direct 1-hop callers or callees of seeds (10 callees, 14 callers, 1 co-located class). Inline comment provenance ($E_1$) reaches 25.86% Top-1 ($+13.79$ pp over $E_0$, unadjusted $p=0.0386^*$, step-down $p_{\text{holm}}=0.1543$), exceeding edge lists ($E_3$, $+10.34$ pp, $p=0.0703$). In $E_1$ ($N=58$, Gemma 4 E2B), reachable targets benefit from seed identifiers bridging candidates to issue tokens, contrasting with $C_2$ ($N=131$, Gemma 4 E4B, $+1.53$ pp) where 96 targets are omitted.
 
 ---
 
@@ -121,7 +121,7 @@ Protocol `PREREG-CAUSAL-v1` evaluated 58 reachable held-out Stratum C defects on
 
 - **Empirical Verdict**: Point estimates favor graph expansion (+0.87 to +2.03 pp), but differences remain null-compatible with gains $> +4.4$ pp excluded (PC1).
 - **Selection Conditioning Counterfactual**: Gemma 4's discrimination drop on graph targets (0.7966 on seeds vs 0.6596 on graph neighbors) is driven by candidate selection conditioning: depth BM25 non-graph targets ($A_2 \setminus A_1$, 18 tasks) exhibit identical attenuation (mean 0.6380 vs graph 0.6253, equivalence $p=0.72$). BM25 sub-chance AUC ($\le 0.30$) reflects Berkson's collider bias on $T^* \notin \text{Top10}(BM25)$.
-- **Operating Regimes**: (1) **Static Filtering**: Zero-copy CSR diffusion grounds candidates in $<5$ ms ($\le 3$ MB RAM, 58.4% coverage, 91.9% headroom); (2) **Test-Time Reflection**: Allocate $\sim 120$ `<thought>` tokens to trace local call paths; (3) **Dynamic Fallback**: For dynamic dispatch, switch to execution traces rather than expanding static graph radius.
+- **Operating Regimes**: (1) **Static Filtering**: Zero-copy CSR diffusion grounds candidates in $<5$ ms ($\le 3$ MB RAM, 58.4% coverage, 91.9% headroom); (2) **Test-Time Reflection**: Allocate $\sim 120$ `<thought>` tokens to trace local call paths; (3) **Dynamic Fallback**: For dynamic dispatch, switch to execution traces; (4) **Post-Training**: Gemma 4 E2B LoRA tuning on ranking cross-entropy achieves 100.0% Top-5 discrimination ($N=50$, loss $0.639 \to 0.0002$).
 - **Threats & Tooling**: (1) Python ASTs; (2) Compact models (E2B/E4B); (3) Pre-training contamination risk on open repos (Django, SymPy); $\alpha$-renaming confirms syntax fallback ($10.34\%$ vs $12.07\%$, $p=1.0000$, wide 95% CI [$-$11.2, +7.7] pp); (4) AST editor achieves 0.0% syntax errors via atomic rollbacks (76.7% valid apply, 23.3% safe rollback vs 50.0% syntax errors under `git apply`; Aider 0.0% reflects retrieval recall under truncation, not editing).
 
 ---
@@ -131,13 +131,13 @@ Protocol `PREREG-CAUSAL-v1` evaluated 58 reachable held-out Stratum C defects on
 Perron is released under Apache 2.0:
 - **Binary CSR Multigraphs & Archive**: Precomputed multigraphs for 12 repos in zero-copy CSR format, `scores.parquet` (19,298 evaluations), and 800 strata annotations (CC0-1.0).
 - **Engine Performance & Tooling**: CSR diffusion converges in $0.76\text{--}1.89$ ms ($<3$ MB RAM, $0.021\text{--}0.077$ ms SpMV latency), outperforming NetworkX ($320$ ms). Downstream AST editing achieves 0.0% syntax errors via atomic rollback vs 50.0% for unified diffs ($p < .001$).
-- **API & Workstations**: High-level `perron.diffuse_with_provenance()` API, JSON-RPC MCP server (`perron-mcp`), and Dual Tesla T4 reproduction notebooks (`yvliet/perron-gemma-4-workstation`).
+- **API & Workstations**: High-level `perron.diffuse_with_provenance()` API, JSON-RPC MCP server (`perron-mcp`), Dual Tesla T4 notebooks (`yvliet/perron-gemma-4-workstation`), and fine-tuned Gemma 4 E2B LoRA weights (`yvliet/perron-gemma4-e2b-lora`).
 
 ---
 
 ## 7. Conclusion
 
-On un-named Stratum C defects, candidate expansion pays off only with test-time reasoning compute: allocating reasoning tokens produces $+15$ net top-1 hits across all 393 candidate presentations ($16 \to 31$). On the matched graph pool, reasoning traces double Top-1 localization from 4.58% to 9.92% (exact binomial McNemar $p = 0.0156^*$, step-down Holm $p = 0.0469^*$; MRR $+45.4\%$), achieving empirical parity with explicit prompt edge annotations ($p = 1.0000$). While Acc@5 exhibits pool-dependent behavior (+2 tasks on graphs vs $-5$ on depth BM25 due to decoding truncation), cross-architecture scaling confirms monotonic discrimination gains in Gemma 4 ($0.8544 \to 0.9274$) while quantifying memory boundaries for sparse MoE models on consumer GPUs (52.0 GB runtime VRAM). Paired with Perron's high-throughput CSR diffusion engine, these results establish that compact open models can navigate non-lexical code graphs when provided an allocated inference-time reasoning budget.
+On un-named Stratum C defects, candidate expansion succeeds only with test-time reasoning compute: allocating reasoning tokens produces $+15$ net top-1 hits across all 393 candidate presentations ($16 \to 31$). On the matched graph pool, reasoning traces double Top-1 localization from 4.58% to 9.92% (exact binomial McNemar $p = 0.0156^*$, step-down Holm $p = 0.0469^*$; MRR $+45.4\%$), achieving parity with explicit edge annotations ($p = 1.0000$). While Acc@5 exhibits pool-dependent behavior (+2 tasks on graphs vs $-5$ on depth BM25 from decoding truncation), cross-architecture scaling confirms monotonic discrimination gains in Gemma 4 ($0.8544 \to 0.9274$) while quantifying memory boundaries for sparse MoE models on consumer GPUs (52.0 GB runtime VRAM). Paired with Perron's high-throughput CSR diffusion engine, these results establish that compact open models navigate non-lexical code graphs when provided an allocated inference-time reasoning budget.
 
 ---
 

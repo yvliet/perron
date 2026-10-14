@@ -146,6 +146,7 @@ def check_privacy_and_links():
         "https://www.kaggle.com/code/yvliet",
         "https://www.kaggle.com/datasets/yvliet",
         "https://pypi.org/project/perron-core",
+        "https://huggingface.co/yvliet",
     )
     for url in cleaned_urls:
         assert any(url.startswith(prefix) for prefix in allowed_prefixes), f"Unexpected external URL: {url}"

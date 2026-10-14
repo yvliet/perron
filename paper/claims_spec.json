@@ -4007,6 +4007,36 @@
       "file": "results/kaggle_causal_callpath_results_131.json",
       "ptr": "/contrasts/C3_thinking_vs_C0_thinking_acc1/tost_p_value",
       "fmt": "pval4"
+    },
+    "LoraValidationN": {
+      "file": "results/lora_training_telemetry.json",
+      "ptr": "/validation_pairs",
+      "fmt": "int"
+    },
+    "LoraInitialLoss": {
+      "file": "results/lora_training_telemetry.json",
+      "ptr": "/history/0/loss",
+      "fmt": "num4"
+    },
+    "LoraFinalLoss": {
+      "file": "results/lora_training_telemetry.json",
+      "ptr": "/final_loss",
+      "fmt": "num4"
+    },
+    "LoraInitialValAccOne": {
+      "file": "results/lora_training_telemetry.json",
+      "ptr": "/history/0/val_acc1",
+      "fmt": "pct1"
+    },
+    "LoraFinalValAccOne": {
+      "file": "results/lora_training_telemetry.json",
+      "ptr": "/final_val_acc1",
+      "fmt": "pct1"
+    },
+    "LoraFinalValAccFive": {
+      "file": "results/lora_training_telemetry.json",
+      "ptr": "/final_val_acc5",
+      "fmt": "pct1"
     }
   }
 }
