@@ -229,7 +229,7 @@ def generate_figure3(out_dir: Path = FIGURES_DIR):
     # 26B-A4B Systems Hardware Boundary at x=26.0 (or visual boundary strip)
     ax3.axvspan(10.5, 14.5, color=COLOR_VERMILION, alpha=0.08, hatch='//')
     ax3.axvline(12.5, color=COLOR_VERMILION, lw=1.2, ls='--')
-    ax3.text(12.5, 0.78, "26B-A4B MoE Boundary\nReq: 44 GB VRAM\n(Fused 3D Experts)",
+    ax3.text(12.5, 0.78, "26B-A4B MoE Boundary\nReq: 52 GB VRAM (44 GB Disk)\n(Fused 3D Experts)",
              fontsize=6.2, color=COLOR_VERMILION, ha='center', fontweight='bold',
              bbox=dict(boxstyle="round,pad=0.25", facecolor="white", edgecolor=COLOR_VERMILION, alpha=0.9, lw=0.6))
 

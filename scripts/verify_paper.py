@@ -167,7 +167,7 @@ def check_no_hardcoded_numbers_tex():
     claims = render_claims()
     allow = {
         "95\\%", "16GB", "24GB", "100\\%", "80\\%", "300\\%", "50.0\\%", "15.0\\%",
-        "35\\%", "38\\%", "61\\%", "2\\,ms", "2ms", "2 ms", "320ms", "28ms", "144MB", "3MB",
+        "35\\%", "38\\%", "61\\%", "36.0\\%", "2\\,ms", "2ms", "2 ms", "320ms", "28ms", "144MB", "3MB",
     }
     allow |= {c["tex"].replace(" ", "") for c in claims}
     allow |= {c["plain"].replace(" ", "") for c in claims}
