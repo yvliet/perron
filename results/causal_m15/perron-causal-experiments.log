@@ -1,0 +1,85 @@
+[{"stream_name":"stderr","time":7.355573368,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":7.355620548,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":7.355625518,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":7.355628157,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":7.969504084,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":7.969545258,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":7.969551285,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":7.969556219,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":40.692606523,"data":"[*] CUDA Available: True (GPU Count: 2)\n"}
+,{"stream_name":"stdout","time":40.692641494,"data":"  [GPU 0]: Tesla T4 | Total VRAM: 15.64 GB\n"}
+,{"stream_name":"stdout","time":40.692646136,"data":"  [GPU 1]: Tesla T4 | Total VRAM: 15.64 GB\n"}
+,{"stream_name":"stdout","time":41.008752126,"data":"[+] Loaded bundle from mounted dataset: /kaggle/input/datasets/yvliet/perron-gemma4-benchmark/causal_callpath_eval_bundle_131.json\n"}
+,{"stream_name":"stdout","time":41.008783426,"data":"[+] Successfully loaded 131 Stratum C evaluation tasks.\n"}
+,{"stream_name":"stdout","time":41.345318167,"data":"[+] Resolved Gemma 4 E4B: /kaggle/input/models/google/gemma-4/transformers/gemma-4-e4b-it/1\n"}
+,{"stream_name":"stdout","time":41.345342485,"data":"[*] Loading tokenizer from /kaggle/input/models/google/gemma-4/transformers/gemma-4-e4b-it/1...\n"}
+,{"stream_name":"stderr","time":45.271326199,"data":"[transformers] `torch_dtype` is deprecated! Use `dtype` instead!\n"}
+,{"stream_name":"stderr","time":45.271368666,"data":"\n"}
+,{"stream_name":"stderr","time":45.27142275,"data":"[transformers] `torch_dtype` is deprecated! Use `dtype` instead!\n"}
+,{"stream_name":"stdout","time":45.453882149,"data":"[*] Loading model in native FP16 with device_map=\"auto\"...\n"}
+,{"stream_name":"stdout","time":104.69638073,"data":"[+] Model loaded successfully.\n"}
+,{"stream_name":"stdout","time":104.897189809,"data":"\n"}
+,{"stream_name":"stdout","time":104.897220745,"data":"=== EXECUTING CONDITION: A4_M15_direct_baseline (mode=baseline, thinking=False, M=15) ===\n"}
+,{"stream_name":"stdout","time":279.704534161,"data":"  [25/131] Progress | Hits@1: 1 | Hits@5: 4\n"}
+,{"stream_name":"stdout","time":450.73274809,"data":"  [50/131] Progress | Hits@1: 1 | Hits@5: 7\n"}
+,{"stream_name":"stdout","time":622.961592062,"data":"  [75/131] Progress | Hits@1: 3 | Hits@5: 14\n"}
+,{"stream_name":"stdout","time":798.643524238,"data":"  [100/131] Progress | Hits@1: 4 | Hits@5: 20\n"}
+,{"stream_name":"stdout","time":974.133754151,"data":"  [125/131] Progress | Hits@1: 5 | Hits@5: 22\n"}
+,{"stream_name":"stdout","time":1013.932956894,"data":"  [131/131] Progress | Hits@1: 6 | Hits@5: 23\n"}
+,{"stream_name":"stdout","time":1013.932986295,"data":"\n"}
+,{"stream_name":"stdout","time":1013.932992088,"data":"=== EXECUTING CONDITION: A4_M15_direct_provenance (mode=provenance, thinking=False, M=15) ===\n"}
+,{"stream_name":"stdout","time":1191.8047575,"data":"  [25/131] Progress | Hits@1: 1 | Hits@5: 4\n"}
+,{"stream_name":"stdout","time":1367.78846719,"data":"  [50/131] Progress | Hits@1: 1 | Hits@5: 7\n"}
+,{"stream_name":"stdout","time":1544.912851863,"data":"  [75/131] Progress | Hits@1: 3 | Hits@5: 13\n"}
+,{"stream_name":"stdout","time":1727.24974232,"data":"  [100/131] Progress | Hits@1: 4 | Hits@5: 19\n"}
+,{"stream_name":"stdout","time":1907.683099133,"data":"  [125/131] Progress | Hits@1: 5 | Hits@5: 21\n"}
+,{"stream_name":"stdout","time":1948.200878988,"data":"  [131/131] Progress | Hits@1: 6 | Hits@5: 22\n"}
+,{"stream_name":"stdout","time":1948.200908721,"data":"\n"}
+,{"stream_name":"stdout","time":1948.200914406,"data":"=== EXECUTING CONDITION: C0_M15_thinking_baseline (mode=baseline, thinking=True, M=15) ===\n"}
+,{"stream_name":"stdout","time":2522.678598714,"data":"  [25/131] Progress | Hits@1: 1 | Hits@5: 4\n"}
+,{"stream_name":"stdout","time":3093.397455434,"data":"  [50/131] Progress | Hits@1: 3 | Hits@5: 7\n"}
+,{"stream_name":"stdout","time":3659.557050919,"data":"  [75/131] Progress | Hits@1: 6 | Hits@5: 15\n"}
+,{"stream_name":"stdout","time":4225.091731641,"data":"  [100/131] Progress | Hits@1: 10 | Hits@5: 22\n"}
+,{"stream_name":"stdout","time":4791.166082534,"data":"  [125/131] Progress | Hits@1: 12 | Hits@5: 25\n"}
+,{"stream_name":"stdout","time":4922.911880844,"data":"  [131/131] Progress | Hits@1: 13 | Hits@5: 26\n"}
+,{"stream_name":"stdout","time":4922.911941022,"data":"\n"}
+,{"stream_name":"stdout","time":4922.911948754,"data":"=== EXECUTING CONDITION: C3_M15_thinking_provenance (mode=provenance, thinking=True, M=15) ===\n"}
+,{"stream_name":"stdout","time":5494.468143826,"data":"  [25/131] Progress | Hits@1: 1 | Hits@5: 5\n"}
+,{"stream_name":"stdout","time":6069.204856679,"data":"  [50/131] Progress | Hits@1: 1 | Hits@5: 8\n"}
+,{"stream_name":"stdout","time":6647.888298838,"data":"  [75/131] Progress | Hits@1: 3 | Hits@5: 16\n"}
+,{"stream_name":"stdout","time":7230.734979062,"data":"  [100/131] Progress | Hits@1: 6 | Hits@5: 22\n"}
+,{"stream_name":"stdout","time":7808.393573041,"data":"  [125/131] Progress | Hits@1: 7 | Hits@5: 24\n"}
+,{"stream_name":"stdout","time":7944.487570057,"data":"  [131/131] Progress | Hits@1: 8 | Hits@5: 25\n"}
+,{"stream_name":"stdout","time":7944.487606599,"data":"[+] All 4 conditions executed successfully.\n"}
+,{"stream_name":"stdout","time":7944.549886781,"data":"\n"}
+,{"stream_name":"stdout","time":7944.549930053,"data":"=== FACTORIAL RESULTS SUMMARY (M=15 Cutoff, N=131) ===\n"}
+,{"stream_name":"stdout","time":7944.549937932,"data":"| Condition                    | Acc@1   | Acc@5   | MRR     | Mean Rank  | Seeds H1 | Graph H1 |\n"}
+,{"stream_name":"stdout","time":7944.549943733,"data":"| ---------------------------- | ------- | ------- | ------- | ---------- | -------- | -------- |\n"}
+,{"stream_name":"stdout","time":7944.549949942,"data":"| A4_M15_direct_baseline       |   4.58% |  17.56% |  0.0970 | 5.323529   |        2 |        4 |\n"}
+,{"stream_name":"stdout","time":7944.549955213,"data":"| A4_M15_direct_provenance     |   4.58% |  16.79% |  0.0948 | 5.411764   |        2 |        4 |\n"}
+,{"stream_name":"stdout","time":7944.549960234,"data":"| C0_M15_thinking_baseline     |   9.92% |  19.85% |  0.1469 | 3.735294   |        3 |       10 |\n"}
+,{"stream_name":"stdout","time":7944.549965253,"data":"| C3_M15_thinking_provenance   |   6.11% |  19.08% |  0.1192 | 4.264705   |        3 |        5 |\n"}
+,{"stream_name":"stdout","time":7944.549970256,"data":"\n"}
+,{"stream_name":"stdout","time":7944.549974805,"data":"=== HYPOTHESIS CONTRASTS ===\n"}
+,{"stream_name":"stdout","time":7944.54997953,"data":"C3_thinking_vs_C0_thinking:\n"}
+,{"stream_name":"stdout","time":7944.549984259,"data":"  Top-1: Delta=-3.82 pp (n10=1, n01=6, p=0.1250)\n"}
+,{"stream_name":"stdout","time":7944.549989176,"data":"  Top-5: Delta=-0.76 pp (n10=1, n01=2, p=1.0000)\n"}
+,{"stream_name":"stdout","time":7944.550009959,"data":"C0_thinking_vs_A4_direct:\n"}
+,{"stream_name":"stdout","time":7944.550013266,"data":"  Top-1: Delta=+5.34 pp (n10=8, n01=1, p=0.0391)\n"}
+,{"stream_name":"stdout","time":7944.550030645,"data":"  Top-5: Delta=+2.29 pp (n10=3, n01=0, p=0.2500)\n"}
+,{"stream_name":"stdout","time":7944.550035356,"data":"C3_thinking_vs_A4_direct:\n"}
+,{"stream_name":"stdout","time":7944.55003981,"data":"  Top-1: Delta=+1.53 pp (n10=4, n01=2, p=0.6875)\n"}
+,{"stream_name":"stdout","time":7944.550044152,"data":"  Top-5: Delta=+1.53 pp (n10=3, n01=1, p=0.6250)\n"}
+,{"stream_name":"stdout","time":7944.550048691,"data":"A4_prov_direct_vs_A4_base_direct:\n"}
+,{"stream_name":"stdout","time":7944.550053005,"data":"  Top-1: Delta=+0.00 pp (n10=0, n01=0, p=1.0000)\n"}
+,{"stream_name":"stdout","time":7944.550056874,"data":"  Top-5: Delta=-0.76 pp (n10=0, n01=1, p=1.0000)\n"}
+,{"stream_name":"stdout","time":7944.550061162,"data":"[+] Full empirical dataset written to stratum_c_causal_m15_results.json.\n"}
+,{"stream_name":"stderr","time":7950.778345861,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":7950.778370876,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":7950.958532559,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":7950.958556558,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":7951.763112233,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":7951.867002593,"data":"[NbConvertApp] Writing 587198 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":7954.407627916,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":7955.011058292,"data":"[NbConvertApp] Writing 918458 bytes to __results__.html\n"}
+]

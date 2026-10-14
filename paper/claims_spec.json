@@ -4037,6 +4037,319 @@
       "file": "results/lora_training_telemetry.json",
       "ptr": "/final_val_acc5",
       "fmt": "pct1"
+    },
+    "CausalMFifteenBaseAccOne": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/A4_M15_direct_baseline/acc_1_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalMFifteenBaseAccFive": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/A4_M15_direct_baseline/acc_5_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalMFifteenBaseMRR": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/A4_M15_direct_baseline/mrr",
+      "fmt": "num4"
+    },
+    "CausalMFifteenBaseMeanRank": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/A4_M15_direct_baseline/mean_gold_rank",
+      "fmt": "num2"
+    },
+    "CausalMFifteenBaseHitsOneKN": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/A4_M15_direct_baseline/hits_1",
+      "n_ptr": "/n_tasks",
+      "fmt": "kn"
+    },
+    "CausalMFifteenBaseHitsFiveKN": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/A4_M15_direct_baseline/hits_5",
+      "n_ptr": "/n_tasks",
+      "fmt": "kn"
+    },
+    "CausalMFifteenProvAccOne": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/A4_M15_direct_provenance/acc_1_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalMFifteenProvAccFive": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/A4_M15_direct_provenance/acc_5_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalMFifteenProvMRR": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/A4_M15_direct_provenance/mrr",
+      "fmt": "num4"
+    },
+    "CausalMFifteenProvMeanRank": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/A4_M15_direct_provenance/mean_gold_rank",
+      "fmt": "num2"
+    },
+    "CausalMFifteenProvHitsOneKN": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/A4_M15_direct_provenance/hits_1",
+      "n_ptr": "/n_tasks",
+      "fmt": "kn"
+    },
+    "CausalMFifteenProvHitsFiveKN": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/A4_M15_direct_provenance/hits_5",
+      "n_ptr": "/n_tasks",
+      "fmt": "kn"
+    },
+    "CausalMFifteenCZeroAccOne": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/acc_1_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalMFifteenCZeroAccFive": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/acc_5_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalMFifteenCZeroMRR": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/mrr",
+      "fmt": "num4"
+    },
+    "CausalMFifteenCZeroMeanRank": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/mean_gold_rank",
+      "fmt": "num2"
+    },
+    "CausalMFifteenCZeroMedianRank": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/median_gold_rank",
+      "fmt": "num1"
+    },
+    "CausalMFifteenCZeroHitsOneKN": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/hits_1",
+      "n_ptr": "/n_tasks",
+      "fmt": "kn"
+    },
+    "CausalMFifteenCZeroHitsFiveKN": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/hits_5",
+      "n_ptr": "/n_tasks",
+      "fmt": "kn"
+    },
+    "CausalMFifteenCZeroLiftTopOnePP": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/contrasts/C0_thinking_vs_A4_direct/top1/delta_pp",
+      "fmt": "delta_pp"
+    },
+    "CausalMFifteenCZeroVsBaseTopOnePval": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/contrasts/C0_thinking_vs_A4_direct/top1/p_value",
+      "fmt": "pval4"
+    },
+    "CausalMFifteenCThreeAccOne": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C3_M15_thinking_provenance/acc_1_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalMFifteenCThreeAccFive": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C3_M15_thinking_provenance/acc_5_pct",
+      "fmt": "pct1_raw"
+    },
+    "CausalMFifteenCThreeMRR": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C3_M15_thinking_provenance/mrr",
+      "fmt": "num4"
+    },
+    "CausalMFifteenCThreeMeanRank": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C3_M15_thinking_provenance/mean_gold_rank",
+      "fmt": "num2"
+    },
+    "CausalMFifteenCThreeHitsOneKN": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C3_M15_thinking_provenance/hits_1",
+      "n_ptr": "/n_tasks",
+      "fmt": "kn"
+    },
+    "CausalMFifteenCThreeHitsFiveKN": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C3_M15_thinking_provenance/hits_5",
+      "n_ptr": "/n_tasks",
+      "fmt": "kn"
+    },
+    "CausalMFifteenCThreeVsCZeroTopOneDeltaPP": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/contrasts/C3_thinking_vs_C0_thinking/top1/delta_pp",
+      "fmt": "delta_pp"
+    },
+    "CausalMFifteenCThreeVsCZeroTopOnePval": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/contrasts/C3_thinking_vs_C0_thinking/top1/p_value",
+      "fmt": "pval4"
+    },
+    "CausalMFifteenBaseGraphHitsOne": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/A4_M15_direct_baseline/graph_only_subgroup/hits_1",
+      "fmt": "int"
+    },
+    "CausalMFifteenCZeroGraphHitsOne": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/graph_only_subgroup/hits_1",
+      "fmt": "int"
+    },
+    "CausalMFifteenCZeroGraphHitsFive": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/graph_only_subgroup/hits_5",
+      "fmt": "int"
+    },
+    "LoraGenNTrain": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/n_train",
+      "fmt": "int"
+    },
+    "LoraGenNVal": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/n_val",
+      "fmt": "int"
+    },
+    "LoraGenInitialLoss": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/training_history/0/loss",
+      "fmt": "num4"
+    },
+    "LoraGenFinalLoss": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/training_history/2/loss",
+      "fmt": "num4"
+    },
+    "LoraGenBaseAccOne": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/base/acc_1",
+      "fmt": "pct1_raw"
+    },
+    "LoraGenBaseAccFive": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/base/acc_5",
+      "fmt": "pct1_raw"
+    },
+    "LoraGenBaseMRR": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/base/mrr",
+      "fmt": "num4"
+    },
+    "LoraGenBaseAUC": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/base/mean_auc",
+      "fmt": "num4"
+    },
+    "LoraGenBaseMeanRank": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/base/mean_gold_rank",
+      "fmt": "num2"
+    },
+    "LoraGenBaseMedianRank": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/base/median_gold_rank",
+      "fmt": "num1"
+    },
+    "LoraGenPostAccOne": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/lora/acc_1",
+      "fmt": "pct1_raw"
+    },
+    "LoraGenPostAccFive": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/lora/acc_5",
+      "fmt": "pct1_raw"
+    },
+    "LoraGenPostMRR": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/lora/mrr",
+      "fmt": "num4"
+    },
+    "LoraGenPostAUC": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/lora/mean_auc",
+      "fmt": "num4"
+    },
+    "LoraGenPostMeanRank": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/lora/mean_gold_rank",
+      "fmt": "num2"
+    },
+    "LoraGenPostMedianRank": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/lora/median_gold_rank",
+      "fmt": "num1"
+    },
+    "LoraGenDeltaAccOnePP": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/delta_acc1_pp",
+      "fmt": "delta_pp"
+    },
+    "LoraGenDeltaAccFivePP": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/delta_acc5_pp",
+      "fmt": "delta_pp"
+    },
+    "LoraGenDeltaAUC": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/delta_auc",
+      "fmt": "delta_pp"
+    },
+    "LoraGenTopOnePval": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/mcnemar_p_top1",
+      "fmt": "pval4"
+    },
+    "LoraGenTopFivePval": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/mcnemar_p_top5",
+      "fmt": "pval4"
+    },
+    "LoraGenStratumCBaseAccOne": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/base/acc_1",
+      "fmt": "pct1_raw"
+    },
+    "LoraGenStratumCBaseAccFive": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/base/acc_5",
+      "fmt": "pct1_raw"
+    },
+    "LoraGenStratumCBaseMRR": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/base/mrr",
+      "fmt": "num4"
+    },
+    "LoraGenStratumCBaseAUC": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/base/mean_auc",
+      "fmt": "num4"
+    },
+    "LoraGenStratumCPostAccOne": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/lora/acc_1",
+      "fmt": "pct1_raw"
+    },
+    "LoraGenStratumCPostAccFive": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/lora/acc_5",
+      "fmt": "pct1_raw"
+    },
+    "LoraGenStratumCPostMRR": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/lora/mrr",
+      "fmt": "num4"
+    },
+    "LoraGenStratumCPostAUC": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/lora/mean_auc",
+      "fmt": "num4"
     }
   }
 }

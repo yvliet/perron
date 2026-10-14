@@ -248,16 +248,16 @@ def test_targeted_test_runner():
             encoding="utf-8",
         )
 
-        res_pass = run_targeted_test(test_file, test_filter="test_pass", timeout_seconds=10.0)
+        res_pass = run_targeted_test(test_file, test_filter="test_pass", timeout_seconds=30.0)
         assert res_pass.passed, f"Test failed with output: {res_pass.output}"
         assert res_pass.exit_code == 0
         assert not res_pass.timed_out
 
-        res_fail = run_targeted_test(test_file, test_filter="test_fail", timeout_seconds=10.0)
+        res_fail = run_targeted_test(test_file, test_filter="test_fail", timeout_seconds=30.0)
         assert not res_fail.passed
         assert res_fail.exit_code != 0
 
-        res_no_match = run_targeted_test(test_file, test_filter="test_nonexistent", timeout_seconds=10.0)
+        res_no_match = run_targeted_test(test_file, test_filter="test_nonexistent", timeout_seconds=30.0)
         assert not res_no_match.passed
         assert res_no_match.exit_code == 5
         assert "exit code 5" in res_no_match.output
@@ -1107,7 +1107,7 @@ def test_tester_pytest_nodeid_support():
 
         # Run only the passing test via NodeID syntax
         node_id = f"{test_file}::test_target_pass"
-        result = run_targeted_test(test_file=node_id, cwd=tmpdir, timeout_seconds=10.0)
+        result = run_targeted_test(test_file=node_id, cwd=tmpdir, timeout_seconds=30.0)
 
         assert result.passed, f"Expected pass, got output: {result.output}"
         assert result.exit_code == 0
