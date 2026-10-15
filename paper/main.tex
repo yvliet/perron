@@ -148,7 +148,8 @@ From the 500 tasks of SWE-bench Verified~\cite{jimenez2024swebench}, I remove th
 \label{tab:protocol_roadmap}
 \scriptsize
 \setlength{\tabcolsep}{3.5pt}
-\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash\hsize=1.0\hsize}X l l c l >{\raggedright\arraybackslash\hsize=1.0\hsize}X}
+\setlength{\tabcolsep}{2.5pt}
+\begin{tabular}{p{3.1cm} l l c l p{3.1cm}}
 \toprule
 \textbf{Protocol / Lock ID (Commit)} & \textbf{Section} & \textbf{Cohort ($N$)} & \textbf{Pool Cutoff ($M$)} & \textbf{Scorer Model} & \textbf{Readout \& Primary Metric} \\
 \midrule
@@ -159,7 +160,7 @@ Reasoning Factorial (\texttt{c563441}, Oct 12) & Sec.~5.5 & $N=131$ All Stratum 
 \texttt{PREREG-CAUSAL-v1} (\texttt{c563441}, Oct 12) & Sec.~5.5 & $N=58$ Stratum C Union & $\bigcup_i A_i$ ($M_{\text{union}} \le 87$) & \texttt{gemma-4-e2b-it} & AST $\alpha$-Renaming \& 5-Way Serialization \\
 LoRA OOD Transfer (Lite $\to$ Verified) & Sec.~5.6 & $N=25$ Graph / $N=35$ Str.\ C & Matched $M \le 25$ & \texttt{gemma-4-e2b-it} + LoRA & Provenance Cross-Entropy Reranking \\
 \bottomrule
-\end{tabularx}
+\end{tabular}
 \end{table}
 \paragraph{Matched-Control Candidate Pools and Statistical Testing}
 Table~\ref{tab:protocol_roadmap} summarizes the experimental locks. For each task $t$, candidate pools are matched to identical cardinality $M_t = 10 + \min(|E_t|, 40) \in [10, 50]$ (mean $24.5$, median $22.0$), where $S$ denotes the top-10 BM25 seeds and $E_t$ denotes 1-hop AST out-neighbors of $S$ passing Filter~$F$ (callable symbols excluding test files and top-25 hubs $\mathcal{H}_{25}$): \textbf{B0}~(unscored BM25), \textbf{B1}~(unscored Perron), \textbf{A1}~(seeds $S$ only, $M=10$), \textbf{A2}~(depth-matched BM25 up to $M_t$), \textbf{A3}~(same-file symbols up to $M_t$), \textbf{A4}~(1-hop graph expansion $S \cup E_t$ ordered by seed-weighted adjacency), \textbf{A5}~(degree-preserving relation-stratified null graph up to $M_t$), and \textbf{A6}~(Perron multi-step specificity diffusion up to $M_t$). A4 reaches 201/344 tasks (58.4\%) vs.\ 199/344 (57.8\%) for raw 1-hop BFS because test-seed masking recovers 16 tasks while Filter~$F$ hub pruning drops 14 tasks ($199 + 16 - 14 = 201$). In the confirmatory family (19,298 forward passes of frozen FP16 \texttt{gemma-4-e2b-it} scoring log-odds $s(t,v) = \operatorname{logsumexp}(z[Y]) - \operatorname{logsumexp}(z[N])$), two pre-registered contrasts on strict Acc@5---\textbf{PC1 ($A_4 - A_2$)} and \textbf{PC2 ($A_4 - A_3$)}---are evaluated via exact two-sided binomial McNemar tests with step-down Holm--Bonferroni correction ($\alpha=0.05$) and repository-stratified bootstrap 95\% CIs ($B=10{,}000$).
@@ -171,11 +172,11 @@ In standalone unscored retrieval across all 344 tasks (detailed in Appendix~\ref
 \begin{table}[!t]
 \centering
 \scriptsize
-\setlength{\tabcolsep}{3.0pt}
+\setlength{\tabcolsep}{4.0pt}
 \renewcommand{\arraystretch}{0.95}
 \caption{\textbf{Gemma 4 pointwise candidate reranking on SWE-bench Verified ($N=344$ callable tasks).} Pools matched to per-task size $M_t \in [10, 50]$ (mean 24.5). Brackets report Wilson 95\% CIs. B0 Acc@10 reflects raw token tie-breaking (176/344 = 51.2\% vs.\ 175/344 after AST deduplication in Appendix~\ref{app:standalone_retrieval}).}
 \label{tab:reranking_results}
-\begin{tabularx}{\linewidth}{l>{\raggedright\arraybackslash}Xccccc}
+\begin{tabular}{llccccc}
 \toprule
 \textbf{Arm} & \textbf{Candidate Pool Composition} & \textbf{Acc@1 (95\% CI)} & \textbf{Acc@3 (95\% CI)} & \textbf{Acc@5 (95\% CI)} & \textbf{Acc@10 (95\% CI)} & \textbf{MRR@50} \\
 \midrule
@@ -189,28 +190,27 @@ A3 & Same-File Matched Control & 24.1\% [19.9, 28.9] & 39.2\% [34.2, 44.5] & 45.
 A5 & Null Graph Control & 24.1\% [19.9, 28.9] & 39.0\% [34.0, 44.2] & 45.9\% [40.7, 51.2] & 51.2\% [45.9, 56.4] & 0.3315 \\
 A6 & Perron Diffusion Pool & 23.6\% [19.4, 28.3] & 38.7\% [33.7, 43.9] & 45.6\% [40.5, 50.9] & \textbf{52.6\%} [47.3, 57.8] & 0.3301 \\
 \bottomrule
-\end{tabularx}
+\end{tabular}
 \end{table}
 \begin{table}[!t]
 \centering
 \scriptsize
-\setlength{\tabcolsep}{3.5pt}
+\setlength{\tabcolsep}{2.5pt}
 \caption{\textbf{Confirmatory and exploratory contrasts on SWE-bench Verified ($N=344$).} Pre-registered confirmatory contrasts (PC1, PC2) evaluated on strict Acc@5 with step-down Holm correction and repository-stratified bootstrap CIs ($B=10{,}000$).}
 \label{tab:confirmatory_contrasts}
-\setlength{\tabcolsep}{2.5pt}
-\begin{tabularx}{\linewidth}{lccccc>{\raggedright\arraybackslash}X}
+\begin{tabular}{lccccc p{4.2cm}}
 \toprule
 \textbf{Contrast} & $\boldsymbol{\Delta}$ \textbf{(pp)} & \textbf{95\% Bootstrap CI} & $\boldsymbol{n_{10}} / \boldsymbol{n_{01}}$ & $\boldsymbol{p_{\text{exact}}}$ & $\boldsymbol{p_{\text{holm}}}$ & \textbf{Classification} \\
 \midrule
 \textbf{PC1 (A4 $-$ A2: Graph vs.\ Depth BM25)} & +2.03 & [$-$0.29, +4.36] & 12 / 5 & 0.1435 & 0.2869 & Null-Compatible (Excludes $\ge +4.4$ pp) \\
 \textbf{PC2 (A4 $-$ A3: Graph vs.\ Same-File)} & +1.45 & [$-$0.58, +3.78] & 10 / 5 & 0.3018 & 0.3018 & Null-Compatible \\
 \midrule
-A4 $-$ A1 (Graph vs.\ Seeds Only, +2.45$\times$ compute) & +0.87 & [$-$1.92, +3.66] & 7 / 4 & 0.5488 & -- & Exploratory (+3 net tasks: $+7$ wins, $-4$ losses) \\
-A4 $-$ A5 (Empirical vs.\ Degree-Matched Null Graph) & +1.16 & [$-$0.58, +2.91] & 7 / 3 & 0.3438 & -- & Exploratory (Topology indistinguishable) \\
-A4 $-$ A6 (1-Hop Graph vs.\ Multi-Step Diffusion) & +1.45 & [+0.00, +3.20] & 7 / 2 & 0.1797 & -- & Exploratory (1-hop avoids hub dilution) \\
-A4 vs.\ B0 (MRR@50 Paired Wilcoxon Test) & $-0.0030$ & [$-0.024$, +0.018] & \multicolumn{2}{c}{Wilcoxon $W=\RerankWilcoxonW$} & $p\RerankWilcoxonP$ & Exploratory \\
+A4 $-$ A1 (Seeds Only, $+2.45\times$ compute) & +0.87 & [$-$1.92, +3.66] & 7 / 4 & 0.5488 & -- & Exploratory (+3 net tasks: $+7$ wins, $-4$ losses) \\
+A4 $-$ A5 (Degree-Matched Null Graph) & +1.16 & [$-$0.58, +2.91] & 7 / 3 & 0.3438 & -- & Exploratory (Topology indistinguishable) \\
+A4 $-$ A6 (Multi-Step Diffusion Pool) & +1.45 & [+0.00, +3.20] & 7 / 2 & 0.1797 & -- & Exploratory (1-hop avoids hub dilution) \\
+A4 vs.\ B0 (MRR@50 Paired Wilcoxon) & $-0.0030$ & [$-0.024$, +0.018] & \multicolumn{2}{c}{Wilcoxon $W=\RerankWilcoxonW$} & $p\RerankWilcoxonP$ & Exploratory \\
 \bottomrule
-\end{tabularx}
+\end{tabular}
 \end{table}
 \paragraph{Confirmatory Reranking Parity and Oracle Recall Symmetry}
 Tables~\ref{tab:reranking_results} and~\ref{tab:confirmatory_contrasts} report pointwise reranking results. Graph 1-hop expansion (A4, 47.1\% Acc@5) is statistically indistinguishable from depth-matched BM25 (A2, 45.1\%, $\Delta = +2.03$~pp, 95\% CI [$-$0.29, +4.36], Holm $p=0.287$) and same-file controls (A3, 45.6\%, $\Delta = +1.45$~pp, Holm $p=0.302$). Under Two One-Sided Tests (TOST), the upper 95\% confidence bound formally excludes population gains $\ge +4.4$~pp ($p < 0.05$; detecting a $+2.03$~pp shift at 80\% power under native 4.94\% discordance would require $N=942$ tasks). Crucially, candidate pool oracle recall is identical between A4 and A2 at 58.4\% (201/344 tasks, $n_{10}=18$ vs.\ $n_{01}=18$, $p=1.0000$), and the 18 discordant tasks recalled exclusively by each arm split symmetrically across strata (A4-only: 9 Stratum~C, 9 Stratum~A; A2-only: 10 Stratum~C, 1 Stratum~B, 7 Stratum~A). Furthermore, A4 provides no significant lift over the degree-preserving null graph A5 ($\Delta = +1.16$~pp, $p=0.344$) and outperforms multi-step diffusion A6 ($47.1\%$ vs.\ $45.6\%$) because 96.0\% of reachable graph defects reside at 1 hop, whereas multi-step walks ($t \ge 2$) dilute top-5 precision into transitive callers. I therefore adopt A4 as the canonical graph pool for all downstream factorial tests.
@@ -220,13 +220,11 @@ Decomposing attrition across the 344 tasks reveals that \textbf{Stage~1 Seed Rec
 \label{sec:truncation_and_bound}
 \begin{figure}[!t]
 \centering
-\begin{minipage}[b]{0.47\linewidth}
+\begin{minipage}[c]{0.47\linewidth}
 \centering
 \includegraphics[width=\linewidth]{figures/truncation_curves.pdf}
-\caption{\textbf{Candidate pool-size truncation curves ($N=344$).} Both A4 and A2 share identical recall ceilings at $M=50$ (58.4\%, 201/344). Expanding $M$ from 10 to 50 causes A2 Acc@5 to dip from 46.2\% to 45.1\% ($-4$ tasks, $p=0.455$), while A4 plateaus at 47.1\% ($+3$ tasks over seeds, $p=0.549$).}
-\label{fig:truncation_curves}
 \end{minipage}\hfill
-\begin{minipage}[b]{0.50\linewidth}
+\begin{minipage}[c]{0.50\linewidth}
 \centering
 \scriptsize
 \setlength{\tabcolsep}{2.8pt}
@@ -241,7 +239,13 @@ A4 Oracle Recall & \TruncAFourRecallTen & \TruncAFourRecallFifteen & \TruncAFour
 A4 Acc@5 (Graph) & \TruncAFourAccFiveTen & \TruncAFourAccFiveFifteen & \textbf{\TruncAFourAccFiveTwenty} & \TruncAFourAccFiveThirty & \textbf{\TruncAFourAccFiveFifty} \\
 \bottomrule
 \end{tabular}
-\vspace{0.8em}
+\end{minipage}
+\vspace{0.4em}
+\begin{minipage}[t]{0.47\linewidth}
+\caption{\textbf{Candidate pool-size truncation curves ($N=344$).} Both A4 and A2 share identical recall ceilings at $M=50$ (58.4\%, 201/344). Expanding $M$ from 10 to 50 causes A2 Acc@5 to dip from 46.2\% to 45.1\% ($-4$ tasks, $p=0.455$), while A4 plateaus at 47.1\% ($+3$ tasks over seeds, $p=0.549$).}
+\label{fig:truncation_curves}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.50\linewidth}
 \captionof{table}{\textbf{Oracle recall and Acc@5 across pool cutoffs $M \in [10, 50]$ ($N=344$).} Capped at $\min(M, M_t)$ (mean 24.5).}
 \label{tab:truncation_curves}
 \end{minipage}
