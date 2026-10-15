@@ -147,9 +147,8 @@ From the 500 tasks of SWE-bench Verified~\cite{jimenez2024swebench}, I remove th
 \caption{\textbf{Summary of pre-registered protocols, Git commit locks, cohorts, and scoring regimes across Sections~5.1--5.6.}}
 \label{tab:protocol_roadmap}
 \scriptsize
-\setlength{\tabcolsep}{3.5pt}
 \setlength{\tabcolsep}{2.5pt}
-\begin{tabular}{p{3.1cm} l l c l p{3.1cm}}
+\begin{tabular}{>{\raggedright\arraybackslash}p{3.1cm} l l c l >{\raggedright\arraybackslash}p{3.1cm}}
 \toprule
 \textbf{Protocol / Lock ID (Commit)} & \textbf{Section} & \textbf{Cohort ($N$)} & \textbf{Pool Cutoff ($M$)} & \textbf{Scorer Model} & \textbf{Readout \& Primary Metric} \\
 \midrule
@@ -220,37 +219,11 @@ Decomposing attrition across the 344 tasks reveals that \textbf{Stage~1 Seed Rec
 \label{sec:truncation_and_bound}
 \begin{figure}[!t]
 \centering
-\begin{minipage}[c]{0.47\linewidth}
-\centering
-\includegraphics[width=\linewidth]{figures/truncation_curves.pdf}
-\end{minipage}\hfill
-\begin{minipage}[c]{0.50\linewidth}
-\centering
-\scriptsize
-\setlength{\tabcolsep}{2.8pt}
-\begin{tabular}{lccccc}
-\toprule
-\textbf{Metric} & $\boldsymbol{M=10}$ & $\boldsymbol{M=15}$ & $\boldsymbol{M=20}$ & $\boldsymbol{M=30}$ & $\boldsymbol{M=50}$ \\
-\midrule
-A2 Oracle Recall & \TruncATwoRecallTen & \TruncATwoRecallFifteen & \TruncATwoRecallTwenty & \TruncATwoRecallThirty & \TruncATwoRecallFifty \\
-A2 Acc@5 (BM25) & \textbf{\TruncATwoAccFiveTen} & \TruncATwoAccFiveFifteen & \TruncATwoAccFiveTwenty & \TruncATwoAccFiveThirty & \TruncATwoAccFiveFifty \\
-\midrule
-A4 Oracle Recall & \TruncAFourRecallTen & \TruncAFourRecallFifteen & \TruncAFourRecallTwenty & \TruncAFourRecallThirty & \TruncAFourRecallFifty \\
-A4 Acc@5 (Graph) & \TruncAFourAccFiveTen & \TruncAFourAccFiveFifteen & \textbf{\TruncAFourAccFiveTwenty} & \TruncAFourAccFiveThirty & \textbf{\TruncAFourAccFiveFifty} \\
-\bottomrule
-\end{tabular}
-\end{minipage}
-\vspace{0.4em}
-\begin{minipage}[t]{0.47\linewidth}
-\caption{\textbf{Candidate pool-size truncation curves ($N=344$).} Both A4 and A2 share identical recall ceilings at $M=50$ (58.4\%, 201/344). Expanding $M$ from 10 to 50 causes A2 Acc@5 to dip from 46.2\% to 45.1\% ($-4$ tasks, $p=0.455$), while A4 plateaus at 47.1\% ($+3$ tasks over seeds, $p=0.549$).}
+\includegraphics[width=0.88\linewidth]{figures/truncation_curves.pdf}
+\caption{\textbf{Pointwise candidate pool-size truncation curves on SWE-bench Verified ($N=344$).} Both A4 and A2 share identical recall ceilings at $M=50$ (58.4\%, 201/344). Expanding pool cutoff $M$ from 10 to 50 causes depth BM25 (A2) Acc@5 to dip from 46.2\% to 45.1\% ($-4$ tasks, $p=0.455$), while graph 1-hop expansion (A4) plateaus at 47.1\% ($+3$ tasks over seeds, $p=0.549$). Complete numerical values across all cutoffs are tabulated in Appendix~\ref{app:truncation_dynamics} (Table~\ref{tab:truncation_curves_app}).}
 \label{fig:truncation_curves}
-\end{minipage}\hfill
-\begin{minipage}[t]{0.50\linewidth}
-\captionof{table}{\textbf{Oracle recall and Acc@5 across pool cutoffs $M \in [10, 50]$ ($N=344$).} Capped at $\min(M, M_t)$ (mean 24.5).}
-\label{tab:truncation_curves}
-\end{minipage}
 \end{figure}
-Evaluating \texttt{scores.parquet} across truncated pool cutoffs $M \in [10, 15, 20, 30, 50]$ (Figure~\ref{fig:truncation_curves} and Table~\ref{tab:truncation_curves}) shows that expanding $M=10 \to 50$ raises pool recall by $+7.27$~pp in both arms, yet A2 loses 4 top-5 hits ($46.2\% \to 45.1\%$) and A4 gains only 3 net hits ($46.2\% \to 47.1\%$: $+6$ new graph conversions, $+1$ seed promotion, $-4$ displaced seeds).
+Evaluating \texttt{scores.parquet} across truncated pool cutoffs $M \in [10, 15, 20, 30, 50]$ (Figure~\ref{fig:truncation_curves}; Appendix Table~\ref{tab:truncation_curves_app}) shows that expanding $M=10 \to 50$ raises pool recall by $+7.27$~pp in both arms, yet A2 loses 4 top-5 hits ($46.2\% \to 45.1\%$) and A4 gains only 3 net hits ($46.2\% \to 47.1\%$: $+6$ new graph conversions, $+1$ seed promotion, $-4$ displaced seeds).
 \paragraph{First-Moment Expected-Rank Diagnostic vs.\ Tail Conversion}
 While exact net $\text{Acc@}k$ change during pool expansion ($M_1 \to M_2$) is governed by the tail-conversion versus seed-displacement balance,
 \begin{equation}
@@ -271,7 +244,7 @@ Why does discrimination drop by $\Delta = 0.137$ on graph-only targets? In two-s
 \caption{\textbf{First-Moment Break-Even Diagnostic, Selection Conditioning Deficit, and Scaling Surface.} \textbf{(a)} First-moment break-even curves $\text{AUC}^* = 1 - \frac{k-1}{M-1}$; mean $M=24.5$ requires $\text{AUC}^* \ge 0.830$ at $k=5$. \textbf{(b)} Within-pool ROC-AUC ($N=344$) for BM25 ($\mu = 0.825$), Gemma~4 seeds ($\mu = 0.797, n=176$), and graph neighbors ($\mu = 0.660, n=25, p = 0.0036^*$). \textbf{(c)} Cross-architecture tail scaling on Stratum~C ($N=58$, \texttt{PREREG-SCALING-v1}), showing Gemma~4 scaling ($0.8544 \to 0.9274$) and the 26B-A4B MoE \ScalingMoERuntimeVRAM\ VRAM barrier.}
 \label{fig:breakeven_bound}
 \end{figure}
-\clearpage
+
 \subsection{Cross-Architecture Scaling Surface and MoE Hardware Bounds (\texttt{PREREG-SCALING-v1})}
 \label{sec:scaling_surface}
 To test whether model scale resolves the discrimination deficit on un-named bugs, protocol \texttt{PREREG-SCALING-v1} evaluates pointwise tail discrimination ($\text{AUC}_{\text{tail}}$, measured strictly within reachable non-seed candidates so top-10 seed distractors do not confound architectural comparisons) across the $N=58$ Stratum~C tasks reachable in the multi-pool union ($\bigcup_i A_i, M_{\text{union}} \le 87$, mean $61.9$) on Kaggle Dual Tesla T4 GPUs (Table~\ref{tab:scaling_surface} and Figure~\ref{fig:breakeven_bound}c). Within Gemma~4's Per-Layer Embedding (PLE) architecture, $\text{AUC}_{\text{tail}}$ scales monotonically from \ScalingGemmaETwoBAuc\ (E2B, 2.0B) to \textbf{\ScalingGemmaEFourBAuc} (E4B, 4.0B), outperforming both \texttt{Phi-4-mini-instruct} (3.8B, \ScalingPhiFourAuc) and \texttt{DeepSeek-R1-Distill-7B} (7.0B, \ScalingDeepSeekSevenBAuc). However, evaluating \texttt{gemma-4-26b-a4b-it} exposes a critical deployment barrier for local MoE agents: its 128 dynamic experts are packed as fused 3D \texttt{nn.Parameter} tensors that bypass standard 2D \texttt{bitsandbytes} NF4 hooks, requiring \ScalingMoERuntimeVRAM\ runtime VRAM (\ScalingMoERequiredVRAM\ disk) and exceeding Dual T4 capacity (\ScalingMoEAvailableVRAM; Appendix~\ref{app:moe_quantization}).
@@ -300,30 +273,30 @@ Across all 131 un-named Stratum~C tasks, gold targets reside within single-pool 
 \begin{table}[!t]
 \centering
 \scriptsize
-\setlength{\tabcolsep}{2.5pt}
-\renewcommand{\arraystretch}{0.96}
+\setlength{\tabcolsep}{3.0pt}
+\renewcommand{\arraystretch}{0.95}
 \caption{\textbf{Candidate Pool $\times$ Test-Time Reasoning and Call-Path Provenance Factorial Evaluation on Stratum C ($N=131$ Un-Named Defects, Dual T4 Execution with \texttt{google/gemma-4-e4b-it}).} Evaluates pool architectures ($A_1, A_2, A_4$ at $M \le 25$), provenance conditions ($C_0\text{--}C_3$), and bound-pruned horizon $M=15$ ($\text{AUC}^*=0.714$). Under \texttt{PREREG-CAUSAL-v1}, Acc@5 was pre-registered as the primary metric ($p=0.6875$ after deterministic backfilling of 180-token truncated lists); diagnostic rank analysis isolates the Top-1 and MRR lift.}
 \label{tab:stratum_c_combined}
-\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash\hsize=1.25\hsize}X l c c c c >{\raggedright\arraybackslash\hsize=0.75\hsize}X}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash\hsize=1.10\hsize}X l c c c >{\raggedright\arraybackslash\hsize=0.90\hsize}X}
 \toprule
-\textbf{Condition / Architecture} & \textbf{Readout Mode} & \textbf{Acc@1} & \textbf{Acc@5 (Raw / Backfill)} & \textbf{Hits} & \textbf{MRR} & \textbf{Paired Contrast} \\
+\textbf{Condition / Architecture} & \textbf{Readout Mode} & \textbf{Acc@1 (Hits)} & \textbf{Acc@5 (Raw / Backfill)} & \textbf{MRR} & \textbf{Paired Contrast} \\
 \midrule
-\multicolumn{7}{l}{\textit{Part I: Candidate Pool $\times$ Test-Time Reasoning Factorial ($M \le 25$, Prompt Budget $\le 3{,}480$ Tokens)}} \\
-Unscored BM25 ($B_0$, $M=25$) & Plain Order & 2.29\% (3) & 15.27\% / 15.27\% & 20/131 & 0.0862 & Lexical order baseline \\
-Seeds Only ($A_1^{(10)}$, $M=10$) & Direct / Thinking & 3.05\% $\to$ 6.87\% & 15.27\% $\to$ 10.69\% (15.27\%) & 20 $\to$ 14 (20) & 0.0865 & Top-1 $p=0.0625$ (Holm $p=0.1250$) \\
-Depth BM25 ($A_2^{(25)}$, $M=25$) & Direct / Thinking & 4.58\% $\to$ 6.87\% & 16.79\% $\to$ 12.98\% (16.79\%) & 22 $\to$ 17 (22) & 0.0967 & Top-1 $p=0.3750$ (Holm $p=0.3750$) \\
-Graph 1-Hop ($A_4^{(25)}$, $M=25$) & Direct Readout & \ListwiseAFourAccOne\ (6) & \ListwiseAFourAccFive\ / \ListwiseAFourAccFive & 22/131 & \ListwiseAFourMRR & Matched graph direct reference \\
-\textbf{Graph 1-Hop ($A_4^{(25)} = C_0$, $M=25$)} & \textbf{Thinking Traces} & \textbf{\CausalCZeroAccOne\ (13)} & \textbf{\CausalCZeroAccFive\ / \CausalCZeroAccFive} & \textbf{24/131} & \textbf{\CausalCZeroMRR} & \textbf{Top-1 $+5.34$ pp ($p=0.0156^*$, Holm $0.0469^*$)} \\
+\multicolumn{6}{l}{\textit{Part I: Candidate Pool $\times$ Test-Time Reasoning Factorial ($M \le 25$, Prompt Budget $\le 3{,}480$ Tokens)}} \\
+Unscored BM25 ($B_0$, $M=25$) & Plain Order & 2.29\% (3/131) & 15.27\% / 15.27\% & 0.0862 & Lexical order baseline \\
+Seeds Only ($A_1^{(10)}$, $M=10$) & Direct / Thinking & 3.05\% $\to$ 6.87\% & 15.27\% $\to$ 10.69\% (15.27\%) & 0.0865 & Top-1 $p=0.0625$ (Holm $p=0.1250$) \\
+Depth BM25 ($A_2^{(25)}$, $M=25$) & Direct / Thinking & 4.58\% $\to$ 6.87\% & 16.79\% $\to$ 12.98\% (16.79\%) & 0.0967 & Top-1 $p=0.3750$ (Holm $p=0.3750$) \\
+Graph 1-Hop ($A_4^{(25)}$, $M=25$) & Direct Readout & \ListwiseAFourAccOne\ (6/131) & \ListwiseAFourAccFive\ / \ListwiseAFourAccFive & \ListwiseAFourMRR & Matched graph direct reference \\
+\textbf{Graph 1-Hop ($A_4^{(25)} = C_0$, $M=25$)} & \textbf{Thinking Traces} & \textbf{\CausalCZeroAccOne\ (13/131)} & \textbf{\CausalCZeroAccFive\ / \CausalCZeroAccFive} & \textbf{\CausalCZeroMRR} & \textbf{Top-1 $+5.34$ pp ($p=0.0156^*$, Holm $0.0469^*$)} \\
 \midrule
-\multicolumn{7}{l}{\textit{Part II: Call-Path Provenance Verbalization $\times$ Thinking Factorial on Graph Pool $A_4^{(25)}$ ($N=131$, $M=25$)}} \\
-$C_1$: 3-Line Stub (No Docstring) & No Prov, No Think & \CausalCOneAccOne\ (3) & \CausalCOneAccFive & 20/131 & \CausalCOneMRR & Stub baseline (mean rank 17.47) \\
-$C_2$: Static Provenance Comment & Prov, No Think & \CausalCTwoAccOne\ (5) & \CausalCTwoAccFive & 21/131 & \CausalCTwoMRR & $-0.76$ pp vs.\ $A_4$ Direct ($p=1.0000$) \\
-$C_3$: Provenance + Thinking & Prov + Think & \CausalCThreeAccOne\ (12) & \CausalCThreeAccFive & 23/131 & \CausalCThreeMRR & $+4.58$ pp vs.\ $A_4$ ($p=0.0312^*$); $C_3 - C_0: p=1.000$ \\
+\multicolumn{6}{l}{\textit{Part II: Call-Path Provenance Verbalization $\times$ Thinking Factorial on Graph Pool $A_4^{(25)}$ ($N=131$, $M=25$)}} \\
+$C_1$: 3-Line Stub (No Docstring) & No Prov, No Think & \CausalCOneAccOne\ (3/131) & \CausalCOneAccFive & \CausalCOneMRR & Stub baseline (mean rank 17.47) \\
+$C_2$: Static Provenance Comment & Prov, No Think & \CausalCTwoAccOne\ (5/131) & \CausalCTwoAccFive & \CausalCTwoMRR & $-0.76$ pp vs.\ $A_4$ Direct ($p=1.0000$) \\
+$C_3$: Provenance + Thinking & Prov + Think & \CausalCThreeAccOne\ (12/131) & \CausalCThreeAccFive & \CausalCThreeMRR & $+4.58$ pp vs.\ $A_4$ ($p=0.0312^*$); $C_3 - C_0: p=1.000$ \\
 \midrule
-\multicolumn{7}{l}{\textit{Part III: Bound-Guided Candidate Pruning ($M=15$, $\text{AUC}^*_{\text{breakeven}} = 0.714$, $34/35$ Reachable Defects Retained)}} \\
-$A_4^{(15)}$ Direct / Provenance & No Thinking & 4.58\% (6) & 17.56\% / 17.56\% & 23/131 & 0.0970 & Mean gold rank $5.32$ (Prov parity $p=1.0000$) \\
-\textbf{$C_0^{(15)}$: Thinking ($M=15$)} & \textbf{Thinking Traces} & \textbf{9.92\% (13)} & \textbf{19.85\% / 19.85\%} & \textbf{26/131} & \textbf{0.1469} & \textbf{Top-1 $+5.34$ pp ($p=0.0391^*$); Mean rank 3.74} \\
-$C_3^{(15)}$: Prov + Think ($M=15$) & Prov + Think & 6.11\% (8) & 18.32\% / 18.32\% & 24/131 & 0.1145 & $-3.82$ pp vs.\ $C_0^{(15)}$ ($p=0.1250$) \\
+\multicolumn{6}{l}{\textit{Part III: Bound-Guided Candidate Pruning ($M=15$, $\text{AUC}^*_{\text{breakeven}} = 0.714$, $34/35$ Reachable Defects Retained)}} \\
+$A_4^{(15)}$ Direct / Provenance & No Thinking & 4.58\% (6/131) & 17.56\% / 17.56\% & 0.0970 & Mean gold rank $5.32$ (Prov parity $p=1.0000$) \\
+\textbf{$C_0^{(15)}$: Thinking ($M=15$)} & \textbf{Thinking Traces} & \textbf{9.92\% (13/131)} & \textbf{19.85\% / 19.85\%} & \textbf{0.1469} & \textbf{Top-1 $+5.34$ pp ($p=0.0391^*$); Mean rank 3.74} \\
+$C_3^{(15)}$: Prov + Think ($M=15$) & Prov + Think & 6.11\% (8/131) & 18.32\% / 18.32\% & 0.1145 & $-3.82$ pp vs.\ $C_0^{(15)}$ ($p=0.1250$) \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -345,18 +318,23 @@ At $M=25$, the first-moment break-even threshold for Top-5 is $\text{AUC}^* = 0.
 \centering
 \scriptsize
 \setlength{\tabcolsep}{3.5pt}
+\renewcommand{\arraystretch}{0.94}
 \caption{\textbf{Pre-registered AST $\alpha$-renaming and multi-encoding graph serialization on reachable Stratum C union tasks ($N=58$, \texttt{gemma-4-e2b-it} without thinking, \texttt{PREREG-CAUSAL-v1}).} Evaluates identifier obfuscation (Exp.\ A) and Fatemi et~al.~\cite{fatemi2023talk} graph encodings (Exp.\ B).}
 \label{tab:causal_ablation}
-\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{6.8cm}ccc>{\raggedleft\arraybackslash}X}
+\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{6.4cm}ccc>{\raggedleft\arraybackslash}X}
 \toprule
-\textbf{Condition} & \textbf{Acc@1} & \textbf{Acc@5} & \textbf{MRR} & \textbf{Contrasts vs.\ Baseline} \\
+\textbf{Condition / Architecture} & \textbf{Acc@1 (Hits)} & \textbf{Acc@5} & \textbf{MRR} & \textbf{Contrasts vs.\ Baseline} \\
 \midrule
-$O_0$: Natural Code vs.\ $O_1$: AST $\alpha$-Renamed Identifiers ($N=58$) & 12.07\% $\to$ 10.34\% & 27.59\% $\to$ 24.14\% & 0.1804 $\to$ 0.1686 & $-1.73$ pp ($7/58 \to 6/58$, exact $p = 1.0000$) \\
+\multicolumn{5}{l}{\textit{Experiment A: Identifier Obfuscation via AST $\alpha$-Renaming ($N=58$)}} \\
+$O_0$: Natural Source Code & 12.07\% (7/58) & 27.59\% & 0.1804 & Baseline reference \\
+$O_1$: AST $\alpha$-Renamed Identifiers & 10.34\% (6/58) & 24.14\% & 0.1686 & $-1.73$ pp (exact $p = 1.0000$) \\
 \midrule
-$E_0$: Isolated Code (Baseline Snippet, No Provenance) & \CausalEncBaselineAccOne & \CausalEncBaselineAccFive & \CausalEncBaselineMRR & reference ($7/58$ hits) \\
-\textbf{$E_1$: Inline Comment Provenance (\texttt{\#~Provenance: Called by})} & \textbf{\CausalEncCommentAccOne} & \textbf{\CausalEncCommentAccFive} & \textbf{\CausalEncCommentMRR} & \textbf{\CausalEncCommentLiftTopOne\ pp} ($15/58$, $p_{\text{uncorr}} = 0.0386^*$, $p_{\text{holm}} = \CausalEncCommentHolmP$) \\
-$E_2$: Linearized Traversal Trace (\texttt{[Call~Trace]}) & \CausalEncLinearAccOne & \CausalEncLinearAccFive & \CausalEncLinearMRR & $+5.17$ pp ($10/58$, $p = 0.4531$) \\
-$E_3$: Subgraph Edge List (\texttt{\#\#\#~Edges}) / $E_4$: Adjacency Map & 15.52\% / 15.52\% & 32.76\% / 34.48\% & 0.2419 / 0.2362 & $+3.45$ pp ($9/58$, $p = 0.6875$; $E_1 - E_3: p=0.0703$) \\
+\multicolumn{5}{l}{\textit{Experiment B: Graph Encoding and Provenance Verbalization ($N=58$, Fatemi et~al.~\cite{fatemi2023talk})}} \\
+$E_0$: Isolated Code (No Provenance) & \CausalEncBaselineAccOne\ (\CausalEncBaselineHitsOneKN) & \CausalEncBaselineAccFive & \CausalEncBaselineMRR & Baseline reference \\
+\textbf{$E_1$: Inline Comment Provenance (\texttt{\#~Provenance})} & \textbf{\CausalEncCommentAccOne\ (\CausalEncCommentHitsOneKN)} & \textbf{\CausalEncCommentAccFive} & \textbf{\CausalEncCommentMRR} & \textbf{\CausalEncCommentLiftTopOne\ pp} ($p_{\text{uncorr}} = 0.0386^*$) \\
+$E_2$: Linearized Traversal Trace (\texttt{[Call~Trace]}) & \CausalEncLinearAccOne\ (\CausalEncLinearHitsOneKN) & \CausalEncLinearAccFive & \CausalEncLinearMRR & $+5.17$ pp ($p = 0.4531$) \\
+$E_3$: Subgraph Edge List (\texttt{\#\#\#~Edges}) & \CausalEncEdgeListAccOne\ (\CausalEncEdgeListHitsOneKN) & \CausalEncEdgeListAccFive & \CausalEncEdgeListMRR & $+3.45$ pp ($p = 0.6875$) \\
+$E_4$: Adjacency Map (\texttt{\#\#\#~Adjacency}) & \CausalEncAdjacencyAccOne\ (\CausalEncAdjacencyHitsOneKN) & \CausalEncAdjacencyAccFive & \CausalEncAdjacencyMRR & $+3.45$ pp ($E_1 - E_4: p=0.0703$) \\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -373,19 +351,21 @@ To test whether compact models can internalize topological priors without test-t
 \begin{table}[!t]
 \centering
 \scriptsize
-\setlength{\tabcolsep}{4.5pt}
-\renewcommand{\arraystretch}{0.94}
+\setlength{\tabcolsep}{5.0pt}
+\renewcommand{\arraystretch}{0.95}
 \caption{\textbf{Out-of-distribution LoRA transfer from SWE-bench Lite to held-out SWE-bench Verified (\texttt{yvliet/perron-gemma4-e2b-lora}).} Evaluates pure 1-hop graph targets ($A_4 \setminus A_1, N=25$) and reachable Stratum C tasks ($N=35$), illustrating the topological prior shift toward provenance-connected candidates.}
 \label{tab:lora_transfer}
-\begin{tabular}{llccccc}
+\begin{tabular}{lccccc}
 \toprule
-\textbf{Held-Out Verified Evaluation Cohort} & \textbf{Scorer Regime} & \textbf{Acc@1 (Hits)} & \textbf{Acc@5 (Hits)} & \textbf{MRR} & \textbf{Median Rank} & \textbf{Within-Pool AUC} \\
+\textbf{Condition / Scorer Regime} & \textbf{Acc@1 (Hits)} & \textbf{Acc@5 (Hits)} & \textbf{MRR} & \textbf{Median Rank} & \textbf{Within-Pool AUC} \\
 \midrule
-\textbf{Pure Graph-Only ($A_4 \setminus A_1, N=25$)} & Zero-Shot Base E2B & \LoraGenBaseAccOne\ (0/25) & \LoraGenBaseAccFive\ (11/25) & \LoraGenBaseMRR & \LoraGenBaseMedianRank & \LoraGenBaseAUC \\
-\textbf{Pure Graph-Only ($A_4 \setminus A_1, N=25$)} & \textbf{Post-LoRA Adapter} & \textbf{\LoraGenPostAccOne\ (5/25)} & \textbf{\LoraGenPostAccFive\ (14/25)} & \textbf{\LoraGenPostMRR} & \textbf{\LoraGenPostMedianRank} & \textbf{\LoraGenPostAUC} \\
+\multicolumn{6}{l}{\textit{Cohort A: Pure Graph-Only Targets ($A_4 \setminus A_1, N=25$)}} \\
+Zero-Shot Base E2B & \LoraGenBaseAccOne\ (0/25) & \LoraGenBaseAccFive\ (11/25) & \LoraGenBaseMRR & \LoraGenBaseMedianRank & \LoraGenBaseAUC \\
+\textbf{Post-LoRA Adapter} & \textbf{\LoraGenPostAccOne\ (5/25)} & \textbf{\LoraGenPostAccFive\ (14/25)} & \textbf{\LoraGenPostMRR} & \textbf{\LoraGenPostMedianRank} & \textbf{\LoraGenPostAUC} \\
 \midrule
-\textbf{Reachable Stratum C ($N=35$, 28 Seeds + 7 Graph)} & Zero-Shot Base E2B & \textbf{\LoraGenStratumCBaseAccOne\ (6/35)} & \LoraGenStratumCBaseAccFive\ (13/35) & \textbf{\LoraGenStratumCBaseMRR} & \LoraGenStratumCBaseMedianRank & \LoraGenStratumCBaseAUC \\
-\textbf{Reachable Stratum C ($N=35$, 28 Seeds + 7 Graph)} & \textbf{Post-LoRA Adapter} & \LoraGenStratumCPostAccOne\ (3/35) & \textbf{\LoraGenStratumCPostAccFive\ (15/35)} & \LoraGenStratumCPostMRR & \textbf{\LoraGenStratumCPostMedianRank} & \textbf{\LoraGenStratumCPostAUC} \\
+\multicolumn{6}{l}{\textit{Cohort B: Reachable Stratum C Tasks ($N=35$, 28 Seeds + 7 Graph)}} \\
+Zero-Shot Base E2B & \textbf{\LoraGenStratumCBaseAccOne\ (6/35)} & \LoraGenStratumCBaseAccFive\ (13/35) & \textbf{\LoraGenStratumCBaseMRR} & \LoraGenStratumCBaseMedianRank & \LoraGenStratumCBaseAUC \\
+\textbf{Post-LoRA Adapter} & \LoraGenStratumCPostAccOne\ (3/35) & \textbf{\LoraGenStratumCPostAccFive\ (15/35)} & \LoraGenStratumCPostMRR & \textbf{\LoraGenStratumCPostMedianRank} & \textbf{\LoraGenStratumCPostAUC} \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -572,6 +552,53 @@ Similarly, comparing A4 to the Perron diffusion pool (A6, 45.6\% Acc@5) yields $
 
 \subsection{Model Sensitivity and Within-Pool ROC-AUC Decomposition}
 To test whether the flatline reflects an insensitive scorer rather than graph retrieval limits, I evaluated within-pool discrimination directly from the \texttt{scores.parquet} evaluation archive. Raw Okapi BM25 scores achieve a within-pool ROC-AUC of \textbf{0.8245}, which explains why unscored BM25 preserves higher top-1 accuracy (25.3\%) and MRR@50 (0.3439). Gemma~4 log-odds scores separate gold targets from distractors with an overall within-pool ROC-AUC of \textbf{0.7796}. Decomposing this discriminative ability by target provenance reveals a marked disparity: Gemma~4 achieves an ROC-AUC of \textbf{0.7966} on seed-gold targets, but drops to \textbf{0.6596} on graph-only gold targets (a degradation of nearly 0.14, Mann-Whitney $U = 2993, p = 0.00358^*$). Furthermore, Reciprocal Rank Fusion (RRF, $k_{\text{rrf}}=60$) combining BM25 prior rank with Gemma log-odds reaches \textbf{46.51\%} Acc@5 (160/344), exceeding both BM25 (44.77\%) and Gemma reranking (46.22\%). This demonstrates that the empirical plateau does not reflect generic model insensitivity, but rather a boundary in representation: compact language models evaluate bug relevance predominantly through surface token overlap, encountering a Topological Disambiguation Deficit where non-lexical gold functions uncovered by graph traversal cannot be distinguished from distractor functions without explicit call-path traces or dense semantic representations.
+
+\section{Four-Stage Bug Localization Loss Funnel and Downstream Reader Evaluation}
+\label{app:reader_mini_test}
+\label{app:reader_test}
+
+\subsection{Four-Stage Bug Localization Loss Funnel}
+Figure~\ref{fig:loss_funnel} illustrates the localization loss funnel on SWE-bench Verified ($N=344$ callable tasks). The analysis decomposes localization attrition across candidate generation and model scoring:
+\begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
+    \item \textbf{Boundary Loss}: Upstream candidate pool formation loses 41.6 pp of oracle recall ($100.0\% \to 58.4\%$, $143/344$ tasks missing from candidate pools).
+    \item \textbf{Compaction Loss}: Downstream model reranking loses 11.3 pp from pool to top-5 ($58.4\% \to 47.1\%$, $39/344$ tasks present in pool but ranked outside top-5).
+    \item \textbf{Bottleneck Ratio}: Upstream boundary loss exceeds downstream compaction loss by $\mathbf{3.68\times}$ at $k=5$ ($41.6 / 11.3 \approx 3.68$, spanning $1.2\times$ at $k=1$ to $6.8\times$ at $k=10$).
+\end{itemize}
+Expanding the candidate pool adds 7.3 pp of oracle recall over seeds ($51.2\% \to 58.4\%$), yet Gemma 4 converts only about 1 pp into ranked top-5 accuracy ($46.2\% \to 47.1\%$).
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/loss_funnel.pdf}
+\caption{\textbf{Four-stage bug localization loss funnel on SWE-bench Verified ($N=344$ callable tasks).} Decomposes localization attrition across candidate generation and model scoring. Boundary loss before scoring ($100.0\% \to 58.4\% = 41.6$ pp) exceeds compaction loss from candidate pool to top-5 ($58.4\% \to 47.1\% = 11.3$ pp) by a factor of $\mathbf{3.68\times}$.}
+\label{fig:loss_funnel}
+\end{figure}
+
+\paragraph{Architectural Implication: Operating Regimes of Static Code Graphs}
+The $3.68\times$ bottleneck ratio defines a practical operating regime for developer agent architectures. Static AST multigraphs provide an efficient, low-overhead candidate filter for the \RerankPoolOracleRecall\ of defects that propagate along explicit syntactic edges. However, for the \RerankBoundaryLossPP~pp of defects outside static reachability (dynamic dispatch, reflection, implicit ORM descriptors, and configuration-driven injection), static graph expansion cannot assist by construction. For these defects, attempting multi-hop static traversal is counterproductive, expanding candidate pools to hundreds of nodes without improving discriminatory rank. Consequently, local developer agents must treat static CSR diffusion as an initial lightweight filter ($<5$~ms, $\le 3$~MB RAM): when issue symbol density or retrieval confidence is low, agent architectures should switch to dynamic execution signals (runtime stack traces, failing test pytest fixtures, or dense semantic embeddings) rather than expanding static graph radius.
+
+\subsection{Downstream Edit-Location Reader Evaluation ($N=100$, Descriptive)}
+Table~\ref{tab:reader_mini_test_app} reports the downstream reader mini-test across $N=100$ tasks stratified by repository size, drawn from instances where BM25 identified candidate pools.
+
+\begin{table}[!htbp]
+\centering
+\footnotesize
+\setlength{\tabcolsep}{4.5pt}
+\renewcommand{\arraystretch}{0.92}
+\caption{\textbf{Downstream edit-location reader mini-test on SWE-bench Verified ($N=100$, descriptive).} ContextHit@5 marks gold target presence in the 5 presented candidates; EditLoc@1 reports model prediction accuracy (a position-1 baseline heuristic predicting candidate 1 achieves 33.0\% under BM25 top-5 context). Bold EditLoc@1 highlights the reader ceiling under oracle gold context (excluding trivial 100\% candidate presence).}
+\label{tab:reader_mini_test_app}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Arm} & \textbf{Candidate Context (Top-5)} & \textbf{ContextHit@5} & \textbf{EditLoc@1} & \textbf{Conversion} \\
+\midrule
+D0 & BM25 Top-5 & 35.0\% & 33.0\% & 0.943 \\
+D1 & A4 Graph Top-5 & 37.0\% & 31.0\% & 0.838 \\
+D2 & A3 Same-File Top-5 & 38.0\% & 30.0\% & 0.789 \\
+D3 & Oracle Context (Randomized Position) & 100.0\% & \textbf{74.0\%} & 0.740 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+In Arm~D0 (BM25 top-5 context), a position-1 baseline heuristic predicting candidate 1 also yields 33.0\% EditLoc@1, matching Gemma 4's reader prediction exactly (33.0\%). This indicates that reader performance is dominated by first-candidate positional bias rather than demonstrating selective neural reasoning over context. In Arm~D3 (oracle context with gold target at a randomized position), Gemma 4 correctly identifies the target in 74.0\% of tasks (67.5\% chance-adjusted). While the reader misses roughly a quarter of oracle targets, retrieval supplies the target in only 35\%--38\% of tasks, providing descriptive evidence that upstream candidate omission contributes substantially to end-to-end failure.
 
 \section{Continuous Resolvent Basis Benchmark and Prior Dose-Response Surface}
 \label{app:dose_response}
@@ -816,74 +843,6 @@ To evaluate the mechanism of the Topological Disambiguation Deficit, I executed 
 \end{enumerate}
 
 When function identifiers are masked, Top-1 accuracy drops to zero across all graph encodings, demonstrating that compact open-weights models depend almost entirely on semantic naming rather than graph topology to resolve code defect locations.
-
-\section{Four-Stage Bug Localization Loss Funnel and Downstream Reader Evaluation}
-\label{app:reader_mini_test}
-\label{app:reader_test}
-
-\subsection{Four-Stage Bug Localization Loss Funnel}
-Figure~\ref{fig:loss_funnel} illustrates the localization loss funnel on SWE-bench Verified ($N=344$ callable tasks). The analysis decomposes localization attrition across candidate generation and model scoring:
-\begin{itemize}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
-    \item \textbf{Boundary Loss}: Upstream candidate pool formation loses 41.6 pp of oracle recall ($100.0\% \to 58.4\%$, $143/344$ tasks missing from candidate pools).
-    \item \textbf{Compaction Loss}: Downstream model reranking loses 11.3 pp from pool to top-5 ($58.4\% \to 47.1\%$, $39/344$ tasks present in pool but ranked outside top-5).
-    \item \textbf{Bottleneck Ratio}: Upstream boundary loss exceeds downstream compaction loss by $\mathbf{3.68\times}$ at $k=5$ ($41.6 / 11.3 \approx 3.68$, spanning $1.2\times$ at $k=1$ to $6.8\times$ at $k=10$).
-\end{itemize}
-Expanding the candidate pool adds 7.3 pp of oracle recall over seeds ($51.2\% \to 58.4\%$), yet Gemma 4 converts only about 1 pp into ranked top-5 accuracy ($46.2\% \to 47.1\%$).
-
-\begin{figure}[!htbp]
-\centering
-\begin{tikzpicture}[
-    node distance=0.6cm and 0.8cm,
-    stage/.style={rectangle, draw=codeblue, fill=codebg, thick, minimum width=4.8cm, minimum height=0.75cm, align=center, font=\small},
-    loss/.style={rectangle, draw=red!70!black, fill=red!5, thick, minimum width=3.8cm, minimum height=0.75cm, align=center, font=\small},
-    arrow/.style={->, >=stealth, thick, color=codeblue}
-]
-    \node[stage] (s0) {\textbf{Stage 0: Oracle Universe} \\ 100.0\% ($344/344$ tasks)};
-    \node[stage, below=of s0] (s1) {\textbf{Stage 1: Seeds Only ($A_1$)} \\ 51.2\% ($176/344$ in pool)};
-    \node[stage, below=of s1] (s2) {\textbf{Stage 2: Graph 1-Hop ($A_4$)} \\ 58.4\% ($201/344$ in pool)};
-    \node[stage, below=of s2] (s3) {\textbf{Stage 3: Gemma 4 Top-5} \\ 47.1\% ($162/344$ localized)};
-
-    \node[loss, right=of s1] (l1) {\textbf{Lexical Boundary Loss} \\ 48.8 pp ($168/344$ tasks)};
-    \node[loss, right=of s2] (l2) {\textbf{Graph Boundary Loss} \\ 41.6 pp ($143/344$ tasks)};
-    \node[loss, right=of s3] (l3) {\textbf{Compaction Loss} \\ 11.3 pp ($39/344$ tasks)};
-
-    \draw[arrow] (s0) -- (s1);
-    \draw[arrow] (s1) -- (s2);
-    \draw[arrow] (s2) -- (s3);
-    \draw[dashed, draw=gray] (s1) -- (l1);
-    \draw[dashed, draw=gray] (s2) -- (l2);
-    \draw[dashed, draw=gray] (s3) -- (l3);
-\end{tikzpicture}
-\caption{\textbf{Four-stage bug localization loss funnel on SWE-bench Verified ($N=344$ callable tasks).} Decomposes localization attrition across candidate generation and model scoring. Boundary loss before scoring ($100.0\% \to 58.4\% = 41.6$ pp) exceeds compaction loss from candidate pool to top-5 ($58.4\% \to 47.1\% = 11.3$ pp) by a factor of $\mathbf{3.68\times}$.}
-\label{fig:loss_funnel}
-\end{figure}
-
-\paragraph{Architectural Implication: Operating Regimes of Static Code Graphs}
-The $3.68\times$ bottleneck ratio defines a practical operating regime for developer agent architectures. Static AST multigraphs provide an efficient, low-overhead candidate filter for the \RerankPoolOracleRecall\ of defects that propagate along explicit syntactic edges. However, for the \RerankBoundaryLossPP~pp of defects outside static reachability (dynamic dispatch, reflection, implicit ORM descriptors, and configuration-driven injection), static graph expansion cannot assist by construction. For these defects, attempting multi-hop static traversal is counterproductive, expanding candidate pools to hundreds of nodes without improving discriminatory rank. Consequently, local developer agents must treat static CSR diffusion as an initial lightweight filter ($<5$~ms, $\le 3$~MB RAM): when issue symbol density or retrieval confidence is low, agent architectures should switch to dynamic execution signals (runtime stack traces, failing test pytest fixtures, or dense semantic embeddings) rather than expanding static graph radius.
-
-\subsection{Downstream Edit-Location Reader Evaluation ($N=100$, Descriptive)}
-Table~\ref{tab:reader_mini_test_app} reports the downstream reader mini-test across $N=100$ tasks stratified by repository size, drawn from instances where BM25 identified candidate pools.
-
-\begin{table}[!htbp]
-\centering
-\footnotesize
-\setlength{\tabcolsep}{4.5pt}
-\renewcommand{\arraystretch}{0.92}
-\caption{\textbf{Downstream edit-location reader mini-test on SWE-bench Verified ($N=100$, descriptive).} ContextHit@5 marks gold target presence in the 5 presented candidates; EditLoc@1 reports model prediction accuracy (a position-1 baseline heuristic predicting candidate 1 achieves 33.0\% under BM25 top-5 context). Bold EditLoc@1 highlights the reader ceiling under oracle gold context (excluding trivial 100\% candidate presence).}
-\label{tab:reader_mini_test_app}
-\begin{tabular}{lcccc}
-\toprule
-\textbf{Arm} & \textbf{Candidate Context (Top-5)} & \textbf{ContextHit@5} & \textbf{EditLoc@1} & \textbf{Conversion} \\
-\midrule
-D0 & BM25 Top-5 & 35.0\% & 33.0\% & 0.943 \\
-D1 & A4 Graph Top-5 & 37.0\% & 31.0\% & 0.838 \\
-D2 & A3 Same-File Top-5 & 38.0\% & 30.0\% & 0.789 \\
-D3 & Oracle Context (Randomized Position) & 100.0\% & \textbf{74.0\%} & 0.740 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-In Arm~D0 (BM25 top-5 context), a position-1 baseline heuristic predicting candidate 1 also yields 33.0\% EditLoc@1, matching Gemma 4's reader prediction exactly (33.0\%). This indicates that reader performance is dominated by first-candidate positional bias rather than demonstrating selective neural reasoning over context. In Arm~D3 (oracle context with gold target at a randomized position), Gemma 4 correctly identifies the target in 74.0\% of tasks (67.5\% chance-adjusted). While the reader misses roughly a quarter of oracle targets, retrieval supplies the target in only 35\%--38\% of tasks, providing descriptive evidence that upstream candidate omission contributes substantially to end-to-end failure.
 
 \section{Syntactic AST Patch Replacement Tooling (\texorpdfstring{$N=30$}{N=30} Synthetic Archetypes)}
 \label{app:ast_editor}

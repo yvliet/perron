@@ -45,7 +45,8 @@ def generate_figure3(out_dir: Path = FIGURES_DIR):
     apply_serif_style()
     print("Generating Figure 3: Break-Even Discrimination Bound, Lexical Bottleneck & Scaling Surface...")
 
-    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(10.5, 2.75), dpi=300, gridspec_kw={'width_ratios': [1.0, 1.0, 1.15]})
+    fig, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(10.5, 2.85), dpi=300,
+                                        gridspec_kw={'width_ratios': [1.0, 1.0, 1.15]})
 
     # -------------------------------------------------------------
     # Panel A: Theoretical Break-Even Bound AUC*(M, k)
@@ -60,14 +61,14 @@ def generate_figure3(out_dir: Path = FIGURES_DIR):
 
     # Viable Promotion Zone for k=5
     ax1.fill_between(M, auc_k5, 1.0, color=COLOR_BLUE, alpha=0.08, label='_nolegend_')
-    ax1.fill_between(M, 0.5, auc_k5, color=COLOR_VERMILION, alpha=0.05, label='_nolegend_')
+    ax1.fill_between(M, 0.48, auc_k5, color=COLOR_VERMILION, alpha=0.05, label='_nolegend_')
 
-    ax1.text(28, 0.94, r"Viable Zone ($\mathbb{E}[\mathrm{R}] \leq 5$)",
+    ax1.text(20, 0.94, r"Viable Zone ($\mathbb{E}[\mathrm{R}] \leq 5$)",
              fontsize=6.8, color=COLOR_BLUE, fontweight='bold', ha='center',
-             bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_BLUE, alpha=0.85, lw=0.6))
-    ax1.text(28, 0.54, r"Distractor Zone ($\mathbb{E}[\mathrm{R}] > 5$)",
+             bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_BLUE, alpha=0.9, lw=0.6))
+    ax1.text(20, 0.54, r"Distractor Zone ($\mathbb{E}[\mathrm{R}] > 5$)",
              fontsize=6.8, color=COLOR_VERMILION, fontweight='bold', ha='center',
-             bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_VERMILION, alpha=0.85, lw=0.6))
+             bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_VERMILION, alpha=0.9, lw=0.6))
 
     # Plot Curves
     ax1.plot(M, auc_k1, color=COLOR_SLATE, lw=1.1, ls=':', label=r'$k=1$ (Top-1)')
@@ -80,13 +81,13 @@ def generate_figure3(out_dir: Path = FIGURES_DIR):
         (10, 1.0 - 4.0 / 9.0, "M=10 (0.556)", (8, -6), 'left', 'top'),
         (15, 1.0 - 4.0 / 14.0, "M=15 (0.714)", (0, 8), 'center', 'bottom'),
         (24.5, 1.0 - 4.0 / 23.5, "M=24.5 (0.830)", (0, 8), 'center', 'bottom'),
-        (50, 1.0 - 4.0 / 49.0, "M=50 (0.918)", (-2, -14), 'right', 'top'),
+        (50, 1.0 - 4.0 / 49.0, "M=50 (0.918)", (-4, -14), 'right', 'top'),
     ]
     for m_pt, auc_pt, lbl, xy_off, ha_pos, va_pos in operating_points:
         ax1.scatter([m_pt], [auc_pt], color=COLOR_BLUE, s=26, zorder=5)
         ax1.annotate(lbl, (m_pt, auc_pt), textcoords="offset points", xytext=xy_off,
                      ha=ha_pos, va=va_pos, fontsize=6.2, color=COLOR_SLATE, zorder=6,
-                     bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_BORDER, lw=0.5))
+                     bbox=dict(boxstyle="round,pad=0.18", facecolor="white", edgecolor=COLOR_BORDER, lw=0.5))
 
     # Empirical Gemma 4 Lines
     ax1.axhline(0.7966, color=COLOR_GREEN, lw=1.0, ls='--', alpha=0.85)
@@ -96,11 +97,12 @@ def generate_figure3(out_dir: Path = FIGURES_DIR):
     ax1.text(5.5, 0.668, "Graph AUC (0.660)", fontsize=6.5, color=COLOR_VERMILION, fontweight='bold')
 
     ax1.set_xlim(5, 52)
-    ax1.set_ylim(0.50, 1.02)
+    ax1.set_ylim(0.48, 1.03)
     ax1.set_xlabel("Candidate Pool Size ($M$)", fontsize=8)
     ax1.set_ylabel("Pairwise Discrimination (ROC-AUC)", fontsize=8)
     ax1.set_title(r"$\mathbf{(a)}$ Break-Even Bound $\mathrm{AUC}^* = 1 - \frac{k-1}{M-1}$", loc='center', fontsize=8.5)
     ax1.legend(loc='lower right', framealpha=0.92, facecolor='white', edgecolor=COLOR_BORDER, fontsize=6.5)
+    ax1.grid(True, ls=':', lw=0.5, alpha=0.5, color=COLOR_BORDER)
 
     # -------------------------------------------------------------
     # Panel B: Empirical Within-Pool Discrimination Distributions
@@ -151,29 +153,30 @@ def generate_figure3(out_dir: Path = FIGURES_DIR):
         kde = stats.gaussian_kde(vals)
         y_eval = np.linspace(np.min(vals), np.max(vals), 100)
         density = kde(y_eval)
-        density_scaled = (density / np.max(density)) * 0.26
+        density_scaled = (density / np.max(density)) * 0.24
         ax2.fill_betweenx(y_eval, pos, pos + density_scaled, facecolor=col, alpha=0.22, edgecolor=col, lw=0.9, zorder=2)
 
         # Micro-pooled Mean Marker
         ax2.scatter([pos], [mean_val], color=col, s=28, marker='D', edgecolor='white', lw=0.7, zorder=4)
-        ax2.text(pos + 0.15, mean_val, f"$\\mu={mean_val:.3f}$", fontsize=6.8, color=col,
-                 fontweight='bold', va='center')
+        ax2.text(pos + 0.26, mean_val, f"$\\mu={mean_val:.3f}$", fontsize=6.8, color=col,
+                 fontweight='bold', va='center', ha='left')
 
     # Break-Even Threshold Line for typical 1-Hop Pool (M=15, k=5 -> AUC* = 0.714)
     ax2.axhline(0.7143, color=COLOR_BLUE, lw=1.2, ls='--', alpha=0.85, zorder=4)
-    ax2.text(0.60, 0.724, r"$\mathrm{AUC}^* = 0.714$", fontsize=6.5, color=COLOR_BLUE, fontweight='bold')
+    ax2.text(0.55, 0.724, r"$\mathrm{AUC}^* = 0.714$", fontsize=6.5, color=COLOR_BLUE, fontweight='bold')
 
     # Non-parametric empirical statistics annotation
-    ax2.text(2.0, 0.25, f"$U={int(u_stat)}, p={p_val:.4f}^*$\nCliff's $\\delta={cliffs_delta:.3f}$",
+    ax2.text(2.0, 0.24, f"$U={int(u_stat)}, p={p_val:.4f}^*$\nCliff's $\\delta={cliffs_delta:.3f}$",
              fontsize=6.5, ha='center', va='center', color=COLOR_SLATE,
              bbox=dict(boxstyle="round,pad=0.25", facecolor=COLOR_BG_CARD, edgecolor=COLOR_BORDER, lw=0.5))
 
     ax2.set_xticks(positions)
     ax2.set_xticklabels([c[0] for c in categories], fontsize=7.2)
-    ax2.set_xlim(0.4, 3.6)
+    ax2.set_xlim(0.4, 3.8)
     ax2.set_ylim(0.18, 1.05)
     ax2.set_ylabel("Within-Pool Discrimination (ROC-AUC)", fontsize=8)
     ax2.set_title(r"$\mathbf{(b)}$ Topological Disambiguation Deficit", loc='center', fontsize=8.5)
+    ax2.grid(True, ls=':', lw=0.5, alpha=0.5, color=COLOR_BORDER)
 
     # -------------------------------------------------------------
     # Panel C: Cross-Architecture Scaling Surface & MoE Hardware Boundary
@@ -204,15 +207,15 @@ def generate_figure3(out_dir: Path = FIGURES_DIR):
 
     # Annotate Points with VRAM & AUC
     ax3.annotate(f"E2B (2B)\nAUC: {gemma_y[0]:.4f}\n6.7 GB VRAM", (gemma_x[0], gemma_y[0]),
-                 textcoords="offset points", xytext=(-15, 12), ha='center', fontsize=6.2, color=COLOR_BLUE,
+                 textcoords="offset points", xytext=(0, 14), ha='center', fontsize=6.2, color=COLOR_BLUE,
                  bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_BLUE, alpha=0.9, lw=0.5))
 
     ax3.annotate(f"E4B (4B)\nAUC: {gemma_y[1]:.4f}\n9.6 GB VRAM", (gemma_x[1], gemma_y[1]),
-                 textcoords="offset points", xytext=(14, 6), ha='left', fontsize=6.2, color=COLOR_BLUE,
+                 textcoords="offset points", xytext=(12, -10), ha='left', fontsize=6.2, color=COLOR_BLUE,
                  bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_BLUE, alpha=0.9, lw=0.5))
 
     ax3.annotate(f"Phi-4 (3.8B)\nAUC: {phi_y:.4f}\n4.1 GB VRAM", (phi_x, phi_y),
-                 textcoords="offset points", xytext=(14, -14), ha='left', fontsize=6.2, color=COLOR_PURPLE,
+                 textcoords="offset points", xytext=(12, -14), ha='left', fontsize=6.2, color=COLOR_PURPLE,
                  bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_PURPLE, alpha=0.9, lw=0.5))
 
     ax3.annotate(f"DeepSeek 7B\nAUC: {ds_y:.4f}\n6.6 GB VRAM", (ds_x, ds_y),
@@ -221,24 +224,28 @@ def generate_figure3(out_dir: Path = FIGURES_DIR):
 
     # Reference lines
     ax3.axhline(0.6596, color=COLOR_VERMILION, lw=1.0, ls=':', alpha=0.85)
-    ax3.text(0.7, 0.668, "Lexical Bottleneck (0.660)", fontsize=6.0, color=COLOR_VERMILION, fontweight='bold')
+    ax3.text(0.5, 0.668, "Lexical Bottleneck (0.660)", fontsize=6.0, color=COLOR_VERMILION, fontweight='bold')
 
     ax3.axhline(0.830, color=COLOR_BLUE, lw=1.0, ls='--', alpha=0.6)
-    ax3.text(0.7, 0.810, r"$\mathrm{AUC}^*=0.830$ ($M=24.5$)", fontsize=6.0, color=COLOR_BLUE)
+    ax3.text(0.5, 0.838, r"$\mathrm{AUC}^* = 0.830$", fontsize=6.2, color=COLOR_BLUE, ha='left')
 
-    # 26B-A4B Systems Hardware Boundary at x=26.0 (or visual boundary strip)
-    ax3.axvspan(10.5, 14.5, color=COLOR_VERMILION, alpha=0.08, hatch='//')
+    # MoE Boundary Corridor with distinct, visible pastel fill and solid border
+    ax3.axvspan(10.5, 14.5, facecolor='#FEE2E2', edgecolor=COLOR_VERMILION, lw=1.0, linestyle='--',
+               alpha=0.65, hatch='//', label='_nolegend_')
     ax3.axvline(12.5, color=COLOR_VERMILION, lw=1.2, ls='--')
-    ax3.text(12.5, 0.78, "26B-A4B MoE Boundary\nReq: 52 GB VRAM (44 GB Disk)\n(Fused 3D Experts)",
+    ax3.text(12.5, 0.82, "26B-A4B MoE Boundary\nReq: 52 GB VRAM (44 GB Disk)\n(Fused 3D Experts)",
              fontsize=6.2, color=COLOR_VERMILION, ha='center', fontweight='bold',
-             bbox=dict(boxstyle="round,pad=0.25", facecolor="white", edgecolor=COLOR_VERMILION, alpha=0.9, lw=0.6))
+             bbox=dict(boxstyle="round,pad=0.25", facecolor="white", edgecolor=COLOR_VERMILION, alpha=0.95, lw=0.6))
 
-    ax3.set_xlim(0.5, 15.0)
-    ax3.set_ylim(0.55, 1.05)
+    ax3.set_xlim(0.2, 15.0)
+    ax3.set_ylim(0.55, 1.10)
     ax3.set_xlabel("Model Capacity / Active Scale (B)", fontsize=8)
     ax3.set_ylabel("Stratum C Graph ROC-AUC", fontsize=8)
     ax3.set_title(r"$\mathbf{(c)}$ Cross-Architecture Scaling Surface", loc='center', fontsize=8.5)
-    ax3.legend(loc='upper left', bbox_to_anchor=(0.48, 0.98), framealpha=0.95, facecolor='white', edgecolor=COLOR_BORDER, fontsize=6.2)
+    # Legend placed in open corridor between x=5.5 and 10.0, above DeepSeek and below title
+    ax3.legend(loc='upper left', bbox_to_anchor=(0.38, 0.98), framealpha=0.95, facecolor='white',
+               edgecolor=COLOR_BORDER, fontsize=6.2)
+    ax3.grid(True, ls=':', lw=0.5, alpha=0.5, color=COLOR_BORDER)
 
     plt.tight_layout()
     save_figure(fig, "breakeven_discrimination_bound", out_dir=out_dir)

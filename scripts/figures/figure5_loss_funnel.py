@@ -17,7 +17,6 @@ import sys
 from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.colors as mcolors
 from matplotlib.patches import PathPatch, Rectangle
 from matplotlib.path import Path as MPath
 
@@ -34,66 +33,32 @@ from scripts.figures.common import (
     COLOR_RED,
     COLOR_INK,
     COLOR_MUTED,
-    COLOR_FAINT,
-    COLOR_PALE,
+    COLOR_SLATE,
+    COLOR_BORDER,
+    COLOR_BG_CARD,
     FIGURES_DIR,
 )
 
 
-def T(ax, x, y, s, size=5.5, color=COLOR_INK, ha="center", va="center", weight="normal",
-      style="normal", mono=False, z=6, **kw):
-    if mono:
-        kw["family"] = "monospace"
+def T(ax, x, y, s, size=6.5, color=COLOR_INK, ha="center", va="center", weight="normal", style="normal", z=6, **kw):
     return ax.text(x, y, s, fontsize=size, color=color, ha=ha, va=va,
                    fontweight=weight, fontstyle=style, zorder=z, **kw)
 
 
-def line(ax, xs, ys, color=COLOR_FAINT, lw=0.8, ls="-", z=3):
-    ax.plot(xs, ys, color=color, lw=lw, ls=ls, zorder=z)
-
-
-def rich_line(ax, x, y, parts, ha="left", gap=4.5):
-    """Draw a single line made of differently-styled text runs."""
-    r = ax.figure.canvas.get_renderer()
-    xr = ax.get_xlim()
-    scale = (xr[1] - xr[0]) / ax.bbox.width
-    objs, widths = [], []
-    for s, kw in parts:
-        kw = dict(kw)
-        t = T(ax, 0, y, s, ha="left", va="baseline", **kw)
-        widths.append(t.get_window_extent(r).width * scale)
-        objs.append(t)
-    total = sum(widths) + gap * (len(widths) - 1)
-    cur = x if ha == "left" else (x - total / 2 if ha == "center" else x - total)
-    for t, w in zip(objs, widths):
-        t.set_x(cur)
-        cur += w + gap
-
-
-def band_path(x0, lo0, hi0, x1, lo1, hi1, frac=0.5):
+def bezier_band(x0, lo0, hi0, x1, lo1, hi1, frac=0.48):
     dx = (x1 - x0) * frac
-    verts = [(x0, hi0), (x0 + dx, hi0), (x1 - dx, hi1), (x1, hi1),
-             (x1, lo1), (x1 - dx, lo1), (x0 + dx, lo0), (x0, lo0), (x0, hi0)]
-    codes = [MPath.MOVETO, MPath.CURVE4, MPath.CURVE4, MPath.CURVE4, MPath.LINETO,
-             MPath.CURVE4, MPath.CURVE4, MPath.CURVE4, MPath.CLOSEPOLY]
+    verts = [
+        (x0, hi0), (x0 + dx, hi0), (x1 - dx, hi1), (x1, hi1),
+        (x1, lo1), (x1 - dx, lo1), (x0 + dx, lo0), (x0, lo0),
+        (x0, hi0)
+    ]
+    codes = [
+        MPath.MOVETO, MPath.CURVE4, MPath.CURVE4, MPath.CURVE4,
+        MPath.LINETO,
+        MPath.CURVE4, MPath.CURVE4, MPath.CURVE4,
+        MPath.CLOSEPOLY
+    ]
     return MPath(verts, codes)
-
-
-def solid_band(ax, path, color, alpha, z=2):
-    ax.add_patch(PathPatch(path, fc=color, ec="none", alpha=alpha, lw=0, zorder=z))
-
-
-def gradient_band(ax, path, color, a0, a1, z=2):
-    clip = PathPatch(path, fc="none", ec="none", lw=0, transform=ax.transData)
-    ax.add_patch(clip)
-    bb = path.get_extents()
-    n = 256
-    arr = np.zeros((1, n, 4))
-    arr[..., :3] = mcolors.to_rgb(color)
-    arr[0, :, 3] = np.linspace(a0, a1, n)
-    im = ax.imshow(arr, extent=[bb.x0, bb.x1, bb.y0, bb.y1], origin="lower", aspect="auto",
-                   zorder=z, interpolation="bilinear")
-    im.set_clip_path(clip)
 
 
 def generate_figure5(out_dir: Path = FIGURES_DIR):
@@ -101,74 +66,82 @@ def generate_figure5(out_dir: Path = FIGURES_DIR):
     apply_serif_style()
     print("Generating Figure 5: Four-Stage Bug Localization Loss Funnel...")
 
-    W, H = 720, 320
-    fig = plt.figure(figsize=(7.2, 3.2), facecolor="white")
+    W, H = 720, 330
+    fig = plt.figure(figsize=(7.2, 3.3), facecolor="white", dpi=300)
     ax = fig.add_axes([0, 0, 1, 1])
     ax.set_xlim(0, W)
     ax.set_ylim(0, H)
     ax.axis("off")
 
     N = 344
-    s = 130.0 / N
-    b = 125.0
-    pw = 12.0
-    xs = [70, 255, 440, 625]
+    s = 125.0 / N
+    b = 110.0
+    pw = 14.0
+    xs = [75, 255, 435, 615]
     h0, h1, h2, h3 = 344 * s, 176 * s, 201 * s, 162 * s
     lost1, infl, lost2 = 168 * s, 25 * s, 39 * s
+
     rx = lambda i: xs[i] + pw / 2
     lx = lambda i: xs[i] - pw / 2
 
-    # Ribbons
-    solid_band(ax, band_path(rx(0), b, b + h1, lx(1), b, b + h1), COLOR_BLUE, 0.30)
-    solid_band(ax, band_path(rx(1), b, b + h1, lx(2), b + infl, b + h2), COLOR_BLUE, 0.30)
-    solid_band(ax, band_path(rx(2), b + lost2, b + h2, lx(3), b + lost2, b + h2), COLOR_BLUE, 0.30)
+    # 1. Main Throughput Ribbons (Pure Vector Pastel Blue with Clean Border)
+    p01 = bezier_band(rx(0), b, b + h1, lx(1), b, b + h1)
+    ax.add_patch(PathPatch(p01, facecolor="#E0F2FE", edgecolor=COLOR_BLUE, lw=1.0, alpha=0.9, zorder=2))
 
-    # Losses & gains
-    gradient_band(ax, band_path(rx(0), b + h1, b + h0, 335, b + h1 + 16, b + h0 + 16), COLOR_RED, 0.80, 0.08)
-    gradient_band(ax, band_path(285, b - 45, b - 45 + infl, lx(2), b, b + infl), COLOR_GREEN, 0.06, 0.85)
-    gradient_band(ax, band_path(rx(2), b, b + lost2, 560, b - 45, b - 45 + lost2), COLOR_RED, 0.80, 0.08)
+    p12 = bezier_band(rx(1), b, b + h1, lx(2), b + infl, b + h2)
+    ax.add_patch(PathPatch(p12, facecolor="#E0F2FE", edgecolor=COLOR_BLUE, lw=1.0, alpha=0.9, zorder=2))
 
-    # Pillars + stage headers
+    p23 = bezier_band(rx(2), b + lost2, b + h2, lx(3), b + lost2, b + h2)
+    ax.add_patch(PathPatch(p23, facecolor="#E0F2FE", edgecolor=COLOR_BLUE, lw=1.0, alpha=0.9, zorder=2))
+
+    # 2. Branching Flow Ribbons
+    # Lexical Boundary Loss (Stage 0 -> Diverges upward): 168 tasks
+    p_lost1 = bezier_band(rx(0), b + h1, b + h0, 315, b + h1 + 16, b + h0 + 16)
+    ax.add_patch(PathPatch(p_lost1, facecolor="#FEE2E2", edgecolor=COLOR_RED, lw=1.0, linestyle="--", alpha=0.85, zorder=2))
+
+    # Graph 1-Hop Expansion (Recovers into Stage 2 from below): +25 tasks
+    p_gain = bezier_band(280, b - 38, b - 38 + infl, lx(2), b, b + infl)
+    ax.add_patch(PathPatch(p_gain, facecolor="#D1FAE5", edgecolor=COLOR_GREEN, lw=1.0, linestyle="-.", alpha=0.9, zorder=2))
+
+    # Compaction Loss (Stage 2 -> Diverges downward): 39 tasks
+    p_lost2 = bezier_band(rx(2), b, b + lost2, 545, b - 38, b - 38 + lost2)
+    ax.add_patch(PathPatch(p_lost2, facecolor="#FEE2E2", edgecolor=COLOR_RED, lw=1.0, linestyle="--", alpha=0.85, zorder=2))
+
+    # 3. Stage Pillars & Header Labels
     stages = [
         ("STAGE 0", "Benchmark Set", "344 / 344 tasks", "100.0%", COLOR_INK, (b, b + h0)),
         ("STAGE 1", "Seed Pool Ceiling", "176 / 344 tasks", "51.2%", COLOR_BLUE, (b, b + h1)),
         ("STAGE 2", "Expanded Graph Pool", "201 / 344 tasks", "58.4%", COLOR_GREEN, (b, b + h2)),
         ("STAGE 3", "Top-5 Scored Accuracy", "162 / 344 tasks", "47.1%", COLOR_INK, (b + lost2, b + h2)),
     ]
+
     for x, (tag, title, cnt, pct, pc, (lo, hi)) in zip(xs, stages):
-        ax.add_patch(Rectangle((x - pw / 2, lo), pw, hi - lo, fc=COLOR_INK, ec="none", zorder=5))
-        line(ax, [x, x], [hi + 3, 273], color=COLOR_FAINT, lw=0.6, ls=(0, (1.4, 2.2)), z=1)
-        T(ax, x, 310, tag, size=5.2, color=COLOR_MUTED, weight="bold")
-        T(ax, x, 300, title, size=6.9, weight="bold")
-        T(ax, x, 290, cnt, size=6.0, color=COLOR_MUTED)
-        T(ax, x, 278, pct, size=9.0, weight="bold", color=pc)
+        ax.add_patch(Rectangle((x - pw / 2, lo), pw, hi - lo, facecolor=COLOR_SLATE, edgecolor=COLOR_INK, lw=0.8, zorder=5))
+        ax.plot([x, x], [hi + 4, 275], color=COLOR_BORDER, lw=0.8, ls=":", zorder=1)
 
-    # Flow annotations
-    T(ax, 341, 250, "Boundary Loss 1: \u221248.8 pp", size=6.5, weight="bold", color=COLOR_RED, ha="left")
-    T(ax, 341, 241, "168 tasks missing from seeds", size=5.8, color=COLOR_MUTED, ha="left")
-    T(ax, 341, 233, "(lexical mismatch)", size=5.8, style="italic", color=COLOR_MUTED, ha="left")
+        T(ax, x, 316, tag, size=5.5, color=COLOR_MUTED, weight="bold")
+        T(ax, x, 304, title, size=7.2, weight="bold")
+        T(ax, x, 292, cnt, size=6.2, color=COLOR_MUTED)
+        T(ax, x, 280, pct, size=9.5, weight="bold", color=pc)
 
-    T(ax, 285, 70, "Net Graph Expansion: +7.3 pp", size=6.9, weight="bold", color=COLOR_GREEN, ha="left")
-    T(ax, 285, 61, "+25 tasks recovered via 1-hop calls", size=5.8, color=COLOR_MUTED, ha="left")
+    # 4. Branch Flow Annotations (High-Contrast Callout Cards)
+    ax.text(328, 236, "Boundary Loss 1: \u221248.8 pp\n168 tasks missing from seeds\n(Lexical mismatch)",
+            fontsize=6.5, color=COLOR_RED, fontweight="bold", ha="left", va="center", zorder=6,
+            bbox=dict(boxstyle="round,pad=0.25", facecolor="white", edgecolor=COLOR_RED, lw=0.8, alpha=0.95))
 
-    T(ax, 568, 97, "Compaction Loss: \u221211.3 pp", size=6.9, weight="bold", color=COLOR_RED, ha="left")
-    T(ax, 568, 88, "39 pool tasks displaced to rank > 5", size=5.8, color=COLOR_MUTED, ha="left")
-    T(ax, 568, 80, "by distractors", size=5.8, style="italic", color=COLOR_MUTED, ha="left")
+    ax.text(275, 55, "Net Graph Expansion: +7.3 pp\n+25 tasks recovered via 1-hop calls",
+            fontsize=6.5, color=COLOR_GREEN, fontweight="bold", ha="left", va="center", zorder=6,
+            bbox=dict(boxstyle="round,pad=0.25", facecolor="white", edgecolor=COLOR_GREEN, lw=0.8, alpha=0.95))
 
-    # Key Finding Callout
-    line(ax, [70, 650], [47, 47], color=COLOR_PALE, lw=0.6, z=1)
-    rich_line(ax, 360, 33, [
-        ("Key Finding:", dict(size=7.2, weight="bold")),
-        ("Upstream Boundary Loss", dict(size=7.2, weight="bold", color=COLOR_RED)),
-        ("(41.6 pp net) exceeds", dict(size=7.0)),
-        ("Downstream Compaction Loss", dict(size=7.2, weight="bold", color=COLOR_RED)),
-        ("(11.3 pp)", dict(size=7.0))], ha="center", gap=6.0)
-    rich_line(ax, 360, 21, [
-        ("by", dict(size=7.0)),
-        ("3.68\u00d7", dict(size=8.4, weight="bold", color=COLOR_RED)),
-        ("(Bottleneck Ratio).", dict(size=7.0)),
-        ("Retrieval boundary is the primary bottleneck.", dict(size=7.2, weight="bold"))],
-        ha="center", gap=6.0)
+    ax.text(545, 62, "Compaction Loss: \u221211.3 pp\n39 pool tasks displaced to rank > 5\nby distractors",
+            fontsize=6.5, color=COLOR_RED, fontweight="bold", ha="left", va="center", zorder=6,
+            bbox=dict(boxstyle="round,pad=0.25", facecolor="white", edgecolor=COLOR_RED, lw=0.8, alpha=0.95))
+
+    # 5. Key Finding Banner at Bottom
+    ax.plot([50, 670], [36, 36], color=COLOR_BORDER, lw=0.8, zorder=1)
+    ax.text(360, 20,
+            r"$\mathbf{Key\ Finding:}\ \mathrm{Upstream\ Boundary\ Loss\ (41.6\ pp\ net)\ exceeds\ Downstream\ Compaction\ Loss\ (11.3\ pp)\ by}\ \mathbf{3.68\times}\ (\mathrm{Bottleneck\ Ratio}).$",
+            fontsize=7.2, color=COLOR_SLATE, ha="center", va="center", zorder=6)
 
     save_figure(fig, "loss_funnel", out_dir=out_dir)
 

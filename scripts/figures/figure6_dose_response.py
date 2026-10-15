@@ -33,6 +33,8 @@ from scripts.figures.common import (
     COLOR_GREEN,
     COLOR_PURPLE,
     COLOR_SLATE,
+    COLOR_BORDER,
+    COLOR_BG_CARD,
     FIGURES_DIR,
 )
 
@@ -42,7 +44,7 @@ def generate_figure6(out_dir: Path = FIGURES_DIR):
     apply_serif_style()
     print("Generating Figure 6: Continuous Dose-Response Surface & Damping Sensitivity...")
 
-    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7.2, 3.0), dpi=300)
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(7.2, 3.1), dpi=300)
 
     # -------------------------------------------------------------
     # Panel (a): Dose-Response Surface across 186 configurations
@@ -106,31 +108,34 @@ def generate_figure6(out_dir: Path = FIGURES_DIR):
         base_acc = c0 + c1 * ln_n + c2 * (ln_n**2)
         res_dev = np.array([glmm['a_ln_k'] * np.log(c['k']) + glmm['b_ln_tau'] * np.log(c['tau']) for c in fam_cfgs]) * 10.0
         accs = np.clip(base_acc + res_dev, 28.0, 51.5)
-        ax1.scatter(neffs, accs, label=lbl, color=col, marker=mkr, s=18, alpha=0.75, edgecolors='none')
+        ax1.scatter(neffs, accs, label=lbl, color=col, marker=mkr, s=18, alpha=0.75, edgecolors='none', zorder=3)
 
     x_grid = np.geomspace(1.0, 100.0, 200)
     ln_grid = np.log(x_grid)
     y_grid = c0 + c1 * ln_grid + c2 * (ln_grid**2)
-    ax1.plot(x_grid, y_grid, color=COLOR_SLATE, lw=2.0, label='GLMM Fit ($R^2=0.197$)')
+    ax1.plot(x_grid, y_grid, color=COLOR_SLATE, lw=2.0, label='GLMM Fit ($R^2=0.197$)', zorder=4)
 
-    ax1.axhline(bm25_rate, color=COLOR_SLATE, ls='--', lw=1.2, label=f'Okapi BM25 ({bm25_rate:.1f}%)')
-    ax1.plot(8.81, peak_rate, marker='*', color='#b91c1c', markersize=9, zorder=5)
-    ax1.annotate('GLMM Vertex (50.9%)', (8.81, peak_rate), textcoords='offset points', xytext=(-35, 6),
-                 fontsize=7.5, fontweight='bold', color='#b91c1c')
+    ax1.axhline(bm25_rate, color=COLOR_SLATE, ls='--', lw=1.1, label=f'Okapi BM25 ({bm25_rate:.1f}%)', zorder=2)
+    ax1.plot(8.81, peak_rate, marker='*', color='#b91c1c', markersize=10, zorder=6)
+    ax1.annotate('GLMM Vertex (50.9%)', (8.81, peak_rate), textcoords='offset points', xytext=(0, 7),
+                 fontsize=7.2, fontweight='bold', color='#b91c1c', ha='center',
+                 bbox=dict(boxstyle="round,pad=0.18", facecolor="white", edgecolor='#b91c1c', lw=0.6, alpha=0.9))
 
     default_rate = res['surface_summary']['calibrated_hit_rate'] * 100.0
-    ax1.plot(6.035, default_rate, marker='o', color=COLOR_BLUE, markersize=6, zorder=5)
-    ax1.annotate('Calibrated Default (49.4%)', (6.035, default_rate), textcoords='offset points', xytext=(-40, -14),
-                 fontsize=7.0, fontweight='bold', color=COLOR_BLUE)
+    ax1.plot(6.035, default_rate, marker='o', color=COLOR_BLUE, markersize=5.5, zorder=6)
+    ax1.annotate('Default (49.4%)', (6.035, default_rate), textcoords='offset points', xytext=(-36, -14),
+                 fontsize=6.8, fontweight='bold', color=COLOR_BLUE,
+                 bbox=dict(boxstyle="round,pad=0.18", facecolor="white", edgecolor=COLOR_BLUE, lw=0.5, alpha=0.9))
 
     ax1.set_xscale('log')
     ax1.set_xlim(0.9, 110)
-    ax1.set_ylim(27, 54)
+    ax1.set_ylim(25, 57)
     ax1.set_xlabel(r'Effective Prior Support $n_{\mathrm{eff}} = \exp(H(\mathbf{p}_0))$', fontsize=8.5)
     ax1.set_ylabel('Top-10 Function Hit Rate (%)', fontsize=8.5)
-    ax1.set_title(r'$\mathbf{(a)}$ Continuous Dose-Response Surface ($N=344$)', fontsize=9)
-    ax1.grid(True, which='both', ls=':', lw=0.5, alpha=0.6)
-    ax1.legend(loc='lower left', fontsize=6.5, framealpha=0.9, ncol=2)
+    ax1.set_title(r'$\mathbf{(a)}$ Continuous Dose-Response Surface ($N=344$)', fontsize=8.8)
+    ax1.grid(True, which='both', ls=':', lw=0.5, alpha=0.5, color=COLOR_BORDER)
+    ax1.legend(loc='lower center', bbox_to_anchor=(0.5, 0.03), fontsize=6.3, framealpha=0.92,
+               facecolor='white', edgecolor=COLOR_BORDER, ncol=2)
 
     # -------------------------------------------------------------
     # Panel (b): Damping Factor Beta Sensitivity
@@ -143,19 +148,22 @@ def generate_figure6(out_dir: Path = FIGURES_DIR):
     ppr_accs = [beta_data['sweep']['standard_ppr'][f'beta_{b:.2f}']['fn_acc_10']['mean'] * 100 for b in betas]
     perron_accs = [beta_data['sweep']['perron_static'][f'beta_{b:.2f}']['fn_acc_10']['mean'] * 100 for b in betas]
 
-    ax2.plot(betas, perron_accs, marker='o', color=COLOR_BLUE, lw=2.0, label=r'Perron ($\gamma=0.70$)')
-    ax2.plot(betas, ppr_accs, marker='s', color=COLOR_VERMILION, ls='--', lw=1.8, label=r'Standard PPR ($\gamma=0.00$)')
+    ax2.plot(betas, perron_accs, marker='o', color=COLOR_BLUE, lw=1.8, markersize=5.5, label=r'Perron ($\gamma=0.70$)', zorder=4)
+    ax2.plot(betas, ppr_accs, marker='s', color=COLOR_VERMILION, ls='--', lw=1.6, markersize=5.0, label=r'Standard PPR ($\gamma=0.00$)', zorder=4)
 
-    ax2.axvspan(0.80, 0.88, color='#e0f2fe', alpha=0.5, label=r'Optuna Pareto ($\beta \in [0.80, 0.88]$)')
-    ax2.axvline(0.85, color=COLOR_SLATE, ls=':', lw=1.2, label=r'Default $\beta=0.85$')
+    # High-contrast, colorblind-safe, bounded corridor
+    ax2.axvspan(0.80, 0.88, facecolor='#E0F2FE', edgecolor=COLOR_BLUE, lw=1.0, linestyle='--',
+               alpha=0.65, label=r'Optuna Pareto ($\beta \in [0.80, 0.88]$)', zorder=2)
+    ax2.axvline(0.85, color=COLOR_SLATE, ls=':', lw=1.2, label=r'Default $\beta=0.85$', zorder=3)
 
-    ax2.set_xlim(-0.02, 0.90)
-    ax2.set_ylim(0, 24)
+    ax2.set_xlim(-0.03, 0.95)
+    ax2.set_ylim(-1, 29)
     ax2.set_xlabel(r'Damping Factor $\beta$', fontsize=8.5)
     ax2.set_ylabel('Diagnostic Hit Rate (%)', fontsize=8.5)
-    ax2.set_title(r'$\mathbf{(b)}$ Damping Sensitivity & Sink Absorption', fontsize=9)
-    ax2.grid(True, ls=':', lw=0.5, alpha=0.6)
-    ax2.legend(loc='upper right', fontsize=7.0, framealpha=0.9)
+    ax2.set_title(r'$\mathbf{(b)}$ Damping Sensitivity & Sink Absorption', fontsize=8.8)
+    ax2.grid(True, ls=':', lw=0.5, alpha=0.5, color=COLOR_BORDER)
+    ax2.legend(loc='upper left', bbox_to_anchor=(0.20, 0.98), fontsize=6.8, framealpha=0.92,
+               facecolor='white', edgecolor=COLOR_BORDER)
 
     plt.tight_layout()
     save_figure(fig, 'neff_dose_response', out_dir=out_dir)
