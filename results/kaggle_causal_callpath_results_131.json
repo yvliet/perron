@@ -1265,6 +1265,8 @@
     "graph_only_c3_hits_5": 1,
     "seed_connected_a4_direct_hits_1": 6,
     "seed_connected_a4_direct_acc1_pct": 21.4,
-    "seed_connected_a4_direct_lift_pp": 21.4
+    "seed_connected_a4_direct_lift_pp": 21.4,
+    "seed_connected_c0_hits_1": 12,
+    "graph_only_c1_hits_1": 0
   }
 }

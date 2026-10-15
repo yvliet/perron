@@ -4350,6 +4350,132 @@
       "file": "results/lora/lora_generalization_results.json",
       "ptr": "/heldout_35_stratum_c/lora/mean_auc",
       "fmt": "num4"
+    },
+    "CausalMFifteenCZeroAccFivePctTwo": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/acc_5_pct",
+      "fmt": "pct2_raw"
+    },
+    "CausalMFifteenCThreeAccOnePctTwo": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C3_M15_thinking_provenance/acc_1_pct",
+      "fmt": "pct2_raw"
+    },
+    "CausalMFifteenSeedHitsOneKN": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/seed_subgroup/hits_1",
+      "n_ptr": "/summary/C0_M15_thinking_baseline/seed_subgroup/n",
+      "fmt": "kn"
+    },
+    "CausalMFifteenSeedHitsFiveKN": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/seed_subgroup/hits_5",
+      "n_ptr": "/summary/C0_M15_thinking_baseline/seed_subgroup/n",
+      "fmt": "kn"
+    },
+    "CausalMFifteenSeedTopOnePct": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/seed_subgroup/hits_1",
+      "n_ptr": "/summary/C0_M15_thinking_baseline/seed_subgroup/n",
+      "fmt": "pct_kn"
+    },
+    "CausalMFifteenSeedTopFivePct": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/seed_subgroup/hits_5",
+      "n_ptr": "/summary/C0_M15_thinking_baseline/seed_subgroup/n",
+      "fmt": "pct_kn"
+    },
+    "CausalMFifteenGraphHitsOneKN": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/graph_only_subgroup/hits_1",
+      "n_ptr": "/summary/C0_M15_thinking_baseline/graph_only_subgroup/n",
+      "fmt": "kn"
+    },
+    "CausalMFifteenGraphHitsFiveKN": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/graph_only_subgroup/hits_5",
+      "n_ptr": "/summary/C0_M15_thinking_baseline/graph_only_subgroup/n",
+      "fmt": "kn"
+    },
+    "CausalMFifteenGraphTopOnePct": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/graph_only_subgroup/hits_1",
+      "n_ptr": "/summary/C0_M15_thinking_baseline/graph_only_subgroup/n",
+      "fmt": "pct_kn"
+    },
+    "CausalMFifteenGraphTopFivePct": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/graph_only_subgroup/hits_5",
+      "n_ptr": "/summary/C0_M15_thinking_baseline/graph_only_subgroup/n",
+      "fmt": "pct_kn"
+    },
+    "CausalMFifteenReachHitsOneKN": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/reachable_subgroup/hits_1",
+      "n_ptr": "/summary/C0_M15_thinking_baseline/reachable_subgroup/n",
+      "fmt": "kn"
+    },
+    "CausalMFifteenReachHitsFiveKN": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/reachable_subgroup/hits_5",
+      "n_ptr": "/summary/C0_M15_thinking_baseline/reachable_subgroup/n",
+      "fmt": "kn"
+    },
+    "CausalMFifteenReachTopOnePct": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/reachable_subgroup/hits_1",
+      "n_ptr": "/summary/C0_M15_thinking_baseline/reachable_subgroup/n",
+      "fmt": "pct_kn"
+    },
+    "CausalMFifteenReachTopFivePct": {
+      "file": "results/causal_m15/stratum_c_causal_m15_results.json",
+      "ptr": "/summary/C0_M15_thinking_baseline/reachable_subgroup/hits_5",
+      "n_ptr": "/summary/C0_M15_thinking_baseline/reachable_subgroup/n",
+      "fmt": "pct_kn"
+    },
+    "CausalSeedAFourDirectHitsOneKN": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/candidate_pool_subgroups/seed_connected_a4_direct_hits_1",
+      "n_ptr": "/candidate_pool_subgroups/seed_connected_n",
+      "fmt": "kn"
+    },
+    "CausalSeedCZeroHitsOneKN": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/candidate_pool_subgroups/seed_connected_c0_hits_1",
+      "n_ptr": "/candidate_pool_subgroups/seed_connected_n",
+      "fmt": "kn"
+    },
+    "CausalGraphOnlyCOneHitsOneKN": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/candidate_pool_subgroups/graph_only_c1_hits_1",
+      "n_ptr": "/candidate_pool_subgroups/graph_only_n",
+      "fmt": "kn"
+    },
+    "CausalGraphOnlyCZeroHitsOneKN": {
+      "file": "results/kaggle_causal_callpath_results_131.json",
+      "ptr": "/candidate_pool_subgroups/graph_only_c0_hits_1",
+      "n_ptr": "/candidate_pool_subgroups/graph_only_n",
+      "fmt": "kn"
+    },
+    "LoraGenStratumCBaseMedianRank": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/base/median_gold_rank",
+      "fmt": "num1"
+    },
+    "LoraGenStratumCPostMedianRank": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/lora/median_gold_rank",
+      "fmt": "num1"
+    },
+    "LoraGenStratumCBaseMeanRank": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/base/mean_gold_rank",
+      "fmt": "num2"
+    },
+    "LoraGenStratumCPostMeanRank": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/lora/mean_gold_rank",
+      "fmt": "num2"
     }
   }
 }
