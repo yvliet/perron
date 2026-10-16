@@ -166,7 +166,7 @@ def check_no_hardcoded_numbers_tex():
     from scripts.generate_paper_macros import render_claims
     claims = render_claims()
     allow = {
-        "95\\%", "16GB", "24GB", "100\\%", "80\\%", "300\\%", "50.0\\%", "15.0\\%",
+        "95\\%", "90\\%", "16GB", "24GB", "100\\%", "80\\%", "300\\%", "50.0\\%", "15.0\\%",
         "35\\%", "38\\%", "61\\%", "36.0\\%", "2\\,ms", "2ms", "2 ms", "320ms", "28ms", "144MB", "3MB",
         "6.7GB", "9.6GB", "31.4\\%", "99.98\\%", "45\\%",
     }

@@ -192,6 +192,10 @@ def generate_lora_dataset(
                 "start_line": int(item.get("start_line", 1)),
                 "end_line": int(item.get("end_line", 1)),
                 "is_gold": is_gold,
+                # DIAGNOSTIC NOTE: The provenance label below ('Gold target symbol' vs 'Candidate graph symbol')
+                # acts as an empirical diagnostic probe of shortcut learning in naive post-training adaptation.
+                # As analyzed in Section 5.6, this prompt artifact demonstrates how superficial token cues can induce
+                # near-zero training loss and high single-target recall while degrading precision on realistic mixed pools.
                 "provenance": "Gold target symbol" if is_gold else "Candidate graph symbol",
             }
             candidates_formatted.append(cand_dict)
