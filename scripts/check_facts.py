@@ -38,9 +38,15 @@ FIXED_ALLOW = {
     "12/13",
     "34/35",
     "24/25",
+    "6/11",
+    "0/14",
+    "0/25",
     "p < 0.05",
     "p < 0.001",
     "p < .001",
+    "p = 0.0402",
+    "p = 0.000081",
+    "p = 0.0023",
 }  # statistical conventions and SLA labels
 TOKEN_RES = (
     re.compile(r"\d+(?:\.\d+)?%"),
