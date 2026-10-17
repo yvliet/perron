@@ -49,7 +49,9 @@ def hydrate_causal_suite():
     print(f"[SUCCESS] Hydrated {nb_file.name}")
 
 def hydrate_lora():
-    log_file = REPO_ROOT / "scratch" / "kaggle_lora_output" / "perron-gemma4-e2b-lora.log"
+    log_file = REPO_ROOT / "scratch" / "kaggle_lora_output_v7" / "perron-gemma4-e2b-lora.log"
+    if not log_file.exists():
+        log_file = REPO_ROOT / "scratch" / "kaggle_lora_output" / "perron-gemma4-e2b-lora.log"
     nb_file = REPO_ROOT / "notebooks" / "kaggle_gemma4_lora" / "kaggle_gemma4_lora.ipynb"
     with open(log_file, "r", encoding="utf-8") as f:
         events = json.load(f)
@@ -61,10 +63,10 @@ def hydrate_lora():
         2: get_text_from_events(events, 14, 18),
         3: "",
         4: "",
-        5: get_text_from_events(events, 19, 30),
-        6: get_text_from_events(events, 31, 51),
-        7: get_text_from_events(events, 52, 71),
-        8: get_text_from_events(events, 72, 81),
+        5: get_text_from_events(events, 19, 34),
+        6: get_text_from_events(events, 35, 56),
+        7: get_text_from_events(events, 57, 74),
+        8: get_text_from_events(events, 75, 84),
     }
 
     for cell_idx, out_text in cell_outputs.items():

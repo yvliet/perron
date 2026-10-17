@@ -4476,6 +4476,131 @@
       "file": "results/lora/lora_generalization_results.json",
       "ptr": "/heldout_35_stratum_c/lora/mean_gold_rank",
       "fmt": "num2"
+    },
+    "LoraGenGraphFirstAccOne": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/graph_first_heuristic/acc_1",
+      "fmt": "pct1_raw"
+    },
+    "LoraGenGraphFirstAccFive": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/graph_first_heuristic/acc_5",
+      "fmt": "pct1_raw"
+    },
+    "LoraGenGraphFirstMRR": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/graph_first_heuristic/mrr",
+      "fmt": "num4"
+    },
+    "LoraGenGraphFirstAUC": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/graph_first_heuristic/mean_auc",
+      "fmt": "num4"
+    },
+    "LoraGenGraphFirstMeanRank": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/graph_first_heuristic/mean_gold_rank",
+      "fmt": "num2"
+    },
+    "LoraGenGraphFirstMedianRank": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_25_graph_targets/graph_first_heuristic/median_gold_rank",
+      "fmt": "num1"
+    },
+    "LoraGenStratumCGraphFirstAccOne": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/graph_first_heuristic/acc_1",
+      "fmt": "pct1_raw"
+    },
+    "LoraGenStratumCGraphFirstAccFive": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/graph_first_heuristic/acc_5",
+      "fmt": "pct1_raw"
+    },
+    "LoraGenStratumCGraphFirstMRR": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/graph_first_heuristic/mrr",
+      "fmt": "num4"
+    },
+    "LoraGenStratumCGraphFirstAUC": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/graph_first_heuristic/mean_auc",
+      "fmt": "num4"
+    },
+    "LoraGenStratumCGraphFirstMeanRank": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/graph_first_heuristic/mean_gold_rank",
+      "fmt": "num2"
+    },
+    "LoraGenStratumCGraphFirstMedianRank": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/graph_first_heuristic/median_gold_rank",
+      "fmt": "num1"
+    },
+    "LoraGenShortcutHeldoutAccOne": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/shortcut_ablation_reference/heldout_25_acc1",
+      "fmt": "pct1_raw"
+    },
+    "LoraGenShortcutHeldoutAccFive": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/shortcut_ablation_reference/heldout_25_acc5",
+      "fmt": "pct1_raw"
+    },
+    "LoraGenShortcutHeldoutMRR": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/shortcut_ablation_reference/heldout_25_mrr",
+      "fmt": "num4"
+    },
+    "LoraGenShortcutHeldoutAUC": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/shortcut_ablation_reference/heldout_25_auc",
+      "fmt": "num4"
+    },
+    "LoraGenShortcutStratumCAccOne": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/shortcut_ablation_reference/heldout_35_acc1",
+      "fmt": "pct1_raw"
+    },
+    "LoraGenShortcutStratumCAccFive": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/shortcut_ablation_reference/heldout_35_acc5",
+      "fmt": "pct1_raw"
+    },
+    "LoraGenShortcutStratumCMRR": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/shortcut_ablation_reference/heldout_35_mrr",
+      "fmt": "num4"
+    },
+    "LoraGenShortcutStratumCAUC": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/shortcut_ablation_reference/heldout_35_auc",
+      "fmt": "num4"
+    },
+    "LoraGenStratumCDeltaAccOnePP": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/delta_acc1_pp",
+      "fmt": "delta_pp"
+    },
+    "LoraGenStratumCDeltaAccFivePP": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/delta_acc5_pp",
+      "fmt": "delta_pp"
+    },
+    "LoraGenStratumCDeltaAUC": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/heldout_35_stratum_c/delta_auc",
+      "fmt": "delta_pp"
+    },
+    "LoraGenValFinalAccOne": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/training_history/2/val_acc1",
+      "fmt": "pct1"
+    },
+    "LoraGenValFinalAccFive": {
+      "file": "results/lora/lora_generalization_results.json",
+      "ptr": "/training_history/2/val_acc5",
+      "fmt": "pct1"
     }
   }
 }

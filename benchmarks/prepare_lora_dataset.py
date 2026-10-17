@@ -192,11 +192,8 @@ def generate_lora_dataset(
                 "start_line": int(item.get("start_line", 1)),
                 "end_line": int(item.get("end_line", 1)),
                 "is_gold": is_gold,
-                # DIAGNOSTIC NOTE: The provenance label below ('Gold target symbol' vs 'Candidate graph symbol')
-                # acts as an empirical diagnostic probe of shortcut learning in naive post-training adaptation.
-                # As analyzed in Section 5.6, this prompt artifact demonstrates how superficial token cues can induce
-                # near-zero training loss and high single-target recall while degrading precision on realistic mixed pools.
-                "provenance": "Gold target symbol" if is_gold else "Candidate graph symbol",
+                # Clean uniform provenance formatting without differential shortcut tokens
+                "provenance": "Extracted code graph candidate",
             }
             candidates_formatted.append(cand_dict)
 
@@ -210,10 +207,20 @@ def generate_lora_dataset(
         processed_pairs.append(formatted_pair)
 
     print(f"[*] Processed {len(processed_pairs)} valid training instances from SWE-bench Lite.")
-    rng.shuffle(processed_pairs)
+    
+    # Repository-level GroupKFold split (zero cross-split repository leakage)
+    # SymPy (33) and Matplotlib (22) held out for out-of-distribution validation (55 instances)
+    # Remaining 9 repositories allocated to training (171 instances)
+    val_repos = {"sympy/sympy", "matplotlib/matplotlib"}
+    val_set = [p for p in processed_pairs if p["repo"] in val_repos]
+    train_set = [p for p in processed_pairs if p["repo"] not in val_repos]
+    rng.shuffle(train_set)
+    rng.shuffle(val_set)
 
-    val_set = processed_pairs[:val_count]
-    train_set = processed_pairs[val_count:]
+    # Assert strict zero-leakage cross-repository firewall
+    train_repos = set(p["repo"] for p in train_set)
+    val_repos_actual = set(p["repo"] for p in val_set)
+    assert len(train_repos.intersection(val_repos_actual)) == 0, "FATAL: Cross-split repository contamination!"
 
     train_out = output_dir / "gemma4_lora_train.jsonl"
     val_out = output_dir / "gemma4_lora_val.jsonl"
@@ -226,8 +233,8 @@ def generate_lora_dataset(
         for p in val_set:
             f.write(json.dumps(p) + "\n")
 
-    print(f"[+] Wrote {len(train_set)} train instances to {train_out}")
-    print(f"[+] Wrote {len(val_set)} val instances to {val_out}")
+    print(f"[+] Wrote {len(train_set)} train instances ({len(train_repos)} repos: {sorted(train_repos)}) to {train_out}")
+    print(f"[+] Wrote {len(val_set)} val instances ({len(val_repos_actual)} repos: {sorted(val_repos_actual)}) to {val_out}")
     return len(train_set), len(val_set)
 
 
