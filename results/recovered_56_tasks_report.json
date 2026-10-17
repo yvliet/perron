@@ -1,0 +1,1218 @@
+{
+  "metadata": {
+    "title": "Historical AST Pre-Image Drift Task Recovery Report",
+    "author": "Sultan Haikal (@yvliet)",
+    "timestamp_utc": "",
+    "total_drift_tasks": 56,
+    "recovered_tasks_count": 56,
+    "total_python_files_tested": 68,
+    "total_python_files_passed": 68,
+    "total_symbols_extracted": 3827,
+    "gold_target_matches": 56,
+    "repo_distribution": {
+      "django/django": 3,
+      "pydata/xarray": 4,
+      "pylint-dev/pylint": 1,
+      "scikit-learn/scikit-learn": 9,
+      "sympy/sympy": 39
+    },
+    "strata_distribution": {
+      "C": 52,
+      "B": 4
+    }
+  },
+  "tasks": {
+    "django__django-12304": {
+      "instance_id": "django__django-12304",
+      "repo": "django/django",
+      "base_commit": "4c1b401e8250f9f520b3c7dc369554477ce8b15a",
+      "stratum": "C",
+      "gold_files": [
+        "django/db/models/enums.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "django/db/models/enums.py",
+          "status": "parse_success",
+          "symbols_count": 12
+        }
+      ],
+      "symbols_count": 12,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "django__django-13346": {
+      "instance_id": "django__django-13346",
+      "repo": "django/django",
+      "base_commit": "9c92924cd5d164701e2514e1c2d6574126bd7cc2",
+      "stratum": "C",
+      "gold_files": [
+        "django/db/models/fields/json.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "django/db/models/fields/json.py",
+          "status": "parse_success",
+          "symbols_count": 68
+        }
+      ],
+      "symbols_count": 68,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "django__django-15503": {
+      "instance_id": "django__django-15503",
+      "repo": "django/django",
+      "base_commit": "859a87d873ce7152af73ab851653b4e1c3ffea4c",
+      "stratum": "C",
+      "gold_files": [
+        "django/db/models/fields/json.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "django/db/models/fields/json.py",
+          "status": "parse_success",
+          "symbols_count": 68
+        }
+      ],
+      "symbols_count": 68,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "pydata__xarray-4075": {
+      "instance_id": "pydata__xarray-4075",
+      "repo": "pydata/xarray",
+      "base_commit": "19b088636eb7d3f65ab7a1046ac672e0689371d8",
+      "stratum": "C",
+      "gold_files": [
+        "xarray/core/weighted.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "xarray/core/weighted.py",
+          "status": "parse_success",
+          "symbols_count": 18
+        }
+      ],
+      "symbols_count": 18,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "pydata__xarray-6599": {
+      "instance_id": "pydata__xarray-6599",
+      "repo": "pydata/xarray",
+      "base_commit": "6bb2b855498b5c68d7cca8cceb710365d58e6048",
+      "stratum": "C",
+      "gold_files": [
+        "xarray/core/computation.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "xarray/core/computation.py",
+          "status": "parse_success",
+          "symbols_count": 51
+        }
+      ],
+      "symbols_count": 51,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "pydata__xarray-7233": {
+      "instance_id": "pydata__xarray-7233",
+      "repo": "pydata/xarray",
+      "base_commit": "51d37d1be95547059251076b3fadaa317750aab3",
+      "stratum": "C",
+      "gold_files": [
+        "xarray/core/rolling.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "xarray/core/rolling.py",
+          "status": "parse_success",
+          "symbols_count": 38
+        }
+      ],
+      "symbols_count": 38,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "pydata__xarray-7393": {
+      "instance_id": "pydata__xarray-7393",
+      "repo": "pydata/xarray",
+      "base_commit": "41fef6f1352be994cd90056d47440fe9aa4c068f",
+      "stratum": "C",
+      "gold_files": [
+        "xarray/core/indexing.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "xarray/core/indexing.py",
+          "status": "parse_success",
+          "symbols_count": 119
+        }
+      ],
+      "symbols_count": 119,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "pylint-dev__pylint-6386": {
+      "instance_id": "pylint-dev__pylint-6386",
+      "repo": "pylint-dev/pylint",
+      "base_commit": "754b487f4d892e3d4872b6fc7468a71db4e31c13",
+      "stratum": "C",
+      "gold_files": [
+        "pylint/config/argument.py",
+        "pylint/config/arguments_manager.py",
+        "pylint/config/utils.py",
+        "pylint/lint/base_options.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "pylint/config/argument.py",
+          "status": "parse_success",
+          "symbols_count": 25
+        },
+        {
+          "file": "pylint/config/arguments_manager.py",
+          "status": "parse_success",
+          "symbols_count": 30
+        },
+        {
+          "file": "pylint/config/utils.py",
+          "status": "parse_success",
+          "symbols_count": 9
+        },
+        {
+          "file": "pylint/lint/base_options.py",
+          "status": "parse_success",
+          "symbols_count": 2
+        }
+      ],
+      "symbols_count": 66,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "scikit-learn__scikit-learn-13135": {
+      "instance_id": "scikit-learn__scikit-learn-13135",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "a061ada48efccf0845acae17009553e01764452b",
+      "stratum": "C",
+      "gold_files": [
+        "sklearn/preprocessing/_discretization.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sklearn/preprocessing/_discretization.py",
+          "status": "parse_success",
+          "symbols_count": 6
+        }
+      ],
+      "symbols_count": 6,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "scikit-learn__scikit-learn-14053": {
+      "instance_id": "scikit-learn__scikit-learn-14053",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "6ab8c86c383dd847a1be7103ad115f174fe23ffd",
+      "stratum": "C",
+      "gold_files": [
+        "sklearn/tree/export.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sklearn/tree/export.py",
+          "status": "parse_success",
+          "symbols_count": 23
+        }
+      ],
+      "symbols_count": 23,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "scikit-learn__scikit-learn-14496": {
+      "instance_id": "scikit-learn__scikit-learn-14496",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "d49a6f13af2f22228d430ac64ac2b518937800d0",
+      "stratum": "B",
+      "gold_files": [
+        "sklearn/cluster/optics_.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sklearn/cluster/optics_.py",
+          "status": "parse_success",
+          "symbols_count": 14
+        }
+      ],
+      "symbols_count": 14,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "scikit-learn__scikit-learn-14710": {
+      "instance_id": "scikit-learn__scikit-learn-14710",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "4b6273b87442a4437d8b3873ea3022ae163f4fdf",
+      "stratum": "C",
+      "gold_files": [
+        "sklearn/ensemble/_hist_gradient_boosting/gradient_boosting.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sklearn/ensemble/_hist_gradient_boosting/gradient_boosting.py",
+          "status": "parse_success",
+          "symbols_count": 30
+        }
+      ],
+      "symbols_count": 30,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "scikit-learn__scikit-learn-25232": {
+      "instance_id": "scikit-learn__scikit-learn-25232",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "f7eea978097085a6781a0e92fc14ba7712a52d75",
+      "stratum": "C",
+      "gold_files": [
+        "sklearn/impute/_iterative.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sklearn/impute/_iterative.py",
+          "status": "parse_success",
+          "symbols_count": 13
+        }
+      ],
+      "symbols_count": 13,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "scikit-learn__scikit-learn-25931": {
+      "instance_id": "scikit-learn__scikit-learn-25931",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "e3d1f9ac39e4bf0f31430e779acc50fb05fe1b64",
+      "stratum": "C",
+      "gold_files": [
+        "sklearn/ensemble/_iforest.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sklearn/ensemble/_iforest.py",
+          "status": "parse_success",
+          "symbols_count": 12
+        }
+      ],
+      "symbols_count": 12,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "scikit-learn__scikit-learn-25973": {
+      "instance_id": "scikit-learn__scikit-learn-25973",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "10dbc142bd17ccf7bd38eec2ac04b52ce0d1009e",
+      "stratum": "C",
+      "gold_files": [
+        "sklearn/feature_selection/_sequential.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sklearn/feature_selection/_sequential.py",
+          "status": "parse_success",
+          "symbols_count": 6
+        }
+      ],
+      "symbols_count": 6,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "scikit-learn__scikit-learn-26194": {
+      "instance_id": "scikit-learn__scikit-learn-26194",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "e886ce4e1444c61b865e7839c9cff5464ee20ace",
+      "stratum": "C",
+      "gold_files": [
+        "sklearn/metrics/_ranking.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sklearn/metrics/_ranking.py",
+          "status": "parse_success",
+          "symbols_count": 19
+        }
+      ],
+      "symbols_count": 19,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "scikit-learn__scikit-learn-26323": {
+      "instance_id": "scikit-learn__scikit-learn-26323",
+      "repo": "scikit-learn/scikit-learn",
+      "base_commit": "586f4318ffcdfbd9a1093f35ad43e81983740b66",
+      "stratum": "C",
+      "gold_files": [
+        "sklearn/compose/_column_transformer.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sklearn/compose/_column_transformer.py",
+          "status": "parse_success",
+          "symbols_count": 32
+        }
+      ],
+      "symbols_count": 32,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-11618": {
+      "instance_id": "sympy__sympy-11618",
+      "repo": "sympy/sympy",
+      "base_commit": "360290c4c401e386db60723ddb0109ed499c9f6e",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/geometry/point.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/geometry/point.py",
+          "status": "parse_success",
+          "symbols_count": 53
+        }
+      ],
+      "symbols_count": 53,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-12096": {
+      "instance_id": "sympy__sympy-12096",
+      "repo": "sympy/sympy",
+      "base_commit": "d7c3045115693e887bcd03599b7ca4650ac5f2cb",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/core/function.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/core/function.py",
+          "status": "parse_success",
+          "symbols_count": 102
+        }
+      ],
+      "symbols_count": 102,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-12489": {
+      "instance_id": "sympy__sympy-12489",
+      "repo": "sympy/sympy",
+      "base_commit": "aa9780761ad8c3c0f68beeef3a0ce5caac9e100b",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/combinatorics/permutations.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/combinatorics/permutations.py",
+          "status": "parse_success",
+          "symbols_count": 83
+        }
+      ],
+      "symbols_count": 83,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-13551": {
+      "instance_id": "sympy__sympy-13551",
+      "repo": "sympy/sympy",
+      "base_commit": "9476425b9e34363c2d9ac38e9f04aa75ae54a775",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/concrete/products.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/concrete/products.py",
+          "status": "parse_success",
+          "symbols_count": 14
+        }
+      ],
+      "symbols_count": 14,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-13615": {
+      "instance_id": "sympy__sympy-13615",
+      "repo": "sympy/sympy",
+      "base_commit": "50d8a102f0735da8e165a0369bbb994c7d0592a6",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/sets/sets.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/sets/sets.py",
+          "status": "parse_success",
+          "symbols_count": 159
+        }
+      ],
+      "symbols_count": 159,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-13757": {
+      "instance_id": "sympy__sympy-13757",
+      "repo": "sympy/sympy",
+      "base_commit": "a5e6a101869e027e7930e694f8b1cfb082603453",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/polys/polytools.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/polys/polytools.py",
+          "status": "parse_success",
+          "symbols_count": 267
+        }
+      ],
+      "symbols_count": 267,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-13852": {
+      "instance_id": "sympy__sympy-13852",
+      "repo": "sympy/sympy",
+      "base_commit": "c935e1d106743efd5bf0705fbeedbd18fadff4dc",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/functions/special/zeta_functions.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/functions/special/zeta_functions.py",
+          "status": "parse_success",
+          "symbols_count": 22
+        }
+      ],
+      "symbols_count": 22,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-13877": {
+      "instance_id": "sympy__sympy-13877",
+      "repo": "sympy/sympy",
+      "base_commit": "1659712001810f5fc563a443949f8e3bb38af4bd",
+      "stratum": "B",
+      "gold_files": [
+        "sympy/matrices/matrices.py",
+        "sympy/utilities/randtest.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/matrices/matrices.py",
+          "status": "parse_success",
+          "symbols_count": 131
+        },
+        {
+          "file": "sympy/utilities/randtest.py",
+          "status": "parse_success",
+          "symbols_count": 5
+        }
+      ],
+      "symbols_count": 136,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-13878": {
+      "instance_id": "sympy__sympy-13878",
+      "repo": "sympy/sympy",
+      "base_commit": "7b127bdf71a36d85216315f80c1b54d22b060818",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/stats/crv_types.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/stats/crv_types.py",
+          "status": "parse_success",
+          "symbols_count": 151
+        }
+      ],
+      "symbols_count": 151,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-13974": {
+      "instance_id": "sympy__sympy-13974",
+      "repo": "sympy/sympy",
+      "base_commit": "84c125972ad535b2dfb245f8d311d347b45e5b8a",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/physics/quantum/tensorproduct.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/physics/quantum/tensorproduct.py",
+          "status": "parse_success",
+          "symbols_count": 14
+        }
+      ],
+      "symbols_count": 14,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-14531": {
+      "instance_id": "sympy__sympy-14531",
+      "repo": "sympy/sympy",
+      "base_commit": "205da797006360fc629110937e39a19c9561313e",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/printing/str.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/printing/str.py",
+          "status": "parse_success",
+          "symbols_count": 125
+        }
+      ],
+      "symbols_count": 125,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-14711": {
+      "instance_id": "sympy__sympy-14711",
+      "repo": "sympy/sympy",
+      "base_commit": "c6753448b5c34f95e250105d76709fe4d349ca1f",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/physics/vector/vector.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/physics/vector/vector.py",
+          "status": "parse_success",
+          "symbols_count": 36
+        }
+      ],
+      "symbols_count": 36,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-14976": {
+      "instance_id": "sympy__sympy-14976",
+      "repo": "sympy/sympy",
+      "base_commit": "9cbea134220b0b951587e11b63e2c832c7246cbc",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/printing/pycode.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/printing/pycode.py",
+          "status": "parse_success",
+          "symbols_count": 59
+        }
+      ],
+      "symbols_count": 59,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-15017": {
+      "instance_id": "sympy__sympy-15017",
+      "repo": "sympy/sympy",
+      "base_commit": "6810dee426943c1a2fe85b5002dd0d4cf2246a05",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/tensor/array/dense_ndim_array.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/tensor/array/dense_ndim_array.py",
+          "status": "parse_success",
+          "symbols_count": 18
+        }
+      ],
+      "symbols_count": 18,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-15349": {
+      "instance_id": "sympy__sympy-15349",
+      "repo": "sympy/sympy",
+      "base_commit": "768da1c6f6ec907524b8ebbf6bf818c92b56101b",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/algebras/quaternion.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/algebras/quaternion.py",
+          "status": "parse_success",
+          "symbols_count": 35
+        }
+      ],
+      "symbols_count": 35,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-15599": {
+      "instance_id": "sympy__sympy-15599",
+      "repo": "sympy/sympy",
+      "base_commit": "5e17a90c19f7eecfa10c1ab872648ae7e2131323",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/core/mod.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/core/mod.py",
+          "status": "parse_success",
+          "symbols_count": 5
+        }
+      ],
+      "symbols_count": 5,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-16597": {
+      "instance_id": "sympy__sympy-16597",
+      "repo": "sympy/sympy",
+      "base_commit": "6fd65310fa3167b9626c38a5487e171ca407d988",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/assumptions/ask.py",
+        "sympy/assumptions/ask_generated.py",
+        "sympy/core/assumptions.py",
+        "sympy/core/power.py",
+        "sympy/printing/tree.py",
+        "sympy/tensor/indexed.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/assumptions/ask.py",
+          "status": "parse_success",
+          "symbols_count": 55
+        },
+        {
+          "file": "sympy/assumptions/ask_generated.py",
+          "status": "parse_success",
+          "symbols_count": 2
+        },
+        {
+          "file": "sympy/core/assumptions.py",
+          "status": "parse_success",
+          "symbols_count": 9
+        },
+        {
+          "file": "sympy/core/power.py",
+          "status": "parse_success",
+          "symbols_count": 50
+        },
+        {
+          "file": "sympy/printing/tree.py",
+          "status": "parse_success",
+          "symbols_count": 4
+        },
+        {
+          "file": "sympy/tensor/indexed.py",
+          "status": "parse_success",
+          "symbols_count": 35
+        }
+      ],
+      "symbols_count": 155,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-16766": {
+      "instance_id": "sympy__sympy-16766",
+      "repo": "sympy/sympy",
+      "base_commit": "b8fe457a02cc24b3470ff678d0099c350b7fef43",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/printing/pycode.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/printing/pycode.py",
+          "status": "parse_success",
+          "symbols_count": 72
+        }
+      ],
+      "symbols_count": 72,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-18211": {
+      "instance_id": "sympy__sympy-18211",
+      "repo": "sympy/sympy",
+      "base_commit": "b4f1aa3540fe68d078d76e78ba59d022dd6df39f",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/core/relational.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/core/relational.py",
+          "status": "parse_success",
+          "symbols_count": 46
+        }
+      ],
+      "symbols_count": 46,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-19040": {
+      "instance_id": "sympy__sympy-19040",
+      "repo": "sympy/sympy",
+      "base_commit": "b9179e80d2daa1bb6cba1ffe35ca9e6612e115c9",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/polys/factortools.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/polys/factortools.py",
+          "status": "parse_success",
+          "symbols_count": 33
+        }
+      ],
+      "symbols_count": 33,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-19346": {
+      "instance_id": "sympy__sympy-19346",
+      "repo": "sympy/sympy",
+      "base_commit": "94fb720696f5f5d12bad8bc813699fd696afd2fb",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/printing/repr.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/printing/repr.py",
+          "status": "parse_success",
+          "symbols_count": 59
+        }
+      ],
+      "symbols_count": 59,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-19495": {
+      "instance_id": "sympy__sympy-19495",
+      "repo": "sympy/sympy",
+      "base_commit": "25fbcce5b1a4c7e3956e6062930f4a44ce95a632",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/sets/conditionset.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/sets/conditionset.py",
+          "status": "parse_success",
+          "symbols_count": 7
+        }
+      ],
+      "symbols_count": 7,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-19637": {
+      "instance_id": "sympy__sympy-19637",
+      "repo": "sympy/sympy",
+      "base_commit": "63f8f465d48559fecb4e4bf3c48b75bf15a3e0ef",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/core/sympify.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/core/sympify.py",
+          "status": "parse_success",
+          "symbols_count": 9
+        }
+      ],
+      "symbols_count": 9,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-19783": {
+      "instance_id": "sympy__sympy-19783",
+      "repo": "sympy/sympy",
+      "base_commit": "586a43201d0357e92e8c93548d69a9f42bf548f4",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/physics/quantum/dagger.py",
+        "sympy/physics/quantum/operator.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/physics/quantum/dagger.py",
+          "status": "parse_success",
+          "symbols_count": 2
+        },
+        {
+          "file": "sympy/physics/quantum/operator.py",
+          "status": "parse_success",
+          "symbols_count": 54
+        }
+      ],
+      "symbols_count": 56,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-19954": {
+      "instance_id": "sympy__sympy-19954",
+      "repo": "sympy/sympy",
+      "base_commit": "6f54459aa0248bf1467ad12ee6333d8bc924a642",
+      "stratum": "B",
+      "gold_files": [
+        "sympy/combinatorics/perm_groups.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/combinatorics/perm_groups.py",
+          "status": "parse_success",
+          "symbols_count": 108
+        }
+      ],
+      "symbols_count": 108,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-20428": {
+      "instance_id": "sympy__sympy-20428",
+      "repo": "sympy/sympy",
+      "base_commit": "c0e85160406f9bf2bcaa2992138587668a1cd0bc",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/polys/domains/expressiondomain.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/polys/domains/expressiondomain.py",
+          "status": "parse_success",
+          "symbols_count": 24
+        }
+      ],
+      "symbols_count": 24,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-20438": {
+      "instance_id": "sympy__sympy-20438",
+      "repo": "sympy/sympy",
+      "base_commit": "33b47e4bd60e2302e42616141e76285038b724d6",
+      "stratum": "B",
+      "gold_files": [
+        "sympy/core/relational.py",
+        "sympy/sets/handlers/comparison.py",
+        "sympy/sets/handlers/issubset.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/core/relational.py",
+          "status": "parse_success",
+          "symbols_count": 61
+        },
+        {
+          "file": "sympy/sets/handlers/comparison.py",
+          "status": "parse_success",
+          "symbols_count": 8
+        },
+        {
+          "file": "sympy/sets/handlers/issubset.py",
+          "status": "parse_success",
+          "symbols_count": 15
+        }
+      ],
+      "symbols_count": 84,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-20801": {
+      "instance_id": "sympy__sympy-20801",
+      "repo": "sympy/sympy",
+      "base_commit": "e11d3fed782146eebbffdc9ced0364b223b84b6c",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/core/numbers.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/core/numbers.py",
+          "status": "parse_success",
+          "symbols_count": 347
+        }
+      ],
+      "symbols_count": 347,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-21596": {
+      "instance_id": "sympy__sympy-21596",
+      "repo": "sympy/sympy",
+      "base_commit": "110997fe18b9f7d5ba7d22f624d156a29bf40759",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/sets/handlers/intersection.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/sets/handlers/intersection.py",
+          "status": "parse_success",
+          "symbols_count": 25
+        }
+      ],
+      "symbols_count": 25,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-21930": {
+      "instance_id": "sympy__sympy-21930",
+      "repo": "sympy/sympy",
+      "base_commit": "de446c6d85f633271dfec1452f6f28ea783e293f",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/physics/secondquant.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/physics/secondquant.py",
+          "status": "parse_success",
+          "symbols_count": 170
+        }
+      ],
+      "symbols_count": 170,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-22456": {
+      "instance_id": "sympy__sympy-22456",
+      "repo": "sympy/sympy",
+      "base_commit": "a3475b3f9ac662cd425157dd3bdb93ad7111c090",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/codegen/ast.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/codegen/ast.py",
+          "status": "parse_success",
+          "symbols_count": 105
+        }
+      ],
+      "symbols_count": 105,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-23413": {
+      "instance_id": "sympy__sympy-23413",
+      "repo": "sympy/sympy",
+      "base_commit": "10de1a18a0efac0b19b611e40c928250dda688bf",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/polys/matrices/normalforms.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/polys/matrices/normalforms.py",
+          "status": "parse_success",
+          "symbols_count": 7
+        }
+      ],
+      "symbols_count": 7,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-23534": {
+      "instance_id": "sympy__sympy-23534",
+      "repo": "sympy/sympy",
+      "base_commit": "832c24fec1046eaa544a4cab4c69e3af3e651759",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/core/symbol.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/core/symbol.py",
+          "status": "parse_success",
+          "symbols_count": 41
+        }
+      ],
+      "symbols_count": 41,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-23824": {
+      "instance_id": "sympy__sympy-23824",
+      "repo": "sympy/sympy",
+      "base_commit": "39de9a2698ad4bb90681c0fdb70b30a78233145f",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/physics/hep/gamma_matrices.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/physics/hep/gamma_matrices.py",
+          "status": "parse_success",
+          "symbols_count": 8
+        }
+      ],
+      "symbols_count": 8,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-23950": {
+      "instance_id": "sympy__sympy-23950",
+      "repo": "sympy/sympy",
+      "base_commit": "88664e6e0b781d0a8b5347896af74b555e92891e",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/sets/contains.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/sets/contains.py",
+          "status": "parse_success",
+          "symbols_count": 4
+        }
+      ],
+      "symbols_count": 4,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-24443": {
+      "instance_id": "sympy__sympy-24443",
+      "repo": "sympy/sympy",
+      "base_commit": "809c53c077485ca48a206cee78340389cb83b7f1",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/combinatorics/homomorphisms.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/combinatorics/homomorphisms.py",
+          "status": "parse_success",
+          "symbols_count": 22
+        }
+      ],
+      "symbols_count": 22,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-24539": {
+      "instance_id": "sympy__sympy-24539",
+      "repo": "sympy/sympy",
+      "base_commit": "193e3825645d93c73e31cdceb6d742cc6919624d",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/polys/rings.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/polys/rings.py",
+          "status": "parse_success",
+          "symbols_count": 179
+        }
+      ],
+      "symbols_count": 179,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-24562": {
+      "instance_id": "sympy__sympy-24562",
+      "repo": "sympy/sympy",
+      "base_commit": "b1cb676cf92dd1a48365b731979833375b188bf2",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/core/numbers.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/core/numbers.py",
+          "status": "parse_success",
+          "symbols_count": 352
+        }
+      ],
+      "symbols_count": 352,
+      "gold_matched": true,
+      "matched_symbols": []
+    },
+    "sympy__sympy-24661": {
+      "instance_id": "sympy__sympy-24661",
+      "repo": "sympy/sympy",
+      "base_commit": "a36caf5c74fe654cedc488e8a8a05fad388f8406",
+      "stratum": "C",
+      "gold_files": [
+        "sympy/parsing/sympy_parser.py"
+      ],
+      "gold_symbol_names": [],
+      "files_recovered": [
+        {
+          "file": "sympy/parsing/sympy_parser.py",
+          "status": "parse_success",
+          "symbols_count": 40
+        }
+      ],
+      "symbols_count": 40,
+      "gold_matched": true,
+      "matched_symbols": []
+    }
+  }
+}
