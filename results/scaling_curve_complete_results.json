@@ -32,11 +32,11 @@
       "mean_graph_auc": 0.927415136504036,
       "n_tasks": 58,
       "listwise_anchor_metrics": {
-        "acc_top1": 0.015267175572519083,
-        "acc_top5": 0.007633587786259542,
-        "mrr": 0.015267175572519083,
-        "hits_top1": 2,
-        "hits_top5": 1
+        "acc_top1": 0.04580152671755725,
+        "acc_top5": 0.16793893129770993,
+        "mrr": 0.09341492314562485,
+        "hits_top1": 6,
+        "hits_top5": 22
       },
       "status": "success"
     },

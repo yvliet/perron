@@ -33,9 +33,9 @@ Five contributions resolve this disconnect:
 
 ## 3. Study Design & Protocol
 
-- **Benchmark & Strata**: 344 Verified tasks [6] across 12 repos: Stratum A (Named, 60.5%), B (Traceback, 1.5%), C (Un-Named, 38.1%). Regex yields $N_A=168, N_B=7, N_C=169$ ($N=100$ audit: 95.0% concordance, Cohen's $\kappa=0.918$, 95% CI [0.849, 0.988]). Auditing 56 exclusions (`FILE_ABSENT_PREIMAGE_DRIFT`) confirms 100% Python 3 parse (68 files, 3,827 symbols); overturning equivalence requires $\ge +9$ net wins ($P(\operatorname{Bin}(56, 0.0494) \ge 9) = 0.0016$).
+- **Benchmark & Strata**: 344 Verified tasks [6] across 12 repos: protocol lock evaluates confirmatory substring strata ($N_A=208$ [60.5%], $N_B=5$ [1.5%], $N_C=131$ [38.1%]), while dataset release refines word-boundary regexes ($N_A=168, N_B=7, N_C=169$; $N=100$ audit: 95.0% concordance, Cohen's $\kappa=0.918$, 95% CI [0.849, 0.988]). Auditing 56 exclusions (`FILE_ABSENT_PREIMAGE_DRIFT`) confirms 100% Python 3 parse (68 files, 3,827 symbols); overturning equivalence requires $\ge +9$ net wins ($P(\operatorname{Bin}(56, 0.0494) \ge 9) = 0.0016$).
 - **Perron CSR Engine**: Typed edges solve in $1.89\text{--}5.10$ ms ($<3$ MB RAM vs SuperLU at 28.1 ms). Operator $M$ ($\beta=0.85$) satisfies $|\lambda_2(M)| \le \beta$ (contraction $\|\boldsymbol{\pi}^{(t)} - \boldsymbol{\pi}_\infty\|_1 \le 2\beta^t$). Damping ($\gamma=0.70$) yields $\text{HSI@10} = 99.5\%$.
-- **Candidate Pools**: Top-10 BM25 seeds ($M_t \in [10, 50]$, mean 24.5) define pools B0--A6 under pre-specified plans (commit `6908e78` locked retrieval; `9abe405` pointwise; `c563441` reasoning). Frozen `gemma-4-e2b-it` scores log-odds (19,298 passes). Contrasts PC1 ($A_4 - A_2$) and PC2 ($A_4 - A_3$) evaluate McNemar tests with Holm correction and bootstrap CIs ($B=10{,}000$).
+- **Candidate Pools**: Top-10 BM25 seeds ($M_t \in [10, 50]$, mean 24.5) define pools B0--A6 under pre-specified plans (commits `6908e78`, `9abe405`, `c563441` lock protocol). Frozen `gemma-4-e2b-it` scores log-odds (19,298 passes). Contrasts PC1 ($A_4 - A_2$) and PC2 ($A_4 - A_3$) evaluate McNemar tests with Holm correction and bootstrap CIs ($B=10{,}000$).
 
 ---
 
@@ -94,9 +94,9 @@ Protocol `PROTOCOL-SCALING-v1` evaluated pointwise discrimination on Dual T4 GPU
 | Pruned Graph | 15 | 4.58% | 17.56% | 0.0970 |
 | **Pruned Graph + Think** | **15** | **9.92%** | **19.85%** | **0.1469** |
 
-- **Parity & Reasoning Lift**: Direct readout ($M \le 25$) ties graph ($A_4$) and depth BM25 ($A_2$) at 16.79% Acc@5 (22/131) and 4.58% Top-1 (6/131). Reasoning improves Top-1 on $A_4^{(25)}$ to **9.92% (13/131; exploratory diagnostic $+5.34$ pp, raw $p=0.0156^*$, 4-test Holm $p=0.0625$, single reversal sensitivity $p=0.0703$)** and MRR ($0.0934 \to 0.1358$); backfilling preserves 18.32% Acc@5 ($p=0.6875$). $A_4\text{+think}$ vs $A_2\text{+think}$ ties at 13 vs 9 hits ($p=0.2188$) at $M=25$ and 13 vs 11 ($p=0.5000$) at $M=15$. Reasoning disambiguates candidates across strata: seeds convert $6/28 \to 12/28$ ($p=0.0312^*$) while graph additions convert $0/7 \to 1/7$ ($p=1.000$).
+- **Parity & Reasoning Lift**: Direct readout ($M \le 25$) ties graph ($A_4$) and depth BM25 ($A_2$) at 16.79% Acc@5 (22/131) and 4.58% Top-1 (6/131). Reasoning lifts Top-1 on $A_4^{(25)}$ to **9.92% (13/131; exploratory diagnostic $+5.34$ pp, raw $p=0.0156^*$, 4-test Holm $p=0.0625$, adverse-addition sensitivity $p=0.0703$, hit-reversal $p=0.1250$)** and MRR ($0.0934 \to 0.1358$); backfilling preserves 18.32% Acc@5 ($p=0.6875$). $A_4\text{+think}$ vs $A_2\text{+think}$ ties at 13 vs 9 ($p=0.2188$, $M=25$) and 13 vs 11 ($p=0.5000$, $M=15$). Reasoning disambiguates candidates across strata: seeds convert $6/28 \to 12/28$ ($p=0.0312^*$) while graph additions convert $0/7 \to 1/7$ ($p=1.000$).
 - **Provenance ($C_1\text{--}C_3$)**: Stubs ($C_1$, 2.29%) and provenance ($C_2$, 3.82%) yield no lift ($-0.76$ pp, $p=1.000$); provenance + thinking ($C_3$, 9.16%) ties thinking ($C_0$, 9.92%, $p=1.000$).
-- **Pruning ($M=15, \text{AUC}^*=0.714$)**: Pruning to $M=15$ lowers $\text{AUC}^*$ to $\mathbf{0.714}$ while retaining 34/35 defects. Pruning yields zero net Top-1 change ($13/131$ in both pools; $13/34$ vs $13/35$ reachable reflects denominator compaction), achieving a **40% candidate stub reduction**; paired with test-time reasoning, it compacts mean target rank from 5.32 to 3.74 (Acc@5 reaches **19.85% (26/131)**, MRR **0.1469**).
+- **Pruning ($M=15, \text{AUC}^*=0.714$)**: Pruning to $M=15$ lowers $\text{AUC}^*$ to $\mathbf{0.714}$ while retaining 34/35 defects. Pruning alone yields zero net Top-1 change (6/131 direct, 13/131 thinking in both $M \in \{15, 25\}$ pools), achieving a **40% candidate stub reduction**; paired with test-time reasoning, mean target rank compacts from $5.32 \to 3.74$ (Acc@5 reaches **19.85% (26/131)**, MRR **0.1469**).
 
 ### 4.6 Lexical Dissection & Multi-Encoding Graph Representations (PROTOCOL-CAUSAL-v1)
 
@@ -139,7 +139,7 @@ I tuned `gemma-4-e2b-it` (LoRA $r=16$) on 226 Lite tasks via GroupKFold (171 tra
 - **Empirical Verdict & Task GLMM**: Marginal tests show small offsets (+0.87 to +2.03 pp; MDE 3.35 pp at 80% power, 95% CI $[-0.29, +4.36]$ pp). Task-clustered GLMM ($N=344$) indicates non-significance ($\text{OR} = 1.118, p = 0.0876$, paired McNemar $p=0.1435$; repository mixed model $\text{OR}=1.130, p=0.349, \sigma_{\text{repo}}=0.963$).
 - **Selection Conditioning**: Discrimination drop (0.7966 vs 0.6596) mirrors depth BM25 (0.6380 vs 0.6253, two-sample $p=0.721$), reflecting selection on $T^* \notin \text{Top10}(BM25)$.
 - **Operating Regimes**: (1) **CSR Filter**: $<5.2$ ms ($\le 3$ MB RAM, 58.4% recall); (2) **Pruning**: Cap at $M=15$ ($\text{AUC}^*=0.714$); (3) **Positive Control**: E4B reaches 16.79% Top-1 and 37.4% Top-5 (MRR 0.2562); (4) **Routing**: Saves 31.4% compute; (5) **Tuning**: Overfitting cautions against tuning.
-- **Tooling Safety**: AST editor achieves 0.0% syntax errors and 76.7% valid apply via pre-commit parse gate vs 30.0% apply and 50.0% errors for `git apply` ($p < .001$).
+- **Tooling Safety**: AST editor achieves 0.0% syntax errors and 76.7% valid apply vs 30.0% apply and 50.0% errors for `git apply` ($p < .001$).
 
 ---
 
