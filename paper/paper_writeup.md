@@ -6,7 +6,7 @@
 
 ## Abstract
 
-Across 344 Verified tasks, Personalized PageRank matches depth-matched lexical retrieval under pointwise scoring (Acc@5 47.1% vs 45.1%, McNemar $p = 0.1435$, Holm $p = 0.2869$; 95% bootstrap CI [-0.29, +4.36] pp; power 39.6%, $N \approx 935$ for +2 pp); a task-clustered GLMM confirms non-significance ($\text{OR} = 1.118, 95\%\text{ CI } [0.984, 1.270], z = 1.708, p = 0.0876$; GEE $p = 0.0901$). An Expected-Rank Identity ($\text{AUC}^* \ge 1 - \frac{k-1}{M-1}$) formalizes candidate selection conditioning: discrimination drops $0.7966 \to 0.6596$ on graph neighbors. On 131 un-named defects, reasoning doubles 4B Top-1 at $M=25$ ($6 \to 13$ hits, unadjusted $p = 0.0156^*$, Holm $p = 0.0469^*$) by filtering seed distractors ($6/28 \to 12/28, p=0.0312^*$) but collapses 2B Top-1 (-53.3%), exposing a capacity threshold. Pruning ($M=15, \text{AUC}^* = 0.714$) converts 2/6 graph additions to Top-1 (19.85% Acc@5). In multi-pool union scoring ($M \le 87$, 59 gold targets), Gemma 4 E4B reaches 16.79% Top-1 and 37.4% Top-5 (MRR 0.2562 vs BM25 0.0862); single-pool $A_4^{(25)}$ direct readout yields 4.58% Top-1 and 16.79% Acc@5. On SWE-bench Lite ($N=171$ train, $N=55$ val), LoRA lifts isolated graph Top-1 ($0.0\% \to 24.0\%, p=0.0312^*$) and MRR ($0.1920 \to 0.3288$) but regresses Acc@5 ($44\% \to 36\%$); mixed discordance ($n_{10}=6, n_{01}=4, p=0.7539$) shows null-compatible transfer and seen-repo memorization. I release depth-matched pools, 19,298 evaluations, 707 strata labels, and the Perron CSR engine (<5.2 ms solve, <=3.0 MB RAM).
+Across 344 Verified tasks, Personalized PageRank matches depth-matched lexical retrieval under pointwise scoring (Acc@5 47.1% vs 45.1%, McNemar $p = 0.1435$, Holm $p = 0.2869$; 95% bootstrap CI [-0.29, +4.36] pp; prospective MDE 3.35 pp at 80% power); a task-clustered GLMM confirms non-significance ($\text{OR} = 1.118, 95\%\text{ CI } [0.984, 1.270], z = 1.708, p = 0.0876$; GEE $p = 0.0901$). An Expected-Rank Identity ($\text{AUC}^* \ge 1 - \frac{k-1}{M-1}$) formalizes candidate selection conditioning: discrimination drops $0.7966 \to 0.6596$ on graph neighbors. On 131 un-named defects, reasoning doubles 4B Top-1 at $M=25$ ($6 \to 13$ hits, unadjusted $p = 0.0156^*$, Holm $p = 0.0469^*$) by filtering seed distractors ($6/28 \to 12/28, p=0.0312^*$) but collapses 2B Top-1 (-53.3%), exposing a capacity threshold. Pruning ($M=15, \text{AUC}^* = 0.714$) converts 2/6 graph additions to Top-1 (19.85% Acc@5). In multi-pool union scoring ($M \le 87$, 59 gold targets), Gemma 4 E4B reaches 16.79% Top-1 and 37.4% Top-5 (MRR 0.2562 vs BM25 0.0862); single-pool $A_4^{(25)}$ direct readout yields 4.58% Top-1 and 16.79% Acc@5. On SWE-bench Lite ($N=171$ train, $N=55$ val), LoRA lifts isolated graph Top-1 ($0.0\% \to 24.0\%, p=0.0312^*$) and MRR ($0.1920 \to 0.3288$) but regresses Acc@5 ($44\% \to 36\%$); mixed discordance ($n_{10}=6, n_{01}=4, p=0.7539$) shows null-compatible transfer and seen-repo memorization. I release depth-matched pools, 19,298 evaluations, 707 strata labels, and the Perron CSR engine (<5.2 ms solve, <=3.0 MB RAM).
 
 ---
 
@@ -33,8 +33,8 @@ Five contributions resolve this disconnect:
 
 ## 3. Study Design & Protocol
 
-- **Benchmark & Strata**: 344 callable Verified tasks [6] across 12 repos: evaluated strata comprise Stratum A (Named, 60.5%), B (Traceback, 1.5%), C (Un-Named, 38.1%). Regex yields $N_A=168, N_B=7, N_C=169$ on 344 tasks ($N_A=180, N_B=21, N_C=299$ on 500 Verified; 44 shifts from word boundaries; $N=100$ audit: 95.0% concordance, Cohen's $\kappa=0.918$, 95% CI [0.849, 0.988]). Auditing all 56 exclusions (`FILE_ABSENT_PREIMAGE_DRIFT`; 39 SymPy, 9 scikit-learn, 4 xarray, 3 Django, 1 pylint) at base commits confirms 100% Python 3 parse (68 files, 3,827 symbols; restoring Stratum C to 183 tasks); overturning equivalence requires $\ge +9$ net wins ($p = 0.0016$).
-- **Perron CSR Engine**: Typed edges ($oldsymbol{\omega} = [0.50, 0.25, 0.15, 0.10]$) solve in $1.89\text{--}5.10$ ms ($<3$ MB RAM vs SuperLU at 28.1 ms). Operator $M = \beta(T + \mathbf{d}\mathbf{p}_0^\top) + (1-\beta)\mathbf{1}\mathbf{p}_0^\top$ ($\beta=0.85$) has bound $|\lambda_2(M)| \le \beta$ (gap $\ge 0.15$, contraction $\|\boldsymbol{\pi}^{(t)} - \boldsymbol{\pi}_\infty\|_1 \le 2\beta^t$). Damping ($\gamma=0.70$) yields $\text{HSI@10} = 99.5\%$, saving 91.9% headroom.
+- **Benchmark & Strata**: 344 callable Verified tasks [6] across 12 repos: evaluated strata comprise Stratum A (Named, 60.5%), B (Traceback, 1.5%), C (Un-Named, 38.1%). Regex yields $N_A=168, N_B=7, N_C=169$ on 344 tasks ($N_A=180, N_B=21, N_C=299$ on 500 Verified; 44 shifts from word boundaries; $N=100$ audit: 95.0% concordance, Cohen's $\kappa=0.918$, 95% CI [0.849, 0.988]). Auditing all 56 exclusions (`FILE_ABSENT_PREIMAGE_DRIFT`; 39 SymPy, 9 scikit-learn, 4 xarray, 3 Django, 1 pylint) at base commits confirms 100% Python 3 parse (68 files, 3,827 symbols); overturning equivalence requires $\ge +9$ net wins ($p = 0.0016$).
+- **Perron CSR Engine**: Typed edges ($\boldsymbol{\omega} = [0.50, 0.25, 0.15, 0.10]$) solve in $1.89\text{--}5.10$ ms ($<3$ MB RAM vs SuperLU at 28.1 ms). Operator $M = \beta(T + \mathbf{d}\mathbf{p}_0^\top) + (1-\beta)\mathbf{1}\mathbf{p}_0^\top$ ($\beta=0.85$) has bound $|\lambda_2(M)| \le \beta$ (gap $\ge 0.15$, contraction $\|\boldsymbol{\pi}^{(t)} - \boldsymbol{\pi}_\infty\|_1 \le 2\beta^t$). Damping ($\gamma=0.70$) yields $\text{HSI@10} = 99.5\%$, saving 91.9% headroom.
 - **Candidate Pools**: Top-10 BM25 seeds ($M_t \in [10, 50]$, mean 24.5) define pools B0--A6 under pre-specified execution plans (commit `6908e78` locked retrieval Oct 3; `9abe405` pointwise Oct 6; `c563441` reasoning Oct 12). Frozen `gemma-4-e2b-it` scores log-odds (19,298 passes). Contrasts PC1 ($A_4 - A_2$) and PC2 ($A_4 - A_3$) evaluate McNemar tests with Holm correction and bootstrap CIs ($B=10{,}000$).
 
 ---
@@ -57,16 +57,16 @@ Across 344 tasks, BM25 reaches 50.9% Fn Acc@10 (175/344); Perron reaches 50.3% (
 | **A5** | Null graph | 24.1% | 45.9% | 0.3315 |
 | **A6** | Perron diffusion | 23.6% | 45.6% | 0.3301 |
 
-- **Statistical Testing & GLMM**: PC1 ($A_4 - A_2$): $+2.03$ pp (95% CI [−0.29, +4.36], discordant 12/5, exact $p=0.1435$, Holm $p=0.287$). Task-clustered GLMM ($N=344$) confirms non-significance ($\text{OR} = 1.118, 95\%\text{ CI } [0.984, 1.270], z = 1.708, p = 0.0876$; GEE $p = 0.0901$), correcting small-cluster SE bias ($N=12$), and confirms Stratum C hardness ($\text{OR} = 0.100, p < 0.001$). Schuirmann TOST ($\alpha=0.05$) score CI $[+0.07, +4.24]$ pp excludes $\ge +4.4$ pp ($p = 0.0402$); 95% CI $[-0.35, +4.74]$ exceeds $\pm 4.4$ pp (power 39.6%; $N\approx 935$ for +2 pp). Hub diffusion dilutes precision ($A_6$ 45.6% vs $A_4$ 47.1%); discrimination drops $0.7966 \to 0.6596$ on graph neighbors via selection conditioning.
+- **Statistical Testing & GLMM**: PC1 ($A_4 - A_2$): $+2.03$ pp (95% CI [−0.29, +4.36], discordant 12/5, exact $p=0.1435$, Holm $p=0.287$). Task-clustered GLMM ($N=344$) confirms non-significance ($\text{OR} = 1.118, 95\%\text{ CI } [0.984, 1.270], z = 1.708, p = 0.0876$; GEE $p = 0.0901$), correcting small-cluster SE bias ($N=12$), and confirms Stratum C hardness ($\text{OR} = 0.100, p < 0.001$). Schuirmann TOST ($\alpha=0.05$) score CI $[+0.07, +4.24]$ pp excludes $\ge +4.4$ pp ($p = 0.0402$); 95% CI $[-0.35, +4.74]$ exceeds $\pm 4.4$ pp (prospective MDE 3.35 pp at 80% power). Hub diffusion dilutes precision ($A_6$ 45.6% vs $A_4$ 47.1%); discrimination drops $0.7966 \to 0.6596$ on graph neighbors via selection conditioning.
 - **Loss Funnel**: Seeds capture 51.2% (48.8 pp loss); Graph reaches 58.4% (41.6 pp loss); Reranking retains 47.1% Top-5 (11.3 pp loss; $N=100$: Gemma 4 recovers 74.0% oracle targets vs 33.0% BM25).
 
 ### 4.3 First-Moment Expected-Rank Identity & Stratum Asymmetry
 
 Expanding $M=10 \to 50$ raises recall from 51.2% to 58.4%, yet Acc@5 plateaus (46.2% to 47.1% on A4; 46.2% to 45.1% on depth BM25). Expected rank $\mathbb{E}[\text{Rank}] \le k$ requires $\text{AUC}^* \ge 1 - \frac{k - 1}{M - 1}$ ($\text{AUC}^* \ge 0.830$ at mean $M = 24.5, k=5$), with Proposition 1 bounding $\operatorname{Acc@}k \ge 1/k$. At graph $\text{AUC} = 0.6596$, expected rank is $9.00$ ($17.68$ at $M=50$). Strata polarize: Stratum A converts 6/11 reached targets (54.5%); Stratum C converts 0/14 ($-2$ tasks).
 
-### 4.4 Cross-Architecture Scaling Surface & Systems MoE Boundary (PREREG-SCALING-v1)
+### 4.4 Cross-Architecture Scaling Surface & Systems MoE Boundary (PROTOCOL-SCALING-v1)
 
-Protocol `PREREG-SCALING-v1` evaluated pointwise discrimination on Dual T4 GPUs across 58 reachable Stratum C tasks:
+Protocol `PROTOCOL-SCALING-v1` evaluated pointwise discrimination on Dual T4 GPUs across 58 reachable Stratum C tasks:
 
 | Model | Archetype | Params | ROC-AUC | VRAM | Runtime |
 | :--- | :--- | :---: | :---: | :---: | :---: |
@@ -98,9 +98,9 @@ Protocol `PREREG-SCALING-v1` evaluated pointwise discrimination on Dual T4 GPUs 
 - **Provenance ($C_1\text{--}C_3$)**: Stubs ($C_1$, 2.29%) and static provenance ($C_2$, 3.82%) yield no lift ($-0.76$ pp, $p=1.000$); provenance + thinking ($C_3$, 9.16%) ties thinking ($C_0$, 9.92%, $p=1.000$).
 - **Pruning ($M=15, \text{AUC}^*=0.714$)**: Pruning to $M=15$ lowers $\text{AUC}^*$ to $\mathbf{0.714}$, cutting distractors ($8.00 \to 4.77$) while retaining 34/35 reachable defects. Top-1 stays **9.92% (13/131)**; Acc@5 reaches **19.85% (26/131)** and MRR **0.1469** (converting 2/6 graph additions to Top-1; 13/34 Top-1 [38.2%], 26/34 Top-5 [76.5%]).
 
-### 4.6 Lexical Dissection & Multi-Encoding Graph Representations (PREREG-CAUSAL-v1)
+### 4.6 Lexical Dissection & Multi-Encoding Graph Representations (PROTOCOL-CAUSAL-v1)
 
-Protocol `PREREG-CAUSAL-v1` evaluated 58 reachable Stratum C union tasks on Dual T4 GPUs:
+Protocol `PROTOCOL-CAUSAL-v1` evaluated 58 reachable Stratum C union tasks on Dual T4 GPUs:
 
 | Condition / Encoding | Acc@1 (Direct) | Acc@1 (Think) | Acc@5 (Direct) | Acc@5 (Think) | Shift |
 | :--- | :---: | :---: | :---: | :---: | :---: |
@@ -136,7 +136,7 @@ I tuned `gemma-4-e2b-it` (LoRA $r=16$) on 226 Lite tasks via GroupKFold (171 tra
 
 ## 5. Discussion
 
-- **Empirical Verdict & Task GLMM**: Marginal tests show small offsets (+0.87 to +2.03 pp; power 39.6%, 95% CI $[-0.29, +4.36]$ pp). A task-clustered GLMM ($N=344$) confirms non-significance ($\text{OR} = 1.118, 95\%\text{ CI } [0.984, 1.270], p = 0.0876$, paired McNemar $p=0.1435$).
+- **Empirical Verdict & Task GLMM**: Marginal tests show small offsets (+0.87 to +2.03 pp; prospective MDE 3.35 pp at 80% power, 95% CI $[-0.29, +4.36]$ pp). A task-clustered GLMM ($N=344$) confirms non-significance ($\text{OR} = 1.118, 95\%\text{ CI } [0.984, 1.270], p = 0.0876$, paired McNemar $p=0.1435$).
 - **Selection Conditioning**: Graph discrimination collapse (0.7966 vs 0.6596) mirrors depth BM25 (0.6380 vs 0.6253, $p=0.72$), reflecting selection on $T^* \notin \text{Top10}(BM25)$.
 - **Operating Regimes**: (1) **CSR Filtering**: $<5.2$ ms ($\le 3$ MB RAM, 58.4% recall); (2) **Pruning**: Cap at $M=15$ ($\text{AUC}^*=0.714$) with $\le 180$ reasoning tokens; (3) **Positive Control**: E4B reaches 16.79% Top-1 and 37.4% Top-5 in union scoring (MRR 0.2562); (4) **Routing**: Saves 31.4% compute; (5) **Post-Training**: Overfitting cautions against tuning.
 - **Tooling Safety**: AST editor achieves 0.0% syntax errors and 76.7% valid apply via rollbacks vs 30.0% apply and 50.0% errors for `git apply` ($p < .001$).
