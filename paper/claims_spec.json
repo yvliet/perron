@@ -4601,6 +4601,196 @@
       "file": "results/lora/lora_generalization_results.json",
       "ptr": "/training_history/2/val_acc5",
       "fmt": "pct1"
+    },
+    "GemmaFourEFourBAccOne": {
+      "file": "results/gemma4_e4b_reranking_results.json",
+      "ptr": "/summary/metrics/acc_at_1_pct",
+      "fmt": "pct2_raw"
+    },
+    "GemmaFourEFourBAccThree": {
+      "file": "results/gemma4_e4b_reranking_results.json",
+      "ptr": "/summary/metrics/acc_at_3_pct",
+      "fmt": "pct2_raw"
+    },
+    "GemmaFourEFourBAccFive": {
+      "file": "results/gemma4_e4b_reranking_results.json",
+      "ptr": "/summary/metrics/acc_at_5_pct",
+      "fmt": "pct1_raw"
+    },
+    "GemmaFourEFourBAccTen": {
+      "file": "results/gemma4_e4b_reranking_results.json",
+      "ptr": "/summary/metrics/acc_at_10_pct",
+      "fmt": "pct2_raw"
+    },
+    "GemmaFourEFourBMRR": {
+      "file": "results/gemma4_e4b_reranking_results.json",
+      "ptr": "/summary/metrics/mrr",
+      "fmt": "num4"
+    },
+    "GemmaFourEFourBTasks": {
+      "file": "results/gemma4_e4b_reranking_results.json",
+      "ptr": "/summary/n_tasks",
+      "fmt": "int"
+    },
+    "GemmaFourEFourBETwoBAccOne": {
+      "file": "results/gemma4_e4b_reranking_results.json",
+      "ptr": "/summary/baselines_comparison/gemma_4_e2b_it/acc_at_1",
+      "fmt": "pct1_raw"
+    },
+    "GemmaFourEFourBETwoBAccFive": {
+      "file": "results/gemma4_e4b_reranking_results.json",
+      "ptr": "/summary/baselines_comparison/gemma_4_e2b_it/acc_at_5",
+      "fmt": "pct1_raw"
+    },
+    "GemmaFourEFourBETwoBMRR": {
+      "file": "results/gemma4_e4b_reranking_results.json",
+      "ptr": "/summary/baselines_comparison/gemma_4_e2b_it/mrr",
+      "fmt": "num4"
+    },
+    "GlmmOddsRatioAFour": {
+      "file": "results/glmm_publication_models.json",
+      "ptr": "/primary/logit_acc5_ref_a2/C(arm)[T.A4]/odds_ratio",
+      "fmt": "num3"
+    },
+    "GlmmPValAFour": {
+      "file": "results/glmm_publication_models.json",
+      "ptr": "/primary/logit_acc5_ref_a2/C(arm)[T.A4]/p_value",
+      "fmt": "pval4"
+    },
+    "GlmmZStatAFour": {
+      "file": "results/glmm_publication_models.json",
+      "ptr": "/primary/logit_acc5_ref_a2/C(arm)[T.A4]/z_stat",
+      "fmt": "num3"
+    },
+    "GlmmORLowAFour": {
+      "file": "results/glmm_publication_models.json",
+      "ptr": "/primary/logit_acc5_ref_a2/C(arm)[T.A4]/or_ci_95_lower",
+      "fmt": "num3"
+    },
+    "GlmmORHighAFour": {
+      "file": "results/glmm_publication_models.json",
+      "ptr": "/primary/logit_acc5_ref_a2/C(arm)[T.A4]/or_ci_95_upper",
+      "fmt": "num3"
+    },
+    "GlmmStratumCOddsRatio": {
+      "file": "results/glmm_publication_models.json",
+      "ptr": "/primary/logit_acc5_ref_a2/C(stratum)[T.C]/odds_ratio",
+      "fmt": "num3"
+    },
+    "GlmmStratumCPVal": {
+      "file": "results/glmm_publication_models.json",
+      "ptr": "/primary/logit_acc5_ref_a2/C(stratum)[T.C]/p_value",
+      "fmt": "pval"
+    },
+    "RecoveredHistoricalTasks": {
+      "file": "results/recovered_56_tasks_report.json",
+      "ptr": "/metadata/recovered_tasks_count",
+      "fmt": "int"
+    },
+    "RecoveredTotalFilesPassed": {
+      "file": "results/recovered_56_tasks_report.json",
+      "ptr": "/metadata/total_python_files_passed",
+      "fmt": "int"
+    },
+    "RecoveredStratumCTasks": {
+      "file": "results/recovered_56_tasks_report.json",
+      "ptr": "/metadata/strata_distribution/C",
+      "fmt": "int"
+    },
+    "RecoveredStratumBTasks": {
+      "file": "results/recovered_56_tasks_report.json",
+      "ptr": "/metadata/strata_distribution/B",
+      "fmt": "int"
+    },
+    "RecoveredTotalSymbols": {
+      "file": "results/recovered_56_tasks_report.json",
+      "ptr": "/metadata/total_symbols_extracted",
+      "fmt": "int"
+    },
+    "ScoreFusionTotalTasks": {
+      "file": "results/ppr_score_fusion_results.json",
+      "ptr": "/total_tasks_processed",
+      "fmt": "int"
+    },
+    "ScoreFusionStratumCRRFAccFive": {
+      "file": "results/ppr_score_fusion_results.json",
+      "ptr": "/cohorts/stratum_c/rrf_k10/acc5_pct",
+      "fmt": "pct2_raw"
+    },
+    "ScoreFusionStratumCPureLLMAccFive": {
+      "file": "results/ppr_score_fusion_results.json",
+      "ptr": "/cohorts/stratum_c/alpha_ppr_1.0/acc5_pct",
+      "fmt": "pct2_raw"
+    },
+    "ScoreFusionStratumCRRFMRR": {
+      "file": "results/ppr_score_fusion_results.json",
+      "ptr": "/cohorts/stratum_c/rrf_k10/mrr",
+      "fmt": "num4"
+    },
+    "ScoreFusionStratumCPureLLMMRR": {
+      "file": "results/ppr_score_fusion_results.json",
+      "ptr": "/cohorts/stratum_c/alpha_ppr_1.0/mrr",
+      "fmt": "num4"
+    },
+    "ScoreFusionStratumCPVal": {
+      "file": "results/ppr_score_fusion_results.json",
+      "ptr": "/cohorts/stratum_c/rrf_k10/mcnemar_vs_pure_llm/p_value",
+      "fmt": "pval4"
+    },
+    "StratumCETwoBAFourAccOne": {
+      "file": "results/kaggle_stratum_c_results.json",
+      "ptr": "/summary/A4/acc_at_1_pct",
+      "fmt": "pct2_raw"
+    },
+    "StratumCETwoBAFourAccThree": {
+      "file": "results/kaggle_stratum_c_results.json",
+      "ptr": "/summary/A4/acc_at_3_pct",
+      "fmt": "pct2_raw"
+    },
+    "StratumCETwoBAFourAccFive": {
+      "file": "results/kaggle_stratum_c_results.json",
+      "ptr": "/summary/A4/acc_at_5_pct",
+      "fmt": "pct2_raw"
+    },
+    "StratumCETwoBAFourAccTen": {
+      "file": "results/kaggle_stratum_c_results.json",
+      "ptr": "/summary/A4/acc_at_10_pct",
+      "fmt": "pct2_raw"
+    },
+    "StratumCETwoBAFourMRR": {
+      "file": "results/kaggle_stratum_c_results.json",
+      "ptr": "/summary/A4/mrr_50",
+      "fmt": "num4"
+    },
+    "StratumCETwoBATwoAccFive": {
+      "file": "results/kaggle_stratum_c_results.json",
+      "ptr": "/summary/A2/acc_at_5_pct",
+      "fmt": "pct1_raw"
+    },
+    "StratumCBZeroAccOne": {
+      "file": "results/kaggle_stratum_c_results.json",
+      "ptr": "/summary/B0/acc_at_1_pct",
+      "fmt": "pct2_raw"
+    },
+    "StratumCBZeroAccThree": {
+      "file": "results/kaggle_stratum_c_results.json",
+      "ptr": "/summary/B0/acc_at_3_pct",
+      "fmt": "pct2_raw"
+    },
+    "StratumCBZeroAccFive": {
+      "file": "results/kaggle_stratum_c_results.json",
+      "ptr": "/summary/B0/acc_at_5_pct",
+      "fmt": "pct2_raw"
+    },
+    "StratumCBZeroAccTen": {
+      "file": "results/kaggle_stratum_c_results.json",
+      "ptr": "/summary/B0/acc_at_10_pct",
+      "fmt": "pct2_raw"
+    },
+    "StratumCBZeroMRR": {
+      "file": "results/kaggle_stratum_c_results.json",
+      "ptr": "/summary/B0/mrr_50",
+      "fmt": "num4"
     }
   }
 }

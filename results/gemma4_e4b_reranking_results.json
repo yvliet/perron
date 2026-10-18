@@ -1,0 +1,1362 @@
+{
+  "summary": {
+    "model": "google/gemma-4-e4b-it",
+    "n_tasks": 131,
+    "metrics": {
+      "acc_at_1_pct": 16.79,
+      "acc_at_3_pct": 32.06,
+      "acc_at_5_pct": 37.4,
+      "acc_at_10_pct": 41.22,
+      "mrr": 0.2562
+    },
+    "baselines_comparison": {
+      "gemma_4_e2b_it": {
+        "acc_at_1": 24.7,
+        "acc_at_5": 47.1,
+        "mrr": 0.3409
+      },
+      "unscored_bm25": {
+        "acc_at_1": 25.3,
+        "acc_at_5": 44.8,
+        "mrr": 0.3439
+      }
+    },
+    "delta_vs_e2b": {
+      "delta_acc1_pp": -7.91,
+      "delta_acc5_pp": -9.7,
+      "delta_mrr": -0.0847
+    }
+  },
+  "tasks": {
+    "astropy__astropy-13033": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 68,
+      "gold_ranks": [
+        1
+      ]
+    },
+    "astropy__astropy-13236": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 55,
+      "gold_ranks": []
+    },
+    "astropy__astropy-14369": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.3333333333333333,
+      "total_candidates": 65,
+      "gold_ranks": [
+        3
+      ]
+    },
+    "astropy__astropy-14539": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.25,
+      "total_candidates": 54,
+      "gold_ranks": [
+        4
+      ]
+    },
+    "astropy__astropy-7166": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 58,
+      "gold_ranks": []
+    },
+    "django__django-10973": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 58,
+      "gold_ranks": []
+    },
+    "django__django-11138": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.3333333333333333,
+      "total_candidates": 58,
+      "gold_ranks": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        19,
+        22,
+        24,
+        25,
+        26,
+        27,
+        28,
+        34,
+        52,
+        55,
+        56
+      ]
+    },
+    "django__django-11141": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 59,
+      "gold_ranks": []
+    },
+    "django__django-11239": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 59,
+      "gold_ranks": [
+        1
+      ]
+    },
+    "django__django-11292": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 52,
+      "gold_ranks": []
+    },
+    "django__django-11299": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 60,
+      "gold_ranks": []
+    },
+    "django__django-11433": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 51,
+      "gold_ranks": []
+    },
+    "django__django-11477": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 61,
+      "gold_ranks": []
+    },
+    "django__django-11490": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 68,
+      "gold_ranks": []
+    },
+    "django__django-11555": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.05,
+      "total_candidates": 71,
+      "gold_ranks": [
+        20
+      ]
+    },
+    "django__django-11734": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.3333333333333333,
+      "total_candidates": 56,
+      "gold_ranks": [
+        3
+      ]
+    },
+    "django__django-11820": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 54,
+      "gold_ranks": []
+    },
+    "django__django-11951": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.5,
+      "total_candidates": 66,
+      "gold_ranks": [
+        2
+      ]
+    },
+    "django__django-12143": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": true,
+      "mrr": 0.16666666666666666,
+      "total_candidates": 83,
+      "gold_ranks": [
+        6
+      ]
+    },
+    "django__django-12262": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 86,
+      "gold_ranks": []
+    },
+    "django__django-12325": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 62,
+      "gold_ranks": [
+        1
+      ]
+    },
+    "django__django-12858": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": true,
+      "mrr": 0.16666666666666666,
+      "total_candidates": 81,
+      "gold_ranks": [
+        6
+      ]
+    },
+    "django__django-12965": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 59,
+      "gold_ranks": []
+    },
+    "django__django-13112": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 55,
+      "gold_ranks": []
+    },
+    "django__django-13128": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 70,
+      "gold_ranks": []
+    },
+    "django__django-13297": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 62,
+      "gold_ranks": []
+    },
+    "django__django-13512": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 57,
+      "gold_ranks": [
+        1
+      ]
+    },
+    "django__django-13516": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 59,
+      "gold_ranks": []
+    },
+    "django__django-13568": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.5,
+      "total_candidates": 56,
+      "gold_ranks": [
+        2
+      ]
+    },
+    "django__django-13569": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 76,
+      "gold_ranks": []
+    },
+    "django__django-13821": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 56,
+      "gold_ranks": [
+        1
+      ]
+    },
+    "django__django-14007": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 57,
+      "gold_ranks": []
+    },
+    "django__django-14122": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 55,
+      "gold_ranks": []
+    },
+    "django__django-14311": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 61,
+      "gold_ranks": []
+    },
+    "django__django-14376": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 63,
+      "gold_ranks": []
+    },
+    "django__django-14404": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 57,
+      "gold_ranks": []
+    },
+    "django__django-14500": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 54,
+      "gold_ranks": [
+        1
+      ]
+    },
+    "django__django-14771": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 63,
+      "gold_ranks": []
+    },
+    "django__django-15022": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 63,
+      "gold_ranks": []
+    },
+    "django__django-15037": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 60,
+      "gold_ranks": []
+    },
+    "django__django-15098": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 56,
+      "gold_ranks": []
+    },
+    "django__django-15127": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 51,
+      "gold_ranks": []
+    },
+    "django__django-15161": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 55,
+      "gold_ranks": []
+    },
+    "django__django-15278": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 59,
+      "gold_ranks": []
+    },
+    "django__django-15280": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.07142857142857142,
+      "total_candidates": 57,
+      "gold_ranks": [
+        14
+      ]
+    },
+    "django__django-15731": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.5,
+      "total_candidates": 62,
+      "gold_ranks": [
+        2
+      ]
+    },
+    "django__django-15930": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.5,
+      "total_candidates": 66,
+      "gold_ranks": [
+        2
+      ]
+    },
+    "django__django-15957": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.3333333333333333,
+      "total_candidates": 81,
+      "gold_ranks": [
+        3,
+        7
+      ]
+    },
+    "django__django-16082": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 53,
+      "gold_ranks": []
+    },
+    "django__django-16116": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 66,
+      "gold_ranks": [
+        1,
+        28
+      ]
+    },
+    "django__django-16145": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.3333333333333333,
+      "total_candidates": 67,
+      "gold_ranks": [
+        3
+      ]
+    },
+    "django__django-16502": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.5,
+      "total_candidates": 61,
+      "gold_ranks": [
+        2
+      ]
+    },
+    "django__django-16642": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.5,
+      "total_candidates": 68,
+      "gold_ranks": [
+        2
+      ]
+    },
+    "django__django-16662": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 67,
+      "gold_ranks": []
+    },
+    "django__django-16877": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 69,
+      "gold_ranks": [
+        1,
+        3
+      ]
+    },
+    "django__django-16899": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.5,
+      "total_candidates": 54,
+      "gold_ranks": [
+        2
+      ]
+    },
+    "django__django-16901": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 60,
+      "gold_ranks": []
+    },
+    "django__django-16950": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 63,
+      "gold_ranks": []
+    },
+    "django__django-17084": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 76,
+      "gold_ranks": []
+    },
+    "django__django-7530": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 60,
+      "gold_ranks": []
+    },
+    "matplotlib__matplotlib-22871": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.5,
+      "total_candidates": 67,
+      "gold_ranks": [
+        2
+      ]
+    },
+    "matplotlib__matplotlib-23412": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 65,
+      "gold_ranks": []
+    },
+    "matplotlib__matplotlib-24177": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 63,
+      "gold_ranks": []
+    },
+    "matplotlib__matplotlib-24627": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 60,
+      "gold_ranks": []
+    },
+    "matplotlib__matplotlib-24870": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 71,
+      "gold_ranks": [
+        1,
+        5
+      ]
+    },
+    "matplotlib__matplotlib-25287": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 71,
+      "gold_ranks": []
+    },
+    "mwaskom__seaborn-3069": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.25,
+      "total_candidates": 62,
+      "gold_ranks": [
+        4
+      ]
+    },
+    "mwaskom__seaborn-3187": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 61,
+      "gold_ranks": []
+    },
+    "pallets__flask-5014": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 51,
+      "gold_ranks": [
+        1
+      ]
+    },
+    "psf__requests-1142": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.2,
+      "total_candidates": 55,
+      "gold_ranks": [
+        5,
+        31
+      ]
+    },
+    "psf__requests-1766": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.25,
+      "total_candidates": 60,
+      "gold_ranks": [
+        4
+      ]
+    },
+    "psf__requests-1921": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.25,
+      "total_candidates": 68,
+      "gold_ranks": [
+        4
+      ]
+    },
+    "psf__requests-2931": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.03571428571428571,
+      "total_candidates": 75,
+      "gold_ranks": [
+        28
+      ]
+    },
+    "psf__requests-5414": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 62,
+      "gold_ranks": [
+        1
+      ]
+    },
+    "pydata__xarray-2905": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.5,
+      "total_candidates": 61,
+      "gold_ranks": [
+        2
+      ]
+    },
+    "pydata__xarray-4356": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 72,
+      "gold_ranks": []
+    },
+    "pydata__xarray-4629": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 56,
+      "gold_ranks": []
+    },
+    "pylint-dev__pylint-4551": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 56,
+      "gold_ranks": []
+    },
+    "pylint-dev__pylint-4604": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 59,
+      "gold_ranks": []
+    },
+    "pylint-dev__pylint-4661": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 53,
+      "gold_ranks": []
+    },
+    "pylint-dev__pylint-7277": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 64,
+      "gold_ranks": [
+        1
+      ]
+    },
+    "pytest-dev__pytest-10356": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": true,
+      "mrr": 0.125,
+      "total_candidates": 61,
+      "gold_ranks": [
+        8,
+        9,
+        10,
+        11
+      ]
+    },
+    "pytest-dev__pytest-5787": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 74,
+      "gold_ranks": []
+    },
+    "pytest-dev__pytest-5809": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 87,
+      "gold_ranks": []
+    },
+    "pytest-dev__pytest-7521": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 65,
+      "gold_ranks": []
+    },
+    "pytest-dev__pytest-7982": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 59,
+      "gold_ranks": []
+    },
+    "scikit-learn__scikit-learn-10908": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.09090909090909091,
+      "total_candidates": 53,
+      "gold_ranks": [
+        11
+      ]
+    },
+    "sphinx-doc__sphinx-10323": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 59,
+      "gold_ranks": []
+    },
+    "sphinx-doc__sphinx-10435": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 62,
+      "gold_ranks": []
+    },
+    "sphinx-doc__sphinx-10449": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 56,
+      "gold_ranks": [
+        1,
+        2
+      ]
+    },
+    "sphinx-doc__sphinx-10614": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.5,
+      "total_candidates": 58,
+      "gold_ranks": [
+        2
+      ]
+    },
+    "sphinx-doc__sphinx-7440": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.5,
+      "total_candidates": 77,
+      "gold_ranks": [
+        2
+      ]
+    },
+    "sphinx-doc__sphinx-7454": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.037037037037037035,
+      "total_candidates": 67,
+      "gold_ranks": [
+        27
+      ]
+    },
+    "sphinx-doc__sphinx-7590": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 71,
+      "gold_ranks": []
+    },
+    "sphinx-doc__sphinx-7748": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 57,
+      "gold_ranks": []
+    },
+    "sphinx-doc__sphinx-7757": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 69,
+      "gold_ranks": []
+    },
+    "sphinx-doc__sphinx-7889": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": true,
+      "mrr": 0.125,
+      "total_candidates": 71,
+      "gold_ranks": [
+        8,
+        14
+      ]
+    },
+    "sphinx-doc__sphinx-7910": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 61,
+      "gold_ranks": []
+    },
+    "sphinx-doc__sphinx-8035": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 56,
+      "gold_ranks": [
+        1,
+        19
+      ]
+    },
+    "sphinx-doc__sphinx-8056": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": true,
+      "mrr": 0.16666666666666666,
+      "total_candidates": 64,
+      "gold_ranks": [
+        6,
+        13,
+        15
+      ]
+    },
+    "sphinx-doc__sphinx-8120": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 57,
+      "gold_ranks": []
+    },
+    "sphinx-doc__sphinx-8265": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 58,
+      "gold_ranks": []
+    },
+    "sphinx-doc__sphinx-8269": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 55,
+      "gold_ranks": []
+    },
+    "sphinx-doc__sphinx-8459": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 64,
+      "gold_ranks": [
+        1
+      ]
+    },
+    "sphinx-doc__sphinx-8475": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 61,
+      "gold_ranks": []
+    },
+    "sphinx-doc__sphinx-8548": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 59,
+      "gold_ranks": []
+    },
+    "sphinx-doc__sphinx-8551": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.25,
+      "total_candidates": 60,
+      "gold_ranks": [
+        4
+      ]
+    },
+    "sphinx-doc__sphinx-8593": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.3333333333333333,
+      "total_candidates": 55,
+      "gold_ranks": [
+        3
+      ]
+    },
+    "sphinx-doc__sphinx-8621": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 60,
+      "gold_ranks": []
+    },
+    "sphinx-doc__sphinx-8638": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 57,
+      "gold_ranks": []
+    },
+    "sphinx-doc__sphinx-9229": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 60,
+      "gold_ranks": []
+    },
+    "sphinx-doc__sphinx-9230": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 68,
+      "gold_ranks": []
+    },
+    "sphinx-doc__sphinx-9258": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 55,
+      "gold_ranks": []
+    },
+    "sphinx-doc__sphinx-9281": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 52,
+      "gold_ranks": []
+    },
+    "sphinx-doc__sphinx-9320": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.25,
+      "total_candidates": 68,
+      "gold_ranks": [
+        4,
+        7
+      ]
+    },
+    "sphinx-doc__sphinx-9367": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 62,
+      "gold_ranks": [
+        1,
+        2,
+        37
+      ]
+    },
+    "sphinx-doc__sphinx-9461": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.5,
+      "total_candidates": 52,
+      "gold_ranks": [
+        2
+      ]
+    },
+    "sphinx-doc__sphinx-9591": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 60,
+      "gold_ranks": []
+    },
+    "sphinx-doc__sphinx-9602": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 52,
+      "gold_ranks": [
+        1
+      ]
+    },
+    "sphinx-doc__sphinx-9658": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 70,
+      "gold_ranks": []
+    },
+    "sphinx-doc__sphinx-9673": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.5,
+      "total_candidates": 60,
+      "gold_ranks": [
+        2
+      ]
+    },
+    "sphinx-doc__sphinx-9698": {
+      "hit_1": false,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 0.3333333333333333,
+      "total_candidates": 54,
+      "gold_ranks": [
+        3
+      ]
+    },
+    "sphinx-doc__sphinx-9711": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 59,
+      "gold_ranks": [
+        1
+      ]
+    },
+    "sympy__sympy-13798": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 72,
+      "gold_ranks": []
+    },
+    "sympy__sympy-14248": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 59,
+      "gold_ranks": []
+    },
+    "sympy__sympy-15809": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 50,
+      "gold_ranks": []
+    },
+    "sympy__sympy-15875": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 54,
+      "gold_ranks": [
+        1
+      ]
+    },
+    "sympy__sympy-15976": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 60,
+      "gold_ranks": [
+        1
+      ]
+    },
+    "sympy__sympy-18763": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 65,
+      "gold_ranks": [
+        1
+      ]
+    },
+    "sympy__sympy-20916": {
+      "hit_1": true,
+      "hit_3": true,
+      "hit_5": true,
+      "hit_10": true,
+      "mrr": 1.0,
+      "total_candidates": 61,
+      "gold_ranks": [
+        1
+      ]
+    },
+    "sympy__sympy-22080": {
+      "hit_1": false,
+      "hit_3": false,
+      "hit_5": false,
+      "hit_10": false,
+      "mrr": 0.0,
+      "total_candidates": 76,
+      "gold_ranks": []
+    }
+  }
+}
