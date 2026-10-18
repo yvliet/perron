@@ -193,7 +193,11 @@
       "A4_hits": 16,
       "total": 131,
       "A4_acc_pct": 12.21,
-      "A4_vs_A2_p_value": 0.125
+      "delta_pp": 3.82,
+      "n10": 6,
+      "n01": 1,
+      "A4_vs_A2_p_value": 0.125,
+      "mcnemar_exact_formula": "2 * sum_{i=0}^1 binom(7, i) / 2^7 = 16 / 128 = 0.1250"
     },
     "stratum_c_listwise_summary": {
       "mrr_lift_pct": 97.3,

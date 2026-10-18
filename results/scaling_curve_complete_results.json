@@ -32,6 +32,9 @@
       "mean_graph_auc": 0.927415136504036,
       "n_tasks": 58,
       "listwise_anchor_metrics": {
+        "cohort_description": "Full Stratum C cohort (un-named defects)",
+        "cohort_n_tasks": 131,
+        "pointwise_scaling_union_n_tasks": 58,
         "acc_top1": 0.04580152671755725,
         "acc_top5": 0.16793893129770993,
         "mrr": 0.09341492314562485,

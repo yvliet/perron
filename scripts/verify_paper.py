@@ -313,6 +313,17 @@ def check_runner_cli():
     assert "tools" in cfg, "agent.yaml missing 'tools' section"
 
 
+def check_resource_parquet_dataset():
+    parquet_path = REPO_ROOT / "dist_dataset" / "scores.parquet"
+    assert parquet_path.is_file(), f"Missing resource parquet dataset: {parquet_path}"
+    import pyarrow.parquet as pq
+    table = pq.read_table(parquet_path)
+    assert table.num_rows == 19298, f"Expected 19,298 scored evaluations, found {table.num_rows}"
+    expected_cols = {"instance_id", "candidate_id", "prompt_variant", "s", "format_mass", "n_prompt_tokens"}
+    actual_cols = set(table.column_names)
+    assert expected_cols.issubset(actual_cols), f"Missing expected parquet columns: {expected_cols - actual_cols}"
+
+
 def main():
     print("=" * 70)
     print("PERRON COMPREHENSIVE VERIFICATION & AUDIT SUITE")
@@ -332,6 +343,7 @@ def main():
         ("Core Unit Test Battery", check_unit_tests),
         ("Turnkey Agent Runner CLI & Manifest Verification", check_runner_cli),
         ("Telemetry Consistency", check_telemetry_consistency),
+        ("Resource Parquet Dataset Integrity", check_resource_parquet_dataset),
         ("No Hardcoded Numbers in TeX", check_no_hardcoded_numbers_tex),
         ("Editorial Style & Terminology Standards", check_style_guidelines),
         ("Typography Standards", check_typography),

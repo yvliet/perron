@@ -341,6 +341,23 @@ python scripts/verify_paper.py               # Verify quality checks (figures, c
 .\read.ps1 -Watch
 ```
 
+### Artifact Consistency Audit & Programmatic Verification
+
+Perron maintains strict programmatic parity between experimental JSON/Parquet telemetry, the publication monograph (`paper/main.tex` → `paper/main.pdf`), and the research writeup (`paper/paper_writeup.md`). All metrics are audited through `scripts/verify_paper.py` across 20 automated gates:
+
+| Benchmark Dimension | Empirical Metric | Sample / Stratum | Source Artifact |
+| :--- | :---: | :---: | :--- |
+| Candidate Reranking Acc@5 | 47.09% (162/344) | N=344 Verified (A4 Graph 1-hop) | `results/gemma4_protocol_tables.json` |
+| Reasoning Factorial Acc@1 | 9.92% (13/131) | N=131 Stratum C (A4 + Thinking) | `results/gemma4_protocol_tables.json` |
+| Scaling Monotonicity ROC-AUC | 0.8544 → 0.9274 | N=58 Stratum C (2B → 4B FP16) | `results/scaling_curve_complete_results.json` |
+| Leave-Django-Out Acc@5 | 34.57% (56/162) | N=162 Non-Django (A4 Graph 1-hop) | `results/gemma4_protocol_tables.json` |
+| 3-Stage Rank Compaction | 5.88 → 5.32 → 3.74 | N=131 Direct → Pruned → Thinking | `paper/main.tex` / `paper_writeup.md` |
+
+#### Programmatic Verification Pipeline
+- **20-Gate Quality Suite**: `python scripts/verify_paper.py` validates citations, macros, telemetry bounds, schema integrity, and word ceilings.
+- **Parquet Integrity (Gate 20)**: Directly tests `dist_dataset/scores.parquet` existence, row count (19,298 rows), and PyArrow schema compliance.
+- **Text Layer Verification**: Extracts raw text layers directly from compiled `paper/main.pdf` using `pypdf`, confirming that compiled publication outputs match underlying numerical claims.
+
 ---
 
 ## 7. Author & License

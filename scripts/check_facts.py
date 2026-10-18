@@ -124,6 +124,11 @@ FIXED_ALLOW = {
     "56.04%",
     "58.24%",
     "47.09%",
+    "26.00%",
+    "26.0%",
+    "44%",
+    "36%",
+    "3 MB",
 }  # statistical conventions and SLA labels
 TOKEN_RES = (
     re.compile(r"\d+(?:\.\d+)?%"),
