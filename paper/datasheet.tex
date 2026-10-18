@@ -11,14 +11,14 @@ Following the documentation standard of Gebru et al.~\cite{gebru2021datasheets},
 The dataset comprises three primary components:
 \begin{enumerate}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
     \item \textbf{SWE-bench Strata Annotations} (\path{data/swebench_strata_annotations.jsonl}): 800 evaluation records across 707 unique task instances (300 in SWE-bench Lite, 500 in SWE-bench Verified, with 93 overlapping pairs). Each instance is classified into Stratum A (\texttt{A\_named}), Stratum B (\texttt{B\_trace}), or Stratum C (\texttt{C\_unnamed}). The 500 SWE-bench Verified tasks follow a strict CONSORT partition: 344 callable evaluated tasks, 93 exploratory Lite overlap, 56 file-preimage drift, and 7 module-level non-callable edits ($344 + 93 + 56 + 7 = 500$).
-    \item \textbf{12 Repository AST Multigraphs} (\path{artifacts/swebench_graphs/}): Compressed SciPy CSR matrices and symbol tables encompassing 109{,}240 nodes and 341{,}892 directed edges partitioned across four typed relation layers (\texttt{call}, \texttt{import}, \texttt{inherit}, and \texttt{co-locate}).
+    \item \textbf{12 Repository AST Multigraphs} (\path{artifacts/swebench_graphs/}): Compressed SciPy CSR matrices and symbol tables encompassing 109{,}240 nodes and 341{,}892 directed edges partitioned across four typed relation layers (\texttt{call}, \texttt{caller}, \texttt{import}, and \texttt{inherit}).
     \item \textbf{Scored Model Telemetry} (\path{scores.parquet}, \path{gemma4_e4b_scores.parquet}): 19{,}298 candidate evaluations from Gemma~4 E2B and 8{,}113 candidate evaluations from Gemma~4 E4B across SWE-bench Verified.
 \end{enumerate}
 
 \subsection{Collection Process}
 Repository graphs were extracted from clean checkouts at specific base commits using Python's native AST and Tree-sitter parsers. Strata classifications were assigned via deterministic regular expression matching with strict identifier boundaries (\path{perron/analysis/strata.py}). Telemetry was captured during offline inference in FP16 precision.
 
-\subsection{Preprocessing, Cleaning, and Human Inter-Annotator Agreement}
+\subsection{Preprocessing, Cleaning, and Classifier-vs-Human Validation Audit}
 File paths were normalized to POSIX standards. Missing distances are encoded as JSON null in compliance with RFC~8259. To verify that the deterministic regex heuristic represents genuine linguistic ground truth, an independent human validation audit was conducted on a stratified random sample of $N=\StrataSampleSize$ tasks ($N_A=45, N_B=15, N_C=40$, seed=42) against raw GitHub issue statements without access to regex tags.
 The audit demonstrated an observed concordance of \StrataHumanConcordance\ (\StrataConcordantCount/\StrataSampleSize\ tasks) and an empirical Cohen's $\kappa = \StrataCohenKappa$ (95\% CI $[0.849, 0.988]$, chance agreement $p_e = \StrataChancePe$). Under Landis and Koch criteria, $\kappa = \StrataCohenKappa$ reflects almost perfect agreement, confirming that the automated heuristic reliably mirrors human expert classification.
 
