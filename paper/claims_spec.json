@@ -4791,6 +4791,36 @@
       "file": "results/kaggle_stratum_c_results.json",
       "ptr": "/summary/B0/mrr_50",
       "fmt": "num4"
+    },
+    "StrataCohenKappa": {
+      "file": "results/strata_human_validation.json",
+      "ptr": "/cohen_kappa",
+      "fmt": "num3"
+    },
+    "StrataHumanConcordance": {
+      "file": "results/strata_human_validation.json",
+      "ptr": "/human_concordance_pct",
+      "fmt": "pct1_raw"
+    },
+    "StrataSampleSize": {
+      "file": "results/strata_human_validation.json",
+      "ptr": "/sample_size",
+      "fmt": "int"
+    },
+    "StrataConcordantCount": {
+      "file": "results/strata_human_validation.json",
+      "ptr": "/concordant_count",
+      "fmt": "int"
+    },
+    "StrataObservedPo": {
+      "file": "results/strata_human_validation.json",
+      "ptr": "/observed_agreement_po",
+      "fmt": "pct1"
+    },
+    "StrataChancePe": {
+      "file": "results/strata_human_validation.json",
+      "ptr": "/chance_agreement_pe",
+      "fmt": "pct1"
     }
   }
 }

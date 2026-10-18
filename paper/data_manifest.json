@@ -258,31 +258,49 @@
     "c1_baseline_isolated": {
       "acc1": 2.29,
       "acc1_hits": 3,
-      "acc1_clopper_pearson_95": [0.47, 6.55],
+      "acc1_clopper_pearson_95": [
+        0.47,
+        6.55
+      ],
       "acc5": 15.27,
       "acc5_hits": 20,
-      "acc5_clopper_pearson_95": [9.58, 22.59],
+      "acc5_clopper_pearson_95": [
+        9.58,
+        22.59
+      ],
       "mrr50": 0.0778,
       "mean_rank": 17.47
     },
     "c2_structural_provenance": {
       "acc1": 3.82,
       "acc1_hits": 5,
-      "acc1_clopper_pearson_95": [1.25, 8.68],
+      "acc1_clopper_pearson_95": [
+        1.25,
+        8.68
+      ],
       "acc5": 16.03,
       "acc5_hits": 21,
-      "acc5_clopper_pearson_95": [10.21, 23.45],
+      "acc5_clopper_pearson_95": [
+        10.21,
+        23.45
+      ],
       "mrr50": 0.0899,
-      "mean_rank": 17.40
+      "mean_rank": 17.4
     },
     "c3_thinking_provenance": {
       "acc1": 9.16,
       "acc1_hits": 12,
-      "acc1_clopper_pearson_95": [4.82, 15.45],
+      "acc1_clopper_pearson_95": [
+        4.82,
+        15.45
+      ],
       "acc5": 17.56,
       "acc5_hits": 23,
-      "acc5_clopper_pearson_95": [11.47, 25.17],
-      "mrr50": 0.1270,
+      "acc5_clopper_pearson_95": [
+        11.47,
+        25.17
+      ],
+      "mrr50": 0.127,
       "mean_rank": 17.18
     },
     "contrast_c3_vs_c1_acc1": {
@@ -304,11 +322,96 @@
     "unscored_bm25_auc": 0.8245,
     "seed_gold_auc": 0.7966,
     "graph_gold_auc": 0.6596,
-    "auc_drop": 0.1370,
+    "auc_drop": 0.137,
     "mann_whitney_u": 2993.0,
     "mann_whitney_p": 0.00358,
     "cliffs_delta": 0.3605,
     "breakeven_auc_star_k5_m24_5": 0.8298,
     "breakeven_auc_star_k5_m15": 0.7143
+  },
+  "sha256_checksums": {
+    "artifacts/swebench_graphs/astropy__astropy_graph.npz": "b9f0379776600f21c85cca26a3f0d2ab5a549481841c6716486056502eed30b5",
+    "artifacts/swebench_graphs/astropy__astropy_layers.npz": "9389f3ac1cbbc2dcd6bdface56321aa44ece76a5483ebe6dd5b03d8509bf9bd3",
+    "artifacts/swebench_graphs/astropy__astropy_meta.json": "4bc8b4dd4e7fbcd323e8a29ce1d2c4bf1546b6dbeef21c08b3902e1951478c5c",
+    "artifacts/swebench_graphs/astropy__astropy_symbols.json": "eaf4c2a310a08da9f23ce1fce16d5ea8cb3c116e23da660a8773e172bacff577",
+    "artifacts/swebench_graphs/dataset-metadata.json": "4f96e68f02e0d566d97ef325440204e05b36d1c68cd0f929506aabd61abcedff",
+    "artifacts/swebench_graphs/django__django_graph.npz": "8f873e1eb4ca86124fcb802e32fbdf873a6c43ae169bdfa45de345806a975d7d",
+    "artifacts/swebench_graphs/django__django_layers.npz": "b93e72ca00d25d32fe93587d03c7729662f25f6e47036a9cd03bbb914e8a8419",
+    "artifacts/swebench_graphs/django__django_meta.json": "890312e145c2a3f475d766200f408bf71ff0f94d13c4e8f4421f7e16740f408b",
+    "artifacts/swebench_graphs/django__django_symbols.json": "fd853e0ace6d9c5ca49abc8fe22557cf50bc4a2090bc456d2c6e9c282465eced",
+    "artifacts/swebench_graphs/matplotlib__matplotlib_graph.npz": "fb3550c983d961f5f21dc5823b196acb1857583b0a90947f68b7200d71b8bbe0",
+    "artifacts/swebench_graphs/matplotlib__matplotlib_layers.npz": "1b07e4be84c84fc35e4b15f8a70af4925860881394f6d5f44af50a0468c62bf1",
+    "artifacts/swebench_graphs/matplotlib__matplotlib_meta.json": "0b8e505cb1f5da05280453266f01c6f52801cc655973962e7233e994d84d7e0e",
+    "artifacts/swebench_graphs/matplotlib__matplotlib_symbols.json": "48305d7295bd3beaf9f02335e6f2d666c427f731157e24f70a9eeaa35b33ac5b",
+    "artifacts/swebench_graphs/mwaskom__seaborn_graph.npz": "5e98422165349d1dd80f5509330611d53f6a27ae8442ecc57f8b0d577b0f3aff",
+    "artifacts/swebench_graphs/mwaskom__seaborn_layers.npz": "8e1b51e78e3c9f46866e89ae00ce3bd1146bc07ff67238c1a263cfafbe4dda7e",
+    "artifacts/swebench_graphs/mwaskom__seaborn_meta.json": "c2e00425bcaa8a52a41783001a3dfd747acf5868b8226839dcdb0771da0bd0d7",
+    "artifacts/swebench_graphs/mwaskom__seaborn_symbols.json": "1601335a720302a139a8aa89b5a81a1a02484ed89c60350dc4116d326e97468a",
+    "artifacts/swebench_graphs/pallets__flask_graph.npz": "a6934a9fb63f1b08266618f7e3740891fc527c73b81547333e3961fc0c982136",
+    "artifacts/swebench_graphs/pallets__flask_layers.npz": "66b6fbbce443bfb117c822ff54d49bff60efb6bb8cbb4b9e022d60edca6e62a3",
+    "artifacts/swebench_graphs/pallets__flask_meta.json": "54214a42be7435446640027c56500e611e1a1f2d810d2e0e6af77c9b91bac3dd",
+    "artifacts/swebench_graphs/pallets__flask_symbols.json": "e1d3a448e009d89f2a2e89bf3b05802bbf0ba82d39192355441da99550795517",
+    "artifacts/swebench_graphs/psf__requests_graph.npz": "1615d6d30999d903866507506eb9e3f1fd80b280d977aa0a0919d26eef6a33c4",
+    "artifacts/swebench_graphs/psf__requests_layers.npz": "d9510e405f23d73cde5c9f1e2bc145ee8ed15c9b730a4620ad36949a25398711",
+    "artifacts/swebench_graphs/psf__requests_meta.json": "98b15c89e63561327937c2e91c189406e1b4341fde904a897487d5c250b820ff",
+    "artifacts/swebench_graphs/psf__requests_symbols.json": "ace54cbe5f55baac5ec017fb5d1b4031017873cd1eaf0c7a8cef365612d90ef8",
+    "artifacts/swebench_graphs/pydata__xarray_graph.npz": "a8c559c800647040aae8b4280295e44a795e47c0ceae2f7b697574cb2c430fd9",
+    "artifacts/swebench_graphs/pydata__xarray_layers.npz": "a9decb7371cc98c2a1a90e3d604a9b51dfb65c81d4470c2c2792117a40bff730",
+    "artifacts/swebench_graphs/pydata__xarray_meta.json": "ff6e30c0080c39b9d6e6140ba4bcec7e82d3c6071d2e4394c4926b82da9d9af2",
+    "artifacts/swebench_graphs/pydata__xarray_symbols.json": "931dd0a3f1338d66d0fdeb0e1c42f313b3a10cb36a97bd0debcef59e9194b616",
+    "artifacts/swebench_graphs/pylint-dev__pylint_graph.npz": "b17df3d0dd634335e987d15b695116a1404587b0eda6c3c6c49fffc67ff7dbf6",
+    "artifacts/swebench_graphs/pylint-dev__pylint_layers.npz": "618e487cd46f85f5c4c3187416dcac5d068adf28d045942a54c2c3110fc423a2",
+    "artifacts/swebench_graphs/pylint-dev__pylint_meta.json": "bd6858a9d18f0cb162a5c292b090fa482e81b3d2e930b55d9d869ba8838b6d14",
+    "artifacts/swebench_graphs/pylint-dev__pylint_symbols.json": "530961d7bb6fbe79e151ab8649fb489ed238aff9266fcaba08604cecb5a98485",
+    "artifacts/swebench_graphs/pytest-dev__pytest_graph.npz": "07fbede63ba52c1d7bb7e73605e7e4314e756c77d9326f0b7ecb84efad299543",
+    "artifacts/swebench_graphs/pytest-dev__pytest_layers.npz": "2e4d6ff6d9d88c40633d493ade430ba03528b7bb70873de4cc18d913b2ee0fa6",
+    "artifacts/swebench_graphs/pytest-dev__pytest_meta.json": "889c6c11f9387fafc58bb868bc89df13ae8863519341de1c04ffdcbb67465a40",
+    "artifacts/swebench_graphs/pytest-dev__pytest_symbols.json": "069f95c301da1ae71efd127184dc612b21001e40d8b6483c7d8b4deeec30a0cd",
+    "artifacts/swebench_graphs/scikit-learn__scikit-learn_graph.npz": "788024a862069394197ab0622233bfe3737e855dfcfd9b17696a5280486fcbdb",
+    "artifacts/swebench_graphs/scikit-learn__scikit-learn_layers.npz": "4ba0bfc5a4624fa907f5170a9b05998103f9aa8af795b13b177e8a662a21da21",
+    "artifacts/swebench_graphs/scikit-learn__scikit-learn_meta.json": "18df30fad0dc0cafc605fcf74b0d3bec0b100bca5f686056e4acf198adc3e3b6",
+    "artifacts/swebench_graphs/scikit-learn__scikit-learn_symbols.json": "b80e29454fbf4efea4f3093d5fe71d112a5146e48e3f29c646cd47eb1377382d",
+    "artifacts/swebench_graphs/sphinx-doc__sphinx_graph.npz": "8c482c26d28ff64f1c18c6af5e6b4e2942c5c488f0d80e418b7d2dca75377408",
+    "artifacts/swebench_graphs/sphinx-doc__sphinx_layers.npz": "51326276b585b9c9cc4255f54674de7170950a341ba58a15e0ced1e535055333",
+    "artifacts/swebench_graphs/sphinx-doc__sphinx_meta.json": "615a57ca4c2670dfc7f3256fb6b4f15adba6bb299f5e10940968cd0f76d45ada",
+    "artifacts/swebench_graphs/sphinx-doc__sphinx_symbols.json": "9c352887498ed8a4823b063e4f0e1e37c15f69a584496707b214b21da96e6918",
+    "artifacts/swebench_graphs/sympy__sympy_graph.npz": "771f940327dbb1a37ca77b9b7109d6e6ecb2239476b93835214a6f793ee8c4ff",
+    "artifacts/swebench_graphs/sympy__sympy_layers.npz": "fe56ec9223a4144152eae839e13792e718440e87c0425593edbc2a082eb63440",
+    "artifacts/swebench_graphs/sympy__sympy_meta.json": "a83e7d1dd099beff02dd73c21755476e8ec338d0a82ea9fe86fea06daaea5cac",
+    "artifacts/swebench_graphs/sympy__sympy_symbols.json": "ed0262e34470ce6de610379803cd6403341995383de0969412d608f6b9ec8a2c",
+    "data/swebench_strata_annotations.jsonl": "d90b28f6d418216512bc324e43eda69303f951313b7527e01a053bc0d89e235f",
+    "dist_dataset/swebench_strata_annotations.jsonl": "bab1bb832d63fb752ca1bab23df62cd485d5c0fb08e7e0855252b5f53184b0e0",
+    "data_release/task_manifest.json": "83c7256402fcfbe8b7656b096455393b5731f7e0f4ab675c912e71f5b0771733",
+    "data_release/scores.parquet": "f75bbed78c5d13385aa337d6f12bc0eead0a2c4866326698f86189e9abb9609f",
+    "results/scores.parquet": "f75bbed78c5d13385aa337d6f12bc0eead0a2c4866326698f86189e9abb9609f",
+    "results/gemma4_e4b_scores.parquet": "6203ed4168e881088cd5b9c31c31bd1e16183491e35b0281dc95a2ac9b5461ab",
+    "results/strata_human_validation.json": "991bf9523a358aed339dfe18d55035a72266efd290eb5321399e4460066ac5ca",
+    "docs/datasheet.md": "0a710cde20ea1943b1c54be3b3143ae99d5cb0c0407c1759d565b8d9eb42a419",
+    "dist_dataset/DATASHEET.md": "0a710cde20ea1943b1c54be3b3143ae99d5cb0c0407c1759d565b8d9eb42a419",
+    "paper/datasheet.tex": "43fa9bcd3c208d84e30489535a5845a0dae2941f5d58740610e49ca1edea77cf"
+  },
+  "community_resource_package": {
+    "title": "Perron Open Code Graph & Task Stratification Resource",
+    "author": "Sultan Haikal (GitHub: @yvliet)",
+    "license": "Apache-2.0",
+    "total_unique_tasks": 707,
+    "total_strata_records": 800,
+    "swebench_verified_total": 500,
+    "swebench_verified_callable": 344,
+    "swebench_lite_total": 300,
+    "total_graph_repositories": 12,
+    "total_graph_nodes": 109240,
+    "total_graph_edges": 341892,
+    "inter_annotator_validation": {
+      "sample_size": 100,
+      "human_concordance_pct": 95.0,
+      "cohen_kappa": 0.9184,
+      "cohen_kappa_ci_95": [
+        0.849,
+        0.988
+      ],
+      "chance_agreement_pe": 0.3875,
+      "interpretation": "Almost Perfect Agreement (kappa >= 0.81)"
+    }
   }
 }
