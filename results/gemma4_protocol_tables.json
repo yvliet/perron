@@ -212,7 +212,7 @@
       "dense_fn_acc_10": 38.4
     },
     "headroom": {
-      "reasoning_headroom_pct": 91.9
+      "reasoning_headroom_pct": 91.8
     },
     "table_one_verified": {
       "bm25_file_acc_5": 59.6,
@@ -256,10 +256,25 @@
       "rerank_discordant_n01": 18,
       "rerank_discordant_n10": 18,
       "rerank_discordant_mcnemar_p": 1.0,
-      "non_django_tasks": 230,
-      "non_django_delta_pp": 2.17,
-      "non_django_mcnemar_p": 0.227,
-      "non_django_pool_parity_pct": 57.1
+      "non_django_tasks": 162,
+      "non_django_delta_pp": 1.85,
+      "non_django_mcnemar_p": 0.5811,
+      "non_django_pool_parity_pct": 50.0,
+      "non_django_a4_acc5": 34.57,
+      "non_django_a2_acc5": 32.72,
+      "non_django_a2_recall_pct": 48.77,
+      "non_django_benchmark_pct": 47.09,
+      "django_tasks": 182,
+      "django_benchmark_pct": 52.91,
+      "django_a2_acc5": 56.04,
+      "django_a4_acc5": 58.24,
+      "django_delta_pp": 2.20,
+      "django_mcnemar_p": 0.1250,
+      "tost_power_pct": 1.92,
+      "tost_power_pct_approx": 2.1,
+      "tost_target_tasks": 1058,
+      "reasoning_top1_4test_holm_p": 0.0625,
+      "reasoning_reversal_p": 0.0703
     },
     "discordant_strata_breakdown": {
       "graph_only_a_pct": 50.0,

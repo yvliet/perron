@@ -3133,12 +3133,97 @@
     "NonDjangoMcNemarP": {
       "file": "results/gemma4_protocol_tables.json",
       "ptr": "/tables/authoritative_constants/non_django_mcnemar_p",
-      "fmt": "pval3"
+      "fmt": "pval4"
     },
     "NonDjangoPoolParityPct": {
       "file": "results/gemma4_protocol_tables.json",
       "ptr": "/tables/authoritative_constants/non_django_pool_parity_pct",
       "fmt": "pct1_raw"
+    },
+    "NonDjangoAFourAccFive": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/non_django_a4_acc5",
+      "fmt": "pct2_raw"
+    },
+    "NonDjangoATwoAccFive": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/non_django_a2_acc5",
+      "fmt": "pct2_raw"
+    },
+    "NonDjangoAFourAccFiveRound": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/non_django_a4_acc5",
+      "fmt": "pct1_raw"
+    },
+    "NonDjangoATwoAccFiveRound": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/non_django_a2_acc5",
+      "fmt": "pct1_raw"
+    },
+    "NonDjangoATwoRecallPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/non_django_a2_recall_pct",
+      "fmt": "pct2_raw"
+    },
+    "NonDjangoATwoRecallPctRound": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/non_django_a2_recall_pct",
+      "fmt": "pct1_raw"
+    },
+    "NonDjangoBenchmarkPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/non_django_benchmark_pct",
+      "fmt": "pct2_raw"
+    },
+    "DjangoTasks": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/django_tasks",
+      "fmt": "int"
+    },
+    "DjangoBenchmarkPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/django_benchmark_pct",
+      "fmt": "pct2_raw"
+    },
+    "DjangoATwoAccFive": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/django_a2_acc5",
+      "fmt": "pct2_raw"
+    },
+    "DjangoAFourAccFive": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/django_a4_acc5",
+      "fmt": "pct2_raw"
+    },
+    "DjangoDeltaPP": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/django_delta_pp",
+      "fmt": "delta_pp"
+    },
+    "DjangoMcNemarP": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/django_mcnemar_p",
+      "fmt": "pval4"
+    },
+    "TostPowerPct": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/tost_power_pct",
+      "fmt": "pct2_raw"
+    },
+    "TostPowerPctApprox": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/tost_power_pct_approx",
+      "fmt": "pct1_raw"
+    },
+    "TostTargetTasks": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/tost_target_tasks",
+      "fmt": "thousands"
+    },
+    "ReasoningTopOneHolmP": {
+      "file": "results/gemma4_protocol_tables.json",
+      "ptr": "/tables/authoritative_constants/reasoning_top1_4test_holm_p",
+      "fmt": "pval4"
     },
     "TruncATwoRecallTen": {
       "file": "results/gemma4_protocol_tables.json",

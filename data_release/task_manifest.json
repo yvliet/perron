@@ -20,12 +20,28 @@
     "legacy": {
       "A": 208,
       "B": 5,
-      "C": 131
+      "C": 131,
+      "total": 344
     },
-    "programmatic": {
+    "legacy_audited": {
+      "A": 208,
+      "B": 5,
+      "C": 131,
+      "total": 344
+    },
+    "programmatic_regex": {
+      "A": 168,
+      "B": 7,
+      "C": 169,
+      "total": 344
+    }
+  },
+  "strata_distribution_verified_all_500": {
+    "programmatic_regex": {
       "A": 180,
       "B": 21,
-      "C": 299
+      "C": 299,
+      "total": 500
     }
   },
   "tasks": {

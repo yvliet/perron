@@ -22,6 +22,8 @@ Following the **Datasheets for Datasets** framework proposed by Gebru et al. (20
 - **What do the instances that comprise the dataset represent?**  
   The dataset comprises **300 task instances** corresponding to the canonical SWE-bench Lite benchmark across 12 mature Python repositories (`astropy`, `django`, `matplotlib`, `seaborn`, `flask`, `requests`, `xarray`, `pylint`, `pytest`, `scikit-learn`, `sphinx`, `sympy`).
 
+  *Note on SWE-bench Verified Evaluation Architecture*: The public release bundle (`data_release/graphs/`) contains the 300 per-task Lite graphs indexed at each task's exact historical `base_commit`. In contrast, the paper's confirmatory evaluation on SWE-bench Verified ($N=344$ evaluated) utilized single frozen repository snapshots (`artifacts/swebench_graphs/`) to benchmark static offline agent caching. The 56 tasks excluded due to `FILE_ABSENT_PREIMAGE_DRIFT` were audited via per-task checkouts, confirming 100% Python 3 parseability.
+
 - **How many instances are there in total?**  
   300 instances partitioned into three disjoint splits:
   - `dev_pilot` ($N = 50$): exploratory calibration subset.
@@ -77,6 +79,9 @@ Following the **Datasheets for Datasets** framework proposed by Gebru et al. (20
 - **What are non-intended uses?**  
   - Generative code completion without AST validation.
   - Code attribution or author de-anonymization.
+
+- **Reproducing Paper Stratum C Cohorts**:  
+  In `task_manifest.json`, each task includes both `stratum_legacy` (the audited classification used in the paper's $N=131$ Stratum C experiments) and `stratum` (the programmatic regex classification, where $N=169$ on Verified callable). To filter for the exact $N=131$ cohort evaluated in Table 6, filter tasks where `task["is_callable"] is True and task["stratum_legacy"] == "C"`.
 
 ---
 
