@@ -385,10 +385,10 @@
     "data_release/scores.parquet": "f75bbed78c5d13385aa337d6f12bc0eead0a2c4866326698f86189e9abb9609f",
     "results/scores.parquet": "f75bbed78c5d13385aa337d6f12bc0eead0a2c4866326698f86189e9abb9609f",
     "results/gemma4_e4b_scores.parquet": "6203ed4168e881088cd5b9c31c31bd1e16183491e35b0281dc95a2ac9b5461ab",
-    "results/strata_human_validation.json": "991bf9523a358aed339dfe18d55035a72266efd290eb5321399e4460066ac5ca",
-    "docs/datasheet.md": "0a710cde20ea1943b1c54be3b3143ae99d5cb0c0407c1759d565b8d9eb42a419",
-    "dist_dataset/DATASHEET.md": "0a710cde20ea1943b1c54be3b3143ae99d5cb0c0407c1759d565b8d9eb42a419",
-    "paper/datasheet.tex": "43fa9bcd3c208d84e30489535a5845a0dae2941f5d58740610e49ca1edea77cf"
+    "results/strata_human_validation.json": "f08b83d3976e46e5077df7deb8843f18bd0af1392298dd7f2a80cb61eabefcdd",
+    "docs/datasheet.md": "8dae8a2a4c31ba72912983d8a47c796bc68988c9ea24adebab5d8d23a323a15d",
+    "dist_dataset/DATASHEET.md": "8dae8a2a4c31ba72912983d8a47c796bc68988c9ea24adebab5d8d23a323a15d",
+    "paper/datasheet.tex": "9e6ef1b53e3f1fa62decbc74ad0a76b633038521cc947fe5b6575e392a88ee3e"
   },
   "community_resource_package": {
     "title": "Perron Open Code Graph & Task Stratification Resource",

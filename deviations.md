@@ -10,17 +10,14 @@
 
 ## 1. Overview & Pre-Registration Integrity
 
-All confirmatory empirical evaluations reported in the Perron manuscript were executed under pre-registered, cryptographically sealed protocol specifications:
-1. **Confirmatory Retrieval Protocol**: Git commit `6908e78` (publicly committed and pushed October 5, 2026, 14:22 UTC)  
-   - Protocol SHA-256: `89416e40d8591ef14a38343118ee493a3fd17724a87ad82361fc37cae9d3cecb`  
-   - Task Split SHA-256: `95c7ef3c42875b16955fc18698bfb64d1f5cb598686cfbb8fcf05a90d3d578eb`  
-2. **Gemma 4 Pointwise Reranking Protocol**: Git commits `a13ab34` (Stage 1 protocol freeze) and `9abe405` (Stage 2 cryptographic lock, October 6, 2026)  
-   - Protocol Definition: `benchmarks/protocol/gemma4_protocol_v1.yaml` (SHA-256: `96af162121e784576ee8a8929e0618774780516baae9d4f0df3e5e4faea8ef8e`)  
-   - Stage 2 Cryptographic Lock: `gemma4_lock_v1.json` (SHA-256: `dbbf292023bd042b31174688174542ee904351b8d6f51cb32098b9f71c49b6b7`)  
-   - Scored Data Release: `data_release/scores.parquet` (19,298 candidate evaluations)  
-   - Git Protocol Tags: `prereg-retrieval` (`6908e78`), `prereg-gemma4-stage1` (`a13ab34`), `prereg-gemma4-stage2` (`9abe405`)  
-
-All pre-registered protocol gates (Gates G0 through G5) passed deterministically.
+All confirmatory empirical evaluations reported in the Perron manuscript were executed under git-committed, cryptographically hashed protocol specifications:
+1. **Confirmatory Retrieval & Metric Foundation**: Git commit `6908e78` (committed October 3, 2026, 09:03 UTC)  
+   - Protocol Implementation: `perron/metrics/` and `perron/analysis/strata.py`
+   - Split Partition Definition: `data/swebench_lite_split.json` (SHA-256 LF: `95c7ef3ca69214f5ac9f6bcba20e2531596ed260c2cbe181d2df3a56873d259b`, CRLF: `18a947a0e8a7941231ab15f11c1eee335adc58f8d03cbce742637452c9a23418`)  
+2. **Gemma 4 Pointwise Reranking Protocol**: Git commits `a13ab34` (Stage 1 protocol freeze) and `9abe405` (Stage 2 candidate lock, October 6, 2026)  
+   - Protocol Definition: `benchmarks/protocol/gemma4_protocol_v1.yaml` (SHA-256: `96af1621a27b48a99666a8fcef626ecd2415fd094fc6b6803fce567c38d927ce`)  
+   - Stage 2 Candidate Lock: `benchmarks/protocol/gemma4_lock_v1.json` (SHA-256 LF: `281508f0f0a35e03cbbfd5b4ec3d69913e3f0c995552252cd68a33e95ec9dfbc`, CRLF: `dbbf292032b2fdff39692476b3d557dddd437a176b745f4ae63ca34fab254712`)  
+   - Scored Data Release: `results/scores.parquet` (19,298 candidate evaluations, SHA-256: `f75bbed78c5d13385aa337d6f12bc0eead0a2c4866326698f86189e9abb9609f`)
 
 ---
 
@@ -48,9 +45,11 @@ All pre-registered protocol gates (Gates G0 through G5) passed deterministically
 
 ---
 
-## 4. Strata Extraction Validation Disclosure
+## 4. Strata Extraction Validation & Inter-Annotator Agreement Disclosure
 
-The lexical accessibility strata (Stratum A: Named, Stratum B: Traceback, Stratum C: Un-Named) were extracted via the deterministic pipeline `perron.analysis.strata`. To evaluate extraction validity beyond deterministic reproducibility, a double-blind human verification spot-check was conducted across 50 randomly sampled SWE-bench Verified tasks. The human audit verified 100% agreement (50/50 concordant classifications) with the regex extraction logic, confirming that issue descriptions matching AST function identifiers were accurately classified without false positives from common programming keywords.
+The lexical accessibility strata (Stratum A: Named, Stratum B: Traceback, Stratum C: Un-Named) were extracted via the deterministic pipeline `perron.analysis.strata`. To evaluate extraction validity beyond deterministic reproducibility, an independent human validation audit was conducted on a stratified random sample of $N=100$ tasks ($N_A=45, N_B=15, N_C=40$, seed=42) against raw GitHub issue statements without access to regex tags (`results/strata_human_validation.json`, SHA-256: `f08b83d3976e46e5077df7deb8843f18bd0af1392298dd7f2a80cb61eabefcdd`). The audit demonstrated 95.0% observed concordance (95/100 concordant classifications) and an empirical Cohen's $\kappa = 0.9184$ (95% CI $[0.849, 0.988]$, chance agreement $p_e = 38.75\%$), confirming almost perfect agreement under Landis and Koch criteria.
+
+In addition, lexical strata in the primary benchmark evaluation ($N=344$) reflect the initial substring classification ($A=208, B=5, C=131$ in `verified_confirmatory_evaluation.json`), whereas the released community dataset (`dist_dataset/swebench_strata_annotations.jsonl`) provides boundary-enforced AST regex classification ($A=168, B=7, C=169$ on the 344 tasks; $A=180, B=21, C=299$ on all 500 Verified tasks), with 44 tasks shifting classifications due to exact word boundary enforcement.
 
 ---
 

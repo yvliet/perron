@@ -151,15 +151,15 @@ def fit_primary_models(df: pd.DataFrame) -> Dict[str, Any]:
     df_a2["arm"] = pd.Categorical(df_a2["arm"], categories=["A2", "A1", "A3", "A4", "A5", "A6", "B0", "B1"])
     df_a2["stratum"] = pd.Categorical(df_a2["stratum"], categories=["A", "B", "C"])
 
-    # 1. Cluster-Robust Logit (Ref: A2) for Acc@5
+    # 1. Cluster-Robust Logit (Ref: A2) for Acc@5 (Task-level clustering across 344 instances)
     m_logit_acc5_a2 = smf.logit("hit_acc5 ~ C(arm) + C(stratum)", data=df_a2).fit(
-        cov_type="cluster", cov_kwds={"groups": df_a2["repo"]}, disp=False
+        cov_type="cluster", cov_kwds={"groups": df_a2["instance_id"]}, disp=False
     )
 
-    # 2. GEE (Ref: A2) for Acc@5
+    # 2. GEE (Ref: A2) for Acc@5 (Grouped by task instance)
     m_gee_acc5_a2 = smf.gee(
         "hit_acc5 ~ C(arm) + C(stratum)",
-        groups="repo",
+        groups="instance_id",
         data=df_a2,
         family=sm.families.Binomial(),
         cov_struct=sm.cov_struct.Exchangeable(),
@@ -171,12 +171,12 @@ def fit_primary_models(df: pd.DataFrame) -> Dict[str, Any]:
     df_a4["stratum"] = pd.Categorical(df_a4["stratum"], categories=["A", "B", "C"])
 
     m_logit_acc5_a4 = smf.logit("hit_acc5 ~ C(arm) + C(stratum)", data=df_a4).fit(
-        cov_type="cluster", cov_kwds={"groups": df_a4["repo"]}, disp=False
+        cov_type="cluster", cov_kwds={"groups": df_a4["instance_id"]}, disp=False
     )
 
     # 4. Cluster-Robust Logit (Ref: A2) for Acc@1
     m_logit_acc1_a2 = smf.logit("hit_acc1 ~ C(arm) + C(stratum)", data=df_a2).fit(
-        cov_type="cluster", cov_kwds={"groups": df_a2["repo"]}, disp=False
+        cov_type="cluster", cov_kwds={"groups": df_a2["instance_id"]}, disp=False
     )
 
     return {
@@ -226,10 +226,10 @@ def fit_stratum_c_models(df: pd.DataFrame) -> Dict[str, Any]:
     df_c["arm"] = pd.Categorical(df_c["arm"], categories=["A2", "A1", "A3", "A4", "A5", "A6", "B0", "B1"])
 
     m_c_acc5 = smf.logit("hit_acc5 ~ C(arm)", data=df_c).fit(
-        cov_type="cluster", cov_kwds={"groups": df_c["repo"]}, disp=False
+        cov_type="cluster", cov_kwds={"groups": df_c["instance_id"]}, disp=False
     )
     m_c_acc1 = smf.logit("hit_acc1 ~ C(arm)", data=df_c).fit(
-        cov_type="cluster", cov_kwds={"groups": df_c["repo"]}, disp=False
+        cov_type="cluster", cov_kwds={"groups": df_c["instance_id"]}, disp=False
     )
 
     return {
@@ -281,10 +281,10 @@ def fit_causal_factorial_interaction() -> Dict[str, Any]:
     df_causal = pd.DataFrame(rows)
 
     m_c1 = smf.logit("hit_acc1 ~ provenance * thinking", data=df_causal).fit(
-        cov_type="cluster", cov_kwds={"groups": df_causal["repo"]}, disp=False
+        cov_type="cluster", cov_kwds={"groups": df_causal["instance_id"]}, disp=False
     )
     m_c5 = smf.logit("hit_acc5 ~ provenance * thinking", data=df_causal).fit(
-        cov_type="cluster", cov_kwds={"groups": df_causal["repo"]}, disp=False
+        cov_type="cluster", cov_kwds={"groups": df_causal["instance_id"]}, disp=False
     )
 
     return {
@@ -334,24 +334,14 @@ def fit_pool_mode_interaction() -> Dict[str, Any]:
                 })
 
     # Listwise observations for A1, A2, A4
-    # In Stratum C listwise telemetry, A4_listwise, A2_listwise, and A1_listwise:
-    # A4: 6 hits@1, 22 hits@5
-    # A2: 6 hits@1, 22 hits@5
-    # A1: 4 hits@1, 20 hits@5
-    # To preserve exact pairing, we use the evaluated candidate sets from bundle
     for t in bundle["tasks"]:
         iid = t["instance_id"]
         repo = repo_map.get(iid, "unknown")
         gold_ids = set(t.get("gold_symbol_ids", []))
 
-        # Check candidate ordering in pool
         for p_arm in ["A1", "A2", "A4"]:
             cands = t.get("pools", {}).get(p_arm, [])
-            # In listwise mode, top-k evaluation reflects model reranking
-            # Here we pull from official_ranked_symbol_ids
             ranked = t.get("official_ranked_symbol_ids", {}).get(p_arm, cands)
-            # The listwise telemetry confirms identical performance for A4 and A2
-            # Here we reflect the exact hit counts
             rows.append({
                 "instance_id": iid,
                 "repo": repo,
@@ -365,7 +355,7 @@ def fit_pool_mode_interaction() -> Dict[str, Any]:
     df_pool["pool"] = pd.Categorical(df_pool["pool"], categories=["A2", "A1", "A4"])
 
     m_pool_acc5 = smf.logit("hit_acc5 ~ C(pool) * is_listwise", data=df_pool).fit(
-        cov_type="cluster", cov_kwds={"groups": df_pool["repo"]}, disp=False
+        cov_type="cluster", cov_kwds={"groups": df_pool["instance_id"]}, disp=False
     )
 
     return {

@@ -5,7 +5,7 @@
 - **Author**: Sultan Haikal (GitHub: `@yvliet`)
 - **License**: Apache-2.0
 - **Version**: 1.0.0 (October 2026)
-- **Repository**: `https://github.com/yvliet/perron-core`
+- **Repository**: `https://github.com/yvliet/perron`
 
 ---
 
@@ -54,8 +54,8 @@ Serialized as compressed SciPy CSR matrices (`*_graph.npz`, `*_layers.npz`), sym
 - Coverage: Twelve prominent Python open-source repositories: `astropy/astropy`, `django/django`, `matplotlib/matplotlib`, `mwaskom/seaborn`, `pallets/flask`, `psf/requests`, `pydata/xarray`, `pylint-dev/pylint`, `pytest-dev/pytest`, `scikit-learn/scikit-learn`, `sphinx-doc/sphinx`, and `sympy/sympy`.
 
 #### Component C: Scored Evaluation Telemetry (`results/scores.parquet`, `results/gemma4_e4b_scores.parquet`)
-- `scores.parquet`: 19,298 candidate-level evaluation records from Gemma 4 E2B pointwise scoring, recording candidate identifiers, source strata, top-k retrieval membership, and gold label indicators.
-- `gemma4_e4b_scores.parquet`: 8,113 candidate records from Gemma 4 E4B pointwise reranking across SWE-bench Verified tasks.
+- `scores.parquet`: 19,298 candidate-level evaluation records from Gemma 4 E2B pointwise scoring, containing columns `['instance_id', 'candidate_id', 'prompt_variant', 's', 'format_mass', 'n_prompt_tokens']`. Relational metadata (gold target indicators and lexical strata) are joined via `data/swebench_verified_gold_labels.json` and `dist_dataset/swebench_strata_annotations.jsonl`.
+- `gemma4_e4b_scores.parquet`: 8,113 candidate-level evaluation records from Gemma 4 E4B pointwise scoring across the multi-pool union on SWE-bench Verified tasks.
 
 ### Are there recommended data splits?
 Yes. The pre-specified confirmatory split consists of the $N=344$ callable SWE-bench Verified tasks. Exploratory analyses should be conducted on the $N=93$ overlapping tasks or the $N=300$ SWE-bench Lite tasks to preserve confirmatory validity.
@@ -102,7 +102,7 @@ The dataset has been used to conduct the empirical audit reported in the researc
 ## 6. Distribution
 
 ### How will the dataset be distributed?
-- **Code & Graph Artifacts**: Hosted on GitHub at `https://github.com/yvliet/perron-core` under the Apache-2.0 license.
+- **Code & Graph Artifacts**: Hosted on GitHub at `https://github.com/yvliet/perron` under the Apache-2.0 license.
 - **Zenodo / Kaggle Datasets**: Graph archives and evaluation parquet files are packaged under DOI-indexed repositories.
 - **Python Wheel**: `perron-core` distributed via PyPI for turnkey graph construction and evaluation reproduction.
 
