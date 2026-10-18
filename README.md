@@ -3,7 +3,7 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![PyPI](https://img.shields.io/pypi/v/perron-core.svg)](https://pypi.org/project/perron-core/)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Tests: Passing](https://img.shields.io/badge/tests-239%2F239%20passing-brightgreen.svg)]()
+[![Tests: Passing](https://img.shields.io/badge/tests-246%2F246%20passing-brightgreen.svg)]()
 
 Perron is a high-throughput AST subgraph slicing and graph retrieval engine designed for open-weights developer agents (such as Gemma 4 E4B and Gemma 4 31B) operating under strict hardware and context-window constraints.
 
@@ -62,7 +62,7 @@ The release bundle contains 300 pre-indexed SWE-bench Lite instance multigraphs 
 - Local directory: `data_release/graphs/<instance_id>/`
 - Kaggle Dataset: [`yvliet/perron-swebench-graphs`](https://www.kaggle.com/datasets/yvliet/perron-swebench-graphs)
 - Croissant 1.0 Metadata: [`data_release/croissant.json`](data_release/croissant.json)
-- Dataset Datasheet: [`data_release/DATASHEET.md`](data_release/DATASHEET.md)
+- Dataset Datasheet: [`docs/datasheet.md`](docs/datasheet.md) (Gebru et al. standard)
 
 ### Empirical Reproduction & Benchmarking
 ```bash

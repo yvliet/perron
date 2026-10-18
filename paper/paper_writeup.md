@@ -33,8 +33,8 @@ Five contributions resolve this disconnect:
 
 ## 3. Study Design & Protocol
 
-- **Benchmark & Strata**: 344 callable Verified tasks [6] across 12 repos: Stratum A (Named, 60.5%), B (Traceback, 1.5%), C (Un-Named, 38.1%). 56 tasks (52 Stratum C) were excluded under frozen snapshots (`FILE_ABSENT_PREIMAGE_DRIFT`); auditing all 56 tasks at base commits shows 100% parse in Python 3 (68 files, 3827 symbols), confirming exclusion was structural head divergence (restoring Stratum C to 183 tasks under multi-commit execution). Overturning equivalence requires $\ge +9$ net wins ($p = 0.0016$). Parameters ($\beta=0.85, \gamma=0.70, \tau=0.15, K=25$) frozen upfront.
-- **Perron CSR Engine**: CSR arrays index typed edges ($\boldsymbol{\omega} = [0.50, 0.25, 0.15, 0.10]$; $1.89\text{--}5.10$ ms solve, $<3$ MB RAM; vs SuperLU at 28.1 ms, SciPy CSR at $8.4\text{--}65.2$ ms). Operator $M = \beta(T + \mathbf{d}\mathbf{p}_0^\top) + (1-\beta)\mathbf{1}\mathbf{p}_0^\top$ ($\beta=0.85$) has Brauer bound $|\lambda_2(M)| \le \beta$ (gap $\ge 0.15$, contraction $\|\boldsymbol{\pi}^{(t)} - \boldsymbol{\pi}_\infty\|_1 \le 2\beta^t$). Damping ($\gamma=0.70$) yields $\text{HSI@10} = 99.5\%$, saving 91.9% headroom (283.8 tokens across 10 AST stubs).
+- **Benchmark & Strata**: 344 callable Verified tasks [6] across 12 repos: Stratum A (Named, 60.5%), B (Traceback, 1.5%), C (Un-Named, 38.1%). Regex classification is validated via independent human audit on $N=100$ tasks (95.0% concordance, Cohen's $\kappa=0.918$, 95% CI [0.849, 0.988]). Auditing all 56 snapshot exclusions (`FILE_ABSENT_PREIMAGE_DRIFT`) at base commits confirms 100% parse in Python 3 (68 files, 3,827 symbols; restoring Stratum C to 183 tasks); overturning equivalence requires $\ge +9$ net wins ($p = 0.0016$).
+- **Perron CSR Engine**: CSR arrays index typed edges ($\boldsymbol{\omega} = [0.50, 0.25, 0.15, 0.10]$; $1.89\text{--}5.10$ ms solve, $<3$ MB RAM vs SuperLU at 28.1 ms). Operator $M = \beta(T + \mathbf{d}\mathbf{p}_0^\top) + (1-\beta)\mathbf{1}\mathbf{p}_0^\top$ ($\beta=0.85$) has Brauer bound $|\lambda_2(M)| \le \beta$ (gap $\ge 0.15$, contraction $\|\boldsymbol{\pi}^{(t)} - \boldsymbol{\pi}_\infty\|_1 \le 2\beta^t$). Damping ($\gamma=0.70$) yields $\text{HSI@10} = 99.5\%$, saving 91.9% headroom (283.8 tokens across 10 stubs).
 - **Candidate Pools & Scoring**: Top-10 BM25 seeds ($M_t \in [10, 50]$, mean 24.5) define pools B0--A6 under pre-specified execution plans. Frozen `gemma-4-e2b-it` scores log-odds (19,298 passes). Contrasts PC1 ($A_4 - A_2$) and PC2 ($A_4 - A_3$) evaluate exact McNemar tests with Holm correction and bootstrap CIs ($B=10{,}000$).
 
 ---
@@ -144,16 +144,16 @@ I tuned `gemma-4-e2b-it` (LoRA $r=16$) on 226 Lite tasks via repository GroupKFo
 
 ## 6. Community Resource Toolkit & Specification
 
-Perron is released under Apache 2.0:
-- **Data**: 12 CSR graphs, `scores.parquet` (19,298 evaluations), and 707 strata labels (800 passes).
-- **Engine**: CSR diffusion in $1.89\text{--}5.10$ ms ($<3$ MB RAM) vs SciPy ($8.4\text{--}65.2$ ms) and SuperLU (28.1 ms). AST editor achieves 0.0% syntax errors via rollbacks vs 50.0% for diffs ($p < .001$).
-- **Code & Weights**: `perron.diffuse_with_provenance()`, `perron-mcp` server, and LoRA weights (`yvliet/perron-gemma4-e2b-lora`).
+Perron is released under Apache 2.0 (`https://github.com/yvliet/perron`):
+- **Data & Documentation**: 12 CSR multigraphs (109,240 nodes, 341,892 edges), 707 strata labels, and `scores.parquet` (19,298 evaluations), documented via a formal *Datasheet for Datasets* (Gebru et al., 2021) and SHA-256 cryptographic manifests.
+- **Engine**: CSR diffusion in $1.89\text{--}5.10$ ms ($<3$ MB RAM) vs SuperLU (28.1 ms). AST editor achieves 0.0% syntax errors via rollbacks vs 50.0% for diffs ($p < .001$).
+- **Code & Tooling**: `perron.diffuse_with_provenance()`, `perron-mcp` JSON-RPC server, and fine-tuned LoRA weights (`yvliet/perron-gemma4-e2b-lora`).
 
 ---
 
 ## 7. Conclusion
 
-Naive code graph expansion fails under small models not because graphs lack defect targets, but because low-overlap neighbors fall below expected-rank discrimination via selection conditioning, while unpruned graphs dilute seed precision. Reasoning acts as a seed distractor filter ($6 \to 12, p=0.0312^*$), while bounded pruning ($M=15$) converts 2/6 graph targets to Top-1 (38.2% reachable conversion). Furthermore, 4B positive scaling achieves 16.79% Top-1 and 37.4% Top-5, proving 2B null results reflect a model capacity floor. Clean LoRA demonstrates Top-1 reweighting on sparse targets (0.0% to 24.0%, $p=0.0312^*$) but introduces trailing rank variance; comment shortcuts induce mixed collapse ($17.1\% \to 8.6\%$). Perron provides a fast CSR foundation for local developer agents.
+Naive code graph expansion fails under small models not because graphs lack defect targets, but because low-overlap neighbors fall below expected-rank discrimination via selection conditioning, while unpruned graphs dilute seed precision. Reasoning acts as a seed distractor filter ($6 \to 12, p=0.0312^*$), while bounded pruning ($M=15$) converts 2/6 graph targets to Top-1 (38.2% reachable conversion). A 4B positive control achieves 16.79% Top-1 and 37.4% Top-5, proving 2B null results reflect a model capacity floor. Clean LoRA demonstrates Top-1 reweighting on sparse targets (0.0% to 24.0%, $p=0.0312^*$) but introduces trailing rank variance; comment shortcuts induce mixed collapse ($17.1\% \to 8.6\%$). Perron provides a fast CSR foundation for local developer agents.
 
 ---
 
