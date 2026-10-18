@@ -12,14 +12,14 @@ Across 344 Verified tasks, 1-hop AST graph expansion exhibits no statistically d
 
 ## 1. Introduction
 
-Local agents must localize defects within tight contexts (K <= 4,096). On 344 Verified tasks with frozen `gemma-4-e2b-it`, 1-hop expansion adds +7.3 pp recall over seeds, yet top-5 accuracy matches depth BM25 (47.1% vs 45.1%, Holm p=0.287).
+Local agents must localize defects within tight contexts ($K \le 4,096$). On 344 Verified tasks with frozen `gemma-4-e2b-it`, 1-hop expansion adds +7.3 pp recall over seeds, yet top-5 accuracy matches depth BM25 (47.1% vs 45.1%, Holm $p=0.287$).
 
 Five contributions resolve this disconnect:
-1. **Parity & Inconclusive Equivalence**: Expansion matches depth BM25 (Δ=+2.03 pp, exact p=0.1435); formal ±2.0 pp equivalence is inconclusive (p=0.512, power 1.92%); task GLM (OR=1.118, p=0.0876) and repository mixed model (OR=1.130, p=0.349, SE doubles to 0.130 dropping task pairing) confirm non-significance.
-2. **First-Moment Markov Floor**: Candidate inclusion requires AUC* >= 1 - (k-1)/(M-1); Proposition 1 bounds worst-case performance as a Markov floor (1/k = 0.20 at M=25, k=5). Discrimination drops to 0.6596 via candidate selection conditioning.
-3. **Scaling & Positive Control**: Monotonic tail scaling (0.8544 to 0.9274); 4B union control reaches 16.79% Top-1, 37.4% Top-5 (MRR 0.2562); 52.0 GB MoE bound (fused 3D tensors).
-4. **Candidate Disambiguation & Horizon Compaction**: Reasoning lifts 4B Top-1 at M=25 via candidate disambiguation (6 to 12, p=0.0312*); M=15 pruning cuts prompt tokens by 40%, compacting mean gold rank from 5.88 to 5.32 to 3.74 with zero Top-1 loss (13/131 in both pools, adverse-pair p=0.0703, hit-flip p=0.1250).
-5. **Post-Training Dynamics**: Clean LoRA lifts isolated Top-1 to 24.0% (p=0.0312*), but regresses Acc@5 (44% to 36%) below Graph-First (52.0%), exhibiting training-set adaptation.
+1. **Parity & Equivalence**: Expansion matches depth BM25 ($\Delta=+2.03$ pp, exact $p=0.1435$; $\pm 2.0$ pp equivalence is inconclusive, $p=0.512$, power 1.92%); task GLM (OR=1.118, p=0.0876) and repo mixed model (OR=1.130, p=0.349) confirm non-significance.
+2. **Markov Floor**: Candidate inclusion requires $\text{AUC}^* \ge 1 - (k-1)/(M-1)$; Proposition 1 bounds worst-case performance as a Markov floor ($1/k=0.20$ at $M=25, k=5$). Discrimination drops to 0.6596 via candidate selection conditioning.
+3. **Scaling & MoE Bound**: Tail discrimination scales monotonically (0.8544 to 0.9274); 4B union control reaches 16.79% Top-1, 37.4% Acc@5 (MRR 0.2562); 26B-A4B MoE 52.0 GB footprint exceeds Dual T4.
+4. **Disambiguation & Pruning**: Reasoning lifts 4B Top-1 at $M=25$ via seed disambiguation (6 to 12, $p=0.0312^*$); $M=15$ pruning cuts candidate stubs by 40%, compacting mean gold rank from 5.88 to 5.32 to 3.74 with zero Top-1 loss (13/131 in both pools).
+5. **Post-Training Dynamics**: Clean LoRA lifts isolated Top-1 to 24.0% ($p=0.0312^*$), but regresses Acc@5 (44% to 36%) below Graph-First (52.0%), showing localized training-set adaptation.
 
 ---
 
@@ -57,7 +57,7 @@ Across 344 tasks, BM25 reaches 50.9% Fn Acc@10 (175/344); Perron reaches 50.3% (
 | **A5** | Null graph | 24.1% | 45.9% | 0.3315 |
 | **A6** | Perron | 23.6% | 45.6% | 0.3301 |
 
-- **Statistical Testing & GLMM**: PC1 (A4 - A2): +2.03 pp (95% CI [-0.29, +4.36], discordant 12/5, exact p=0.1435, Holm p=0.287). Task-clustered GLM (N=344) confirms non-significance (OR=1.118, SE=0.065, p=0.0876; GEE p=0.0901; repository mixed model OR=1.130, SE=0.130, z=0.937, p=0.349, σ_repo=0.963). Under Schuirmann TOST (α=0.05), equivalence within ±2.0 pp is inconclusive (p=0.512; power 1.92% at N=344, requiring N ≈ 1,058 tasks). Superiority MDE is 3.35 pp at 80% power (N ≈ 970 for +2.0 pp; 90% Tango interval [+0.07, +4.24] pp). Hub diffusion dilutes precision (A6 45.6% vs A4 47.1%); discrimination drops 0.7966 to 0.6596 on graph neighbors via selection conditioning.
+- **Statistical Testing & GLMM**: PC1 (A4 - A2): +2.03 pp (95% CI [-0.29, +4.36], 12/5 discordant, exact $p=0.1435$, Holm $p=0.287$). Task GLM (OR=1.118, p=0.0876) and repo mixed model (OR=1.130, p=0.349, $\sigma_{\text{repo}}=0.963$) confirm non-significance. Equivalence within $\pm 2.0$ pp is inconclusive ($p=0.512$, power 1.92%, requiring $N \approx 1{,}058$). MDE is 3.35 pp at 80% power; 90% Tango interval is [+0.07, +4.24] pp. Diffusion dilutes precision (A6 45.6% vs A4 47.1%); discrimination drops from 0.7966 to 0.6596 via selection conditioning.
 - **Loss Funnel**: Seeds capture 51.2% (48.8 pp loss); Graph reaches 58.4% (41.6 pp boundary loss); Reranking retains 47.1% Top-5 (11.3 pp loss; N=100: Gemma 4 recovers 74.0% oracle targets vs 33.0% BM25).
 
 ### 4.3 First-Moment Expected-Rank Identity & Stratum Asymmetry
@@ -76,7 +76,7 @@ Protocol `PROTOCOL-SCALING-v1` evaluated pointwise discrimination on Dual T4s ac
 | `DeepSeek-R1-7B` | RL Distill | 7.0B | 4-bit NF4 | 0.6489 | 6594.6 MB | 5,231s |
 | `gemma-4-26b-a4b-it` | MoE (128 exp) | 3.8B/26B | FP16 | *Bound* | *52.0 GB* | *Exceeds T4* |
 
-- **Scaling & Positive Control**: Tail discrimination scales monotonically in Gemma 4 FP16 (0.8544 to 0.9274), exceeding quantized baselines Phi-4-mini 4-bit (0.7836) and DeepSeek 7B 4-bit (0.6489; 95% CI [+0.21, +0.34]). Gemma 4 26B-A4B requires 52.0 GB unquantized FP16 VRAM (fused 3D expert tensors bypass bitsandbytes), exceeding Dual T4 capacity (29.1 GB). Positive Control (N=131): Multi-pool union scoring (M <= 87, 58 targets) with `gemma-4-e4b-it` reaches Top-1 **16.79%** (22/131), Acc@5 **37.4%** (49/131), Acc@10 **41.22%** (54/131), MRR **0.2562** (vs BM25: 3.05% Top-1, 15.27% Acc@5, MRR 0.0862). Listwise direct readout on A4(25) (M <= 25, 35 targets) yields 4.58% Top-1 and 16.79% Acc@5, which reasoning lifts to 9.92%, confirming 2B nulls reflect a capacity floor.
+- **Scaling & Positive Control**: Tail discrimination scales monotonically in Gemma 4 FP16 (0.8544 to 0.9274), exceeding quantized baselines Phi-4-mini (0.7836) and DeepSeek-7B (0.6489). Gemma 4 26B-A4B requires 52.0 GB unquantized FP16 VRAM (fused 3D expert tensors bypass 2D quantization hooks), exceeding Dual T4 capacity (29.1 GB). Positive Control ($N=131$): Union scoring ($M \le 87$) with `gemma-4-e4b-it` reaches Top-1 **16.79%** (22/131), Acc@5 **37.4%** (49/131), Acc@10 **41.22%** (54/131), MRR **0.2562** (vs BM25: 3.05% Top-1, 15.27% Acc@5, MRR 0.0862). Direct readout on A4(25) yields 4.58% Top-1 and 16.79% Acc@5, which reasoning lifts to 9.92%, confirming 2B nulls reflect a capacity floor.
 
 ### 4.5 Candidate Pool × Reasoning Factorial Matrix & M=15 Verification (N=131)
 
@@ -94,9 +94,9 @@ Protocol `PROTOCOL-SCALING-v1` evaluated pointwise discrimination on Dual T4s ac
 | Pruned Graph | 15 | 4.58% | 17.56% | 0.0970 |
 | **Pruned Graph + Think** | **15** | **9.92%** | **19.85%** | **0.1469** |
 
-- **Parity & Reasoning Lift**: Direct readout (M <= 25) ties graph (A4) and depth BM25 (A2) at 16.79% Acc@5 (22/131) and 4.58% Top-1 (6/131). Reasoning lifts A4(25) Top-1 to **9.92% (13/131; diagnostic +5.34 pp, raw p=0.0156*, Holm p=0.0625, adverse-pair p=0.0703, hit-flip p=0.1250)** and MRR (0.0934 to 0.1358); backfilling preserves 18.32% Acc@5 (p=0.6875). A4+think vs A2+think ties at 13 vs 9 (p=0.2188, M=25) and 13 vs 11 (p=0.5000, M=15). Pointwise A4 vs A2 achieves 12.21% vs 8.40% (n10=6, n01=1, p=0.1250). Reasoning disambiguates across strata: seeds convert 6/28 to 12/28 (p=0.0312*) while graph additions convert 0/7 to 1/7 (p=1.000).
+- **Parity & Reasoning Lift**: Direct readout ($M \le 25$) ties graph ($A_4$) and depth BM25 ($A_2$) at 16.79% Acc@5 (22/131) and 4.58% Top-1 (6/131). Reasoning lifts $A_4(25)$ Top-1 to **9.92% (13/131; diagnostic $+5.34$ pp, raw $p=0.0156^*$, Holm $p=0.0625$, adverse-pair $p=0.0703$, hit-flip $p=0.1250$)** and MRR (0.0934 to 0.1358); backfilling preserves 18.32% Acc@5 ($p=0.6875$). $A_4+\text{think}$ vs $A_2+\text{think}$ ties at 13 vs 9 (p=0.2188, M=25) and 13 vs 11 (p=0.5000, M=15). Pointwise $A_4$ vs $A_2$ achieves 12.21% vs 8.40% ($n_{10}=6, n_{01}=1, p=0.1250$). Reasoning disambiguates across strata: seeds convert 6/28 to 12/28 ($p=0.0312^*$) while graph additions convert 0/7 to 1/7 ($p=1.000$).
 - **Provenance (C1-C3)**: Stubs (C1, 2.29%) and provenance (C2, 3.82%) yield no lift (-0.76 pp, p=1.000); provenance + thinking (C3, 9.16%) ties thinking (C0, 9.92%).
-- **Pruning (M=15, AUC*=0.714)**: Pruning to M=15 lowers AUC* to **0.714** while retaining 34/35 defects. Evaluating the M in {15, 25} x {Direct, Thinking} factorial confirms orthogonal roles: pruning alone (M=25 to 15) preserves Top-1 (6/131, 4.58%) while cutting stubs by 40% (mean gold rank shifts 5.88 to 5.32). Pairing candidate pruning with reasoning compacts mean gold rank from 5.32 to **3.74** (Acc@5 reaches **19.85% (26/131)**, MRR **0.1469**), retaining all 13 Top-1 hits (unpruned M=25 thinking achieves mean rank 4.77). Thus, pruning supplies context compaction without hit loss; test-time reasoning supplies rank compaction.
+- **Pruning (M=15, AUC*=0.714)**: Pruning to $M=15$ lowers $\text{AUC}^*$ to 0.714 while retaining 34/35 defects. Pruning alone preserves Top-1 (6/131, 4.58%) while cutting candidate stubs by 40% (mean rank 5.88 to 5.32). Pairing pruning with reasoning compacts mean rank to **3.74** (Acc@5 reaches **19.85% [26/131]**, MRR **0.1469**), retaining all 13 Top-1 hits. Thus, pruning provides context compaction without hit loss, while reasoning provides rank compaction.
 
 ### 4.6 Lexical Dissection & Multi-Encoding Graph Representations (PROTOCOL-CAUSAL-v1)
 
@@ -130,16 +130,16 @@ I tuned `gemma-4-e2b-it` (LoRA r=16) on 226 Lite tasks via GroupKFold (171 train
 | | **Clean LoRA** | **22.9%** | **48.6%** | **0.3623** | **6.0** | **0.6392** |
 | | *Shortcut Probe* | *8.6%* | *42.9%* | *0.2596* | *6.0* | *0.6084* |
 
-- **Empirical Dynamics**: On isolated graph targets (N=25), clean LoRA lifts Top-1 to **24.0%** (6 hits, p=0.0312*) and MRR (0.1920 to 0.3288), but regresses Acc@5 (44.0% to 36.0%) and AUC (0.6063 to 0.5859) below Graph-First (52.0%, 0.7056). On mixed pools (N=35), clean LoRA reaches **22.9%** Top-1 (6 to 8 hits, p=0.7539) and **48.6%** Top-5 (13 to 17 hits, p=0.4545). A comment probe confirms Cohort A rewards non-seed bias while collapsing mixed Top-1 (17.1% to 8.6%).
+- **Empirical Dynamics**: On isolated graph targets ($N=25$), clean LoRA lifts Top-1 to **24.0%** (6 hits, $p=0.0312^*$) and MRR (0.1920 to 0.3288), but regresses Acc@5 (44.0% to 36.0%) and AUC (0.6063 to 0.5859) below Graph-First (52.0%, 0.7056). On mixed pools ($N=35$), clean LoRA reaches **22.9%** Top-1 ($p=0.7539$) and **48.6%** Top-5 ($p=0.4545$). A comment probe confirms non-seed bias collapses mixed Top-1 (17.1% to 8.6%).
 
 ---
 
 ## 5. Discussion
 
-- **Empirical Verdict & Model Specification**: Marginal tests show small offsets (+0.87 to +2.03 pp; MDE 3.35 pp at 80% power, 95% CI [-0.29, +4.36] pp). Task-clustered GLM (N=344) confirms non-significance (OR=1.118, p=0.0876, paired McNemar p=0.1435). The repository mixed model (OR=1.130, p=0.349, σ_repo=0.963) doubles standard error (0.065 to 0.130) because specifying only random repo intercepts drops within-task pairing.
-- **Selection Conditioning & Literature Corroboration**: Discrimination drop (0.7966 vs 0.6596) mirrors depth BM25 (0.6380 vs 0.6253, p=0.721), reflecting conditioning on T* not in Top10(BM25). In peer literature, RepoGraph (ICLR 2025, Table 4) confirms that while 1-hop expansion gained +3.67 pp, unpruned 2-hop collapsed to 26.00% (-5.67 pp) via distractor accumulation, corroborating Perron. Because 1-hop checking is Depth-1 (Sanford et al., 2024), reasoning functions as candidate disambiguation across lexical distractors rather than multi-hop traversal.
-- **Operating Regimes**: (1) **CSR Filter**: <5.2 ms (<= 3 MB RAM, 58.4% recall); (2) **Pruning**: Cap at M=15 (AUC*=0.714); (3) **Positive Control**: E4B reaches 16.79% Top-1, 37.4% Top-5 (MRR 0.2562); (4) **Routing**: Saves 31.4% compute; (5) **Tuning**: Overfitting cautions against tuning.
-- **Tooling Safety**: AST editor achieves 0.0% syntax errors and 76.7% valid apply vs 30.0% apply and 50.0% errors for `git apply` (p < .001).
+- **Model Specification**: Offsets (+0.87 to +2.03 pp; 95% CI [-0.29, +4.36] pp) confirm parity. Task GLM (OR=1.118, p=0.0876) and repo GLMM (OR=1.130, p=0.349, $\sigma_{\text{repo}}=0.963$) confirm non-significance; SE doubles (0.065 to 0.130) because repo intercepts drop task pairing.
+- **Selection Conditioning**: Discrimination drop (0.7966 vs 0.6596) mirrors depth BM25 (0.6380 vs 0.6253, $p=0.721$), reflecting conditioning on $T^* \notin \text{Top10}(\text{BM25})$. In literature, RepoGraph (ICLR 2025) confirms unpruned 2-hop collapsed to 26.00% ($-5.67$ pp) via distractor dilution, corroborating Perron. As 1-hop checking is Depth-1 (Sanford et al., 2024), reasoning disambiguates lexical distractors rather than traversing graphs.
+- **Operating Regimes**: (1) **CSR Filter**: $<5.2$ ms ($\le 3$ MB RAM, 58.4% recall); (2) **Pruning**: Cap at $M=15$ ($\text{AUC}^*=0.714$); (3) **Control**: E4B reaches 16.79% Top-1, 37.4% Acc@5 (MRR 0.2562); (4) **Routing**: Saves 31.4% compute; (5) **Tuning**: Overfitting cautions against adapter tuning.
+- **AST Surgery**: AST editor achieves 0.0% syntax errors and 76.7% valid apply vs 30.0% apply and 50.0% errors for `git apply` ($p < .001$).
 
 ---
 
@@ -154,7 +154,7 @@ Perron is released under Apache 2.0 (`https://github.com/yvliet/perron`):
 
 ## 7. Conclusion
 
-Code graph expansion fails under small models not because graphs lack targets, but because low-overlap neighbors fall below expected-rank discrimination via selection conditioning, while unpruned graphs dilute precision. Reasoning disambiguates candidates on 4B models (6 to 12, p=0.0312*) but degrades 2B models (-53.3%), while bounded pruning (M=15) achieves rank compaction (5.88 to 5.32 to 3.74) with zero Top-1 loss (13/131 in both pools). A 4B positive control reaches 16.79% Top-1 and 37.4% Top-5 in union scoring, indicating 2B nulls reflect a capacity floor. Clean LoRA shows Top-1 reweighting on sparse targets (0.0% to 24.0%, p=0.0312*) but adds rank variance; comment shortcuts induce mixed collapse (17.1% to 8.6%). Perron provides a fast CSR foundation for local developer agents.
+Code graph expansion stalls under small models not from missing reachability, but because low-overlap neighbors drop below expected-rank discrimination via selection conditioning, while unpruned graphs dilute precision. Test-time reasoning disambiguates candidates in 4B models ($6 \to 12, p=0.0312^*$) but degrades 2B models, while bounded pruning ($M=15$) achieves rank compaction (5.88 to 5.32 to 3.74) with zero Top-1 loss. A 4B control reaches 16.79% Top-1 and 37.4% Acc@5, indicating 2B nulls reflect a capacity floor. Clean LoRA shows Top-1 reweighting on isolated targets (24.0%, $p=0.0312^*$) but adds rank variance. Perron provides a fast, zero-copy CSR foundation for local developer agents.
 
 ---
 

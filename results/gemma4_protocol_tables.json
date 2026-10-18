@@ -200,15 +200,15 @@
       "mcnemar_exact_formula": "2 * sum_{i=0}^1 binom(7, i) / 2^7 = 16 / 128 = 0.1250"
     },
     "stratum_c_listwise_summary": {
-      "mrr_lift_pct": 97.3,
+      "mrr_lift_pct": 45.4,
       "A4_vs_A2_p_value": 1.0,
-      "A4_vs_A2_pointwise_p_value": 0.0034
+      "A4_vs_A2_pointwise_p_value": 0.1250
     },
     "causal_summary": {
-      "mrr_lift_pct": 63.2,
+      "mrr_lift_pct": 45.4,
       "subgroup_conversion_pct": 28.6,
       "subgroup_acc_one_pct": 7.1,
-      "exact_binomial_p": 0.0039,
+      "exact_binomial_p": 0.0156,
       "subgroup_p": 0.125
     },
     "funnel": {
@@ -293,6 +293,25 @@
       "lexical_only_a_pct": 38.9,
       "lexical_only_b_pct": 5.6,
       "lexical_only_c_pct": 55.6
+    },
+    "positive_control_e4b": {
+      "model": "google/gemma-4-e4b-it",
+      "n_tasks": 131,
+      "acc_at_1_pct": 16.79,
+      "acc_at_3_pct": 32.06,
+      "acc_at_5_pct": 37.4,
+      "acc_at_10_pct": 41.22,
+      "mrr": 0.2562,
+      "unscored_bm25_acc_at_1": 3.05,
+      "unscored_bm25_acc_at_5": 15.27,
+      "unscored_bm25_mrr": 0.0862
+    },
+    "scaling_surface_table": {
+      "gemma_4_e2b_it": {"params": "2.0B", "precision": "FP16", "roc_auc": 0.8544, "vram_mb": 6698.9, "runtime_s": 1798},
+      "gemma_4_e4b_it": {"params": "4.0B", "precision": "FP16", "roc_auc": 0.9274, "vram_mb": 9648.4, "runtime_s": 6250},
+      "phi_4_mini": {"params": "3.8B", "precision": "4-bit NF4", "roc_auc": 0.7836, "vram_mb": 4135.9, "runtime_s": 2854},
+      "deepseek_r1_7b": {"params": "7.0B", "precision": "4-bit NF4", "roc_auc": 0.6489, "vram_mb": 6594.6, "runtime_s": 5231},
+      "gemma_4_26b_a4b_it": {"params": "3.8B/26B", "precision": "FP16", "roc_auc": "Bound", "vram_mb": "52.0 GB", "runtime_s": "Exceeds T4"}
     }
   }
 }
