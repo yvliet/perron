@@ -111,4 +111,4 @@ The dataset has been used to conduct the empirical audit reported in the researc
 ## 7. Maintenance
 
 ### Who will maintain the dataset?
-The dataset is maintained by Sultan Haikal (GitHub: `@yvliet`, email: `yvliet@users.noreply.github.com`). Errata, graph additions, and community pull requests are reviewed via GitHub issues.
+The dataset is maintained by Sultan Haikal (GitHub: `@yvliet`, email: `recrified@gmail.com`). Errata, graph additions, and community pull requests are reviewed via GitHub issues.

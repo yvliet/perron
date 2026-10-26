@@ -246,7 +246,7 @@ python -m pytest tests/ -v
 ```
 Output:
 ```
-============================= 239 passed in 66.40s =============================
+============================= 246 passed in 60.87s =============================
 ```
 
 ### Running the Diagnostic Benchmark

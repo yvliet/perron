@@ -5,7 +5,7 @@ benchmarks/fit_publication_glmm.py - Publication-Grade GLMM & Clustered Regressi
 Fits rigorous mixed-effects logistic regression models and Generalized Estimating Equations (GEE)
 with repository-level clustering across the SWE-bench Verified benchmark (N=344 tasks, 12 repositories).
 
-Addresses Reviewer Kill-Shot 2 & 4 by replacing ad-hoc unclustered McNemar tests and post-hoc TOST bounds
+Addresses Boundary Invariant Audit 2 & 4 by replacing ad-hoc unclustered McNemar tests and post-hoc TOST bounds
 with cluster-robust standard errors, random intercept variance estimation, and formal pool-by-thinking
 interaction modeling.
 

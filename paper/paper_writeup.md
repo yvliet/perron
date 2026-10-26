@@ -1,6 +1,6 @@
 # When Does Graph Expansion Help Small Code Models Localize Bugs? An Empirical Audit of Reranking, Distractor Dilution, and Test-Time Reasoning on Gemma 4
 
-**Author**: Sultan Haikal ([@yvliet](https://github.com/yvliet)) | **Code**: [perron](https://github.com/yvliet/perron) | **License**: Apache 2.0
+**Author**: Sultan Haikal ([@yvliet](https://github.com/yvliet), recrified@gmail.com) | **Code**: [perron](https://github.com/yvliet/perron) | **License**: Apache 2.0
 
 ---
 

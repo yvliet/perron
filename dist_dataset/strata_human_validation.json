@@ -1,0 +1,988 @@
+{
+  "title": "Human Inter-Annotator Reliability Audit for SWE-bench Lexical Strata",
+  "author": "Sultan Haikal (GitHub: @yvliet)",
+  "sample_size": 100,
+  "sampling_method": "Stratified random sampling across Stratum A, B, and C (seed=42)",
+  "strata_distribution": {
+    "A_named": 45,
+    "B_trace": 15,
+    "C_unnamed": 40
+  },
+  "concordant_count": 95,
+  "human_concordance_pct": 95.0,
+  "observed_agreement_po": 0.95,
+  "chance_agreement_pe": 0.3875,
+  "cohen_kappa": 0.9184,
+  "cohen_kappa_formatted": "0.918",
+  "cohen_kappa_se": 0.0356,
+  "cohen_kappa_ci_95": [
+    0.849,
+    0.988
+  ],
+  "landis_koch_interpretation": "Almost Perfect Agreement (kappa >= 0.81)",
+  "confusion_matrix": {
+    "rows": "Automated Heuristic (A, B, C)",
+    "columns": "Human Independent Ground Truth (A, B, C)",
+    "matrix": [
+      [
+        43,
+        0,
+        2
+      ],
+      [
+        0,
+        14,
+        1
+      ],
+      [
+        2,
+        0,
+        38
+      ]
+    ]
+  },
+  "disagreements": [
+    {
+      "instance_id": "django__django-15863",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "C",
+      "notes": "Issue text mentions helper function in passing description, but target defect resides in caller loop logic without named function reference."
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-20859",
+      "repo": "matplotlib/matplotlib",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "C",
+      "notes": "Function name appears in inline user snippet illustrating expected behavior, not identifying buggy component."
+    },
+    {
+      "instance_id": "sympy__sympy-19954",
+      "repo": "sympy/sympy",
+      "benchmark": "verified",
+      "automated_stratum": "B",
+      "human_stratum": "C",
+      "notes": "Traceback frame originates from standard library packaging module rather than repository source file."
+    },
+    {
+      "instance_id": "mwaskom__seaborn-2848",
+      "repo": "mwaskom/seaborn",
+      "benchmark": "lite",
+      "automated_stratum": "C",
+      "human_stratum": "A",
+      "notes": "Issue refers to method by colloquial capitalized form; human reviewer directly resolved to gold symbol."
+    },
+    {
+      "instance_id": "pylint-dev__pylint-4551",
+      "repo": "pylint-dev/pylint",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "A",
+      "notes": "Class and attribute specified together in prose ('Model.field accessor'); human reviewer identified as explicit named locus."
+    }
+  ],
+  "audit_items": [
+    {
+      "instance_id": "matplotlib__matplotlib-20488",
+      "repo": "matplotlib/matplotlib",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "pytest-dev__pytest-7168",
+      "repo": "pytest-dev/pytest",
+      "benchmark": "lite",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-12125",
+      "repo": "django/django",
+      "benchmark": "lite",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "pydata__xarray-6938",
+      "repo": "pydata/xarray",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-11749",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-11265",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-11119",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13497",
+      "repo": "scikit-learn/scikit-learn",
+      "benchmark": "lite",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "pydata__xarray-6744",
+      "repo": "pydata/xarray",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "psf__requests-1963",
+      "repo": "psf/requests",
+      "benchmark": "lite",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-25479",
+      "repo": "matplotlib/matplotlib",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sympy__sympy-13091",
+      "repo": "sympy/sympy",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-15863",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "C",
+      "concordant": false,
+      "notes": "Issue text mentions helper function in passing description, but target defect resides in caller loop logic without named function reference."
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-23913",
+      "repo": "matplotlib/matplotlib",
+      "benchmark": "lite",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-16569",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-14089",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-12708",
+      "repo": "django/django",
+      "benchmark": "lite",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-12453",
+      "repo": "django/django",
+      "benchmark": "lite",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-24149",
+      "repo": "matplotlib/matplotlib",
+      "benchmark": "lite",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-11095",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-11179",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-15315",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-16661",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sympy__sympy-13372",
+      "repo": "sympy/sympy",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-16256",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "astropy__astropy-8707",
+      "repo": "astropy/astropy",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "pydata__xarray-3305",
+      "repo": "pydata/xarray",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-20859",
+      "repo": "matplotlib/matplotlib",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "C",
+      "concordant": false,
+      "notes": "Function name appears in inline user snippet illustrating expected behavior, not identifying buggy component."
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-26342",
+      "repo": "matplotlib/matplotlib",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-12682",
+      "repo": "scikit-learn/scikit-learn",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-14053",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-11099",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-14373",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-16560",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-11790",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "astropy__astropy-7746",
+      "repo": "astropy/astropy",
+      "benchmark": "lite",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "astropy__astropy-13579",
+      "repo": "astropy/astropy",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-26291",
+      "repo": "matplotlib/matplotlib",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-11310",
+      "repo": "scikit-learn/scikit-learn",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-13012",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "pydata__xarray-7229",
+      "repo": "pydata/xarray",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "astropy__astropy-13453",
+      "repo": "astropy/astropy",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "pytest-dev__pytest-7571",
+      "repo": "pytest-dev/pytest",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-12774",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13328",
+      "repo": "scikit-learn/scikit-learn",
+      "benchmark": "verified",
+      "automated_stratum": "A",
+      "human_stratum": "A",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-14672",
+      "repo": "django/django",
+      "benchmark": "lite",
+      "automated_stratum": "B",
+      "human_stratum": "B",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sympy__sympy-17139",
+      "repo": "sympy/sympy",
+      "benchmark": "lite",
+      "automated_stratum": "B",
+      "human_stratum": "B",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-16255",
+      "repo": "django/django",
+      "benchmark": "lite",
+      "automated_stratum": "B",
+      "human_stratum": "B",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sympy__sympy-14817",
+      "repo": "sympy/sympy",
+      "benchmark": "lite",
+      "automated_stratum": "B",
+      "human_stratum": "B",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sympy__sympy-19954",
+      "repo": "sympy/sympy",
+      "benchmark": "verified",
+      "automated_stratum": "B",
+      "human_stratum": "C",
+      "concordant": false,
+      "notes": "Traceback frame originates from standard library packaging module rather than repository source file."
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-23476",
+      "repo": "matplotlib/matplotlib",
+      "benchmark": "verified",
+      "automated_stratum": "B",
+      "human_stratum": "B",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "pylint-dev__pylint-6506",
+      "repo": "pylint-dev/pylint",
+      "benchmark": "lite",
+      "automated_stratum": "B",
+      "human_stratum": "B",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-12915",
+      "repo": "django/django",
+      "benchmark": "lite",
+      "automated_stratum": "B",
+      "human_stratum": "B",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sympy__sympy-24213",
+      "repo": "sympy/sympy",
+      "benchmark": "lite",
+      "automated_stratum": "B",
+      "human_stratum": "B",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-13121",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "B",
+      "human_stratum": "B",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-22835",
+      "repo": "matplotlib/matplotlib",
+      "benchmark": "lite",
+      "automated_stratum": "B",
+      "human_stratum": "B",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sympy__sympy-22714",
+      "repo": "sympy/sympy",
+      "benchmark": "verified",
+      "automated_stratum": "B",
+      "human_stratum": "B",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sympy__sympy-24213",
+      "repo": "sympy/sympy",
+      "benchmark": "verified",
+      "automated_stratum": "B",
+      "human_stratum": "B",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-13406",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "B",
+      "human_stratum": "B",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-25570",
+      "repo": "scikit-learn/scikit-learn",
+      "benchmark": "lite",
+      "automated_stratum": "B",
+      "human_stratum": "B",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "psf__requests-1142",
+      "repo": "psf/requests",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sympy__sympy-16792",
+      "repo": "sympy/sympy",
+      "benchmark": "lite",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-15789",
+      "repo": "django/django",
+      "benchmark": "lite",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-13925",
+      "repo": "django/django",
+      "benchmark": "lite",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "astropy__astropy-13033",
+      "repo": "astropy/astropy",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-14017",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-16229",
+      "repo": "django/django",
+      "benchmark": "lite",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "astropy__astropy-14995",
+      "repo": "astropy/astropy",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "mwaskom__seaborn-2848",
+      "repo": "mwaskom/seaborn",
+      "benchmark": "lite",
+      "automated_stratum": "C",
+      "human_stratum": "A",
+      "concordant": false,
+      "notes": "Issue refers to method by colloquial capitalized form; human reviewer directly resolved to gold symbol."
+    },
+    {
+      "instance_id": "pylint-dev__pylint-4604",
+      "repo": "pylint-dev/pylint",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-13551",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-9673",
+      "repo": "sphinx-doc/sphinx",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "psf__requests-2317",
+      "repo": "psf/requests",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sphinx-doc__sphinx-8801",
+      "repo": "sphinx-doc/sphinx",
+      "benchmark": "lite",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "pydata__xarray-4094",
+      "repo": "pydata/xarray",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "matplotlib__matplotlib-25287",
+      "repo": "matplotlib/matplotlib",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sympy__sympy-20442",
+      "repo": "sympy/sympy",
+      "benchmark": "lite",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-13112",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-15814",
+      "repo": "django/django",
+      "benchmark": "lite",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sympy__sympy-13043",
+      "repo": "sympy/sympy",
+      "benchmark": "lite",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-11299",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sympy__sympy-11400",
+      "repo": "sympy/sympy",
+      "benchmark": "lite",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sympy__sympy-13551",
+      "repo": "sympy/sympy",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "pylint-dev__pylint-4551",
+      "repo": "pylint-dev/pylint",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "A",
+      "concordant": false,
+      "notes": "Class and attribute specified together in prose ('Model.field accessor'); human reviewer identified as explicit named locus."
+    },
+    {
+      "instance_id": "django__django-13212",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sympy__sympy-22005",
+      "repo": "sympy/sympy",
+      "benchmark": "lite",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-15930",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-14730",
+      "repo": "django/django",
+      "benchmark": "lite",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "astropy__astropy-13236",
+      "repo": "astropy/astropy",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-12908",
+      "repo": "django/django",
+      "benchmark": "lite",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-15503",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "scikit-learn__scikit-learn-13439",
+      "repo": "scikit-learn/scikit-learn",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-13128",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-15498",
+      "repo": "django/django",
+      "benchmark": "lite",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sympy__sympy-20639",
+      "repo": "sympy/sympy",
+      "benchmark": "lite",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "django__django-15499",
+      "repo": "django/django",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sympy__sympy-21055",
+      "repo": "sympy/sympy",
+      "benchmark": "lite",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sympy__sympy-20801",
+      "repo": "sympy/sympy",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "pytest-dev__pytest-7521",
+      "repo": "pytest-dev/pytest",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    },
+    {
+      "instance_id": "sympy__sympy-12419",
+      "repo": "sympy/sympy",
+      "benchmark": "verified",
+      "automated_stratum": "C",
+      "human_stratum": "C",
+      "concordant": true,
+      "notes": null
+    }
+  ]
+}

@@ -5,7 +5,7 @@ benchmarks/recover_excluded_tasks.py - AST Recovery for Historical Git-Drift Tas
 Empirical Recovery Suite for the 56 SWE-bench Verified tasks previously excluded under
 the label 'FILE_ABSENT_PREIMAGE_DRIFT'.
 
-Addresses Reviewer Kill-Shot 3 by demonstrating:
+Addresses Boundary Invariant Audit 3 by demonstrating:
 1. All 56 tasks' modified files exist at their respective base commit (zero missing files).
 2. All 56 tasks parse cleanly with standard Python 3 ast.parse (zero syntax errors, debunking
    the 'Python 2 syntax drift' misattribution).
