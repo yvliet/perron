@@ -1,7 +1,7 @@
 {
   "title": "SWE-bench Lexical Accessibility Strata Annotations",
   "id": "yvliet/swebench-strata-annotations",
-  "subtitle": "707 Lexical Strata Annotations, 12 CSR Code Multigraphs & 19,298 Gemma 4 Evaluations",
+  "subtitle": "707 Lexical Strata, 12 CSR Multigraphs & 19,298 Gemma 4 Evaluations",
   "description": "Benchmark dataset pairing Princeton SWE-bench with call and import multigraphs across 12 major Python repositories. Includes 800 evaluations across 707 unique task instances, 12 CSR multigraph archives (109,240 nodes, 341,892 edges), and 19,298 scored evaluations across Google Gemma 4 models (E2B, E4B, 26B-A4B, 31B). Formatted under Apache-2.0 and MLCommons Croissant standards with a complete Gebru et al. Datasheet.",
   "licenses": [
     {
