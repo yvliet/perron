@@ -86,7 +86,7 @@ def update_manifest():
     }
 
     with open(MANIFEST_PATH, "w", encoding="utf-8") as f:
-        json.dump(manifest, f, indent=2)
+        json.dump(manifest, f, indent=4)
 
     print(f"Updated {MANIFEST_PATH} with {len(checksums)} SHA-256 checksums and community resource metadata.")
 

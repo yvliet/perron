@@ -387,7 +387,7 @@
         "results/gemma4_e4b_scores.parquet": "6203ed4168e881088cd5b9c31c31bd1e16183491e35b0281dc95a2ac9b5461ab",
         "results/strata_human_validation.json": "f08b83d3976e46e5077df7deb8843f18bd0af1392298dd7f2a80cb61eabefcdd",
         "docs/datasheet.md": "d5c18f22806254c8c1377697add367ee7e1b0c27710e600d09d0405d01f4af31",
-        "dist_dataset/DATASHEET.md": "92c4ebb313016400b18bc912f139bcd8317e3760bbbf4031c68d63450156eb56",
+        "dist_dataset/DATASHEET.md": "d5c18f22806254c8c1377697add367ee7e1b0c27710e600d09d0405d01f4af31",
         "paper/datasheet.tex": "c087a998815a7927e6f6bf3a5b5aaef7ad8d48069efcd133dcd5d4cf2d234167"
     },
     "community_resource_package": {

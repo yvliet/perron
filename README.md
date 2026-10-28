@@ -289,7 +289,6 @@ Contrasting unconstrained data center cloud APIs against Perron's local consumer
 | System / Architecture | Deployment / Model Class | Cost / Issue | Defect Resolution (Pass@1 / Diagnostic) |
 | :--- | :--- | :---: | :---: |
 | *Data Center Cloud APIs (Full SWE-bench Lite, N=300, Multi-GPU Cloud Clusters)* | | | |
-| Claude Fable 5 | Cloud Cluster API | $2.00-$5.00+ | 95.0% (Pass@1) |
 | Agentless (Xia et al.) | GPT-4o (Cloud API) | $0.34 | 27.3% (Pass@1) |
 | AutoCodeRover (Zhang et al.) | GPT-4 (Cloud API) | $0.65 | 22.0% (Pass@1) |
 | SWE-agent (Yang et al.) | GPT-4 (Cloud API) | $2.14 | 18.0% (Pass@1) |
@@ -373,7 +372,7 @@ If you use Perron or the SWE-bench Lite Multigraph Resource in your research, pl
 
 ```bibtex
 @article{haikal2026perron,
-  title={When Code Graphs Break Down: Empirical Limits, Representation Bottlenecks, and Structural Provenance in Local Developer Agents},
+  title={When Does Graph Expansion Help Small Code Models Localize Bugs? An Empirical Audit of Reranking, Distractor Dilution, and Test-Time Reasoning on Gemma 4},
   author={Haikal, Sultan},
   year={2026},
   url={https://github.com/yvliet/perron}
