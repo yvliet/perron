@@ -148,6 +148,7 @@ Perron is released under Apache 2.0 (`https://github.com/yvliet/perron`):
 - **Data & Specs**: 12 CSR multigraphs (109,240 nodes, 341,892 edges), 707 strata labels, `scores.parquet` (19,298 E2B and 8,113 E4B evaluations), *Datasheet for Datasets* (Gebru et al., 2021), SHA-256 manifests.
 - **Engine**: CSR diffusion in 1.89-5.10 ms (<3 MB RAM) with pre-commit syntax validation gates.
 - **Tooling**: `perron.diffuse_with_provenance()`, `perron-mcp` server, LoRA weights (`yvliet/perron-gemma4-e2b-lora`).
+- **Notebooks**: [Gemma 4 Workstation](https://www.kaggle.com/code/yvliet/perron-gemma-4-workstation) (Dual T4 GPU 344-task context packing) and [Quickstart Demo](https://www.kaggle.com/code/yvliet/perron-spectral-code-graph-quickstart-demo) (1.89-5.10 ms CPU diffusion).
 
 ---
 
