@@ -28,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip setuptools wheel
-          pip install -e ".[dev,data]"
+          pip install -e ".[dev,data,eval]"
 
       - name: Run test suite
         run: |
