@@ -5,12 +5,12 @@ Following the documentation standard of Gebru et al.~\cite{gebru2021datasheets},
 
 \subsection{Motivation}
 \textbf{Purpose}: The dataset was constructed to evaluate the empirical boundaries of static graph expansion, distractor dilution, and test-time reasoning in repository-level code intelligence, addressing the lack of structural task stratification in existing software engineering benchmarks.
-\textbf{Author and Funding}: Sultan Haikal (GitHub: \texttt{@yvliet}). The dataset was developed independently for the Google DeepMind Gemma~4 Developer Agent competition (Track 2: Research Monograph and Resource Track). Model inference was executed on Kaggle dual Nvidia Tesla T4 GPU environments.
+\textbf{Author and Funding}: Sultan Haikal (GitHub: \texttt{@yvliet}). The dataset was developed independently for the Google DeepMind Gemma~4 Developer Agent Research and Resource Monograph. Model inference was executed on Kaggle dual Nvidia Tesla T4 GPU environments.
 
 \subsection{Composition}
 The dataset comprises three primary components:
 \begin{enumerate}[noitemsep,topsep=2pt,parsep=0pt,partopsep=0pt]
-    \item \textbf{SWE-bench Strata Annotations} (\path{data/swebench_strata_annotations.jsonl}): 800 evaluation records across 707 unique task instances (300 in SWE-bench Lite, 500 in SWE-bench Verified, with 93 overlapping pairs). Each instance is classified into Stratum A (\texttt{A\_named}), Stratum B (\texttt{B\_trace}), or Stratum C (\texttt{C\_unnamed}). The 500 SWE-bench Verified tasks follow a strict CONSORT partition: 344 callable evaluated tasks, 93 exploratory Lite overlap, 56 file-preimage drift, and 7 module-level non-callable edits ($344 + 93 + 56 + 7 = 500$).
+    \item \textbf{SWE-bench Strata Annotations} (\path{data/swebench_strata_annotations.jsonl}): 800 evaluation records across 707 unique task instances (300 in SWE-bench Lite, 500 in SWE-bench Verified, with 93 overlapping pairs). Each instance is classified into Stratum A (\texttt{A\_named}), Stratum B (\texttt{B\_trace}), or Stratum C (\texttt{C\_unnamed}). The 500 SWE-bench Verified tasks follow a deterministic benchmark waterfall partition: 344 callable evaluated tasks, 93 exploratory Lite overlap, 56 file-preimage drift, and 7 module-level non-callable edits ($344 + 93 + 56 + 7 = 500$).
     \item \textbf{Repository AST Multigraphs (Two-Tier Design)}:
     \begin{itemize}[noitemsep,topsep=1pt,parsep=0pt,partopsep=0pt]
         \item \textbf{Per-Task Base-Commit Multigraphs} (\path{data_release/graphs/}, $N=300$ Lite tasks): CSR matrices and symbol tables extracted from checkouts at each task's immutable git base commit for community benchmarking.

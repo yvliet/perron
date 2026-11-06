@@ -92,17 +92,17 @@ def generate_figure4(out_dir: Path = FIGURES_DIR):
     ax1.plot([4.58, 4.58, 9.92, 9.92],
              [1.0 - 0.14 - dot_clearance, 0.35, 0.35, 3.0 - 0.14 - dot_clearance],
              color=COLOR_GREEN, lw=1.1, ls=':', zorder=1)
-    ax1.text(6.8, 0.18, r"$\mathbf{2.17\times\ Matched\ Lift}$" + "\n" + r"($4.58\% \to 9.92\%$)" + "\n" + r"($p = 0.0156^*$)",
-             fontsize=6.2, color=COLOR_GREEN, fontweight='bold', ha='center', va='top', zorder=4,
-             bbox=dict(boxstyle="round,pad=0.22", facecolor=COLOR_BG_CARD, edgecolor=COLOR_GREEN, lw=0.8))
+    ax1.text(6.0, 0.18, r"$\mathbf{6\to 13\ Hits\ (+5.34\ pp)}$" + "\n" + r"($4.58\% \to 9.92\%$)" + "\n" + r"($p = 0.0156^*$, Holm $.0625$)",
+             fontsize=5.6, color=COLOR_GREEN, fontweight='bold', ha='center', va='top', zorder=4,
+             bbox=dict(boxstyle="round,pad=0.20", facecolor=COLOR_BG_CARD, edgecolor=COLOR_GREEN, lw=0.8))
 
     # Factorial Parity Annotation (C3 vs C0) at symmetric bottom baseline
-    ax1.text(23.2, 0.18,
+    ax1.text(23.8, 0.18,
              r"$\mathbf{Factorial\ Contrast:}$" + "\n" +
              r"$C_3\ \text{vs.}\ C_0\ \text{Exact}\ p = 1.0000$" + "\n" +
-             r"$\Delta_{\text{interaction}} = 0.00\text{ pp\ (Parity)}$",
-             fontsize=6.0, color=COLOR_BLUE, ha='center', va='top', zorder=4,
-             bbox=dict(boxstyle="round,pad=0.22", facecolor='#F0F9FF', edgecolor=COLOR_BLUE, lw=0.8))
+             r"$\Delta_{\text{interaction}} = 0.00\text{ pp\ (Null)}$",
+             fontsize=5.6, color=COLOR_BLUE, ha='center', va='top', zorder=4,
+             bbox=dict(boxstyle="round,pad=0.20", facecolor='#F0F9FF', edgecolor=COLOR_BLUE, lw=0.8))
 
     ax1.set_yticks(y_pos)
     ax1.set_yticklabels([c[0] for c in conditions], fontsize=7.6)
@@ -120,7 +120,7 @@ def generate_figure4(out_dir: Path = FIGURES_DIR):
     # Panel B: Relative Metric Lift vs. Matched Graph Baseline (A4)
     # -------------------------------------------------------------
     metrics_data = [
-        ("Top-1 Accuracy\n(Acc@1)", 116.7, 100.0, r"+116.7% (p=0.0156*)", r"+100.0% (p=0.0312*)"),
+        ("Top-1 Accuracy\n(Acc@1)", 116.7, 100.0, r"+116.7% (raw p=.016*, Holm .063)", r"+100.0% (raw p=.031*)"),
         ("MRR@50\nScore", 45.4, 36.0, r"+45.4% (0.1358)", r"+36.0% (0.1270)"),
         ("Top-5 Accuracy\n(Acc@5)", 9.1, 4.5, r"+9.1% (p=0.688)", r"+4.5% (p=1.000)"),
     ]
@@ -141,7 +141,7 @@ def generate_figure4(out_dir: Path = FIGURES_DIR):
 
     ax2.set_yticks(y_bar)
     ax2.set_yticklabels([m[0] for m in metrics_data], fontsize=7.2)
-    ax2.set_xlim(0, 160)
+    ax2.set_xlim(0, 215)
     ax2.set_xticks([0, 40, 80, 120, 160])
     ax2.set_ylim(-0.60, 2.85)
     ax2.set_xlabel("Relative Lift vs. Matched Baseline A4 (%)")

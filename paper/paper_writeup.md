@@ -6,7 +6,7 @@
 
 ## Abstract
 
-Local code graph agents (2B-4B) face hub absorption and distractor dilution. Across 344 Verified tasks, Perron's CSR engine (1.89-5.10 ms, HSI@10=99.5%) suppresses hubs, yet unpruned 1-hop expansion under frozen 2B scoring shows no statistically detectable difference with depth-matched lexical retrieval (Acc@5 47.1% vs 45.1%, step-down Holm p=0.2869, exact McNemar p=0.1435; ±2.0 pp equivalence inconclusive, p=0.512, TOST power 1.92%). Wilcoxon-Mann-Whitney expectations (E[Rank] = 1 + (M-1)(1-AUC), Bamber 1975) explain this plateau and how to unlock it: candidate selection conditioning drops discrimination from 0.7966 on seeds to 0.6596 on graph neighbors (p=0.0036*), pushing expected target rank past top-5. Unlocking graph context requires horizon pruning (M=15, -40% stubs) plus reasoning or provenance: on 131 un-named defects, 4B reasoning (<=180 tokens) lifts Top-1 at M=25 (4.58% to 9.92%, raw p=0.0156*; 4-test Holm p=0.0625, adverse-pair p=0.0703, hit-flip p=0.1250) via seed disambiguation (12/28 hits) over graph traversal (1/7 hits), compacting mean target rank from 5.88 to 5.32 to 3.74 with zero Top-1 loss. Across 162 non-Django tasks, expansion matches lexical search (34.6% vs 32.7%, p=0.5811). Fine-tuning on SWE-bench Lite lifts isolated graph Top-1 to 24.0% (p=0.0312*) but degrades broad ranking (44% to 36%). I release depth-matched pools, 19,298 evaluations, 707 strata labels, and Perron CSR under Apache 2.0.
+Local code graph agents (2B-4B) face hub absorption and distractor dilution. Across 344 Verified tasks, Perron's CSR engine (1.89-5.10 ms, HSI@10=99.5%) suppresses hubs, yet unpruned 1-hop expansion under frozen 2B scoring shows no statistically detectable difference with depth-matched lexical retrieval (Acc@5 47.1% vs 45.1%, step-down Holm p=0.2869, exact McNemar p=0.1435; ±2.0 pp equivalence inconclusive, p=0.512, TOST power 1.92%). Wilcoxon-Mann-Whitney expectations (E[Rank] = 1 + (M-1)(1-AUC), Bamber 1975) explain this plateau and how to unlock it: candidate selection conditioning drops discrimination from 0.7966 on seeds to 0.6596 on graph neighbors (p=0.0036*), pushing expected target rank past top-5. Unlocking graph context requires horizon pruning (M=15, -40% stubs) plus reasoning or provenance: on 131 un-named defects, 4B reasoning (<=180 tokens) lifts Top-1 at M=25 from 4.58% to 9.92% (raw p=0.0156*, 4-test Holm p=0.0625) via seed disambiguation (12/28 hits) over graph traversal (1/7 hits), compacting mean target rank from 5.88 to 5.32 to 3.74 with zero Top-1 loss. Across 162 non-Django tasks, expansion matches lexical search (34.6% vs 32.7%, p=0.5811). Fine-tuning on SWE-bench Lite lifts isolated listwise graph Top-1 to 24.0% (p=0.0312*) but degrades broad ranking (44% to 36%). I release depth-matched pools, 19,298 evaluations, 707 strata labels, and Perron CSR under Apache 2.0.
 
 ---
 
@@ -33,9 +33,9 @@ Five contributions define the operating regime that unlocks local code graphs:
 
 ## 3. Study Design & Protocol
 
-- **Benchmark & Strata**: 344 Verified tasks [6] across 12 repos: protocol lock evaluates substring strata (N_A=208 [60.5%], N_B=5 [1.5%], N_C=131 [38.1%]); dataset release refines word-boundary regexes (N_A=168, N_B=7, N_C=169; N=100 audit: 95.0% concordance, Cohen κ=0.918, 95% CI [0.849, 0.988]). Auditing 56 exclusions confirms 100% syntax validity (68 files, 3,827 symbols); overturning equivalence requires >= +9 net wins (p=0.0016).
+- **Benchmark & Strata**: 344 Verified tasks [6] across 12 repos: protocol lock evaluates substring strata (N_A=208 [60.5%], N_B=5 [1.5%], N_C=131 [38.1%]); dataset refines word-boundary regexes (N_A=168, N_B=7, N_C=169; N=100 audit: 95.0% concordance, Cohen κ=0.918, 95% CI [0.849, 0.988]). Auditing 56 exclusions confirms 100% syntax validity (68 files, 3,827 symbols); overturning equivalence requires >= +9 net wins (p=0.0016).
 - **Perron CSR Engine**: Typed edges solve in 1.89-5.10 ms (<3 MB RAM vs SuperLU at 28.1 ms). Transition matrix M (β=0.85) satisfies |λ_2(M)| <= β (Doeblin contraction $\|\boldsymbol{\pi}^{(t)} - \boldsymbol{\pi}_\infty\|_1 \le 2\beta^t$). Damping (γ=0.70) yields HSI@10=99.5%.
-- **Candidate Pools**: Top-10 BM25 seeds (M_t in [10, 50], mean 24.5) define depth-matched candidate pools B0--A6 under pre-registered plans. Frozen `gemma-4-e2b-it` scores log-odds (19,298 passes). Contrasts PC1 (A4 - A2) and PC2 (A4 - A3) evaluate McNemar tests with Holm correction and bootstrap CIs (B=10,000).
+- **Candidate Pools**: Top-10 BM25 seeds (M_t in [10, 50], mean 24.5) define depth-matched pools B0--A6. Frozen `gemma-4-e2b-it` scores log-odds (19,298 passes). Contrasts PC1 (A4 - A2) and PC2 (A4 - A3) evaluate McNemar tests with Holm correction and bootstrap CIs (B=10,000).
 
 ---
 
@@ -76,7 +76,7 @@ Pointwise candidate discrimination was evaluated on Dual T4s across 58 Stratum C
 | `DeepSeek-R1-7B` | RL Distill | 7.0B | 4-bit NF4 | 0.6489 | 6594.6 MB | 5,231s |
 | `gemma-4-26b-a4b-it` | MoE (128 exp) | 3.8B/26B | FP16 | *Bound* | *52.0 GB* | *Exceeds T4* |
 
-- **Scaling & Positive Control**: Tail discrimination scales monotonically in Gemma 4 FP16 (0.8544 to 0.9274), exceeding quantized baselines Phi-4-mini (0.7836) and DeepSeek-7B (0.6489). Gemma 4 26B-A4B requires 52.0 GB unquantized FP16 VRAM (fused 3D expert tensors bypass 2D quantization hooks), exceeding Dual T4 capacity (29.1 GB). Positive Control ($N=131$): Union scoring ($M \le 87$) with `gemma-4-e4b-it` reaches Top-1 **16.79%** (22/131), Acc@5 **37.4%** (49/131), Acc@10 **41.22%** (54/131), MRR **0.2562** (vs BM25: 3.05% Top-1, 15.27% Acc@5, MRR 0.0862). Direct readout on A4(25) yields 4.58% Top-1 and 16.79% Acc@5, which reasoning lifts to 9.92%, confirming 2B nulls reflect a capacity floor.
+- **Scaling & Positive Control**: Tail discrimination scales monotonically in Gemma 4 FP16 (0.8544 to 0.9274), exceeding quantized baselines Phi-4-mini (0.7836) and DeepSeek-7B (0.6489). Gemma 4 26B-A4B requires 52.0 GB FP16 VRAM (3D expert tensors bypass 2D quantization hooks), exceeding Dual T4 capacity (29.1 GB). Positive Control ($N=131$): Union scoring ($M \le 87$) with `gemma-4-e4b-it` reaches Top-1 **16.79%** (22/131), Acc@5 **37.4%** (49/131), Acc@10 **41.22%** (54/131), MRR **0.2562** (vs BM25: 3.05% Top-1, 15.27% Acc@5, MRR 0.0862). Direct readout on A4(25) yields 4.58% Top-1 and 16.79% Acc@5, which reasoning lifts to 9.92%, confirming 2B nulls reflect a capacity floor.
 
 ### 4.5 Candidate Pool × Reasoning Factorial Matrix & M=15 Verification (N=131)
 
@@ -96,9 +96,9 @@ Pointwise candidate discrimination was evaluated on Dual T4s across 58 Stratum C
 | Pruned Graph | 15 | 4.58% | 17.56% | 0.0970 |
 | **Pruned Graph + Think** | **15** | **9.92%** | **19.85%** | **0.1469** |
 
-- **Direct Readout & Reasoning Lift**: Direct readout ($M \le 25$) ties graph ($A_4$) and depth BM25 ($A_2$) at 16.79% Acc@5 (22/131) and 4.58% Top-1 (6/131). Reasoning lifts $A_4(25)$ Top-1 to **9.92% (13/131; diagnostic $+5.34$ pp, raw $p=0.0156^{*}$, Holm $p=0.0625$, adverse-pair $p=0.0703$, hit-flip $p=0.1250$)** and MRR (0.0934 to 0.1358); backfilling preserves 18.32% Acc@5 ($p=0.6875$). $A_4+\text{think}$ vs $A_2+\text{think}$ shows no statistically detectable difference at 13 vs 9 (p=0.2188, M=25) and 13 vs 11 (p=0.5000, M=15). Pointwise $A_4$ vs $A_2$ achieves 12.21% vs 8.40% ($n_{10}=6, n_{01}=1, p=0.1250$). Reasoning disambiguates across strata: seeds convert 6/28 to 12/28 ($p=0.0312^{*}$) while graph additions convert 0/7 to 1/7 ($p=1.000$).
+- **Direct Readout & Reasoning Lift**: Direct readout ($M \le 25$) ties graph ($A_4$) and depth BM25 ($A_2$) at 16.79% Acc@5 (22/131) and 4.58% Top-1 (6/131). Reasoning lifts $A_4(25)$ Top-1 to **9.92% (13/131; diagnostic $+5.34$ pp, raw $p=0.0156^{*}$, 4-test Holm $p=0.0625$)** and MRR (0.0934 to 0.1358), while backfilling preserves 18.32% Acc@5 ($p=0.6875$); 1 adverse pair ($p=0.0703$) or hit-flip ($p=0.1250$) crosses $\alpha=0.05$. $A_4+\text{think}$ vs $A_2+\text{think}$ shows no statistically detectable difference at 13 vs 9 (p=0.2188, M=25) and 13 vs 11 (p=0.5000, M=15). Pointwise $A_4$ vs $A_2$ achieves 12.21% vs 8.40% ($n_{10}=6, n_{01}=1, p=0.1250$). Reasoning disambiguates across strata: seeds convert 6/28 to 12/28 ($p=0.0312^{*}$) while graph additions convert 0/7 to 1/7 ($p=1.000$).
 - **Provenance (C1-C3)**: Stubs (C1, 2.29%) and provenance (C2, 3.82%) yield no lift (-0.76 pp, p=1.000); provenance + thinking (C3, 9.16%) ties thinking (C0, 9.92%).
-- **Pruning (M=15, AUC*=0.714)**: Pruning to $M=15$ lowers $\text{AUC}^{*}$ to 0.714 while retaining 34/35 defects. Pruning alone preserves Top-1 (6/131, 4.58%) while cutting candidate stubs by 40% (mean rank 5.88 to 5.32). Pairing pruning with reasoning compacts mean rank to **3.74** (Acc@5 reaches **19.85% [26/131]**, MRR **0.1469**), retaining all 13 Top-1 hits. Thus, pruning provides context compaction without hit loss, while reasoning provides rank compaction.
+- **Pruning (M=15, AUC*=0.714)**: Pruning to $M=15$ lowers $\text{AUC}^{*}$ to 0.714 while retaining 34/35 defects, preserving Top-1 (6/131, 4.58%) while cutting stubs by 40% (mean rank 5.88 to 5.32). Pairing pruning with reasoning compacts mean rank to **3.74** (Acc@5 **19.85% [26/131]**, MRR **0.1469**), retaining all 13 Top-1 hits. Pruning provides context compaction; reasoning provides rank compaction.
 
 ### 4.6 Lexical Dissection & Multi-Encoding Graph Representations
 
@@ -123,16 +123,16 @@ I tuned `gemma-4-e2b-it` (LoRA r=16) on 226 Lite tasks via GroupKFold (171 train
 
 | Cohort | Scorer | Acc@1 | Acc@5 | MRR | Med | AUC |
 | :--- | :--- | :---: | :---: | :---: | :---: | :---: |
-| Graph (N=25) | Base E2B | 0.0% | 44.0% | 0.1920 | 7.0 | 0.6063 |
+| Graph (N=25) | Base E2B (Listwise) | 0.0% | 44.0% | 0.1920 | 7.0 | 0.6063 |
 | | Graph-First | 8.0% | **52.0%** | 0.2518 | **5.0** | **0.7056** |
 | | **Clean LoRA** | **24.0%** | 36.0% | **0.3288** | 9.0 | 0.5859 |
 | | *Shortcut Probe* | *20.0%* | *56.0%* | *0.3702* | *4.0* | *0.6270* |
-| Strat C (N=35) | Base E2B | 17.1% | 37.1% | 0.2895 | 9.0 | 0.5692 |
+| Strat C (N=35) | Base E2B (Listwise) | 17.1% | 37.1% | 0.2895 | 9.0 | 0.5692 |
 | | Graph-First | 0.0% | 17.1% | 0.0993 | 16.0 | 0.3753 |
 | | **Clean LoRA** | **22.9%** | **48.6%** | **0.3623** | **6.0** | **0.6392** |
 | | *Shortcut Probe* | *8.6%* | *42.9%* | *0.2596* | *6.0* | *0.6084* |
 
-- **Empirical Dynamics**: On isolated graph targets ($N=25$), clean LoRA lifts Top-1 to **24.0%** (6 hits, $p=0.0312^{*}$) and MRR (0.1920 to 0.3288), but regresses Acc@5 (44.0% to 36.0%) and AUC (0.6063 to 0.5859) below Graph-First (52.0%, 0.7056). On mixed pools ($N=35$), clean LoRA reaches **22.9%** Top-1 ($p=0.7539$) and **48.6%** Top-5 ($p=0.4545$). A comment probe confirms non-seed bias collapses mixed Top-1 (17.1% to 8.6%).
+- **Empirical Dynamics**: On isolated graph targets ($N=25$), clean LoRA lifts listwise Top-1 to **24.0%** (6 hits, $p=0.0312^{*}$; pointwise E2B ranks $\ge 2$ at Top-1) and MRR (0.1920 to 0.3288), but regresses Acc@5 (44.0% to 36.0%) and AUC (0.6063 to 0.5859) below Graph-First (52.0%, 0.7056). On mixed pools ($N=35$), clean LoRA reaches **22.9%** Top-1 ($p=0.7539$) and **48.6%** Top-5 ($p=0.4545$). A comment probe confirms non-seed bias collapses mixed Top-1 (17.1% to 8.6%).
 
 ---
 

@@ -201,24 +201,24 @@ def generate_figure3(out_dir: Path = FIGURES_DIR):
     ds_x, ds_y = models[3]["params_b"], models[3]["mean_graph_auc"]
 
     # Monotonic scaling curve for Gemma 4
-    ax3.plot(gemma_x, gemma_y, color=COLOR_BLUE, lw=1.8, marker='o', markersize=6, zorder=5, label='Gemma 4 (PLE Dense)')
-    ax3.scatter([phi_x], [phi_y], color=COLOR_PURPLE, s=42, marker='s', zorder=5, label='Phi-4-mini (3.8B)')
-    ax3.scatter([ds_x], [ds_y], color=COLOR_SLATE, s=48, marker='^', zorder=5, label='DeepSeek-R1-7B')
+    ax3.plot(gemma_x, gemma_y, color=COLOR_BLUE, lw=1.8, marker='o', markersize=6, zorder=5, label='Gemma 4 (FP16 PLE)')
+    ax3.scatter([phi_x], [phi_y], color=COLOR_PURPLE, s=42, marker='s', zorder=5, label='Phi-4-mini (4-bit NF4)')
+    ax3.scatter([ds_x], [ds_y], color=COLOR_SLATE, s=48, marker='^', zorder=5, label='DeepSeek-7B (4-bit NF4)')
 
     # Annotate Points with VRAM & AUC
-    ax3.annotate(f"E2B (2B)\nAUC: {gemma_y[0]:.4f}\n6.7 GB VRAM", (gemma_x[0], gemma_y[0]),
+    ax3.annotate(f"E2B (2B, FP16)\nAUC: {gemma_y[0]:.4f}\n6.7 GB VRAM", (gemma_x[0], gemma_y[0]),
                  textcoords="offset points", xytext=(0, 14), ha='center', fontsize=6.2, color=COLOR_BLUE,
                  bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_BLUE, alpha=0.9, lw=0.5))
 
-    ax3.annotate(f"E4B (4B)\nAUC: {gemma_y[1]:.4f}\n9.6 GB VRAM", (gemma_x[1], gemma_y[1]),
-                 textcoords="offset points", xytext=(12, -10), ha='left', fontsize=6.2, color=COLOR_BLUE,
+    ax3.annotate(f"E4B (4B, FP16)\nAUC: {gemma_y[1]:.4f}\n9.6 GB VRAM", (gemma_x[1], gemma_y[1]),
+                 textcoords="offset points", xytext=(8, 4), ha='left', fontsize=6.0, color=COLOR_BLUE,
                  bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_BLUE, alpha=0.9, lw=0.5))
 
-    ax3.annotate(f"Phi-4 (3.8B)\nAUC: {phi_y:.4f}\n4.1 GB VRAM", (phi_x, phi_y),
-                 textcoords="offset points", xytext=(12, -14), ha='left', fontsize=6.2, color=COLOR_PURPLE,
+    ax3.annotate(f"Phi-4 (3.8B, NF4)\nAUC: {phi_y:.4f}\n4.1 GB VRAM", (phi_x, phi_y),
+                 textcoords="offset points", xytext=(10, -16), ha='left', fontsize=6.0, color=COLOR_PURPLE,
                  bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_PURPLE, alpha=0.9, lw=0.5))
 
-    ax3.annotate(f"DeepSeek 7B\nAUC: {ds_y:.4f}\n6.6 GB VRAM", (ds_x, ds_y),
+    ax3.annotate(f"DeepSeek 7B (NF4)\nAUC: {ds_y:.4f}\n6.6 GB VRAM", (ds_x, ds_y),
                  textcoords="offset points", xytext=(0, -22), ha='center', fontsize=6.2, color=COLOR_SLATE,
                  bbox=dict(boxstyle="round,pad=0.2", facecolor="white", edgecolor=COLOR_SLATE, alpha=0.9, lw=0.5))
 
@@ -242,9 +242,9 @@ def generate_figure3(out_dir: Path = FIGURES_DIR):
     ax3.set_xlabel("Model Capacity / Active Scale (B)", fontsize=8)
     ax3.set_ylabel("Stratum C Graph ROC-AUC", fontsize=8)
     ax3.set_title(r"$\mathbf{(c)}$ Cross-Architecture Scaling Surface", loc='center', fontsize=8.5)
-    # Legend placed in open corridor between x=5.5 and 10.0, above DeepSeek and below title
-    ax3.legend(loc='upper left', bbox_to_anchor=(0.38, 0.98), framealpha=0.95, facecolor='white',
-               edgecolor=COLOR_BORDER, fontsize=6.2)
+    # Legend placed in open corridor at upper right
+    ax3.legend(loc='upper right', bbox_to_anchor=(0.99, 0.99), framealpha=0.95, facecolor='white',
+               edgecolor=COLOR_BORDER, fontsize=5.8)
     ax3.grid(True, ls=':', lw=0.5, alpha=0.5, color=COLOR_BORDER)
 
     plt.tight_layout()
