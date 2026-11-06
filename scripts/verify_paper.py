@@ -81,6 +81,7 @@ def check_figures():
         "truncation_curves",
         "breakeven_discrimination_bound",
         "causal_provenance_forest",
+        "localization_attrition",
         "neff_dose_response",
     ]
     for fig_name in expected_figures:

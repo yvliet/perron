@@ -6,7 +6,7 @@ Active Manuscript Figures:
   - Figure 2: Candidate Pool-Size Truncation Curves (truncation_curves.{pdf, png})
   - Figure 3: Break-Even Discrimination Bound & Lexical Bottleneck (breakeven_discrimination_bound.{pdf, png})
   - Figure 4: Causal Provenance Forest Plot & Effect Sizes (causal_provenance_forest.{pdf, png})
-  - Figure 5: Four-Stage Bug Localization Loss Funnel (loss_funnel.{pdf, png})
+  - Figure 5: Candidate Localization Pipeline Attrition (localization_attrition.{pdf, png})
   - Figure 6: Continuous Dose-Response Surface & Damping Sensitivity (neff_dose_response.{pdf, png})
 
 Author: Sultan Haikal (@yvliet)
@@ -20,7 +20,7 @@ from scripts.figures.generate_kaggle_thumbnail import generate_kaggle_thumbnails
 from scripts.figures.figure2_truncation import generate_figure2
 from scripts.figures.figure3_breakeven import generate_figure3
 from scripts.figures.figure4_causal_forest import generate_figure4
-from scripts.figures.figure5_loss_funnel import generate_figure5
+from scripts.figures.figure5_localization_attrition import generate_figure5
 from scripts.figures.figure6_dose_response import generate_figure6
 
 FIGURES_REGISTRY = {
@@ -49,9 +49,9 @@ FIGURES_REGISTRY = {
         "generator": generate_figure4,
     },
     5: {
-        "name": "Figure 5: Four-Stage Bug Localization Loss Funnel",
-        "description": "Sankey loss funnel decomposing upstream boundary vs downstream compaction loss",
-        "outputs": ["loss_funnel.pdf", "loss_funnel.png"],
+        "name": "Figure 5: Candidate Localization Pipeline Attrition",
+        "description": "Two-panel chart decomposing upstream boundary loss vs downstream compaction loss and bottleneck ratio",
+        "outputs": ["localization_attrition.pdf", "localization_attrition.png"],
         "generator": generate_figure5,
     },
     6: {

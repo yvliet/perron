@@ -7,7 +7,7 @@ Generates the active publication-grade figures for the manuscript:
     - Figure 2: Candidate Pool-Size Truncation Curves (truncation_curves.{pdf, png})
     - Figure 3: Break-Even Discrimination Bound & Lexical Bottleneck (breakeven_discrimination_bound.{pdf, png})
     - Figure 4: Causal Provenance Forest Plot & Effect Sizes (causal_provenance_forest.{pdf, png})
-    - Figure 5: Four-Stage Bug Localization Loss Funnel (loss_funnel.{pdf, png})
+    - Figure 5: Candidate Localization Pipeline Attrition (localization_attrition.{pdf, png})
     - Figure 6: Continuous Dose-Response Surface & Damping Sensitivity (neff_dose_response.{pdf, png})
 
 Usage:

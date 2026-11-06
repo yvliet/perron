@@ -57,7 +57,7 @@ Across 344 tasks, BM25 reaches 50.9% Fn Acc@10 (175/344); Perron reaches 50.3% (
 | **A6** | Perron | 23.6% | 45.6% | 0.3301 |
 
 - **Statistical Testing & GLMM**: PC1 (A4 - A2): +2.03 pp (95% CI [-0.29, +4.36], 12/5 discordant, exact $p=0.1435$, Holm $p=0.287$). Task GLM (OR=1.118, p=0.0876) and repo GLMM (OR=1.130, p=0.349, $\sigma_{\text{repo}}=0.963$) confirm non-significance. At 4.94% paired discordance, $\pm 2.0$ pp TOST requires $N \approx 1{,}058$ (>500 Verified ceiling; $p=0.512$, power 1.92%); at $N=344$, 3.35 pp MDE and 90% Tango [+0.07, +4.24] pp bound gain below +4.24 pp. Diffusion dilutes precision (A6 45.6% vs A4 47.1%); discrimination drops from 0.7966 to 0.6596 via selection conditioning.
-- **Loss Funnel**: Seeds capture 51.2% (48.8 pp loss); Graph reaches 58.4% (41.6 pp loss); Reranking retains 47.1% Top-5 (11.3 pp loss; N=100: Gemma 4 recovers 74.0% oracle vs 33.0% BM25).
+- **Pipeline Attrition**: Seeds capture 51.2% (48.8 pp loss); Graph reaches 58.4% (41.6 pp loss); Reranking retains 47.1% Top-5 (11.3 pp loss; N=100: Gemma 4 recovers 74.0% oracle vs 33.0% BM25).
 
 ### 4.3 First-Moment Expected-Rank Identity & Stratum Asymmetry
 
