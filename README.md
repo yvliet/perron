@@ -1,25 +1,52 @@
-# Perron: Context-Budgeted AST Subgraph Slicing and Graph Retrieval for Local Developer Agents
+<div align="center">
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![PyPI](https://img.shields.io/pypi/v/perron-core.svg)](https://pypi.org/project/perron-core/)
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Tests: Passing](https://img.shields.io/badge/tests-246%2F246%20passing-brightgreen.svg)]()
+# perron
+
+### Context-budgeted AST subgraph slicing and graph retrieval for local developer agents.
+
+[![pypi](https://img.shields.io/badge/pypi-v0.3.0-gray.svg?logo=pypi&logoColor=white)](https://pypi.org/project/perron-core/)
+[![python](https://img.shields.io/badge/python-3.10+-gray.svg?logo=python&logoColor=white)](pyproject.toml)
+[![license: apache-2.0](https://img.shields.io/badge/license-Apache--2.0-gray.svg?logo=apache&logoColor=white)](LICENSE)
+[![dataset](https://img.shields.io/badge/dataset-kaggle-gray.svg?logo=kaggle&logoColor=white)](https://www.kaggle.com/datasets/yvliet/perron-swebench-graphs)
+[![paper](https://img.shields.io/badge/paper-PDF-gray.svg?logo=arxiv&logoColor=white)](paper/main.pdf)
+
+[Quickstart](#quickstart) •
+[Problem Formulation](#1-problem-formulation-hub-node-explosion-in-code-graphs) •
+[Mathematical Architecture](#2-mathematical-architecture) •
+[Project Structure](#3-project-structure) •
+[Python API & Setup](#4-installation--quickstart) •
+[Verification & Benchmarks](#5-verification--benchmark-results) •
+[Publication Pipeline](#6-paper-building--publication-pipeline) •
+[Citation](#8-citation)
+
+</div>
 
 Perron is a high-throughput AST subgraph slicing and graph retrieval engine designed for open-weights developer agents (such as Gemma 4 E4B and Gemma 4 31B) operating under strict hardware and context-window constraints.
-
----
 
 ## Quickstart
 
 ### 5-Line Python Quickstart
 ```python
 import perron
+
+# Query repository context via query-directed spectral diffusion
+result = perron.diffuse_with_provenance(
+    query="Fix username validation regex boundary condition",
+    repo_path="./my_repo",
+    top_k=5,
+)
+for candidate in result:
+    print(f"[{candidate.score:.4f}] {candidate.identifier} ({candidate.call_path})")
+```
+
+Or inspect pre-indexed SWE-bench Lite instance multigraphs:
+```python
 from perron.loaders import load_instance_graph
 
-# Load pre-indexed zero-copy CSR multigraph and query localized context
+# Load pre-indexed zero-copy CSR multigraph
 graph = load_instance_graph("data_release/graphs/django__django-11099")
-retriever = perron.PerronRetriever(graph.t_matrix, dangling=graph.dangling, symbols=graph.nodes_df)
-context = retriever.query("Fix username validation regex boundary condition", max_tokens=4096)
+print(f"Loaded {graph.instance_id}: {graph.num_nodes} nodes, {graph.num_edges} edges")
+print("Top hub symbols:", graph.top_hubs(k=5))
 ```
 
 ### Installation
@@ -74,8 +101,6 @@ perron bench --method perron --split dev_val
 perron bench --method bm25 --split heldout
 ```
 
----
-
 ## 1. Problem Formulation: Hub-Node Explosion in Code Graphs
 
 In modern repository-level software engineering benchmarks (e.g. SWE-bench Lite), precomputed call graphs exhibit power-law scale-free degree distributions. Ubiquitous utility functions (`logging.getLogger`, `utils.check_type`, `BaseModel.__init__`) act as ultra-high-degree hub nodes:
@@ -95,8 +120,6 @@ Global Baseline π_global ──────────────────
                                                                              ↓
 Hierarchical AST Breadcrumbs ←── Versioned Priority Queue ←── Component-Budget Partition
 ```
-
----
 
 ## 2. Mathematical Architecture
 
@@ -138,30 +161,30 @@ $$\text{score}(v) = \frac{\text{Specificity}(v)}{c(v)} \cdot \left(1 + \mu \cdot
 
 Pointers are versioned `(score, v, version[v])`. Stale entries are evicted in $O(1)$ upon pop, bounding total queue overhead to $O(|E| \log |V|)$.
 
----
-
 ## 3. Project Structure
 
 ```
 perron/
 ├── __init__.py         # Package entrypoint and public symbols
+├── api.py              # High-level drop-in agent API (diffuse_with_provenance)
+├── cli.py              # Unified command-line interface (perron {index,query,bench,eval})
+├── mcp_server.py       # Model Context Protocol (MCP) JSON-RPC 2.0 stdio server
 ├── matrix.py           # Zero-copy memory-mapped CSR graph ingestion
 ├── diffusion.py        # Softmax prior & sparse PPR power iteration
 ├── specificity.py      # Global stationary baseline & hub-damping ratio
 ├── packer.py           # Priority queue frontier & hierarchical AST breadcrumbs
+├── retriever.py        # Hybrid IR, traceback extraction, and CodeGraph engine
+├── loaders.py          # InstanceGraph loaders for SWE-bench Lite multigraphs
 ├── editor.py           # AST-grounded search-and-replace editor
-└── tester.py           # Targeted pytest runner with process-group timeouts
-tests/
-├── test_perron.py                  # Core unit test suite
-├── test_adversarial_fuzzer.py     # Maximum-entropy adversarial fuzzer
-└── test_boundary_invariants.py # Multi-angle boundary and invariance test battery
+├── patch.py            # Unified diff generation and atomic patch application
+├── tester.py           # Targeted pytest runner with process-group timeouts
+└── agent.py            # Autonomous developer agent runtime & trajectory evaluation
+tests/                  # 40 verification suites covering spectral theory, fuzzing, and contracts
 benchmarks/
 ├── diagnostic.py       # Diagnostic benchmark (Recall@K, MRR, Hub Suppression)
 ├── repair_eval.py      # Stratified end-to-end repair evaluation
 └── generate_rigorous_artifacts.py # Publication-grade statistical analysis
 ```
-
----
 
 ## 4. Installation & Quickstart
 
@@ -235,8 +258,6 @@ specificity = calculate_specificity_scores(
 
 print("Top candidate symbol:", np.argmax(specificity))
 ```
-
----
 
 ## 5. Verification & Benchmark Results
 
@@ -320,8 +341,6 @@ Deterministic Scaffold:    Deterministic Replay / Scaffold (0.0% Syntax Errors)
 Average Latency:           0.73s / instance
 ```
 
----
-
 ## 6. Paper Building & Publication Pipeline
 
 Perron includes a single-command master pipeline for generating figures, compiling the LaTeX document via an isolated standalone Tectonic engine, and running academic quality checks:
@@ -357,14 +376,10 @@ Perron maintains strict programmatic parity between experimental JSON/Parquet te
 - **Parquet Integrity (Gate 20)**: Directly tests `dist_dataset/scores.parquet` existence, row count (19,298 rows), and PyArrow schema compliance.
 - **Text Layer Verification**: Extracts raw text layers directly from compiled `paper/main.pdf` using `pypdf`, confirming that compiled publication outputs match underlying numerical claims.
 
----
-
 ## 7. Author & License
 
 - **Author**: Sultan Haikal (GitHub: [@yvliet](https://github.com/yvliet), Email: `recrified@gmail.com`)
 - **License**: Apache License, Version 2.0 (see [LICENSE](LICENSE))
-
----
 
 ## 8. Citation
 
