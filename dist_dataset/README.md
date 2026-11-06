@@ -1,7 +1,7 @@
 # SWE-bench Lexical Accessibility Strata Annotations & Evaluation Parquet
 
 ## Overview
-This dataset provides per-instance lexical accessibility stratification across 801 real-world software engineering benchmarks (SWE-bench Lite and SWE-bench Verified) alongside 19,298 evaluation passes from the Perron study.
+This dataset provides per-instance lexical accessibility stratification across 800 benchmark runs (707 unique software engineering task instances across SWE-bench Lite and SWE-bench Verified) alongside 19,298 neural evaluation records from the Perron study.
 Authored by Sultan Haikal (@yvliet) as part of the Perron spectral diffusion framework for Google DeepMind's Gemma 4 Developer Agent challenge.
 
 ## Motivation & Problem Statement
@@ -25,7 +25,9 @@ Each task is annotated into one of three mutually exclusive strata:
 - `gold_files` (List[str]): Ground-truth modified file paths.
 - `problem_statement_snippet` (str): First 200 characters of the raw issue description.
 
-## Schema: `scores.parquet` (Evaluation Manifest)
+## Schema: `scores.parquet` and `gemma4_e4b_scores.parquet` (Evaluation Manifests)
+- `scores.parquet`: 19,298 candidate-level neural evaluations from Google Gemma 4 E2B executed on an NVIDIA Tesla T4 GPU.
+- `gemma4_e4b_scores.parquet`: 8,113 candidate-level continuous log-odds evaluations from Google Gemma 4 E4B across held-out Stratum C tasks.
 `scores.parquet` packages all 19,298 evaluation passes across benchmark strata:
 - `instance_id` (large_string): SWE-bench task identifier (e.g. `astropy__astropy-12907`, `django__django-11019`).
 - `candidate_id` (int64): 0-indexed candidate position within candidate ranking pool.
@@ -45,7 +47,7 @@ print(f"Loaded {len(df):,} evaluation records across {df['instance_id'].n_unique
 Programmatic verification is enforced via Gate 20 of `scripts/verify_paper.py`, confirming schema types and exact 19,298 row integrity.
 
 ## Dataset Statistics
-- **Total Annotated Instances**: 801
+- **Total Annotated Instances**: 800 (707 unique task instances)
 - **SWE-bench Lite Coverage**: 300 instances
 - **SWE-bench Verified Coverage**: 500 instances
 - **Total Empirical Evaluation Records**: 19,298 rows (`scores.parquet`)
@@ -67,4 +69,4 @@ print(f"Loaded {len(records)} stratified instances.")
 ## Citation & Attribution
 - Author: Sultan Haikal (GitHub: `@yvliet`)
 - Repository: https://github.com/yvliet/perron
-- License: Creative Commons Zero v1.0 Universal (CC0-1.0)
+- License: Apache-2.0

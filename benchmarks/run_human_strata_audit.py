@@ -1,9 +1,10 @@
 """
-benchmarks/run_human_strata_audit.py - Human Inter-Annotator Reliability Audit.
+benchmarks/run_human_strata_audit.py - Expert Boundary Concordance Audit.
 
-Evaluates inter-rater reliability between the automated deterministic regex
-classifier (perron.analysis.strata) and independent human manual inspection
-across a stratified sample of N=100 SWE-bench tasks.
+Evaluates agreement between the deterministic lexical accessibility classifier
+(perron.analysis.strata) and author expert boundary adjudication across a stratified
+sample of N=100 SWE-bench tasks. Documented edge cases assess borderline lexical mentions,
+external traceback frames, and colloquial entity references.
 
 Computes:
 1. Observed Concordance Rate (p_o)
@@ -11,7 +12,7 @@ Computes:
 3. Cohen's Kappa coefficient (kappa) and standard error
 4. 95% Confidence Interval under normal approximation
 5. 3x3 Confusion Matrix across Strata A (Named), B (Trace), C (Unnamed)
-6. Qualitative error analysis on discordant instances
+6. Qualitative error analysis on discordant boundary instances
 
 License: Apache-2.0
 Author: Sultan Haikal (GitHub: @yvliet)
@@ -156,8 +157,8 @@ def run_audit(seed: int = 42) -> Dict[str, Any]:
         "cohen_kappa_ci_95": [round(ci_low, 3), round(ci_high, 3)],
         "landis_koch_interpretation": "Almost Perfect Agreement (kappa >= 0.81)",
         "confusion_matrix": {
-            "rows": "Automated Heuristic (A, B, C)",
-            "columns": "Human Independent Ground Truth (A, B, C)",
+            "rows": "Automated Deterministic Classifier (A, B, C)",
+            "columns": "Expert Boundary Adjudication (A, B, C)",
             "matrix": [
                 [confusion["A"]["A"], confusion["A"]["B"], confusion["A"]["C"]],
                 [confusion["B"]["A"], confusion["B"]["B"], confusion["B"]["C"]],

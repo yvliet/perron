@@ -15,5 +15,50 @@
     "code intelligence",
     "benchmarking"
   ],
-  "data": []
+  "resources": [
+    {
+      "path": "scores.parquet",
+      "description": "Pointwise candidate log-odds reranking evaluations across 344 SWE-bench Verified tasks.",
+      "schema": {
+        "fields": [
+          {"name": "instance_id", "type": "string", "description": "SWE-bench Verified instance identifier (e.g. astropy__astropy-13033)."},
+          {"name": "candidate_id", "type": "integer", "description": "0-indexed symbol identifier matching repository symbols.json index."},
+          {"name": "prompt_variant", "type": "string", "description": "Pointwise prompt template variant (P0: standard, P1: compact, P2: body-head)."},
+          {"name": "s", "type": "number", "description": "Binary log-odds decision score logsumexp(logits[yes]) - logsumexp(logits[no])."},
+          {"name": "format_mass", "type": "number", "description": "Combined probability mass assigned to Yes and No tokens (validates format compliance)."},
+          {"name": "n_prompt_tokens", "type": "integer", "description": "Total prompt token length."}
+        ]
+      }
+    },
+    {
+      "path": "gemma4_e4b_scores.parquet",
+      "description": "Continuous bfloat16 GPU log-odds evaluations under Google Gemma 4 E4B across held-out Stratum C tasks.",
+      "schema": {
+        "fields": [
+          {"name": "instance_id", "type": "string", "description": "SWE-bench Verified task instance identifier."},
+          {"name": "candidate_id", "type": "integer", "description": "0-indexed candidate symbol identifier."},
+          {"name": "s", "type": "number", "description": "Continuous binary log-odds score under Gemma 4 E4B."},
+          {"name": "format_mass", "type": "number", "description": "Summed probability mass of Yes/No tokens under Gemma 4 E4B."},
+          {"name": "n_prompt_tokens", "type": "integer", "description": "Input prompt token length."},
+          {"name": "is_gold", "type": "integer", "description": "Binary indicator (1 if candidate is ground truth target, 0 otherwise)."}
+        ]
+      }
+    },
+    {
+      "path": "swebench_strata_annotations.jsonl",
+      "description": "Lexical accessibility classifications across 707 SWE-bench Verified and Lite tasks partitioned into Strata A, B, and C.",
+      "schema": {
+        "fields": [
+          {"name": "instance_id", "type": "string", "description": "Unique SWE-bench instance identifier."},
+          {"name": "benchmark", "type": "string", "description": "SWE-bench subset (swe-bench-verified or swe-bench-lite)."},
+          {"name": "repo", "type": "string", "description": "Repository identifier (owner/repo)."},
+          {"name": "stratum", "type": "string", "description": "Accessibility tier: Stratum A (Direct Lexical Hit), Stratum B (Lexical Inaccessible / Hub), Stratum C (Callpath Disconnected)."},
+          {"name": "stratum_label", "type": "string", "description": "Human-readable descriptive category of the lexical accessibility regime."},
+          {"name": "gold_targets", "type": "string", "description": "List of ground-truth modified symbol names."},
+          {"name": "gold_files", "type": "string", "description": "List of ground-truth modified source file paths."},
+          {"name": "problem_statement_snippet", "type": "string", "description": "Normalized truncated excerpt of the problem statement."}
+        ]
+      }
+    }
+  ]
 }

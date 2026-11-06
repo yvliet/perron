@@ -21,8 +21,8 @@
   ],
   "landis_koch_interpretation": "Almost Perfect Agreement (kappa >= 0.81)",
   "confusion_matrix": {
-    "rows": "Automated Heuristic (A, B, C)",
-    "columns": "Human Independent Ground Truth (A, B, C)",
+    "rows": "Automated Deterministic Classifier (A, B, C)",
+    "columns": "Expert Boundary Adjudication (A, B, C)",
     "matrix": [
       [
         43,
