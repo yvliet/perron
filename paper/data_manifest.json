@@ -386,8 +386,8 @@
         "results/scores.parquet": "b6330fe2da904b84d6d9b0b7d4b9cd63d114db3da2681d11fff7de0ad97b910c",
         "results/gemma4_e4b_scores.parquet": "6203ed4168e881088cd5b9c31c31bd1e16183491e35b0281dc95a2ac9b5461ab",
         "results/strata_human_validation.json": "506dfd94d37c0e2ce253eda0404808ec96844c91e6598e969fc9132a47ae027d",
-        "docs/datasheet.md": "d5c18f22806254c8c1377697add367ee7e1b0c27710e600d09d0405d01f4af31",
-        "dist_dataset/DATASHEET.md": "d5c18f22806254c8c1377697add367ee7e1b0c27710e600d09d0405d01f4af31",
+        "docs/datasheet.md": "8ae7d701775c3934e8056361dc4200eca3aa63f1c2f66c61442a75e9b08207e4",
+        "dist_dataset/DATASHEET.md": "8ae7d701775c3934e8056361dc4200eca3aa63f1c2f66c61442a75e9b08207e4",
         "paper/datasheet.tex": "5c511de021009e481430a3ee57f328b7d45c144a088e6166cbd8ed4f66418fac"
     },
     "community_resource_package": {

@@ -79,7 +79,7 @@ Data extraction and evaluation runs took place during October 2026.
 ### What preprocessing or cleaning was done?
 - **Normalization**: File paths were normalized to POSIX standards, stripping Windows drive letters and local workstation prefixes.
 - **Unreachable Distance Encoding**: In compliance with RFC 8259, infinite graph path lengths and missing hops were serialized as JSON `null` rather than non-standard `Infinity` or `NaN` literals.
-- **Classifier-vs-Human Validation Audit (Cohen's Kappa)**: To verify that the regex stratification heuristic represents genuine linguistic ground truth rather than algorithmic idiosyncrasy, an independent human audit was conducted on a stratified random sample of $N=100$ tasks (45 from Stratum A, 15 from Stratum B, 40 from Stratum C; seed=42).
+- **Expert Boundary Concordance Audit (Cohen's Kappa)**: To verify that the deterministic regex heuristic represents genuine linguistic ground truth rather than algorithmic idiosyncrasy, an author expert boundary concordance audit was conducted on a stratified random sample of $N=100$ tasks (45 from Stratum A, 15 from Stratum B, 40 from Stratum C; seed=42) against raw GitHub issue statements without access to regex tags.
   - Observed Concordance: 95.0% ($95/100$).
   - Chance Agreement: 38.75%.
   - Cohen's $\kappa$: $0.9184$ (95% CI $[0.849, 0.988]$).

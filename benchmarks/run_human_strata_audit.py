@@ -139,7 +139,7 @@ def run_audit(seed: int = 42) -> Dict[str, Any]:
     ci_high = min(1.0, kappa + 1.96 * se_kappa)
     
     result = {
-        "title": "Human Inter-Annotator Reliability Audit for SWE-bench Lexical Strata",
+        "title": "Author Expert Boundary Concordance Audit for SWE-bench Lexical Strata",
         "author": "Sultan Haikal (GitHub: @yvliet)",
         "sample_size": n_total,
         "sampling_method": "Stratified random sampling across Stratum A, B, and C (seed=42)",
