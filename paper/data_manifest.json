@@ -382,13 +382,13 @@
         "data/swebench_strata_annotations.jsonl": "d90b28f6d418216512bc324e43eda69303f951313b7527e01a053bc0d89e235f",
         "dist_dataset/swebench_strata_annotations.jsonl": "bab1bb832d63fb752ca1bab23df62cd485d5c0fb08e7e0855252b5f53184b0e0",
         "data_release/task_manifest.json": "240f3d5ecfc4897f6a40982fceea3d9c7d497247954c707d63b75c0a1e99b357",
-        "data_release/scores.parquet": "f75bbed78c5d13385aa337d6f12bc0eead0a2c4866326698f86189e9abb9609f",
-        "results/scores.parquet": "f75bbed78c5d13385aa337d6f12bc0eead0a2c4866326698f86189e9abb9609f",
+        "data_release/scores.parquet": "b6330fe2da904b84d6d9b0b7d4b9cd63d114db3da2681d11fff7de0ad97b910c",
+        "results/scores.parquet": "b6330fe2da904b84d6d9b0b7d4b9cd63d114db3da2681d11fff7de0ad97b910c",
         "results/gemma4_e4b_scores.parquet": "6203ed4168e881088cd5b9c31c31bd1e16183491e35b0281dc95a2ac9b5461ab",
-        "results/strata_human_validation.json": "f08b83d3976e46e5077df7deb8843f18bd0af1392298dd7f2a80cb61eabefcdd",
+        "results/strata_human_validation.json": "28c48f3a71d710d6f0ba983e3d23b3758d7c912000c5cd667ce2f3cbd40b336f",
         "docs/datasheet.md": "d5c18f22806254c8c1377697add367ee7e1b0c27710e600d09d0405d01f4af31",
         "dist_dataset/DATASHEET.md": "d5c18f22806254c8c1377697add367ee7e1b0c27710e600d09d0405d01f4af31",
-        "paper/datasheet.tex": "c087a998815a7927e6f6bf3a5b5aaef7ad8d48069efcd133dcd5d4cf2d234167"
+        "paper/datasheet.tex": "01c60b132a6e847bf424965fbca257bd99e28a9cd38d3a0c2b9fc1a497ea0f5d"
     },
     "community_resource_package": {
         "title": "Perron Open Code Graph & Task Stratification Resource",

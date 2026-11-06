@@ -17,7 +17,7 @@ All confirmatory empirical evaluations reported in the Perron manuscript were ex
 2. **Gemma 4 Pointwise Reranking Protocol**: Git commits `a13ab34` (Stage 1 protocol freeze) and `9abe405` (Stage 2 candidate lock, October 6, 2026)  
    - Protocol Definition: `benchmarks/protocol/gemma4_protocol_v1.yaml` (SHA-256: `96af1621a27b48a99666a8fcef626ecd2415fd094fc6b6803fce567c38d927ce`)  
    - Stage 2 Candidate Lock: `benchmarks/protocol/gemma4_lock_v1.json` (SHA-256 LF: `281508f0f0a35e03cbbfd5b4ec3d69913e3f0c995552252cd68a33e95ec9dfbc`, CRLF: `dbbf292032b2fdff39692476b3d557dddd437a176b745f4ae63ca34fab254712`)  
-   - Scored Data Release: `results/scores.parquet` (19,298 candidate evaluations, SHA-256: `f75bbed78c5d13385aa337d6f12bc0eead0a2c4866326698f86189e9abb9609f`)
+   - Scored Data Release: `results/scores.parquet` (19,298 candidate evaluations, SHA-256: `b6330fe2da904b84d6d9b0b7d4b9cd63d114db3da2681d11fff7de0ad97b910c`)
 
 ---
 
