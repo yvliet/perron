@@ -6,15 +6,15 @@
 
 ## Abstract
 
-Across 344 Verified tasks, 1-hop AST graph expansion exhibits no statistically detectable difference with depth-matched lexical retrieval (Acc@5 47.1% vs 45.1%, step-down Holm p=0.2869, exact McNemar p=0.1435; formal ±2.0 pp equivalence remains inconclusive, p=0.512, TOST power 1.92%). Classical Wilcoxon-Mann-Whitney expectations (E[Rank] = 1 + (M-1)(1-AUC), Bamber 1975) explain why expansion stalls: candidate selection conditioning drops pairwise discrimination from 0.7966 on seeds to 0.6596 on graph neighbors (p=0.0036*), pushing expected target rank past the top-5 window. On 131 un-named defects, test-time reasoning (<= 180 tokens) improves Top-1 at M=25 (4.58% to 9.92%, raw p=0.0156*; 4-test Holm p=0.0625, adverse-pair p=0.0703, hit-flip p=0.1250), acting as candidate disambiguation among lexical seeds (12/28 hits) rather than relational graph traversal (1/7 hits). Candidate horizon pruning (M=15) cuts candidate stubs by 40%; paired with reasoning, it compacts mean target rank from 5.88 to 5.32 to 3.74 with zero loss in reachable Top-1 hits. Across 162 non-Django tasks, topological expansion matches lexical search at 34.6% vs 32.7% (p=0.5811). Parameter-efficient fine-tuning on SWE-bench Lite lifts isolated graph Top-1 to 24.0% (p=0.0312*) but introduces trailing distractor variance that degrades broad-pool ranking (44% to 36%). I release depth-matched candidate pools, 19,298 evaluations, 707 verified strata labels, and the reference Perron CSR engine under Apache 2.0.
+Local code graph agents (2B-4B) face hub absorption and distractor dilution. Across 344 Verified tasks, Perron's CSR engine (1.89-5.10 ms, HSI@10=99.5%) suppresses hubs, yet unpruned 1-hop expansion under frozen 2B scoring shows no statistically detectable difference with depth-matched lexical retrieval (Acc@5 47.1% vs 45.1%, step-down Holm p=0.2869, exact McNemar p=0.1435; ±2.0 pp equivalence inconclusive, p=0.512, TOST power 1.92%). Wilcoxon-Mann-Whitney expectations (E[Rank] = 1 + (M-1)(1-AUC), Bamber 1975) explain this plateau and how to unlock it: candidate selection conditioning drops discrimination from 0.7966 on seeds to 0.6596 on graph neighbors (p=0.0036*), pushing expected target rank past top-5. Unlocking graph context requires horizon pruning (M=15, -40% stubs) plus reasoning or provenance: on 131 un-named defects, 4B reasoning (<=180 tokens) lifts Top-1 at M=25 (4.58% to 9.92%, raw p=0.0156*; 4-test Holm p=0.0625, adverse-pair p=0.0703, hit-flip p=0.1250) via seed disambiguation (12/28 hits) over graph traversal (1/7 hits), compacting mean target rank from 5.88 to 5.32 to 3.74 with zero Top-1 loss. Across 162 non-Django tasks, expansion matches lexical search (34.6% vs 32.7%, p=0.5811). Fine-tuning on SWE-bench Lite lifts isolated graph Top-1 to 24.0% (p=0.0312*) but degrades broad ranking (44% to 36%). I release depth-matched pools, 19,298 evaluations, 707 strata labels, and Perron CSR under Apache 2.0.
 
 ---
 
 ## 1. Introduction
 
-Local agents must localize defects within tight contexts ($K \le 4,096$). On 344 Verified tasks with frozen `gemma-4-e2b-it`, 1-hop expansion adds +7.3 pp recall over seeds, yet top-5 accuracy matches depth BM25 (47.1% vs 45.1%, Holm $p=0.287$).
+Offline agents (2B-4B, $K \le 4,096$) need structural context without cloud APIs. On 344 Verified tasks with frozen `gemma-4-e2b-it`, 1-hop expansion adds +7.3 pp recall, yet unpruned top-5 accuracy matches depth BM25 (47.1% vs 45.1%, Holm $p=0.287$).
 
-Five contributions resolve this disconnect:
+Five contributions define the operating regime that unlocks local code graphs:
 1. **Matched Controls & Inconclusive Equivalence**: Expansion exhibits no statistically detectable difference with depth BM25 ($\Delta=+2.03$ pp, exact $p=0.1435$; $\pm 2.0$ pp equivalence is inconclusive, $p=0.512$, power 1.92%); task GLM (OR=1.118, p=0.0876) and repo mixed model (OR=1.130, p=0.349) confirm non-significance.
 2. **Markov Floor**: Candidate inclusion requires $\text{AUC}^{*} \ge 1 - (k-1)/(M-1)$; Proposition 1 bounds worst-case performance as a Markov floor ($1/k=0.20$ at $M=25, k=5$). Discrimination drops to 0.6596 via candidate selection conditioning.
 3. **Scaling & MoE Bound**: Tail discrimination scales monotonically (0.8544 to 0.9274); 4B union control reaches 16.79% Top-1, 37.4% Acc@5 (MRR 0.2562); 26B-A4B MoE 52.0 GB footprint exceeds Dual T4.
@@ -80,7 +80,7 @@ Pointwise candidate discrimination was evaluated on Dual T4s across 58 Stratum C
 
 ### 4.5 Candidate Pool × Reasoning Factorial Matrix & M=15 Verification (N=131)
 
-*Denominator Key*: $N=344$ callable Verified; $N=131$ all Stratum C; $N=58$ union-reachable ($M \le 87$); $N=35$ reachable at $M=25$ ($28$ seeds + $7$ graph additions); $N=34$ reachable at $M=15$ ($28$ seeds + $6$ graph additions).
+*Denominator Key*: $N=344$ Verified; $N=131$ Stratum C; $N=58$ union-reachable ($M \le 87$); $N=35$ reachable at $M=25$ ($28$ seeds + $7$ graph); $N=34$ at $M=15$ ($28$ seeds + $6$ graph).
 
 | Condition | M | Acc@1 | Acc@5 | MRR |
 | :--- | :---: | :---: | :---: | :---: |
@@ -139,7 +139,7 @@ I tuned `gemma-4-e2b-it` (LoRA r=16) on 226 Lite tasks via GroupKFold (171 train
 ## 5. Discussion
 
 - **Model Specification**: Offsets (+0.87 to +2.03 pp; 95% CI [-0.29, +4.36] pp) show no statistically detectable difference. Task GLM (OR=1.118, p=0.0876) and repo GLMM (OR=1.130, p=0.349, $\sigma_{\text{repo}}=0.963$) confirm non-significance; SE doubles (0.065 to 0.130) because repo intercepts drop task pairing.
-- **Selection Conditioning**: Discrimination drop (0.7966 vs 0.6596) mirrors depth BM25 (0.6380 vs 0.6253, $p=0.721$), reflecting conditioning on $T^{*} \notin \text{Top10}(\text{BM25})$. In literature, RepoGraph (ICLR 2025) confirms unpruned 2-hop collapsed to 26.00% ($-5.67$ pp) via distractor dilution, corroborating Perron. Evaluations lacking lexical stratification or depth-matched controls ($A_2$ at $M_t$) confound pool cardinality with topology and mask selection conditioning across strata; isolating these regimes requires cardinality-matched controls ($N=344$, 19,298 passes). As 1-hop checking is Depth-1 (Sanford et al., 2024), reasoning disambiguates lexical distractors rather than traversing graphs.
+- **Selection Conditioning**: Discrimination drop (0.7966 vs 0.6596) mirrors depth BM25 (0.6380 vs 0.6253, $p=0.721$), reflecting conditioning on $T^{*} \notin \text{Top10}(\text{BM25})$. RepoGraph (ICLR 2025) confirms unpruned 2-hop collapsed to 26.00% ($-5.67$ pp) via distractor dilution, corroborating Perron. Evaluations lacking lexical stratification or depth-matched controls ($A_2$ at $M_t$) confound pool cardinality with topology; isolating these regimes requires cardinality-matched controls ($N=344$, 19,298 passes). As 1-hop checking is Depth-1 (Sanford et al., 2024), reasoning disambiguates lexical distractors rather than traversing graphs.
 - **Operating Regimes**: (1) **CSR Filter**: $<5.2$ ms ($\le 3$ MB RAM, 58.4% recall); (2) **Pruning**: Cap at $M=15$ ($\text{AUC}^{*}=0.714$); (3) **Control**: E4B reaches 16.79% Top-1, 37.4% Acc@5 (MRR 0.2562); (4) **Routing**: Saves 31.4% compute; (5) **Tuning**: Overfitting cautions against adapter tuning.
 
 ---
@@ -156,7 +156,7 @@ Perron is released under Apache 2.0 (`https://github.com/yvliet/perron`):
 
 ## 7. Conclusion
 
-Code graph expansion stalls under small models not from missing reachability, but because low-overlap neighbors drop below expected-rank discrimination via selection conditioning, while unpruned graphs dilute precision. Test-time reasoning disambiguates candidates in 4B models ($6 \to 12, p=0.0312^{*}$) but degrades 2B models, while bounded pruning ($M=15$) achieves rank compaction (5.88 to 5.32 to 3.74) with zero Top-1 loss. A 4B control reaches 16.79% Top-1 and 37.4% Acc@5, indicating 2B nulls reflect a capacity floor. Clean LoRA shows Top-1 reweighting on isolated targets (24.0%, $p=0.0312^{*}$) but adds rank variance. Perron provides a fast, zero-copy CSR foundation for local developer agents.
+Perron defines the operating regime for local code graphs: post-walk damping (1.89-5.10 ms, HSI@10=99.5%) prevents hub collapse, while unpruned expansion stalls under 2B models because low-overlap neighbors drop below expected-rank discrimination ($\text{AUC}=0.6596 < 0.830$) via selection conditioning. Unlocking graph context requires horizon pruning ($M=15$, $-40\%$ stubs) paired with 4B reasoning ($6 \to 12$ seed Top-1, $p=0.0312^{*}$, compacting mean rank from 5.88 to 5.32 to 3.74 with zero Top-1 loss) or 2B inline provenance (12.07% to 25.86% Top-1). A 4B control reaches 16.79% Top-1 and 37.4% Acc@5, confirming 2B nulls reflect a capacity floor. Clean LoRA lifts isolated Top-1 (24.0%, $p=0.0312^{*}$) but adds rank variance. Perron provides a fast, zero-copy CSR foundation for local developer agents.
 
 ---
 
