@@ -1,5 +1,5 @@
 {
-  "title": "Human Inter-Annotator Reliability Audit for SWE-bench Lexical Strata",
+  "title": "Author Expert Boundary Concordance Audit for SWE-bench Lexical Strata",
   "author": "Sultan Haikal (GitHub: @yvliet)",
   "sample_size": 100,
   "sampling_method": "Stratified random sampling across Stratum A, B, and C (seed=42)",

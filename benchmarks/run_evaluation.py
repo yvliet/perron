@@ -123,7 +123,7 @@ def run_instance(
             # Initialize git so diff calculation and worktrees function
             subprocess.run(["git", "init"], cwd=str(inst_repo), capture_output=True, check=False)
             subprocess.run(["git", "config", "user.name", "Sultan Haikal"], cwd=str(inst_repo), capture_output=True, check=False)
-            subprocess.run(["git", "config", "user.email", "yvliet@users.noreply.github.com"], cwd=str(inst_repo), capture_output=True, check=False)
+            subprocess.run(["git", "config", "user.email", "recrified@gmail.com"], cwd=str(inst_repo), capture_output=True, check=False)
             subprocess.run(["git", "add", "."], cwd=str(inst_repo), capture_output=True, check=False)
             subprocess.run(["git", "commit", "-m", "initial commit"], cwd=str(inst_repo), capture_output=True, check=False)
 

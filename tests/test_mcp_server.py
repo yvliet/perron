@@ -166,6 +166,31 @@ def test_mcp_error_handling(sample_repo: Path):
             assert "error" in resp_invalid
             assert resp_invalid["error"]["code"] == -32600
 
+        # Non-dict params or arguments payloads (e.g. params: [1, 2, 3], params: "invalid")
+        for invalid_params in [[1, 2, 3], "invalid", 42]:
+            req_invalid_params = {
+                "jsonrpc": "2.0",
+                "id": 99,
+                "method": "tools/call",
+                "params": invalid_params,
+            }
+            resp_params = server.handle_request(req_invalid_params)
+            assert resp_params["id"] == 99
+            assert "error" in resp_params
+            assert resp_params["error"]["code"] == -32602
+
+        # Non-dict arguments payload inside valid params dict
+        req_invalid_args = {
+            "jsonrpc": "2.0",
+            "id": 100,
+            "method": "tools/call",
+            "params": {"name": "retrieve_context", "arguments": [1, 2, 3]},
+        }
+        resp_args = server.handle_request(req_invalid_args)
+        assert resp_args["id"] == 100
+        assert "error" in resp_args
+        assert resp_args["error"]["code"] == -32602
+
         # Missing required args
         req2 = {
             "jsonrpc": "2.0",

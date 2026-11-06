@@ -17,23 +17,23 @@ Offline agents (2B-4B, $K \le 4,096$) need structural context without cloud APIs
 Five contributions define the operating regime that unlocks local code graphs:
 1. **Matched Controls & Inconclusive Equivalence**: Expansion exhibits no statistically detectable difference with depth BM25 ($\Delta=+2.03$ pp, exact $p=0.1435$; $\pm 2.0$ pp equivalence is inconclusive, $p=0.512$, power 1.92%); task GLM (OR=1.118, p=0.0876) and repo mixed model (OR=1.130, p=0.349) confirm non-significance.
 2. **Markov Floor**: Candidate inclusion requires $\text{AUC}^{*} \ge 1 - (k-1)/(M-1)$; Proposition 1 bounds worst-case performance as a Markov floor ($1/k=0.20$ at $M=25, k=5$). Discrimination drops to 0.6596 via candidate selection conditioning.
-3. **Scaling & MoE Bound**: Tail discrimination scales monotonically (0.8544 to 0.9274); 4B union control reaches 16.79% Top-1, 37.4% Acc@5 (MRR 0.2562); 26B-A4B MoE 52.0 GB footprint exceeds Dual T4.
-4. **Disambiguation & Pruning**: Reasoning lifts 4B Top-1 at $M=25$ via seed disambiguation (6 to 12, $p=0.0312^{*}$); $M=15$ pruning cuts candidate stubs by 40%, compacting mean gold rank from 5.88 to 5.32 to 3.74 with zero Top-1 loss (13/131 in both pools).
-5. **Post-Training Dynamics**: Clean LoRA lifts isolated Top-1 to 24.0% ($p=0.0312^{*}$), but regresses Acc@5 (44% to 36%) below Graph-First (52.0%), showing localized training-set adaptation.
+3. **Scaling & MoE Bound**: Tail discrimination scales monotonically (0.8544 to 0.9274); 4B union reaches 16.79% Top-1, 37.4% Acc@5 (MRR 0.2562); 26B-A4B MoE (52.0 GB) exceeds Dual T4.
+4. **Disambiguation & Pruning**: Reasoning lifts 4B Top-1 at $M=25$ via seed disambiguation (6 to 12, $p=0.0312^{*}$); $M=15$ pruning cuts stubs by 40%, compacting mean rank from 5.88 to 5.32 to 3.74 with zero Top-1 loss (13/131).
+5. **Post-Training Dynamics**: Clean LoRA lifts isolated Top-1 to 24.0% ($p=0.0312^{*}$), but regresses Acc@5 (44% to 36%) below Graph-First (52.0%), showing localized adaptation.
 
 ---
 
 ## 2. Related Work
 
-- **Diffusion & Scaling**: APPNP [7] and HippoRAG decouple PageRank from supervision, while PRFL [12] and SweRank [11] apply PageRank and 7B rerankers to fault localization. On scale-free code graphs, however, unweighted random walks ($\beta=0.85$) funnel $\beta^3=61.4\%$ of $t \ge 3$ mass into high-in-degree utility sinks (9.2% hub contamination, HSI@10=90.8%), while undirected hop metrics create spurious shortcuts through root modules. Perron resolves both via directed CSR diffusion and post-walk specificity damping ($\gamma=0.70$, HSI@10=99.5%).
+- **Diffusion & Scaling**: APPNP [7] and HippoRAG decouple PageRank from supervision, while PRFL [12] and SweRank [11] evaluate fault localization. On scale-free code graphs, unweighted random walks ($\beta=0.85$) funnel $\beta^3=61.4\%$ of $t \ge 3$ mass into high-in-degree utility sinks (9.2% contamination, HSI@10=90.8%), while undirected hops create spurious shortcuts through root modules. Perron resolves both via directed CSR diffusion with specificity damping ($\gamma=0.70$, HSI@10=99.5%).
 - **Graph Reasoning**: Fatemi et al. [8] and Sanford et al. [9] proved reachability depth bounds. I show reasoning eliminates explicit edge verbalization in 4B models.
-- **Agent Localization**: Aider [1], CodexGraph [3], Agentless [5], and LocAgent [4] benchmark localization. Perron evaluates compact models (2B/4B) zero-shot on static CSR graphs.
+- **Agent Localization**: Aider [1], CodexGraph [3], Agentless [5], and LocAgent [4] benchmark localization. Perron evaluates 2B/4B models zero-shot on static CSR graphs.
 
 ---
 
 ## 3. Study Design & Protocol
 
-- **Benchmark & Strata**: 344 Verified tasks [6] across 12 repos: protocol lock evaluates substring strata (N_A=208 [60.5%], N_B=5 [1.5%], N_C=131 [38.1%]); dataset refines word-boundary regexes (N_A=168, N_B=7, N_C=169; N=100 audit: 95.0% concordance, Cohen κ=0.918, 95% CI [0.849, 0.988]). Auditing 56 exclusions confirms 100% syntax validity (68 files, 3,827 symbols); overturning equivalence requires >= +9 net wins (p=0.0016).
+- **Benchmark & Strata**: 344 Verified tasks [6] across 12 repos: protocol lock evaluates substring strata (N_A=208 [60.5%], N_B=5 [1.5%], N_C=131 [38.1%]); dataset refines word-boundary regexes (N_A=168, N_B=7, N_C=169; N=100 expert boundary audit: 95.0% concordance, Cohen κ=0.918, 95% CI [0.849, 0.988]). Auditing 56 exclusions confirms 100% syntax validity (68 files, 3,827 symbols); overturning equivalence requires >= +9 net wins (p=0.0016).
 - **Perron CSR Engine**: Typed edges solve in 1.89-5.10 ms (<3 MB RAM vs SuperLU at 28.1 ms). Transition matrix M (β=0.85) satisfies |λ_2(M)| <= β (Doeblin contraction $\|\boldsymbol{\pi}^{(t)} - \boldsymbol{\pi}_\infty\|_1 \le 2\beta^t$). Damping (γ=0.70) yields HSI@10=99.5%.
 - **Candidate Pools**: Top-10 BM25 seeds (M_t in [10, 50], mean 24.5) define depth-matched pools B0--A6. Frozen `gemma-4-e2b-it` scores log-odds (19,298 passes). Contrasts PC1 (A4 - A2) and PC2 (A4 - A3) evaluate McNemar tests with Holm correction and bootstrap CIs (B=10,000).
 
@@ -139,7 +139,7 @@ I tuned `gemma-4-e2b-it` (LoRA r=16) on 226 Lite tasks via GroupKFold (171 train
 ## 5. Discussion
 
 - **Model Specification**: Offsets (+0.87 to +2.03 pp; 95% CI [-0.29, +4.36] pp) show no statistically detectable difference. Task GLM (OR=1.118, p=0.0876) and repo GLMM (OR=1.130, p=0.349, $\sigma_{\text{repo}}=0.963$) confirm non-significance; SE doubles (0.065 to 0.130) because repo intercepts drop task pairing.
-- **Selection Conditioning**: Discrimination drop (0.7966 vs 0.6596) mirrors depth BM25 (0.6380 vs 0.6253, $p=0.721$), reflecting conditioning on $T^{*} \notin \text{Top10}(\text{BM25})$. RepoGraph (ICLR 2025) confirms unpruned 2-hop collapsed to 26.00% ($-5.67$ pp) via distractor dilution, corroborating Perron. Evaluations lacking lexical stratification or depth-matched controls ($A_2$ at $M_t$) confound pool cardinality with topology; isolating these regimes requires cardinality-matched controls ($N=344$, 19,298 passes). As 1-hop checking is Depth-1 (Sanford et al., 2024), reasoning disambiguates lexical distractors rather than traversing graphs.
+- **Selection Conditioning**: Discrimination drop (0.7966 vs 0.6596) mirrors depth BM25 (0.6380 vs 0.6253, $p=0.721$), reflecting conditioning on $T^{*} \notin \text{Top10}(\text{BM25})$. RepoGraph [2] confirms unpruned 2-hop collapsed to 26.00% ($-5.67$ pp) via distractor dilution. Uncontrolled evaluations confound pool cardinality with topology; isolating these regimes requires depth-matched controls ($N=344$, 19,298 passes). Because 1-hop verification is Depth-1 [9], reasoning disambiguates lexical distractors rather than traversing graphs.
 - **Operating Regimes**: (1) **CSR Filter**: $<5.2$ ms ($\le 3$ MB RAM, 58.4% recall); (2) **Pruning**: Cap at $M=15$ ($\text{AUC}^{*}=0.714$); (3) **Control**: E4B reaches 16.79% Top-1, 37.4% Acc@5 (MRR 0.2562); (4) **Routing**: Saves 31.4% compute; (5) **Tuning**: Overfitting cautions against adapter tuning.
 
 ---
@@ -147,10 +147,10 @@ I tuned `gemma-4-e2b-it` (LoRA r=16) on 226 Lite tasks via GroupKFold (171 train
 ## 6. Community Resource Toolkit & Specification
 
 Perron is released under Apache 2.0 (`https://github.com/yvliet/perron`):
-- **Data & Specs**: 12 CSR multigraphs (109,240 nodes, 341,892 edges), 707 strata labels, `scores.parquet` (19,298 E2B and 8,113 E4B evaluations), *Datasheet for Datasets* (Gebru et al., 2021), SHA-256 manifests.
+- **Data & Specs**: 12 CSR multigraphs (109,240 nodes, 341,892 edges), 707 strata labels, `scores.parquet` (19,298 E2B and 8,113 E4B evaluations), *Datasheet for Datasets*, SHA-256 manifests.
 - **Engine**: CSR diffusion in 1.89-5.10 ms (<3 MB RAM) with pre-commit syntax validation gates.
-- **Tooling**: `perron.diffuse_with_provenance()`, `perron-mcp` server, LoRA weights (`yvliet/perron-gemma4-e2b-lora`).
-- **Notebooks**: [Gemma 4 Workstation](https://www.kaggle.com/code/yvliet/perron-gemma-4-workstation) (Dual T4 GPU 344-task context packing) and [Quickstart Demo](https://www.kaggle.com/code/yvliet/perron-spectral-code-graph-quickstart-demo) (1.89-5.10 ms CPU diffusion).
+- **Tooling**: `diffuse_with_provenance()`, `perron-mcp` server, LoRA weights (`yvliet/perron-gemma4-e2b-lora`).
+- **Notebooks**: [Gemma 4 Workstation](https://www.kaggle.com/code/yvliet/perron-gemma-4-workstation) (Dual T4 context packing) and [Quickstart Demo](https://www.kaggle.com/code/yvliet/perron-spectral-code-graph-quickstart-demo) (CPU diffusion).
 
 ---
 

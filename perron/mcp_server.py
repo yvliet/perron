@@ -321,6 +321,16 @@ class PerronMCPServer:
         method = req.get("method", "")
         params = req.get("params", {}) or {}
 
+        if not isinstance(params, dict):
+            return {
+                "jsonrpc": "2.0",
+                "id": msg_id,
+                "error": {
+                    "code": -32602,
+                    "message": "Invalid params: must be a JSON object",
+                },
+            }
+
         # 1. Initialize
         if method == "initialize":
             return {
@@ -364,6 +374,15 @@ class PerronMCPServer:
         if method == "tools/call":
             tool_name = params.get("name")
             arguments = params.get("arguments", {}) or {}
+            if not isinstance(arguments, dict):
+                return {
+                    "jsonrpc": "2.0",
+                    "id": msg_id,
+                    "error": {
+                        "code": -32602,
+                        "message": "Invalid arguments: must be a JSON object",
+                    },
+                }
             try:
                 if tool_name == "retrieve_context":
                     output_text = self.tool_retrieve_context(arguments)
@@ -455,9 +474,23 @@ class PerronMCPServer:
                 sys.stdout.flush()
                 continue
 
-            response = self.handle_request(request)
-            if response is not None:
-                sys.stdout.write(json.dumps(response) + "\n")
+            try:
+                response = self.handle_request(request)
+                if response is not None:
+                    sys.stdout.write(json.dumps(response) + "\n")
+                    sys.stdout.flush()
+            except Exception as exc:
+                logger.exception("Unhandled error processing request: %s", exc)
+                req_id = request.get("id") if isinstance(request, dict) else None
+                err_resp = {
+                    "jsonrpc": "2.0",
+                    "id": req_id,
+                    "error": {
+                        "code": -32603,
+                        "message": f"Internal server error: {exc}",
+                    },
+                }
+                sys.stdout.write(json.dumps(err_resp) + "\n")
                 sys.stdout.flush()
 
         self.close()

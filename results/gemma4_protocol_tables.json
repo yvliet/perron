@@ -202,7 +202,7 @@
     "stratum_c_listwise_summary": {
       "mrr_lift_pct": 45.4,
       "A4_vs_A2_p_value": 1.0,
-      "A4_vs_A2_pointwise_p_value": 0.1250
+      "A4_vs_A2_pointwise_p_value": 0.125
     },
     "causal_summary": {
       "mrr_lift_pct": 45.4,
@@ -278,8 +278,8 @@
       "django_benchmark_pct": 52.91,
       "django_a2_acc5": 56.04,
       "django_a4_acc5": 58.24,
-      "django_delta_pp": 2.20,
-      "django_mcnemar_p": 0.1250,
+      "django_delta_pp": 2.2,
+      "django_mcnemar_p": 0.125,
       "tost_power_pct": 1.92,
       "tost_power_pct_approx": 2.1,
       "tost_target_tasks": 1058,
@@ -307,11 +307,41 @@
       "unscored_bm25_mrr": 0.0862
     },
     "scaling_surface_table": {
-      "gemma_4_e2b_it": {"params": "2.0B", "precision": "FP16", "roc_auc": 0.8544, "vram_mb": 6698.9, "runtime_s": 1798},
-      "gemma_4_e4b_it": {"params": "4.0B", "precision": "FP16", "roc_auc": 0.9274, "vram_mb": 9648.4, "runtime_s": 6250},
-      "phi_4_mini": {"params": "3.8B", "precision": "4-bit NF4", "roc_auc": 0.7836, "vram_mb": 4135.9, "runtime_s": 2854},
-      "deepseek_r1_7b": {"params": "7.0B", "precision": "4-bit NF4", "roc_auc": 0.6489, "vram_mb": 6594.6, "runtime_s": 5231},
-      "gemma_4_26b_a4b_it": {"params": "3.8B/26B", "precision": "FP16", "roc_auc": "Bound", "vram_mb": "52.0 GB", "runtime_s": "Exceeds T4"}
+      "gemma_4_e2b_it": {
+        "params": "2.0B",
+        "precision": "FP16",
+        "roc_auc": 0.8544,
+        "vram_mb": 6698.9,
+        "runtime_s": 1798
+      },
+      "gemma_4_e4b_it": {
+        "params": "4.0B",
+        "precision": "FP16",
+        "roc_auc": 0.9274,
+        "vram_mb": 9648.4,
+        "runtime_s": 6250
+      },
+      "phi_4_mini": {
+        "params": "3.8B",
+        "precision": "4-bit NF4",
+        "roc_auc": 0.7836,
+        "vram_mb": 4135.9,
+        "runtime_s": 2854
+      },
+      "deepseek_r1_7b": {
+        "params": "7.0B",
+        "precision": "4-bit NF4",
+        "roc_auc": 0.6489,
+        "vram_mb": 6594.6,
+        "runtime_s": 5231
+      },
+      "gemma_4_26b_a4b_it": {
+        "params": "3.8B/26B",
+        "precision": "FP16",
+        "roc_auc": "Bound",
+        "vram_mb": "52.0 GB",
+        "runtime_s": "Exceeds T4"
+      }
     }
   }
 }
