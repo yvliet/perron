@@ -281,7 +281,7 @@ To test whether the low unassisted reranking accuracy on Stratum~C ($N=\GemmaFou
 \renewcommand{\arraystretch}{0.95}
 \caption{\textbf{Candidate Pool $\times$ Test-Time Reasoning and Call-Path Provenance Factorial Evaluation on Stratum C ($N=131$ Un-Named Defects, Dual T4 Execution with \texttt{google/gemma-4-e4b-it}).} Evaluates pool architectures ($A_1, A_2, A_4$ at $M \le 25$), provenance conditions ($C_0\text{--}C_3$), and bound-pruned horizon $M=15$ ($\text{AUC}^*=0.714$). Under \texttt{PROTOCOL-CAUSAL-v1}, Acc@5 was designated in the time-stamped protocol plan ($p=0.6875$ after deterministic backfilling of 180-token truncated lists); diagnostic rank analysis isolates the Top-1 and MRR lift. \textit{Methodological Boundary}: Evaluated on the confirmatory protocol lock ($N=131$ Stratum C, $N=58$ reachable). Programmatic regex boundary reclassification ($N=169$, released in dataset) shifts 38 tasks. While $\sim 28$ of these 38 tasks lack in-pool targets (yielding zero discordance), among the $\sim 10$ reachable tasks, exact binomial sensitivity confirms fragility: adding a single adverse discordant pair ($n_{01}=1, n_{10}=7, n=8$) yields $p = 18/256 = 0.0703$, while flipping an existing positive discordant hit to a loss ($n_{01}=1, n_{10}=6, n=7$) yields $p = 16/128 = 0.1250$. In both perturbations, family-wise significance is lost, demonstrating that candidate disambiguation is an exploratory diagnostic awaiting multi-seed replication.}
 \label{tab:stratum_c_combined}
-\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash\hsize=1.10\hsize}X l c c c >{\raggedright\arraybackslash\hsize=0.90\hsize}X}
+\begin{tabular}{>{\raggedright\arraybackslash}p{4.2cm} l c c c >{\raggedright\arraybackslash}p{4.4cm}}
 \toprule
 \textbf{Condition / Architecture} & \textbf{Readout Mode} & \textbf{Acc@1 (Hits)} & \textbf{Acc@5 (Raw / Backfill)} & \textbf{MRR} & \textbf{Paired Contrast} \\
 \midrule
@@ -302,7 +302,7 @@ $A_4^{(15)}$ Direct / Provenance & No Thinking & 4.58\% (6/131) & 17.56\% / 17.5
 \textbf{$C_0^{(15)}$: Thinking ($M=15$)} & \textbf{Thinking Traces} & \textbf{9.92\% (13/131)} & \textbf{\CausalMFifteenCZeroAccFivePctTwo\ / \CausalMFifteenCZeroAccFivePctTwo} & \textbf{0.1469} & \textbf{Top-1 $+5.34$ pp ($p=0.0391^*$); Mean rank 3.74} \\
 $C_3^{(15)}$: Prov + Think ($M=15$) & Prov + Think & \CausalMFifteenCThreeAccOnePctTwo\ (8/131) & \CausalMFifteenCThreeAccFive\ / \CausalMFifteenCThreeAccFive & 0.1192 & $-3.82$ pp vs.\ $C_0^{(15)}$ ($p=0.1250$) \\
 \bottomrule
-\end{tabularx}
+\end{tabular}
 \end{table}
 \paragraph{Protocol-Specified Top-5 Contrasts vs.\ Diagnostic Top-1 Lift and Candidate Disambiguation}
 Under direct readout without reasoning, $A_4^{(25)}$ and $A_2^{(25)}$ tie exactly at 16.79\% Acc@5 (22/131) and 4.58\% Acc@1 (6/131). While protocol-specified Top-5 accuracy under thinking ($C_0$) gains $+1.53$~pp on $A_4^{(25)}$ ($22 \to 24$ hits, null-compatible $p=0.6875$; un-backfilled lexical pools drop by $3.82\text{--}4.58$~pp due to 180-token generation caps truncating trailing ranks 2--5, which deterministic backfilling restores to exact baseline levels), diagnostic rank evaluation shows that test-time thinking concentrates gains at the \textbf{Top-1 decision boundary}: on $A_4^{(25)}$, thinking lifts Top-1 accuracy from \textbf{4.58\% (6 hits) to 9.92\% (13 hits; exploratory diagnostic $+5.34$~pp, $n_{10}=7, n_{01}=0$, raw exact McNemar $p=0.0156^*$, which does not cross $\alpha=0.05$ under the 4-test step-down Holm family, $p_{\text{Holm}}=0.0625$; single adverse-pair sensitivity $p=0.0703$, discordant-flip sensitivity $p=0.1250$; MRR $+45.4\%$ from $0.0934 \to 0.1358$)}. Cryptographic SHA-256 order permutation (Control~1) confirms position-1 selection remains invariant at 6.87\% (9/131). However, partitioning the $N=35$ reachable targets at $M=25$ by \textbf{strict disjoint retrieval provenance} reveals that thinking acts primarily as fine-grained \textbf{candidate disambiguation}: within the $N=28$ top-10 BM25 seeds ($S$), graph expansion without thinking suppresses Top-1 to 21.4\% (6/28), and thinking doubles seed conversion to \textbf{42.9\% (12/28 hits, $+21.4$~pp, $p=0.0312^*$; 22/28 in Top-5)}, whereas on the $N=7$ pure 1-hop graph additions ($A_4^{(25)} \setminus S$), thinking converts $0/7 \to 1/7$ into Top-1 ($14.3\%, p=1.0000$; $2/7$ in Top-5), matching the $\sim 80\%$ seed base rate in the candidate pool. Evaluating the direct contrast between graph expansion and depth-matched lexical retrieval under test-time reasoning shows no statistically detectable difference: at $M=25$, $A_4\text{+think}$ reaches 13 hits vs.\ 9 hits for $A_2\text{+think}$ (+3.05 pp, $n_{10}=5, n_{01}=1$, exact paired McNemar $p = 0.2188$), and at $M=15$, $A_4\text{+think}$ reaches 13 hits vs.\ 11 hits for $A_2\text{+think}$ (+1.53 pp, $n_{10}=2, n_{01}=0$, exact $p = 0.5000$; Top-5 ties at 26 vs.\ 24 hits, $p = 0.5000$). Thus, test-time thinking acts primarily as candidate disambiguation across both representations, and graph expansion does not yield a statistically detectable advantage over depth-matched lexical retrieval ($p \ge 0.2188$).
@@ -317,11 +317,11 @@ At candidate cutoff $M=25$, the first-moment target inclusion threshold for Top-
 \begin{table}[!t]
 \centering
 \scriptsize
-\setlength{\tabcolsep}{3.0pt}
+\setlength{\tabcolsep}{5.0pt}
 \renewcommand{\arraystretch}{0.94}
 \caption{\textbf{AST $\alpha$-renaming and multi-encoding graph serialization on reachable Stratum C union tasks ($N=58$, \texttt{gemma-4-e2b-it}).} Reports both direct readout and test-time reasoning across all arms, demonstrating identifier obfuscation (Exp.\ A), graph encodings (Exp.\ B), and the capacity breakdown of reasoning on 2B models.}
 \label{tab:causal_ablation}
-\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}p{4.2cm}cccc>{\raggedleft\arraybackslash}X}
+\begin{tabular}{l c c c c r}
 \toprule
 \textbf{Condition / Architecture} & \textbf{Acc@1 (Direct)} & \textbf{Acc@1 (Think)} & \textbf{Acc@5 (Direct)} & \textbf{Acc@5 (Think)} & \textbf{Reasoning Shift} \\
 \midrule
@@ -336,7 +336,7 @@ $E_2$: Linearized Traversal Trace & 17.24\% (10/58) & 5.17\% (3/58) & 32.76\% & 
 $E_3$: Subgraph Edge List & 15.52\% (9/58) & 6.90\% (4/58) & 32.76\% & 20.69\% & $-8.62$ pp ($-55.6\%$) \\
 $E_4$: Adjacency Map & 15.52\% (9/58) & 6.90\% (4/58) & 34.48\% & 25.86\% & $-8.62$ pp ($-55.6\%$) \\
 \bottomrule
-\end{tabularx}
+\end{tabular}
 \end{table}
 \paragraph{Synthesizing Fatemi et~al.\ (2024) and Sanford et~al.\ (2024): The Reasoning Capacity Threshold}
 Auditing the 25 pure graph targets discovered in $A_4 \setminus A_1$ reveals that within 1-hop expansion, 14 tasks are callers and 10 tasks are callees of a lexical seed (alongside 1 inheritance relation). However, evaluating complete multi-hop reachability shows that 43.7\% of reachable non-seed targets require 2 hops; unpruned 2-hop expansion introduces distractor dilution that degrades ranking precision. Comparing Table~\ref{tab:stratum_c_combined} and Table~\ref{tab:causal_ablation} reveals an architectural capacity threshold governing how graph verbalization~\cite{fatemi2023talk} and reasoning depth~\cite{sanford2024understanding} interact:
@@ -532,11 +532,11 @@ Table~\ref{tab:verified_retrieval} presents standalone retrieval on SWE-bench Ve
 \begin{table}[!htbp]
 \centering
 \footnotesize
-\setlength{\tabcolsep}{3.0pt}
+\setlength{\tabcolsep}{4.5pt}
 \renewcommand{\arraystretch}{0.95}
 \caption{\textbf{Standalone retrieval evaluation on SWE-bench Verified ($N=344$ callable tasks).} Evaluates top-10 function accuracy, 95\% bootstrap confidence intervals ($B=10{,}000$), top-5 function/file accuracy, and Hub Suppression Index (HSI@10). Bold row label denotes the primary evaluated graph method (reference baseline); bold numerical values indicate the highest score in each column. Holm $p$-values are computed against Perron Static. Dense retrieval evaluates \texttt{BAAI/bge-small-en-v1.5} (384-d). Aider Repo Map is designed for file/class tag context packing, yielding 0.0\% on strict callable function matching by design.}
 \label{tab:verified_retrieval}
-\begin{tabularx}{\linewidth}{>{\raggedright\arraybackslash}Xcccccc}
+\begin{tabular}{l c c c c c c}
 \toprule
 \textbf{Method} & \textbf{Fn Acc@10} & \textbf{95\% CI} & \textbf{Fn Acc@5} & \textbf{File Acc@5} & \textbf{HSI@10} & \textbf{Holm $p$} \\
 \midrule
@@ -549,7 +549,7 @@ HippoRAG Prior Scaling & 49.4\% (170/344) & [44.2\%, 54.7\%] & 40.4\% & 52.6\% &
 Aider Repo Map (Tag PageRank) & 0.0\% (0/344) & [0.0\%, 0.0\%] & 0.0\% & 40.0\% & 92.4\% & $<0.001$ \\
 Dense Retrieval (\texttt{bge-small-en-v1.5}) & 38.4\% (132/344) & [33.4\%, 43.6\%] & 29.7\% & 44.8\% & 96.2\% & $<0.001$ \\
 \bottomrule
-\end{tabularx}
+\end{tabular}
 \end{table}
 
 \subsection{Confirmatory Power Bounds, GLMM Specification, and Retrieval Dynamics}
