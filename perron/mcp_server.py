@@ -142,6 +142,8 @@ class PerronMCPServer:
 
     def get_or_load_graph(self, repo_path: str, cache_dir: Optional[str] = None) -> CodeGraph:
         rp = Path(repo_path).resolve()
+        if not rp.exists() or not rp.is_dir():
+            raise FileNotFoundError(f"Repository path does not exist or is not a directory: {rp}")
         cp = Path(cache_dir).resolve() if cache_dir else (rp / ".perron_cache")
         key = f"{rp}:{cp}"
         if key not in self.active_graphs:
@@ -304,7 +306,17 @@ class PerronMCPServer:
     # JSON-RPC Message Dispatcher
     # -------------------------------------------------------------------------
 
-    def handle_request(self, req: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    def handle_request(self, req: Any) -> Optional[Dict[str, Any]]:
+        if not isinstance(req, dict):
+            return {
+                "jsonrpc": "2.0",
+                "id": None,
+                "error": {
+                    "code": -32600,
+                    "message": "Invalid Request: top-level JSON payload must be an object",
+                },
+            }
+
         msg_id = req.get("id")
         method = req.get("method", "")
         params = req.get("params", {}) or {}

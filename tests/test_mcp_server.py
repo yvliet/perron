@@ -159,6 +159,13 @@ def test_mcp_error_handling(sample_repo: Path):
         assert "error" in resp1
         assert resp1["error"]["code"] == -32601
 
+        # Non-dict JSON payloads (e.g. [], null, primitive)
+        for invalid_payload in [[], None, "invalid", 123]:
+            resp_invalid = server.handle_request(invalid_payload)
+            assert resp_invalid is not None
+            assert "error" in resp_invalid
+            assert resp_invalid["error"]["code"] == -32600
+
         # Missing required args
         req2 = {
             "jsonrpc": "2.0",
@@ -170,5 +177,23 @@ def test_mcp_error_handling(sample_repo: Path):
         assert resp2["id"] == 21
         assert resp2["result"]["isError"] is True
         assert "Error executing 'retrieve_context'" in resp2["result"]["content"][0]["text"]
+
+        # Non-existent repo_path
+        req3 = {
+            "jsonrpc": "2.0",
+            "id": 22,
+            "method": "tools/call",
+            "params": {
+                "name": "retrieve_context",
+                "arguments": {
+                    "repo_path": "/non/existent/path/for/sure",
+                    "query": "find bug",
+                },
+            },
+        }
+        resp3 = server.handle_request(req3)
+        assert resp3["id"] == 22
+        assert resp3["result"]["isError"] is True
+        assert "Repository path does not exist" in resp3["result"]["content"][0]["text"]
     finally:
         server.close()
