@@ -7,7 +7,8 @@
 [![pypi](https://img.shields.io/badge/pypi-v0.3.0-gray.svg?logo=pypi&logoColor=white)](https://pypi.org/project/perron-core/)
 [![python](https://img.shields.io/badge/python-3.10+-gray.svg?logo=python&logoColor=white)](pyproject.toml)
 [![license: apache-2.0](https://img.shields.io/badge/license-Apache--2.0-gray.svg?logo=apache&logoColor=white)](LICENSE)
-[![dataset](https://img.shields.io/badge/dataset-kaggle-gray.svg?logo=kaggle&logoColor=white)](https://www.kaggle.com/datasets/yvliet/perron-swebench-graphs)
+[![notebook](https://img.shields.io/badge/notebook-kaggle-gray.svg?logo=kaggle&logoColor=white)](https://www.kaggle.com/code/yvliet/perron-gemma-4-workstation)
+[![dataset](https://img.shields.io/badge/dataset-kaggle-gray.svg?logo=kaggle&logoColor=white)](https://www.kaggle.com/datasets/yvliet/swebench-strata-annotations)
 [![paper](https://img.shields.io/badge/paper-PDF-gray.svg?logo=arxiv&logoColor=white)](paper/main.pdf)
 
 [Quickstart](#quickstart) •
@@ -84,12 +85,29 @@ Exposed tools:
 - `inspect_symbol_breadcrumbs`: Navigates caller/callee hierarchical neighborhoods and PageRank breadcrumbs.
 - `build_code_graph`: Compiles AST multigraphs into zero-copy CSR transition matrices.
 
-### Dataset Resource Access
-The release bundle contains 300 pre-indexed SWE-bench Lite instance multigraphs (4.8M nodes, 41.5M edges):
-- Local directory: `data_release/graphs/<instance_id>/`
-- Kaggle Dataset: [`yvliet/perron-swebench-graphs`](https://www.kaggle.com/datasets/yvliet/perron-swebench-graphs)
-- Croissant 1.0 Metadata: [`data_release/croissant.json`](data_release/croissant.json)
-- Dataset Datasheet: [`docs/datasheet.md`](docs/datasheet.md) (Gebru et al. standard)
+### Dataset & Interactive Notebook Resources
+
+Perron releases two documented benchmark datasets and a turnkey workstation notebook:
+
+1. **SWE-bench Lexical Accessibility Strata Annotations (Primary Competition Resource)**:
+   - Contains 707 difficulty strata annotations ($\kappa = 0.918$), 12 CSR multigraph archives (109,240 nodes, 341,892 edges), and 19,298 scored Gemma 4 evaluations across all 344 Verified tasks.
+   - Local directory: [`dist_dataset/`](dist_dataset/)
+   - Kaggle Dataset: [`yvliet/swebench-strata-annotations`](https://www.kaggle.com/datasets/yvliet/swebench-strata-annotations)
+   - Evaluation Parquet: [`dist_dataset/scores.parquet`](dist_dataset/scores.parquet) (19,298 rows)
+   - Croissant 1.0 Metadata: [`dist_dataset/croissant.json`](dist_dataset/croissant.json)
+   - Dataset Datasheet: [`dist_dataset/DATASHEET.md`](dist_dataset/DATASHEET.md) (Gebru et al. standard)
+
+2. **SWE-bench Lite Pre-Indexed Multigraphs**:
+   - Contains 300 pre-indexed SWE-bench Lite instance multigraphs (4.8M nodes, 41.5M edges) in zero-copy CSR binary format.
+   - Local directory: `data_release/graphs/<instance_id>/`
+   - Kaggle Dataset: [`yvliet/perron-swebench-graphs`](https://www.kaggle.com/datasets/yvliet/perron-swebench-graphs)
+   - Croissant 1.0 Metadata: [`data_release/croissant.json`](data_release/croissant.json)
+   - Dataset Datasheet: [`docs/datasheet.md`](docs/datasheet.md)
+
+3. **Turnkey Kaggle Workstation Notebook**:
+   - Executes Perron and Gemma 4 E4B on Kaggle Dual-T4 GPU instances without local installation.
+   - Kaggle Notebook: [`yvliet/perron-gemma-4-workstation`](https://www.kaggle.com/code/yvliet/perron-gemma-4-workstation)
+   - Local source: [`notebooks/kaggle_gemma4_workstation.ipynb`](notebooks/kaggle_gemma4_workstation.ipynb)
 
 ### Empirical Reproduction & Benchmarking
 ```bash
@@ -179,6 +197,11 @@ perron/
 ├── patch.py            # Unified diff generation and atomic patch application
 ├── tester.py           # Targeted pytest runner with process-group timeouts
 └── agent.py            # Autonomous developer agent runtime & trajectory evaluation
+dist_dataset/           # Primary benchmark resource (707 strata, 12 CSR graphs, scores.parquet, datasheet)
+data_release/           # Pre-indexed SWE-bench Lite CSR multigraphs (300 instances)
+notebooks/              # Kaggle workstation notebook and evaluation harnesses
+paper/                  # Publication monograph (main.tex, main.pdf) and writeup (paper_writeup.md)
+scripts/                # Standalone Tectonic build pipeline, 20-gate verifier, and fact linter
 tests/                  # 40 verification suites covering spectral theory, fuzzing, and contracts
 benchmarks/
 ├── diagnostic.py       # Diagnostic benchmark (Recall@K, MRR, Hub Suppression)
