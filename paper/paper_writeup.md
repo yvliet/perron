@@ -15,7 +15,7 @@ Across 344 Verified tasks, 1-hop AST graph expansion exhibits no statistically d
 Local agents must localize defects within tight contexts ($K \le 4,096$). On 344 Verified tasks with frozen `gemma-4-e2b-it`, 1-hop expansion adds +7.3 pp recall over seeds, yet top-5 accuracy matches depth BM25 (47.1% vs 45.1%, Holm $p=0.287$).
 
 Five contributions resolve this disconnect:
-1. **Parity & Equivalence**: Expansion matches depth BM25 ($\Delta=+2.03$ pp, exact $p=0.1435$; $\pm 2.0$ pp equivalence is inconclusive, $p=0.512$, power 1.92%); task GLM (OR=1.118, p=0.0876) and repo mixed model (OR=1.130, p=0.349) confirm non-significance.
+1. **Matched Controls & Inconclusive Equivalence**: Expansion exhibits no statistically detectable difference with depth BM25 ($\Delta=+2.03$ pp, exact $p=0.1435$; $\pm 2.0$ pp equivalence is inconclusive, $p=0.512$, power 1.92%); task GLM (OR=1.118, p=0.0876) and repo mixed model (OR=1.130, p=0.349) confirm non-significance.
 2. **Markov Floor**: Candidate inclusion requires $\text{AUC}^{*} \ge 1 - (k-1)/(M-1)$; Proposition 1 bounds worst-case performance as a Markov floor ($1/k=0.20$ at $M=25, k=5$). Discrimination drops to 0.6596 via candidate selection conditioning.
 3. **Scaling & MoE Bound**: Tail discrimination scales monotonically (0.8544 to 0.9274); 4B union control reaches 16.79% Top-1, 37.4% Acc@5 (MRR 0.2562); 26B-A4B MoE 52.0 GB footprint exceeds Dual T4.
 4. **Disambiguation & Pruning**: Reasoning lifts 4B Top-1 at $M=25$ via seed disambiguation (6 to 12, $p=0.0312^{*}$); $M=15$ pruning cuts candidate stubs by 40%, compacting mean gold rank from 5.88 to 5.32 to 3.74 with zero Top-1 loss (13/131 in both pools).
@@ -43,7 +43,7 @@ Five contributions resolve this disconnect:
 
 ### 4.1 Standalone Retrieval & Reachability
 
-Across 344 tasks, BM25 reaches 50.9% Fn Acc@10 (175/344); Perron reaches 50.3% (173/344, Holm p=1.000); PPR reaches 50.0% (172/344); tag maps reach 40.0%; bi-encoders reach 38.4%. Reachability is 57.8% at 1 hop, 66.9% at 2 hops. A 186-config sweep fits a GLMM in n_eff = exp(H(p_0)) (R^2=0.197, p < 0.001). Leave-Django-Out across N=162 non-Django tasks (47.1% of benchmark) exhibits parity: A4 achieves 34.6% vs 32.7% for A2 (Δ=+1.85 pp, 56 vs 53 hits, n10=8, n01=5, exact McNemar p=0.5811, recall 50.0% vs 48.8%).
+Across 344 tasks, BM25 reaches 50.9% Fn Acc@10 (175/344); Perron reaches 50.3% (173/344, Holm p=1.000); PPR reaches 50.0% (172/344); tag maps reach 40.0%; bi-encoders reach 38.4%. Reachability is 57.8% at 1 hop, 66.9% at 2 hops. A 186-config sweep fits a GLMM in n_eff = exp(H(p_0)) (R^2=0.197, p < 0.001). Leave-Django-Out across N=162 non-Django tasks (47.1% of benchmark) shows no statistically detectable difference: A4 achieves 34.6% vs 32.7% for A2 (Δ=+1.85 pp, 56 vs 53 hits, n10=8, n01=5, exact McNemar p=0.5811, recall 50.0% vs 48.8%).
 
 ### 4.2 Pointwise Candidate Reranking: Confirmatory Matched-Control Evaluation
 
@@ -62,7 +62,7 @@ Across 344 tasks, BM25 reaches 50.9% Fn Acc@10 (175/344); Perron reaches 50.3% (
 
 ### 4.3 First-Moment Expected-Rank Identity & Stratum Asymmetry
 
-Expanding $M=10$ to $50$ raises recall from 51.2% to 58.4%, yet Acc@5 plateaus (46.2% to 47.1% on A4; 46.2% to 45.1% on depth BM25). Expected rank $\mathbb{E}[\text{Rank}] \le k$ defines inclusion threshold $\text{AUC}^{*} \ge 1 - (k-1)/(M-1)$ ($\text{AUC}^{*} \ge 0.830$ at mean $M=24.5, k=5$), Proposition 1 bounds worst-case performance as a Markov floor (Acc@k $\ge 1/k$, equaling 0.20 at $M=25, k=5$). At graph AUC=0.6596, expected rank is 9.00 (17.68 at $M=50$). Strata polarize: Stratum A converts 6/11 reached targets (54.5%); Stratum C converts 0/14 (-2 tasks).
+Expanding $M=10$ to $50$ raises recall from 51.2% to 58.4%, yet Acc@5 plateaus (46.2% to 47.1% on A4; 46.2% to 45.1% on depth BM25). Expected rank $\mathbb{E}[\text{Rank}] \le k$ defines inclusion threshold $\text{AUC}^{*} \ge 1 - (k-1)/(M-1)$ ($\text{AUC}^{*} \ge 0.830$ at mean $M=24.5, k=5$), Proposition 1 bounds worst-case performance as a Markov floor (Acc@k $\ge 1/k$, equaling 0.20 at $M=25, k=5$). At graph AUC=0.6596, expected rank at mean pool size $\bar{M}=24.5$ ($\bar{M}-1=23.5$) is $1 + 23.5(1-0.6596) = 9.00$ (17.68 at $M=50$). Strata polarize: Stratum A converts 6/11 reached targets (54.5%); Stratum C converts 0/14 (-2 tasks).
 
 ### 4.4 Cross-Architecture Scaling Surface & Systems MoE Boundary
 
@@ -80,6 +80,8 @@ Pointwise candidate discrimination was evaluated on Dual T4s across 58 Stratum C
 
 ### 4.5 Candidate Pool × Reasoning Factorial Matrix & M=15 Verification (N=131)
 
+*Denominator Key*: $N=344$ callable Verified; $N=131$ all Stratum C; $N=58$ union-reachable ($M \le 87$); $N=35$ reachable at $M=25$ ($28$ seeds + $7$ graph additions); $N=34$ reachable at $M=15$ ($28$ seeds + $6$ graph additions).
+
 | Condition | M | Acc@1 | Acc@5 | MRR |
 | :--- | :---: | :---: | :---: | :---: |
 | Unscored BM25 | 25 | 3.05% | 15.27% | 0.0862 |
@@ -94,7 +96,7 @@ Pointwise candidate discrimination was evaluated on Dual T4s across 58 Stratum C
 | Pruned Graph | 15 | 4.58% | 17.56% | 0.0970 |
 | **Pruned Graph + Think** | **15** | **9.92%** | **19.85%** | **0.1469** |
 
-- **Parity & Reasoning Lift**: Direct readout ($M \le 25$) ties graph ($A_4$) and depth BM25 ($A_2$) at 16.79% Acc@5 (22/131) and 4.58% Top-1 (6/131). Reasoning lifts $A_4(25)$ Top-1 to **9.92% (13/131; diagnostic $+5.34$ pp, raw $p=0.0156^{*}$, Holm $p=0.0625$, adverse-pair $p=0.0703$, hit-flip $p=0.1250$)** and MRR (0.0934 to 0.1358); backfilling preserves 18.32% Acc@5 ($p=0.6875$). $A_4+\text{think}$ vs $A_2+\text{think}$ ties at 13 vs 9 (p=0.2188, M=25) and 13 vs 11 (p=0.5000, M=15). Pointwise $A_4$ vs $A_2$ achieves 12.21% vs 8.40% ($n_{10}=6, n_{01}=1, p=0.1250$). Reasoning disambiguates across strata: seeds convert 6/28 to 12/28 ($p=0.0312^{*}$) while graph additions convert 0/7 to 1/7 ($p=1.000$).
+- **Direct Readout & Reasoning Lift**: Direct readout ($M \le 25$) ties graph ($A_4$) and depth BM25 ($A_2$) at 16.79% Acc@5 (22/131) and 4.58% Top-1 (6/131). Reasoning lifts $A_4(25)$ Top-1 to **9.92% (13/131; diagnostic $+5.34$ pp, raw $p=0.0156^{*}$, Holm $p=0.0625$, adverse-pair $p=0.0703$, hit-flip $p=0.1250$)** and MRR (0.0934 to 0.1358); backfilling preserves 18.32% Acc@5 ($p=0.6875$). $A_4+\text{think}$ vs $A_2+\text{think}$ shows no statistically detectable difference at 13 vs 9 (p=0.2188, M=25) and 13 vs 11 (p=0.5000, M=15). Pointwise $A_4$ vs $A_2$ achieves 12.21% vs 8.40% ($n_{10}=6, n_{01}=1, p=0.1250$). Reasoning disambiguates across strata: seeds convert 6/28 to 12/28 ($p=0.0312^{*}$) while graph additions convert 0/7 to 1/7 ($p=1.000$).
 - **Provenance (C1-C3)**: Stubs (C1, 2.29%) and provenance (C2, 3.82%) yield no lift (-0.76 pp, p=1.000); provenance + thinking (C3, 9.16%) ties thinking (C0, 9.92%).
 - **Pruning (M=15, AUC*=0.714)**: Pruning to $M=15$ lowers $\text{AUC}^{*}$ to 0.714 while retaining 34/35 defects. Pruning alone preserves Top-1 (6/131, 4.58%) while cutting candidate stubs by 40% (mean rank 5.88 to 5.32). Pairing pruning with reasoning compacts mean rank to **3.74** (Acc@5 reaches **19.85% [26/131]**, MRR **0.1469**), retaining all 13 Top-1 hits. Thus, pruning provides context compaction without hit loss, while reasoning provides rank compaction.
 
@@ -136,7 +138,7 @@ I tuned `gemma-4-e2b-it` (LoRA r=16) on 226 Lite tasks via GroupKFold (171 train
 
 ## 5. Discussion
 
-- **Model Specification**: Offsets (+0.87 to +2.03 pp; 95% CI [-0.29, +4.36] pp) confirm parity. Task GLM (OR=1.118, p=0.0876) and repo GLMM (OR=1.130, p=0.349, $\sigma_{\text{repo}}=0.963$) confirm non-significance; SE doubles (0.065 to 0.130) because repo intercepts drop task pairing.
+- **Model Specification**: Offsets (+0.87 to +2.03 pp; 95% CI [-0.29, +4.36] pp) show no statistically detectable difference. Task GLM (OR=1.118, p=0.0876) and repo GLMM (OR=1.130, p=0.349, $\sigma_{\text{repo}}=0.963$) confirm non-significance; SE doubles (0.065 to 0.130) because repo intercepts drop task pairing.
 - **Selection Conditioning**: Discrimination drop (0.7966 vs 0.6596) mirrors depth BM25 (0.6380 vs 0.6253, $p=0.721$), reflecting conditioning on $T^{*} \notin \text{Top10}(\text{BM25})$. In literature, RepoGraph (ICLR 2025) confirms unpruned 2-hop collapsed to 26.00% ($-5.67$ pp) via distractor dilution, corroborating Perron. Evaluations lacking lexical stratification or depth-matched controls ($A_2$ at $M_t$) confound pool cardinality with topology and mask selection conditioning across strata; isolating these regimes requires cardinality-matched controls ($N=344$, 19,298 passes). As 1-hop checking is Depth-1 (Sanford et al., 2024), reasoning disambiguates lexical distractors rather than traversing graphs.
 - **Operating Regimes**: (1) **CSR Filter**: $<5.2$ ms ($\le 3$ MB RAM, 58.4% recall); (2) **Pruning**: Cap at $M=15$ ($\text{AUC}^{*}=0.714$); (3) **Control**: E4B reaches 16.79% Top-1, 37.4% Acc@5 (MRR 0.2562); (4) **Routing**: Saves 31.4% compute; (5) **Tuning**: Overfitting cautions against adapter tuning.
 
