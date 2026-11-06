@@ -38,8 +38,12 @@ def test_handlabel_node_id_consistency() -> None:
     sample = load_handlabel_sample()
     assert len(sample) >= 10, f"Expected at least 10 hand-labeled instances, got {len(sample)}"
 
+    graphs_dir = REPO_ROOT / "artifacts" / "swebench_graphs"
+    if not graphs_dir.exists():
+        pytest.skip("Precompiled repo graphs required in artifacts/swebench_graphs")
+
     parser = GoldPatchParser(
-        graphs_dir=REPO_ROOT / "artifacts" / "swebench_graphs",
+        graphs_dir=graphs_dir,
         tasks_file=REPO_ROOT / "data" / "swebench_lite_cache.jsonl",
     )
 

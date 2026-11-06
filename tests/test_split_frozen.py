@@ -13,19 +13,21 @@ import hashlib
 import json
 from pathlib import Path
 
-FROZEN_SHA256 = "18a947a0e8a7941231ab15f11c1eee335adc58f8d03cbce742637452c9a23418"
+FROZEN_SHA256_CRLF = "18a947a0e8a7941231ab15f11c1eee335adc58f8d03cbce742637452c9a23418"
+FROZEN_SHA256_LF = "95c7ef3ca69214f5ac9f6bcba20e2531596ed260c2cbe181d2df3a56873d259b"
+FROZEN_SHA256 = FROZEN_SHA256_CRLF
 SPLIT_PATH = Path(__file__).resolve().parent.parent / "data" / "swebench_lite_split.json"
 
 
 def test_swebench_lite_split_hash() -> None:
-    """Assert data/swebench_lite_split.json has not been modified."""
+    """Assert data/swebench_lite_split.json has not been modified (accepting CRLF or LF checkout)."""
     assert SPLIT_PATH.is_file(), f"Split file not found at {SPLIT_PATH}"
     with open(SPLIT_PATH, "rb") as f:
         computed_sha256 = hashlib.sha256(f.read()).hexdigest()
 
-    assert computed_sha256 == FROZEN_SHA256, (
+    assert computed_sha256 in (FROZEN_SHA256_CRLF, FROZEN_SHA256_LF), (
         f"Cryptographic drift detected! data/swebench_lite_split.json SHA256 "
-        f"expected {FROZEN_SHA256}, got {computed_sha256}"
+        f"expected one of {(FROZEN_SHA256_CRLF, FROZEN_SHA256_LF)}, got {computed_sha256}"
     )
 
 

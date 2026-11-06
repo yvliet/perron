@@ -334,6 +334,10 @@ def test_dose_response_benchmark_dry_run(tmp_path: Path) -> None:
     Verify that run_dose_response_benchmark executes cleanly in dry-run mode
     and outputs a schema-compliant JSON artifact.
     """
+    from benchmarks.run_dose_response_basis import GRAPHS_DIR
+    if not GRAPHS_DIR.exists() or not any(GRAPHS_DIR.glob("*_graph.npz")):
+        pytest.skip("Precompiled repository graphs (*_graph.npz) required in data/benchmark_graphs")
+
     out_json = tmp_path / "test_dose_response.json"
     res = run_dose_response_benchmark(
         limit=3,

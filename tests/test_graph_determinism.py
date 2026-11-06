@@ -38,7 +38,8 @@ def test_graph_determinism_across_rebuilds(tmp_path: Path):
             break
 
     repo_graphs_dir = REPO_ROOT / "artifacts" / "swebench_graphs"
-    assert repo_graphs_dir.exists(), "Precompiled repo graphs required"
+    if not repo_graphs_dir.exists():
+        pytest.skip("Precompiled repo graphs required in artifacts/swebench_graphs")
 
     dir_run1 = tmp_path / "run1"
     dir_run2 = tmp_path / "run2"
