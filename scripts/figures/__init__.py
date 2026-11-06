@@ -16,6 +16,7 @@ License: Apache-2.0
 from pathlib import Path
 from scripts.figures.common import FIGURES_DIR
 from scripts.figures.figure1_pipeline import generate_figure1
+from scripts.figures.generate_kaggle_thumbnail import generate_kaggle_thumbnails
 from scripts.figures.figure2_truncation import generate_figure2
 from scripts.figures.figure3_breakeven import generate_figure3
 from scripts.figures.figure4_causal_forest import generate_figure4
@@ -73,6 +74,7 @@ __all__ = [
     "FIGURES_REGISTRY",
     "FIGURES_DIR",
     "generate_figure1",
+    "generate_kaggle_thumbnails",
     "generate_figure2",
     "generate_figure3",
     "generate_figure4",

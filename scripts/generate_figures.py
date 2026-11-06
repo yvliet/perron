@@ -37,6 +37,7 @@ from scripts.figures import (
     FIGURES_REGISTRY,
     FIGURES_DIR,
     generate_all_figures,
+    generate_kaggle_thumbnails,
 )
 
 
@@ -97,7 +98,11 @@ def main():
     )
     parser.add_argument(
         "--fig", "--figure", dest="figure", type=str, default="all",
-        help="Figure number to generate (1, 2, 3, 4, 5, 6, or 'all')",
+        help="Figure number to generate (1, 2, 3, 4, 5, 6, 'all', or 'thumbnail')",
+    )
+    parser.add_argument(
+        "--thumbnail", action="store_true",
+        help="Generate high-resolution 2:1 Kaggle thumbnail banners (2400x1200, 1120x560, 560x280)",
     )
     parser.add_argument(
         "--list", action="store_true",
@@ -107,6 +112,12 @@ def main():
 
     if args.list:
         list_figures()
+        return 0
+
+    if args.thumbnail or args.figure.lower() in ("thumb", "thumbnail"):
+        print("\n--> Generating Kaggle 2:1 Thumbnail Banners (2400x1200, 1120x560, 560x280)...")
+        generate_kaggle_thumbnails()
+        print("[OK] Kaggle thumbnail banners generated successfully.")
         return 0
 
     if args.figure.lower() == "all":
