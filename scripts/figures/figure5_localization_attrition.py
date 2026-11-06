@@ -84,22 +84,22 @@ def generate_figure5(out_dir: Path = FIGURES_DIR):
     ax1.text(0.50, badge_y, r"$\mathbf{-48.8\ pp}$" + "\n(168 missing)",
              ha="center", va="center", fontsize=6.2, color="#B91C1C",
              bbox=dict(boxstyle="round,pad=0.25", facecolor="#FEF2F2", edgecolor="#DC2626", lw=0.7), zorder=4)
-    ax1.annotate("", xy=(0.50, 77.0), xytext=(0.50, 85.0),
-                 arrowprops=dict(arrowstyle="->", color="#DC2626", lw=0.8), zorder=3)
+    ax1.annotate("", xy=(0.50, 81.0), xytext=(0.50, 81.01),
+                 arrowprops=dict(arrowstyle="->,head_length=0.42,head_width=0.32", color="#DC2626", lw=1.1), zorder=3)
 
     # Delta 2: S1 -> S2 (+7.3 pp, +25 tasks recovered via 1-hop AST calls)
     ax1.text(1.50, badge_y, r"$\mathbf{+7.3\ pp}$" + "\n(+25 recovered)",
              ha="center", va="center", fontsize=6.2, color="#15803D",
              bbox=dict(boxstyle="round,pad=0.25", facecolor="#F0FDF4", edgecolor="#16A34A", lw=0.7), zorder=4)
-    ax1.annotate("", xy=(1.50, 85.0), xytext=(1.50, 77.0),
-                 arrowprops=dict(arrowstyle="->", color="#16A34A", lw=0.8), zorder=3)
+    ax1.annotate("", xy=(1.50, 83.5), xytext=(1.50, 83.49),
+                 arrowprops=dict(arrowstyle="->,head_length=0.42,head_width=0.32", color="#16A34A", lw=1.1), zorder=3)
 
     # Delta 3: S2 -> S3 (-11.3 pp, 39 tasks displaced from top-5)
     ax1.text(2.50, badge_y, r"$\mathbf{-11.3\ pp}$" + "\n(39 displaced)",
              ha="center", va="center", fontsize=6.2, color="#B91C1C",
              bbox=dict(boxstyle="round,pad=0.25", facecolor="#FEF2F2", edgecolor="#DC2626", lw=0.7), zorder=4)
-    ax1.annotate("", xy=(2.50, 77.0), xytext=(2.50, 85.0),
-                 arrowprops=dict(arrowstyle="->", color="#DC2626", lw=0.8), zorder=3)
+    ax1.annotate("", xy=(2.50, 81.0), xytext=(2.50, 81.01),
+                 arrowprops=dict(arrowstyle="->,head_length=0.42,head_width=0.32", color="#DC2626", lw=1.1), zorder=3)
 
     ax1.set_title("(a) Stepwise Candidate Localization Retention", fontsize=8.5, fontweight="bold", pad=8)
     ax1.set_ylabel("Defect Retention Recall (%)", fontsize=7.8)
@@ -127,9 +127,9 @@ def generate_figure5(out_dir: Path = FIGURES_DIR):
         ax2.text(bx[i], losses[i] + 1.2, f"{losses[i]:.1f} pp\n({loss_counts[i]} tasks)",
                  ha="center", va="bottom", fontsize=6.8, fontweight="bold", color=COLOR_INK)
 
-    # Ratio bracket positioned safely above the highest label (y=52.5)
+    # Ratio bracket: left leg at 50 in Y, right leg down to 20 in Y
     bracket_y = 52.5
-    ax2.plot([0, 0, 1, 1], [bracket_y - 2.5, bracket_y, bracket_y, bracket_y - 2.5], color=COLOR_INK, lw=1.0)
+    ax2.plot([0, 0, 1, 1], [50.0, bracket_y, bracket_y, 20.0], color=COLOR_INK, lw=1.0)
     ax2.text(0.5, bracket_y + 1.5, r"$\mathbf{3.68\times\ Bottleneck\ Ratio}$",
              ha="center", va="bottom", fontsize=7.2, fontweight="bold", color=COLOR_INK)
 
