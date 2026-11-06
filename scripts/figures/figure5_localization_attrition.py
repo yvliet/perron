@@ -84,22 +84,28 @@ def generate_figure5(out_dir: Path = FIGURES_DIR):
     ax1.text(0.50, badge_y, r"$\mathbf{-48.8\ pp}$" + "\n(168 missing)",
              ha="center", va="center", fontsize=6.2, color="#B91C1C",
              bbox=dict(boxstyle="round,pad=0.25", facecolor="#FEF2F2", edgecolor="#DC2626", lw=0.7), zorder=4)
-    ax1.annotate("", xy=(0.50, 81.0), xytext=(0.50, 81.01),
-                 arrowprops=dict(arrowstyle="->,head_length=0.42,head_width=0.32", color="#DC2626", lw=1.1), zorder=3)
 
     # Delta 2: S1 -> S2 (+7.3 pp, +25 tasks recovered via 1-hop AST calls)
     ax1.text(1.50, badge_y, r"$\mathbf{+7.3\ pp}$" + "\n(+25 recovered)",
              ha="center", va="center", fontsize=6.2, color="#15803D",
              bbox=dict(boxstyle="round,pad=0.25", facecolor="#F0FDF4", edgecolor="#16A34A", lw=0.7), zorder=4)
-    ax1.annotate("", xy=(1.50, 83.5), xytext=(1.50, 83.49),
-                 arrowprops=dict(arrowstyle="->,head_length=0.42,head_width=0.32", color="#16A34A", lw=1.1), zorder=3)
 
     # Delta 3: S2 -> S3 (-11.3 pp, 39 tasks displaced from top-5)
     ax1.text(2.50, badge_y, r"$\mathbf{-11.3\ pp}$" + "\n(39 displaced)",
              ha="center", va="center", fontsize=6.2, color="#B91C1C",
              bbox=dict(boxstyle="round,pad=0.25", facecolor="#FEF2F2", edgecolor="#DC2626", lw=0.7), zorder=4)
-    ax1.annotate("", xy=(2.50, 81.0), xytext=(2.50, 81.01),
-                 arrowprops=dict(arrowstyle="->,head_length=0.42,head_width=0.32", color="#DC2626", lw=1.1), zorder=3)
+
+    # Perfect geometric chevrons beneath transition badges
+    ch_dx, ch_dy = 0.055, 2.2
+    # Chevron 1: pointing down
+    ax1.plot([0.50 - ch_dx, 0.50, 0.50 + ch_dx], [81.5 + ch_dy, 81.5, 81.5 + ch_dy],
+             color="#DC2626", lw=1.2, solid_capstyle="round", solid_joinstyle="round", zorder=3)
+    # Chevron 2: pointing up
+    ax1.plot([1.50 - ch_dx, 1.50, 1.50 + ch_dx], [81.5 - ch_dy, 81.5, 81.5 - ch_dy],
+             color="#16A34A", lw=1.2, solid_capstyle="round", solid_joinstyle="round", zorder=3)
+    # Chevron 3: pointing down
+    ax1.plot([2.50 - ch_dx, 2.50, 2.50 + ch_dx], [81.5 + ch_dy, 81.5, 81.5 + ch_dy],
+             color="#DC2626", lw=1.2, solid_capstyle="round", solid_joinstyle="round", zorder=3)
 
     ax1.set_title("(a) Stepwise Candidate Localization Retention", fontsize=8.5, fontweight="bold", pad=8)
     ax1.set_ylabel("Defect Retention Recall (%)", fontsize=7.8)
