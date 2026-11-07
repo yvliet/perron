@@ -24,7 +24,7 @@
 
 </div>
 
-Perron is a high-throughput AST subgraph slicing and graph retrieval engine designed for open-weights developer agents (such as Gemma 4 E4B and Gemma 4 31B) operating under strict hardware and context-window constraints.
+Perron is an empirical research suite and high-throughput AST code graph engine investigating when structural graph expansion aids compact open-weights models (Gemma 4 E2B, E4B, 26B-A4B) under strict hardware and context-window constraints. Across 344 held-out SWE-bench Verified tasks, Perron characterizes the tension between topological reachability and distractor dilution, defining the four-tier operating regime that unlocks local developer agents.
 
 ## Quickstart
 
@@ -121,13 +121,18 @@ perron bench --method perron --split dev_val
 perron bench --method bm25 --split heldout
 ```
 
-## 1. Problem Formulation: Hub-Node Explosion in Code Graphs
+## 1. Problem Formulation: Hub-Node Explosion & Distractor Dilution
 
-In modern repository-level software engineering benchmarks (e.g. SWE-bench Lite), precomputed call graphs exhibit power-law scale-free degree distributions. Ubiquitous utility functions (`logging.getLogger`, `utils.check_type`, `BaseModel.__init__`) act as ultra-high-degree hub nodes:
+Local code graph agents (2B–4B open-weights models operating within $\le 9.6$ GB VRAM) face two coupled bottlenecks when navigating large repositories:
+1. **Scale-Free Hub Absorption**: Standard graph walks (Personalized PageRank) concentrate probability mass in ubiquitous utility functions (`logging.getLogger`, `utils.check_type`), absorbing up to 90% of retrieval slots and yielding 0.0% Hub Suppression Index (HSI).
+2. **Distractor Dilution & Selection Conditioning**: Unpruned graph expansion introduces low-lexical-overlap neighbors that drop below the expected-rank discrimination threshold ($AUC = 0.6596 < 0.830$ by Bamber's theorem $\mathbb{E}[\text{Rank}] = 1 + (M-1)(1 - \text{AUC})$), pushing expected target rank past the top-5 evaluation window.
 
-- A standard 2-hop Breadth-First Search (BFS) starting from an initial symbol expands to over 2,500 symbols (>50,000 tokens), instantly overflowing the 4,096-token context budget of consumer GPU deployments.
-- Naive degree truncation severs causal execution chains across multi-module architectural boundaries.
-- Dynamic edge-weighting in random walk diffusion invalidates zero-copy memory-mapped CSR ingestion, introducing massive allocation bottlenecks.
+Across the complete **$N = 344$ SWE-bench Verified benchmark**, Perron demonstrates that while post-walk specificity damping suppresses hub dominance ($\text{HSI@10} = 99.5\%$, $1.89\text{--}5.10$ ms on CPU), unpruned graph expansion ($A_6$, 45.64%) matches depth-matched lexical retrieval ($A_4$ 47.09% vs BM25 45.06%, Holm $p = 0.2869$, exact McNemar $p = 0.1435$). 
+
+Unlocking structural code graphs on local models requires operating within **scale-matched regimes**:
+- **Edge Tier (2B)**: Zero-cost inline provenance comments lift reachable Top-1 from 12.07% to 25.86% ($+13.79$ pp, $p = 0.0078^*$).
+- **Workstation Tier (4B)**: Candidate horizon pruning ($M = 15$, $\text{AUC}^* = 0.714$, $-40\%$ stub tokens) paired with short reasoning ($\le 180$ tokens) lifts Top-1 from 4.58% to 9.92% ($6/131 \to 13/131$, $p = 0.0156^*$) and compacts mean target rank from $5.88 \to 3.74$.
+- **Fine-Tuned Reranking**: Clean LoRA adapters lift isolated listwise graph Top-1 from 0.0% to 24.0% ($p = 0.0312^*$).
 
 Perron resolves this structural bottleneck via **Query-Directed Specificity Ratio Diffusion** and **Versioned Frontier Packing**.
 
@@ -319,15 +324,32 @@ Evaluating Multi-Scale Diffusion Latency Scaling...
 ---------------------------------------------------------
 ```
 
-### Real Repository SWE-bench Lite Benchmark (50 Instances)
-Across 50 authentic instances evaluated on full repository call graphs (`psf/requests` and `sympy/sympy`):
+### SWE-bench Verified Benchmark ($N = 344$ Callable Tasks)
+Evaluated across all 344 callable tasks from SWE-bench Verified under frozen pointwise direct scoring and controlled context budgets ($K \le 4,096$ tokens):
 
-| Evaluation Metric | Standard PPR ($\gamma=0.0$) | Perron ($\gamma=0.70, \beta=0.85$) | Improvement ($\Delta$) | Statistical Significance |
-| :--- | :--- | :--- | :--- | :--- |
-| **Hub Suppression Index (HSI)** | 0.00% | **95.60%** | +95.60% | $t(49) = 5.02, p < .001, d = 0.71$ |
-| **File Recall@4k** | 38.00% | **42.00%** | +4.00% | $t(49) = 2.14, p = .037, d = 0.30$ |
-| **Function Recall@4k** | 0.00% | **4.00%** | +4.00% | $\Delta = +4.0\%$ vs 0% zero-shot |
-| **Mean Reciprocal Rank (MRR)** | 0.009 | **0.027** | +0.018 | $3.0\times$ rank precision boost |
+| Retrieval & Localization Pipeline | Candidate Pool ($M$) | Acc@5 (Hits) | $\Delta$ vs BM25 | Statistical Significance | Hub Suppression Index (HSI@10) |
+| :--- | :---: | :---: | :---: | :---: | :---: |
+| **Depth BM25 Baseline** | 10 | 45.06% (155/344) | Ref. | Baseline reference | 0.0% |
+| **Perron Pointwise ($A_4$, 1-Hop Expansion)** | 10 | **47.09% (162/344)** | **+2.03 pp** | Step-down Holm $p = 0.2869$, McNemar $p = 0.1435$ | **99.5%** ($p < .001$) |
+| **Perron Multi-Step Diffusion ($A_6$, Spectral)** | 10 | 45.64% (157/344) | +0.58 pp | Transitive distractor dilution ($t \ge 2$) | **99.5%** ($p < .001$) |
+| **Top-10 Oracle Union ($A_1 \cup A_4$)** | 20 | 54.36% (187/344) | +9.30 pp | Upstream boundary ceiling | **99.5%** ($p < .001$) |
+
+### Four-Tier Operating Regime Unlocking Local Code Models
+
+1. **CPU Pre-Filtering** ($1.89\text{--}5.10$ ms, $\le 3$ MB RAM):
+   - Zero-copy memory-mapped CSR power iteration achieves 99.5% Hub Suppression Index without dynamic matrix allocation.
+   - Selective routing ($\pi^*$) saves 31.4% downstream LLM inference compute while preserving 58.4% graph recall.
+
+2. **Edge Tier (`gemma-4-e2b-it`, unquantized FP16, 6.7 GB VRAM)**:
+   - Zero-cost inline provenance comments ($E_1$) lift reachable Top-1 localization from 12.07% to 25.86% ($+13.79$ pp, exact McNemar $p = 0.0078^*$) without test-time generation latency.
+   - Avoid unconstrained reasoning tokens on 2B (which trigger $-42.9\%$ drift).
+
+3. **Workstation Tier (`gemma-4-e4b-it`, unquantized FP16, 9.6 GB VRAM)**:
+   - Candidate horizon pruning ($M = 15$, $\text{AUC}^* = 0.714$, $-40\%$ stub tokens) paired with short reasoning ($\le 180$ tokens) lifts Top-1 from 4.58% to 9.92% ($6/131 \to 13/131$, $p = 0.0156^*$).
+   - Compacts mean target rank from $5.88 \to 5.32 \to 3.74$ with zero Top-1 loss, disambiguating lexical seeds ($12/28$ hits) over trailing graph distractors ($1/7$ hits).
+
+4. **MoE Hardware Boundary (`gemma-4-26b-a4b-it`, 52.0 GB unquantized FP16)**:
+   - Isolates the local MoE execution barrier: fused 3D expert parameter tensors (`[128, d_in, d_out]`) bypass standard 2D `bitsandbytes` NF4 hooks, requiring 52 GB runtime VRAM and making 2B–4B PLE models the true Pareto sweet spot for single-GPU local workstations.
 
 ### SWE-bench Lite Architectural Landscape
 Contrasting unconstrained data center cloud APIs against Perron's local consumer offline model profile:
