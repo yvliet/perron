@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="paper/figures/kaggle_thumbnail_2400x1200.png" alt="Perron Architecture Banner" width="100%">
+
 # perron
 
 ### Context-budgeted AST subgraph slicing and graph retrieval for local developer agents.
@@ -151,28 +153,28 @@ $$D_u = \sum_{v} W_{uv}, \quad T_{uv} = \begin{cases} \frac{W_{uv}}{D_u}, & D_u 
 Loading is performed via `numpy.load(..., mmap_mode='r')` and wrapped in `scipy.sparse.csr_matrix` in **< 1.0 ms**, bypassing runtime API queries.
 
 ### B. Shift-Invariant Softmax Teleportation Prior
-Given cosine similarities $s_i = \cos(\mathbf{e}_q, \mathbf{e}_i)$ for candidate symbols, the teleportation restart vector $\mathbf{p}_0$ is computed with temperature $\tau = 0.15$ using shift-invariant log-sum-exp in `float64`:
+Given cosine similarities $`s_i = \cos(\mathbf{e}_q, \mathbf{e}_i)`$ for candidate symbols, the teleportation restart vector $`\mathbf{p}_0`$ is computed with temperature $\tau = 0.15$ using shift-invariant log-sum-exp in `float64`:
 
 $$c = \max_j \frac{s_j}{\tau}, \quad p_0(i) = \frac{\exp\left(\frac{s_i}{\tau} - c\right)}{\sum_j \exp\left(\frac{s_j}{\tau} - c\right)}$$
 
 ### C. Sparse Personalized PageRank (PPR)
-Stationary probability distribution $\boldsymbol{\pi}_{\text{query}}$ (the Perron vector) is obtained via sparse power iteration:
+Stationary probability distribution $`\boldsymbol{\pi}_{\text{query}}`$ (the Perron vector) is obtained via sparse power iteration:
 
 $$\boldsymbol{\pi}^{(t+1)} = \beta \cdot (\boldsymbol{\pi}^{(t)} T) + \left(\beta \cdot (\boldsymbol{\pi}^{(t)} \mathbf{d}) + 1 - \beta\right) \cdot \mathbf{p}_0$$
 
 With damping factor $\beta = 0.85$, the spectral gap $1 - \beta = 0.15$ ensures geometric convergence within 80-100 iterations (< 3.0 ms on CPU).
 
 ### D. Specificity Ratio Hub-Damping
-To suppress ubiquitous hub nodes without altering static matrix entries, Perron compares $\boldsymbol{\pi}_{\text{query}}$ against a precomputed repository-wide stationary baseline $\boldsymbol{\pi}_{\text{global}}$ (obtained via uniform prior $\mathbf{p}_0 = \frac{1}{|V|} \mathbf{1}$):
+To suppress ubiquitous hub nodes without altering static matrix entries, Perron compares $`\boldsymbol{\pi}_{\text{query}}`$ against a precomputed repository-wide stationary baseline $`\boldsymbol{\pi}_{\text{global}}`$ (obtained via uniform prior $`\mathbf{p}_0 = \frac{1}{|V|} \mathbf{1}`$):
 
 $$\text{Specificity}(v) = \frac{\pi_{\text{query}}(v)}{(\pi_{\text{global}}(v) + \epsilon)^\gamma}, \quad \gamma = 0.7, \; \epsilon = 10^{-8}$$
 
 Test nodes serve as bipartite routing bridges during random walk diffusion, but are suppressed from the code context packing candidate pool.
 
 ### E. Versioned Priority Queue Frontier Packing
-Context packing extracts a connected subgraph fitting strict token limits ($K_{\text{effective}} = 3,480$ tokens):
-- Proportional component budget allocation: $K_i = \lfloor K \cdot \sum_{u \in C_i} \text{Specificity}(u) / \sum_v \text{Specificity}(v) \rfloor$.
-- Target-first anchor: $t^* = \arg\max_{u \in C_i} \text{Specificity}(u)$.
+Context packing extracts a connected subgraph fitting strict token limits ($`K_{\text{effective}} = 3,480`$ tokens):
+- Proportional component budget allocation: $`K_i = \lfloor K \cdot \sum_{u \in C_i} \text{Specificity}(u) / \sum_v \text{Specificity}(v) \rfloor`$.
+- Target-first anchor: $`t^* = \arg\max_{u \in C_i} \text{Specificity}(u)`$.
 - Versioned greedy frontier expansion:
 
 $$\text{score}(v) = \frac{\text{Specificity}(v)}{c(v)} \cdot \left(1 + \mu \cdot \frac{|\text{edges}(v, S_i)|}{\text{deg}(v)}\right)$$
@@ -333,10 +335,10 @@ Contrasting unconstrained data center cloud APIs against Perron's local consumer
 | System / Architecture | Deployment / Model Class | Cost / Issue | Defect Resolution (Pass@1 / Diagnostic) |
 | :--- | :--- | :---: | :---: |
 | *Data Center Cloud APIs (Full SWE-bench Lite, N=300, Multi-GPU Cloud Clusters)* | | | |
-| Agentless (Xia et al.) | GPT-4o (Cloud API) | $0.34 | 27.3% (Pass@1) |
-| AutoCodeRover (Zhang et al.) | GPT-4 (Cloud API) | $0.65 | 22.0% (Pass@1) |
-| SWE-agent (Yang et al.) | GPT-4 (Cloud API) | $2.14 | 18.0% (Pass@1) |
-| BM25 + RAG (Yang et al.) | GPT-4 (Cloud API) | $0.05 | 3.8% (Pass@1) |
+| Agentless (Xia et al.) | GPT-4o (Cloud API) | \$0.34 | 27.3% (Pass@1) |
+| AutoCodeRover (Zhang et al.) | GPT-4 (Cloud API) | \$0.65 | 22.0% (Pass@1) |
+| SWE-agent (Yang et al.) | GPT-4 (Cloud API) | \$2.14 | 18.0% (Pass@1) |
+| BM25 + RAG (Yang et al.) | GPT-4 (Cloud API) | \$0.05 | 3.8% (Pass@1) |
 | *Local Consumer Offline Models (<=16GB RAM, No API Cost, Offline Workstation)* | | | |
 | **Perron (Diagnostic Scaffold)** | **Gemma 4 E4B / Deterministic Replay** | **No API fee (Local)** | **5/5 Solvable (5/5 Boundary Handled)** |
 
