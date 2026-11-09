@@ -1,0 +1,90 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "data": { "@id": "cr:data", "@type": "@json" },
+    "dataType": { "@id": "cr:dataType", "@type": "@vocab" },
+    "dct": "http://purl.org/dc/terms/",
+    "fileObject": "cr:fileObject",
+    "format": "cr:format",
+    "name": "cr:name",
+    "recordSet": "cr:recordSet",
+    "sc": "https://schema.org/"
+  },
+  "@type": "sc:Dataset",
+  "name": "swebench-strata-annotations",
+  "description": "Benchmark dataset pairing Princeton SWE-bench with call and import multigraphs across 12 major Python repositories. Includes 800 evaluations across 707 unique task instances, 12 CSR multigraph archives, and 19,298 scored evaluations across Google Gemma 4 models.",
+  "url": "https://github.com/yvliet/perron",
+  "license": "https://spdx.org/licenses/Apache-2.0.html",
+  "version": "1.0.0",
+  "conformsTo": "http://mlcommons.org/croissant/1.0",
+  "creator": {
+    "@type": "Person",
+    "name": "Sultan Haikal"
+  },
+  "distribution": [
+    {
+      "@type": "cr:FileObject",
+      "@id": "scores-parquet",
+      "name": "scores.parquet",
+      "description": "Pointwise candidate log-odds reranking evaluations across 344 SWE-bench Verified tasks.",
+      "contentUrl": "scores.parquet",
+      "encodingFormat": "application/x-parquet"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "gemma4-e4b-scores-parquet",
+      "name": "gemma4_e4b_scores.parquet",
+      "description": "Continuous bfloat16 GPU log-odds evaluations under Google Gemma 4 E4B across held-out Stratum C tasks.",
+      "contentUrl": "gemma4_e4b_scores.parquet",
+      "encodingFormat": "application/x-parquet"
+    },
+    {
+      "@type": "cr:FileObject",
+      "@id": "swebench-strata-annotations-jsonl",
+      "name": "swebench_strata_annotations.jsonl",
+      "description": "Lexical accessibility classifications across 707 SWE-bench tasks partitioned into Strata A, B, and C.",
+      "contentUrl": "swebench_strata_annotations.jsonl",
+      "encodingFormat": "application/jsonlines"
+    }
+  ],
+  "recordSet": [
+    {
+      "@type": "cr:RecordSet",
+      "@id": "strata-annotations-recordset",
+      "name": "strata_annotations",
+      "description": "Lexical accessibility strata classification for each SWE-bench task.",
+      "field": [
+        {
+          "@type": "cr:Field",
+          "@id": "strata-annotations-recordset/instance_id",
+          "name": "instance_id",
+          "description": "Canonical SWE-bench task identifier.",
+          "dataType": "sc:Text",
+          "source": { "fileObject": { "@id": "swebench-strata-annotations-jsonl" }, "column": "instance_id" }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "strata-annotations-recordset/repo",
+          "name": "repo",
+          "description": "Source repository name.",
+          "dataType": "sc:Text",
+          "source": { "fileObject": { "@id": "swebench-strata-annotations-jsonl" }, "column": "repo" }
+        },
+        {
+          "@type": "cr:Field",
+          "@id": "strata-annotations-recordset/stratum",
+          "name": "stratum",
+          "description": "Lexical accessibility stratum (A, B, or C).",
+          "dataType": "sc:Text",
+          "source": { "fileObject": { "@id": "swebench-strata-annotations-jsonl" }, "column": "stratum" }
+        }
+      ]
+    }
+  ]
+}

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "perron-core"
-version = "0.3.0"
+version = "0.3.1"
 description = "Context-Bounded Repository Navigation via Query-Directed Spectral Hub Suppression for Edge Developer Agents"
 authors = [
     { name = "Sultan Haikal", email = "recrified@gmail.com" }

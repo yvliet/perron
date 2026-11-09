@@ -34,7 +34,7 @@ Five contributions define the operating regime unlocking local code graphs:
 
 - **Benchmark & Strata**: 344 Verified tasks [6] across 12 repos: substring strata (Named N\_A=208 [60.5%], Traceback N\_B=5 [1.5%], Un-Named N\_C=131 [38.1%]); regexes (N\_A=168, N\_B=7, N\_C=169; N=100 expert boundary audit: 95.0% concordance, Cohen κ=0.918, 95% CI [0.849, 0.988]). Auditing 56 exclusions confirms 100% syntax validity (68 files, 3,827 symbols); overturning equivalence requires >= +9 net wins (p=0.0016).
 - **Perron CSR Engine**: Solves in 1.89-5.10 ms (<3 MB RAM vs SuperLU 28.1 ms). Transition matrix M (β=0.85) satisfies |λ₂(M)| <= β (Doeblin contraction ||π^(t)-π(∞)||₁≤2β^t); damping (γ=0.70) yields HSI@10=99.5%.
-- **Candidate Pools**: Top-10 BM25 seeds (M_t in [10, 50], mean 24.5) define depth-matched pools B0--A6. Frozen `gemma-4-e2b-it` scores log-odds (19,298 passes). Contrasts PC1 (A4 - A2) and PC2 (A4 - A3) evaluate McNemar tests with Holm correction and bootstrap CIs (B=10,000).
+- **Candidate Pools**: Top-10 BM25 seeds (M\_t in [10, 50], mean 24.5) define depth-matched pools B0--A6. Frozen `gemma-4-e2b-it` scores log-odds (19,298 passes). Contrasts PC1 (A4 - A2) and PC2 (A4 - A3) evaluate McNemar tests with Holm correction and bootstrap CIs (B=10,000).
 
 ---
 

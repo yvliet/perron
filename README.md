@@ -6,7 +6,7 @@
 
 ### Context-budgeted AST subgraph slicing and graph retrieval for local developer agents.
 
-[![pypi](https://img.shields.io/badge/pypi-v0.3.0-gray.svg?logo=pypi&logoColor=white)](https://pypi.org/project/perron-core/)
+[![pypi](https://img.shields.io/badge/pypi-v0.3.1-gray.svg?logo=pypi&logoColor=white)](https://pypi.org/project/perron-core/)
 [![python](https://img.shields.io/badge/python-3.10+-gray.svg?logo=python&logoColor=white)](pyproject.toml)
 [![license: apache-2.0](https://img.shields.io/badge/license-Apache--2.0-gray.svg?logo=apache&logoColor=white)](LICENSE)
 [![notebook](https://img.shields.io/badge/notebook-kaggle-gray.svg?logo=kaggle&logoColor=white)](https://www.kaggle.com/code/yvliet/perron-gemma-4-workstation)

@@ -68,7 +68,7 @@ def test_mcp_stdio_lifecycle_and_tools(tmp_path: Path):
         assert "result" in init_resp
         server_info = init_resp["result"].get("serverInfo", {})
         assert server_info.get("name") == "perron-mcp"
-        assert server_info.get("version") == "0.3.0"
+        assert server_info.get("version") == "0.3.1"
         assert "capabilities" in init_resp["result"]
 
         # 2. Initialized Notification (no response expected)
