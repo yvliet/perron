@@ -1,7 +1,7 @@
 {
   "suite": "gemma4_ast_context_packing_localization",
   "evaluation_mode": "deterministic_context_packing",
-  "target_model_family": "Google Gemma 4 (E4B / 26B A4B)",
+  "target_model_family": "Google Gemma 4 E4B",
   "token_budget": 3480,
   "num_instances": 344,
   "summary": {

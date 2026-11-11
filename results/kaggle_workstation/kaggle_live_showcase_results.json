@@ -1,0 +1,286 @@
+{
+  "suite": "live_t4x2_showcase",
+  "timestamp_utc": "2026-11-11T11:26:29Z",
+  "author": "Sultan Haikal (@yvliet)",
+  "n_tasks": 15,
+  "summary": {
+    "top1_hits": 2,
+    "top5_hits": 3,
+    "top1_acc_pct": 13.33,
+    "top5_acc_pct": 20.0,
+    "mean_mrr": 0.1651,
+    "total_elapsed_s": 318.73
+  },
+  "records": [
+    {
+      "instance_id": "astropy__astropy-13033",
+      "repo": "astropy/astropy",
+      "gold_symbol_ids": [
+        12728,
+        12729
+      ],
+      "top1_predicted": "BaseTimeSeries._check_required_columns",
+      "top1_symbol_id": 12729,
+      "hit_top1": true,
+      "hit_top5": true,
+      "mrr": 1.0,
+      "elapsed_s": 23.28,
+      "generated_reasoning": "<|channel>thought\nHere's a plan to analyze the defect and provide the fix:\n1.  **Understand the Goal:** The issue is a \"misleading exception when required column check fails\" within `BaseTimeSeries`.\n...",
+      "prompt_tokens": 412,
+      "completion_tokens": 150
+    },
+    {
+      "instance_id": "astropy__astropy-13236",
+      "repo": "astropy/astropy",
+      "gold_symbol_ids": [
+        10977
+      ],
+      "top1_predicted": "_check_for_sequence_of_structured_arrays",
+      "top1_symbol_id": 10806,
+      "hit_top1": false,
+      "hit_top5": false,
+      "mrr": 0.0,
+      "elapsed_s": 20.98,
+      "generated_reasoning": "<|channel>thought\nHere's a thinking process to analyze the defect and propose the fix:\n\n1.  **Understand the Goal:** The request asks for an analysis of a software defect related to structured columns...",
+      "prompt_tokens": 358,
+      "completion_tokens": 150
+    },
+    {
+      "instance_id": "astropy__astropy-14369",
+      "repo": "astropy/astropy",
+      "gold_symbol_ids": [
+        13286
+      ],
+      "top1_predicted": "CDS._parse_unit",
+      "top1_symbol_id": 13300,
+      "hit_top1": false,
+      "hit_top5": true,
+      "mrr": 0.3333333333333333,
+      "elapsed_s": 21.93,
+      "generated_reasoning": "<|channel>thought\nHere's a plan to analyze the defect and propose a fix:\n1.  **Understand the Goal:** The defect is that `astropy.table` (specifically when using `format='ascii.cds'`) incorrectly pars...",
+      "prompt_tokens": 471,
+      "completion_tokens": 150
+    },
+    {
+      "instance_id": "astropy__astropy-14539",
+      "repo": "astropy/astropy",
+      "gold_symbol_ids": [
+        4229
+      ],
+      "top1_predicted": "TableDataDiff._report",
+      "top1_symbol_id": 4230,
+      "hit_top1": false,
+      "hit_top5": false,
+      "mrr": 0.0,
+      "elapsed_s": 22.31,
+      "generated_reasoning": "<|channel>thought\nHere's a plan to analyze the defect and propose a fix:\n1.  **Understand the Goal:** The function `io.fits.FITSDiff` (specifically `TableDataDiff`) is incorrectly reporting difference...",
+      "prompt_tokens": 417,
+      "completion_tokens": 150
+    },
+    {
+      "instance_id": "astropy__astropy-7166",
+      "repo": "astropy/astropy",
+      "gold_symbol_ids": [
+        16017
+      ],
+      "top1_predicted": "setup",
+      "top1_symbol_id": 17845,
+      "hit_top1": false,
+      "hit_top5": false,
+      "mrr": 0.0,
+      "elapsed_s": 19.65,
+      "generated_reasoning": "<|channel>thought\nHere's a plan to analyze the defect and provide the solution:\n1.  **Understand the Goal:** The `InheritDocstrings` metaclass is failing to process docstrings for properties because i...",
+      "prompt_tokens": 126,
+      "completion_tokens": 150
+    },
+    {
+      "instance_id": "django__django-10973",
+      "repo": "django/django",
+      "gold_symbol_ids": [
+        4552,
+        4553,
+        4554,
+        4551
+      ],
+      "top1_predicted": "_setup_environment",
+      "top1_symbol_id": 4374,
+      "hit_top1": false,
+      "hit_top5": false,
+      "mrr": 0.0,
+      "elapsed_s": 20.28,
+      "generated_reasoning": "<|channel>thought\nHere's a thinking process to analyze the request and formulate the response:\n\n1.  **Analyze the Input:**\n    *   **Issue Description:** The goal is to use `subprocess.run` and pass `...",
+      "prompt_tokens": 177,
+      "completion_tokens": 150
+    },
+    {
+      "instance_id": "django__django-11138",
+      "repo": "django/django",
+      "gold_symbol_ids": [
+        4623,
+        4638,
+        4639,
+        4641,
+        4642,
+        4643,
+        4644,
+        4645,
+        4678,
+        4685,
+        4686,
+        4687,
+        4688,
+        4689,
+        4690,
+        4691,
+        4328,
+        4330,
+        4331,
+        4332,
+        4465,
+        4469,
+        4470
+      ],
+      "top1_predicted": "DatabaseOperations.datetime_cast_date_sql",
+      "top1_symbol_id": 4332,
+      "hit_top1": true,
+      "hit_top5": true,
+      "mrr": 1.0,
+      "elapsed_s": 21.53,
+      "generated_reasoning": "<|channel>thought\nHere's a plan to analyze the defect and propose a fix:\n1.  **Understand the Goal:** The user wants me to analyze a specific Django bug (related to `TIME_ZONE` not being used when mak...",
+      "prompt_tokens": 386,
+      "completion_tokens": 150
+    },
+    {
+      "instance_id": "django__django-11141",
+      "repo": "django/django",
+      "gold_symbol_ids": [
+        4862
+      ],
+      "top1_predicted": "iter_all_python_module_files",
+      "top1_symbol_id": 8624,
+      "hit_top1": false,
+      "hit_top5": false,
+      "mrr": 0.0,
+      "elapsed_s": 21.81,
+      "generated_reasoning": "<|channel>thought\nHere's a plan to analyze the defect and provide the solution:\n1.  **Understand the Defect:** The core issue is that the `migrate` command fails when the migrations directory is a Pyt...",
+      "prompt_tokens": 278,
+      "completion_tokens": 150
+    },
+    {
+      "instance_id": "django__django-11239",
+      "repo": "django/django",
+      "gold_symbol_ids": [
+        4553
+      ],
+      "top1_predicted": "DatabaseWrapper.get_connection_params",
+      "top1_symbol_id": 4540,
+      "hit_top1": false,
+      "hit_top5": false,
+      "mrr": 0.0,
+      "elapsed_s": 21.85,
+      "generated_reasoning": "<|channel>thought\nHere's a plan to analyze the defect and propose a fix:\n1.  **Understand the Goal:** The user wants to add support for client certificates and keys (`sslcert`, `sslkey`) to `dbshell` ...",
+      "prompt_tokens": 378,
+      "completion_tokens": 150
+    },
+    {
+      "instance_id": "django__django-11292",
+      "repo": "django/django",
+      "gold_symbol_ids": [
+        3554,
+        3558,
+        3540,
+        3541,
+        3551
+      ],
+      "top1_predicted": "Command.add_arguments",
+      "top1_symbol_id": 3595,
+      "hit_top1": false,
+      "hit_top5": false,
+      "mrr": 0.0,
+      "elapsed_s": 20.63,
+      "generated_reasoning": "<|channel>thought\nHere's a thinking process to analyze the defect and generate the solution:\n\n1.  **Understand the Goal (The Defect):**\n    *   **Problem:** The `diffsettings` management command (and ...",
+      "prompt_tokens": 181,
+      "completion_tokens": 150
+    },
+    {
+      "instance_id": "django__django-11299",
+      "repo": "django/django",
+      "gold_symbol_ids": [
+        6725
+      ],
+      "top1_predicted": "CheckConstraint._get_check_sql",
+      "top1_symbol_id": 5341,
+      "hit_top1": false,
+      "hit_top5": false,
+      "mrr": 0.0,
+      "elapsed_s": 21.68,
+      "generated_reasoning": "<|channel>thought\nHere's a plan to analyze the defect and propose a fix:\n1.  **Understand the Goal:** The defect is that `CheckConstraint` with complex `OR`/`AND` logic generates incorrect SQL, specif...",
+      "prompt_tokens": 347,
+      "completion_tokens": 150
+    },
+    {
+      "instance_id": "django__django-11433",
+      "repo": "django/django",
+      "gold_symbol_ids": [
+        7105
+      ],
+      "top1_predicted": "Field.prepare_value",
+      "top1_symbol_id": 6915,
+      "hit_top1": false,
+      "hit_top5": false,
+      "mrr": 0.0,
+      "elapsed_s": 20.67,
+      "generated_reasoning": "<|channel>thought\nHere's a plan to analyze the defect and provide the solution:\n1.  **Understand the Goal:** The user wants to allow `cleaned_data` (the processed data from a form) to overwrite the de...",
+      "prompt_tokens": 251,
+      "completion_tokens": 150
+    },
+    {
+      "instance_id": "django__django-11477",
+      "repo": "django/django",
+      "gold_symbol_ids": [
+        8545
+      ],
+      "top1_predicted": "URLResolver._reverse_with_prefix",
+      "top1_symbol_id": 8588,
+      "hit_top1": false,
+      "hit_top5": false,
+      "mrr": 0.0,
+      "elapsed_s": 20.12,
+      "generated_reasoning": "<|channel>thought\nHere's a plan to analyze the defect and provide the fix:\n1.  **Understand the Goal:** The function `translate_url()` (or the underlying mechanism in `URLResolver`) is failing to cons...",
+      "prompt_tokens": 160,
+      "completion_tokens": 150
+    },
+    {
+      "instance_id": "django__django-11490",
+      "repo": "django/django",
+      "gold_symbol_ids": [
+        6611
+      ],
+      "top1_predicted": "QuerySet.values_list",
+      "top1_symbol_id": 6483,
+      "hit_top1": false,
+      "hit_top5": false,
+      "mrr": 0.0,
+      "elapsed_s": 21.19,
+      "generated_reasoning": "<|channel>thought\nHere's a plan to analyze the defect and propose a fix:\n1.  **Understand the Defect:** Analyze the provided issue description. The core problem is that when a `QuerySet` is composed (...",
+      "prompt_tokens": 266,
+      "completion_tokens": 150
+    },
+    {
+      "instance_id": "django__django-11555",
+      "repo": "django/django",
+      "gold_symbol_ids": [
+        6615
+      ],
+      "top1_predicted": "OrderBy.get_source_expressions",
+      "top1_symbol_id": 5565,
+      "hit_top1": false,
+      "hit_top5": false,
+      "mrr": 0.14285714285714285,
+      "elapsed_s": 20.8,
+      "generated_reasoning": "<|channel>thought\nHere's a plan to analyze the defect and propose a fix:\n1.  **Understand the Defect:** Analyze the `Issue Description` to pinpoint *what* is failing and *when*.\n2.  **Analyze the Caus...",
+      "prompt_tokens": 271,
+      "completion_tokens": 150
+    }
+  ]
+}

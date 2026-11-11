@@ -1,0 +1,14 @@
+{
+  "suite": "perron_editor_surgical_validation",
+  "timestamp_utc": "2026-11-11T11:26:29Z",
+  "author": "Sultan Haikal (@yvliet)",
+  "license": "Apache-2.0",
+  "summary": {
+    "total_scenarios": 3,
+    "valid_patches_committed": 2,
+    "syntax_errors_committed": 0,
+    "syntax_error_rate_pct": 0.0,
+    "rollback_verified": true
+  },
+  "reference_notebook": "https://www.kaggle.com/code/yvliet/perron-gemma4-e4b-control"
+}
