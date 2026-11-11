@@ -1,0 +1,12 @@
+{
+  "repo": "mwaskom/seaborn",
+  "commit": "94621cef29f80282436d73e8d2c0aa76dab81273",
+  "symbols_count": 2452,
+  "edges_count": 8640,
+  "shape": [
+    2452,
+    2452
+  ],
+  "schema_version": "1.0",
+  "perron_version": "0.2.0"
+}

@@ -40,7 +40,7 @@ def main():
     logger.info("Building distribution wheel with python -m build --wheel...")
     run_cmd([sys.executable, "-m", "build", "--wheel", "--outdir", str(dist_dir)], cwd=REPO_ROOT)
 
-    wheel_files = list(dist_dir.glob("perron_core-0.3.0-*.whl"))
+    wheel_files = list(dist_dir.glob("perron_core-0.3.1-*.whl"))
     if not wheel_files:
         # Check alternative name
         wheel_files = list(dist_dir.glob("perron*.whl"))
@@ -82,12 +82,12 @@ def main():
         # 5. Verify import and version
         logger.info("Verifying module import in clean venv...")
         res = run_cmd([str(venv_python), "-c", "import perron; print(perron.__version__)"])
-        assert "0.3.0" in res.stdout.strip(), f"Expected version 0.3.0, got {res.stdout}"
+        assert "0.3.1" in res.stdout.strip(), f"Expected version 0.3.1, got {res.stdout}"
 
         # 6. Verify CLI entrypoint
         logger.info("Verifying perron --version CLI entrypoint...")
         res = run_cmd([str(venv_perron), "--version"])
-        assert "0.3.0" in res.stdout.strip() or "0.3.0" in res.stderr.strip()
+        assert "0.3.1" in res.stdout.strip() or "0.3.1" in res.stderr.strip()
 
         logger.info("Verifying perron --help CLI entrypoint...")
         res = run_cmd([str(venv_perron), "--help"])
@@ -95,7 +95,7 @@ def main():
 
         logger.info("Verifying perron-mcp entrypoint...")
         res = run_cmd([str(venv_perron_mcp), "--version"])
-        assert "0.3.0" in res.stdout.strip() or "0.3.0" in res.stderr.strip()
+        assert "0.3.1" in res.stdout.strip() or "0.3.1" in res.stderr.strip()
 
         logger.info("All clean-room installation checks PASSED successfully!")
 

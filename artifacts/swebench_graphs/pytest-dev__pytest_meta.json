@@ -1,0 +1,12 @@
+{
+  "repo": "pytest-dev/pytest",
+  "commit": "6995257cf470d2143ad1683824962de4071c0eb7",
+  "symbols_count": 5868,
+  "edges_count": 14340,
+  "shape": [
+    5868,
+    5868
+  ],
+  "schema_version": "1.0",
+  "perron_version": "0.2.0"
+}

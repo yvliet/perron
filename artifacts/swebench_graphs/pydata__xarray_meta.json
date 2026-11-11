@@ -1,0 +1,12 @@
+{
+  "repo": "pydata/xarray",
+  "commit": "863e49066ca4d61c9adfe62aca3bf21b90e1af8c",
+  "symbols_count": 4243,
+  "edges_count": 17310,
+  "shape": [
+    4243,
+    4243
+  ],
+  "schema_version": "1.0",
+  "perron_version": "0.2.0"
+}

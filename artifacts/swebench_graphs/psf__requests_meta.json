@@ -1,0 +1,12 @@
+{
+  "repo": "psf/requests",
+  "commit": "110048f9837f8441ea536804115e80b69f400277",
+  "symbols_count": 284,
+  "edges_count": 770,
+  "shape": [
+    284,
+    284
+  ],
+  "schema_version": "1.0",
+  "perron_version": "0.2.0"
+}

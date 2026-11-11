@@ -1,0 +1,12 @@
+{
+  "repo": "sympy/sympy",
+  "commit": "8dcb12a6cf500e8738d6729ab954a261758f49ca",
+  "symbols_count": 6033,
+  "edges_count": 17938,
+  "shape": [
+    6033,
+    6033
+  ],
+  "schema_version": "1.0",
+  "perron_version": "0.2.0"
+}

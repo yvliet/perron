@@ -1,0 +1,12 @@
+{
+  "repo": "django/django",
+  "commit": "e7fd69d051eaa67cb17f172a39b57253e9cb831a",
+  "symbols_count": 31705,
+  "edges_count": 331849,
+  "shape": [
+    31705,
+    31705
+  ],
+  "schema_version": "1.0",
+  "perron_version": "0.2.0"
+}

@@ -1,0 +1,12 @@
+{
+  "repo": "scikit-learn/scikit-learn",
+  "commit": "b90661d6a46aa3619d3eec94d5281f5888add501",
+  "symbols_count": 7064,
+  "edges_count": 23129,
+  "shape": [
+    7064,
+    7064
+  ],
+  "schema_version": "1.0",
+  "perron_version": "0.2.0"
+}

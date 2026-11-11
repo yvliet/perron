@@ -1,0 +1,12 @@
+{
+  "repo": "astropy/astropy",
+  "commit": "d16bfe05a744909de4b27f5875fe0d4ed41ce607",
+  "symbols_count": 17854,
+  "edges_count": 53621,
+  "shape": [
+    17854,
+    17854
+  ],
+  "schema_version": "1.0",
+  "perron_version": "0.2.0"
+}

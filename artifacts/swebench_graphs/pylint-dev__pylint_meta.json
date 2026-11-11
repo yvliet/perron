@@ -1,0 +1,12 @@
+{
+  "repo": "pylint-dev/pylint",
+  "commit": "182cc539b8154c0710fcea7e522267e42eba8899",
+  "symbols_count": 7010,
+  "edges_count": 13416,
+  "shape": [
+    7010,
+    7010
+  ],
+  "schema_version": "1.0",
+  "perron_version": "0.2.0"
+}

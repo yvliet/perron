@@ -1,0 +1,12 @@
+{
+  "repo": "pallets/flask",
+  "commit": "d8c37f43724cd9fb0870f77877b7c4c7e38a19e0",
+  "symbols_count": 1506,
+  "edges_count": 2080,
+  "shape": [
+    1506,
+    1506
+  ],
+  "schema_version": "1.0",
+  "perron_version": "0.2.0"
+}

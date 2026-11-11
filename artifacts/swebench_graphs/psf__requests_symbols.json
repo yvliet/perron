@@ -1,0 +1,2558 @@
+[
+  {
+    "id": 0,
+    "identifier": "check_compatibility",
+    "file_path": "__init__.py",
+    "symbol_type": "function",
+    "line_start": 58,
+    "line_end": 90,
+    "degree": 0
+  },
+  {
+    "id": 1,
+    "identifier": "_check_cryptography",
+    "file_path": "__init__.py",
+    "symbol_type": "function",
+    "line_start": 93,
+    "line_end": 104,
+    "degree": 0
+  },
+  {
+    "id": 2,
+    "identifier": "to_native_string",
+    "file_path": "_internal_utils.py",
+    "symbol_type": "function",
+    "line_start": 25,
+    "line_end": 35,
+    "degree": 7
+  },
+  {
+    "id": 3,
+    "identifier": "unicode_is_ascii",
+    "file_path": "_internal_utils.py",
+    "symbol_type": "function",
+    "line_start": 38,
+    "line_end": 50,
+    "degree": 1
+  },
+  {
+    "id": 4,
+    "identifier": "SOCKSProxyManager",
+    "file_path": "adapters.py",
+    "symbol_type": "function",
+    "line_start": 62,
+    "line_end": 63,
+    "degree": 2
+  },
+  {
+    "id": 5,
+    "identifier": "_urllib3_request_context",
+    "file_path": "adapters.py",
+    "symbol_type": "function",
+    "line_start": 76,
+    "line_end": 110,
+    "degree": 1
+  },
+  {
+    "id": 6,
+    "identifier": "BaseAdapter",
+    "file_path": "adapters.py",
+    "symbol_type": "class",
+    "line_start": 113,
+    "line_end": 140,
+    "degree": 3
+  },
+  {
+    "id": 7,
+    "identifier": "BaseAdapter.__init__",
+    "file_path": "adapters.py",
+    "symbol_type": "method",
+    "line_start": 116,
+    "line_end": 117,
+    "degree": 1
+  },
+  {
+    "id": 8,
+    "identifier": "BaseAdapter.send",
+    "file_path": "adapters.py",
+    "symbol_type": "method",
+    "line_start": 119,
+    "line_end": 136,
+    "degree": 1
+  },
+  {
+    "id": 9,
+    "identifier": "BaseAdapter.close",
+    "file_path": "adapters.py",
+    "symbol_type": "method",
+    "line_start": 138,
+    "line_end": 140,
+    "degree": 1
+  },
+  {
+    "id": 10,
+    "identifier": "HTTPAdapter",
+    "file_path": "adapters.py",
+    "symbol_type": "class",
+    "line_start": 143,
+    "line_end": 696,
+    "degree": 16
+  },
+  {
+    "id": 11,
+    "identifier": "HTTPAdapter.__init__",
+    "file_path": "adapters.py",
+    "symbol_type": "method",
+    "line_start": 178,
+    "line_end": 198,
+    "degree": 2
+  },
+  {
+    "id": 12,
+    "identifier": "HTTPAdapter.__getstate__",
+    "file_path": "adapters.py",
+    "symbol_type": "method",
+    "line_start": 200,
+    "line_end": 201,
+    "degree": 1
+  },
+  {
+    "id": 13,
+    "identifier": "HTTPAdapter.__setstate__",
+    "file_path": "adapters.py",
+    "symbol_type": "method",
+    "line_start": 203,
+    "line_end": 214,
+    "degree": 2
+  },
+  {
+    "id": 14,
+    "identifier": "HTTPAdapter.init_poolmanager",
+    "file_path": "adapters.py",
+    "symbol_type": "method",
+    "line_start": 216,
+    "line_end": 240,
+    "degree": 3
+  },
+  {
+    "id": 15,
+    "identifier": "HTTPAdapter.proxy_manager_for",
+    "file_path": "adapters.py",
+    "symbol_type": "method",
+    "line_start": 242,
+    "line_end": 278,
+    "degree": 6
+  },
+  {
+    "id": 16,
+    "identifier": "HTTPAdapter.cert_verify",
+    "file_path": "adapters.py",
+    "symbol_type": "method",
+    "line_start": 280,
+    "line_end": 334,
+    "degree": 3
+  },
+  {
+    "id": 17,
+    "identifier": "HTTPAdapter.build_response",
+    "file_path": "adapters.py",
+    "symbol_type": "method",
+    "line_start": 336,
+    "line_end": 371,
+    "degree": 6
+  },
+  {
+    "id": 18,
+    "identifier": "HTTPAdapter.build_connection_pool_key_attributes",
+    "file_path": "adapters.py",
+    "symbol_type": "method",
+    "line_start": 373,
+    "line_end": 421,
+    "degree": 3
+  },
+  {
+    "id": 19,
+    "identifier": "HTTPAdapter.get_connection_with_tls_context",
+    "file_path": "adapters.py",
+    "symbol_type": "method",
+    "line_start": 423,
+    "line_end": 470,
+    "degree": 8
+  },
+  {
+    "id": 20,
+    "identifier": "HTTPAdapter.get_connection",
+    "file_path": "adapters.py",
+    "symbol_type": "method",
+    "line_start": 472,
+    "line_end": 511,
+    "degree": 5
+  },
+  {
+    "id": 21,
+    "identifier": "HTTPAdapter.close",
+    "file_path": "adapters.py",
+    "symbol_type": "method",
+    "line_start": 513,
+    "line_end": 521,
+    "degree": 1
+  },
+  {
+    "id": 22,
+    "identifier": "HTTPAdapter.request_url",
+    "file_path": "adapters.py",
+    "symbol_type": "method",
+    "line_start": 523,
+    "line_end": 553,
+    "degree": 4
+  },
+  {
+    "id": 23,
+    "identifier": "HTTPAdapter.add_headers",
+    "file_path": "adapters.py",
+    "symbol_type": "method",
+    "line_start": 555,
+    "line_end": 567,
+    "degree": 2
+  },
+  {
+    "id": 24,
+    "identifier": "HTTPAdapter.proxy_headers",
+    "file_path": "adapters.py",
+    "symbol_type": "method",
+    "line_start": 569,
+    "line_end": 588,
+    "degree": 4
+  },
+  {
+    "id": 25,
+    "identifier": "HTTPAdapter.send",
+    "file_path": "adapters.py",
+    "symbol_type": "method",
+    "line_start": 590,
+    "line_end": 696,
+    "degree": 14
+  },
+  {
+    "id": 26,
+    "identifier": "request",
+    "file_path": "api.py",
+    "symbol_type": "function",
+    "line_start": 14,
+    "line_end": 59,
+    "degree": 7
+  },
+  {
+    "id": 27,
+    "identifier": "get",
+    "file_path": "api.py",
+    "symbol_type": "function",
+    "line_start": 62,
+    "line_end": 73,
+    "degree": 1
+  },
+  {
+    "id": 28,
+    "identifier": "options",
+    "file_path": "api.py",
+    "symbol_type": "function",
+    "line_start": 76,
+    "line_end": 85,
+    "degree": 1
+  },
+  {
+    "id": 29,
+    "identifier": "head",
+    "file_path": "api.py",
+    "symbol_type": "function",
+    "line_start": 88,
+    "line_end": 100,
+    "degree": 1
+  },
+  {
+    "id": 30,
+    "identifier": "post",
+    "file_path": "api.py",
+    "symbol_type": "function",
+    "line_start": 103,
+    "line_end": 115,
+    "degree": 1
+  },
+  {
+    "id": 31,
+    "identifier": "put",
+    "file_path": "api.py",
+    "symbol_type": "function",
+    "line_start": 118,
+    "line_end": 130,
+    "degree": 1
+  },
+  {
+    "id": 32,
+    "identifier": "patch",
+    "file_path": "api.py",
+    "symbol_type": "function",
+    "line_start": 133,
+    "line_end": 145,
+    "degree": 1
+  },
+  {
+    "id": 33,
+    "identifier": "delete",
+    "file_path": "api.py",
+    "symbol_type": "function",
+    "line_start": 148,
+    "line_end": 157,
+    "degree": 1
+  },
+  {
+    "id": 34,
+    "identifier": "_basic_auth_str",
+    "file_path": "auth.py",
+    "symbol_type": "function",
+    "line_start": 25,
+    "line_end": 66,
+    "degree": 5
+  },
+  {
+    "id": 35,
+    "identifier": "AuthBase",
+    "file_path": "auth.py",
+    "symbol_type": "class",
+    "line_start": 69,
+    "line_end": 73,
+    "degree": 1
+  },
+  {
+    "id": 36,
+    "identifier": "AuthBase.__call__",
+    "file_path": "auth.py",
+    "symbol_type": "method",
+    "line_start": 72,
+    "line_end": 73,
+    "degree": 1
+  },
+  {
+    "id": 37,
+    "identifier": "HTTPBasicAuth",
+    "file_path": "auth.py",
+    "symbol_type": "class",
+    "line_start": 76,
+    "line_end": 96,
+    "degree": 5
+  },
+  {
+    "id": 38,
+    "identifier": "HTTPBasicAuth.__init__",
+    "file_path": "auth.py",
+    "symbol_type": "method",
+    "line_start": 79,
+    "line_end": 81,
+    "degree": 1
+  },
+  {
+    "id": 39,
+    "identifier": "HTTPBasicAuth.__eq__",
+    "file_path": "auth.py",
+    "symbol_type": "method",
+    "line_start": 83,
+    "line_end": 89,
+    "degree": 1
+  },
+  {
+    "id": 40,
+    "identifier": "HTTPBasicAuth.__ne__",
+    "file_path": "auth.py",
+    "symbol_type": "method",
+    "line_start": 91,
+    "line_end": 92,
+    "degree": 1
+  },
+  {
+    "id": 41,
+    "identifier": "HTTPBasicAuth.__call__",
+    "file_path": "auth.py",
+    "symbol_type": "method",
+    "line_start": 94,
+    "line_end": 96,
+    "degree": 2
+  },
+  {
+    "id": 42,
+    "identifier": "HTTPProxyAuth",
+    "file_path": "auth.py",
+    "symbol_type": "class",
+    "line_start": 99,
+    "line_end": 104,
+    "degree": 1
+  },
+  {
+    "id": 43,
+    "identifier": "HTTPProxyAuth.__call__",
+    "file_path": "auth.py",
+    "symbol_type": "method",
+    "line_start": 102,
+    "line_end": 104,
+    "degree": 2
+  },
+  {
+    "id": 44,
+    "identifier": "HTTPDigestAuth",
+    "file_path": "auth.py",
+    "symbol_type": "class",
+    "line_start": 107,
+    "line_end": 314,
+    "degree": 12
+  },
+  {
+    "id": 45,
+    "identifier": "HTTPDigestAuth.__init__",
+    "file_path": "auth.py",
+    "symbol_type": "method",
+    "line_start": 110,
+    "line_end": 114,
+    "degree": 1
+  },
+  {
+    "id": 46,
+    "identifier": "HTTPDigestAuth.init_per_thread_state",
+    "file_path": "auth.py",
+    "symbol_type": "method",
+    "line_start": 116,
+    "line_end": 124,
+    "degree": 2
+  },
+  {
+    "id": 47,
+    "identifier": "HTTPDigestAuth.build_digest_header",
+    "file_path": "auth.py",
+    "symbol_type": "method",
+    "line_start": 126,
+    "line_end": 234,
+    "degree": 3
+  },
+  {
+    "id": 48,
+    "identifier": "HTTPDigestAuth.md5_utf8",
+    "file_path": "auth.py",
+    "symbol_type": "method",
+    "line_start": 145,
+    "line_end": 148,
+    "degree": 1
+  },
+  {
+    "id": 49,
+    "identifier": "HTTPDigestAuth.sha_utf8",
+    "file_path": "auth.py",
+    "symbol_type": "method",
+    "line_start": 153,
+    "line_end": 156,
+    "degree": 1
+  },
+  {
+    "id": 50,
+    "identifier": "HTTPDigestAuth.sha256_utf8",
+    "file_path": "auth.py",
+    "symbol_type": "method",
+    "line_start": 161,
+    "line_end": 164,
+    "degree": 1
+  },
+  {
+    "id": 51,
+    "identifier": "HTTPDigestAuth.sha512_utf8",
+    "file_path": "auth.py",
+    "symbol_type": "method",
+    "line_start": 169,
+    "line_end": 172,
+    "degree": 1
+  },
+  {
+    "id": 52,
+    "identifier": "HTTPDigestAuth.handle_redirect",
+    "file_path": "auth.py",
+    "symbol_type": "method",
+    "line_start": 236,
+    "line_end": 239,
+    "degree": 1
+  },
+  {
+    "id": 53,
+    "identifier": "HTTPDigestAuth.handle_401",
+    "file_path": "auth.py",
+    "symbol_type": "method",
+    "line_start": 241,
+    "line_end": 283,
+    "degree": 4
+  },
+  {
+    "id": 54,
+    "identifier": "HTTPDigestAuth.__call__",
+    "file_path": "auth.py",
+    "symbol_type": "method",
+    "line_start": 285,
+    "line_end": 303,
+    "degree": 3
+  },
+  {
+    "id": 55,
+    "identifier": "HTTPDigestAuth.__eq__",
+    "file_path": "auth.py",
+    "symbol_type": "method",
+    "line_start": 305,
+    "line_end": 311,
+    "degree": 1
+  },
+  {
+    "id": 56,
+    "identifier": "HTTPDigestAuth.__ne__",
+    "file_path": "auth.py",
+    "symbol_type": "method",
+    "line_start": 313,
+    "line_end": 314,
+    "degree": 1
+  },
+  {
+    "id": 57,
+    "identifier": "_resolve_char_detection",
+    "file_path": "compat.py",
+    "symbol_type": "function",
+    "line_start": 30,
+    "line_end": 39,
+    "degree": 0
+  },
+  {
+    "id": 58,
+    "identifier": "MockRequest",
+    "file_path": "cookies.py",
+    "symbol_type": "class",
+    "line_start": 23,
+    "line_end": 100,
+    "degree": 16
+  },
+  {
+    "id": 59,
+    "identifier": "MockRequest.__init__",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 35,
+    "line_end": 38,
+    "degree": 1
+  },
+  {
+    "id": 60,
+    "identifier": "MockRequest.get_type",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 40,
+    "line_end": 41,
+    "degree": 1
+  },
+  {
+    "id": 61,
+    "identifier": "MockRequest.get_host",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 43,
+    "line_end": 44,
+    "degree": 3
+  },
+  {
+    "id": 62,
+    "identifier": "MockRequest.get_origin_req_host",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 46,
+    "line_end": 47,
+    "degree": 3
+  },
+  {
+    "id": 63,
+    "identifier": "MockRequest.get_full_url",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 49,
+    "line_end": 67,
+    "degree": 2
+  },
+  {
+    "id": 64,
+    "identifier": "MockRequest.is_unverifiable",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 69,
+    "line_end": 70,
+    "degree": 2
+  },
+  {
+    "id": 65,
+    "identifier": "MockRequest.has_header",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 72,
+    "line_end": 73,
+    "degree": 1
+  },
+  {
+    "id": 66,
+    "identifier": "MockRequest.get_header",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 75,
+    "line_end": 76,
+    "degree": 1
+  },
+  {
+    "id": 67,
+    "identifier": "MockRequest.add_header",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 78,
+    "line_end": 82,
+    "degree": 1
+  },
+  {
+    "id": 68,
+    "identifier": "MockRequest.add_unredirected_header",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 84,
+    "line_end": 85,
+    "degree": 1
+  },
+  {
+    "id": 69,
+    "identifier": "MockRequest.get_new_headers",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 87,
+    "line_end": 88,
+    "degree": 1
+  },
+  {
+    "id": 70,
+    "identifier": "MockRequest.unverifiable",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 90,
+    "line_end": 92,
+    "degree": 2
+  },
+  {
+    "id": 71,
+    "identifier": "MockRequest.origin_req_host",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 94,
+    "line_end": 96,
+    "degree": 2
+  },
+  {
+    "id": 72,
+    "identifier": "MockRequest.host",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 98,
+    "line_end": 100,
+    "degree": 2
+  },
+  {
+    "id": 73,
+    "identifier": "MockResponse",
+    "file_path": "cookies.py",
+    "symbol_type": "class",
+    "line_start": 103,
+    "line_end": 121,
+    "degree": 4
+  },
+  {
+    "id": 74,
+    "identifier": "MockResponse.__init__",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 110,
+    "line_end": 115,
+    "degree": 1
+  },
+  {
+    "id": 75,
+    "identifier": "MockResponse.info",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 117,
+    "line_end": 118,
+    "degree": 1
+  },
+  {
+    "id": 76,
+    "identifier": "MockResponse.getheaders",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 120,
+    "line_end": 121,
+    "degree": 1
+  },
+  {
+    "id": 77,
+    "identifier": "extract_cookies_to_jar",
+    "file_path": "cookies.py",
+    "symbol_type": "function",
+    "line_start": 124,
+    "line_end": 137,
+    "degree": 6
+  },
+  {
+    "id": 78,
+    "identifier": "get_cookie_header",
+    "file_path": "cookies.py",
+    "symbol_type": "function",
+    "line_start": 140,
+    "line_end": 148,
+    "degree": 2
+  },
+  {
+    "id": 79,
+    "identifier": "remove_cookie_by_name",
+    "file_path": "cookies.py",
+    "symbol_type": "function",
+    "line_start": 151,
+    "line_end": 167,
+    "degree": 2
+  },
+  {
+    "id": 80,
+    "identifier": "CookieConflictError",
+    "file_path": "cookies.py",
+    "symbol_type": "class",
+    "line_start": 170,
+    "line_end": 173,
+    "degree": 1
+  },
+  {
+    "id": 81,
+    "identifier": "RequestsCookieJar",
+    "file_path": "cookies.py",
+    "symbol_type": "class",
+    "line_start": 176,
+    "line_end": 437,
+    "degree": 26
+  },
+  {
+    "id": 82,
+    "identifier": "RequestsCookieJar.get",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 194,
+    "line_end": 204,
+    "degree": 2
+  },
+  {
+    "id": 83,
+    "identifier": "RequestsCookieJar.set",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 206,
+    "line_end": 223,
+    "degree": 6
+  },
+  {
+    "id": 84,
+    "identifier": "RequestsCookieJar.iterkeys",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 225,
+    "line_end": 232,
+    "degree": 2
+  },
+  {
+    "id": 85,
+    "identifier": "RequestsCookieJar.keys",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 234,
+    "line_end": 240,
+    "degree": 2
+  },
+  {
+    "id": 86,
+    "identifier": "RequestsCookieJar.itervalues",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 242,
+    "line_end": 249,
+    "degree": 2
+  },
+  {
+    "id": 87,
+    "identifier": "RequestsCookieJar.values",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 251,
+    "line_end": 257,
+    "degree": 2
+  },
+  {
+    "id": 88,
+    "identifier": "RequestsCookieJar.iteritems",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 259,
+    "line_end": 266,
+    "degree": 2
+  },
+  {
+    "id": 89,
+    "identifier": "RequestsCookieJar.items",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 268,
+    "line_end": 275,
+    "degree": 3
+  },
+  {
+    "id": 90,
+    "identifier": "RequestsCookieJar.list_domains",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 277,
+    "line_end": 283,
+    "degree": 1
+  },
+  {
+    "id": 91,
+    "identifier": "RequestsCookieJar.list_paths",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 285,
+    "line_end": 291,
+    "degree": 1
+  },
+  {
+    "id": 92,
+    "identifier": "RequestsCookieJar.multiple_domains",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 293,
+    "line_end": 304,
+    "degree": 1
+  },
+  {
+    "id": 93,
+    "identifier": "RequestsCookieJar.get_dict",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 306,
+    "line_end": 319,
+    "degree": 1
+  },
+  {
+    "id": 94,
+    "identifier": "RequestsCookieJar.__contains__",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 321,
+    "line_end": 325,
+    "degree": 1
+  },
+  {
+    "id": 95,
+    "identifier": "RequestsCookieJar.__getitem__",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 327,
+    "line_end": 334,
+    "degree": 2
+  },
+  {
+    "id": 96,
+    "identifier": "RequestsCookieJar.__setitem__",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 336,
+    "line_end": 341,
+    "degree": 2
+  },
+  {
+    "id": 97,
+    "identifier": "RequestsCookieJar.__delitem__",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 343,
+    "line_end": 347,
+    "degree": 2
+  },
+  {
+    "id": 98,
+    "identifier": "RequestsCookieJar.set_cookie",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 349,
+    "line_end": 356,
+    "degree": 3
+  },
+  {
+    "id": 99,
+    "identifier": "RequestsCookieJar.update",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 358,
+    "line_end": 364,
+    "degree": 4
+  },
+  {
+    "id": 100,
+    "identifier": "RequestsCookieJar._find",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 366,
+    "line_end": 384,
+    "degree": 1
+  },
+  {
+    "id": 101,
+    "identifier": "RequestsCookieJar._find_no_duplicates",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 386,
+    "line_end": 413,
+    "degree": 4
+  },
+  {
+    "id": 102,
+    "identifier": "RequestsCookieJar.__getstate__",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 415,
+    "line_end": 420,
+    "degree": 2
+  },
+  {
+    "id": 103,
+    "identifier": "RequestsCookieJar.__setstate__",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 422,
+    "line_end": 426,
+    "degree": 2
+  },
+  {
+    "id": 104,
+    "identifier": "RequestsCookieJar.copy",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 428,
+    "line_end": 433,
+    "degree": 3
+  },
+  {
+    "id": 105,
+    "identifier": "RequestsCookieJar.get_policy",
+    "file_path": "cookies.py",
+    "symbol_type": "method",
+    "line_start": 435,
+    "line_end": 437,
+    "degree": 2
+  },
+  {
+    "id": 106,
+    "identifier": "_copy_cookie_jar",
+    "file_path": "cookies.py",
+    "symbol_type": "function",
+    "line_start": 440,
+    "line_end": 452,
+    "degree": 1
+  },
+  {
+    "id": 107,
+    "identifier": "create_cookie",
+    "file_path": "cookies.py",
+    "symbol_type": "function",
+    "line_start": 455,
+    "line_end": 489,
+    "degree": 3
+  },
+  {
+    "id": 108,
+    "identifier": "morsel_to_cookie",
+    "file_path": "cookies.py",
+    "symbol_type": "function",
+    "line_start": 492,
+    "line_end": 518,
+    "degree": 2
+  },
+  {
+    "id": 109,
+    "identifier": "cookiejar_from_dict",
+    "file_path": "cookies.py",
+    "symbol_type": "function",
+    "line_start": 521,
+    "line_end": 539,
+    "degree": 8
+  },
+  {
+    "id": 110,
+    "identifier": "merge_cookies",
+    "file_path": "cookies.py",
+    "symbol_type": "function",
+    "line_start": 542,
+    "line_end": 561,
+    "degree": 3
+  },
+  {
+    "id": 111,
+    "identifier": "RequestException",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 12,
+    "line_end": 24,
+    "degree": 1
+  },
+  {
+    "id": 112,
+    "identifier": "RequestException.__init__",
+    "file_path": "exceptions.py",
+    "symbol_type": "method",
+    "line_start": 17,
+    "line_end": 24,
+    "degree": 1
+  },
+  {
+    "id": 113,
+    "identifier": "InvalidJSONError",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 27,
+    "line_end": 28,
+    "degree": 1
+  },
+  {
+    "id": 114,
+    "identifier": "JSONDecodeError",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 31,
+    "line_end": 52,
+    "degree": 3
+  },
+  {
+    "id": 115,
+    "identifier": "JSONDecodeError.__init__",
+    "file_path": "exceptions.py",
+    "symbol_type": "method",
+    "line_start": 34,
+    "line_end": 42,
+    "degree": 1
+  },
+  {
+    "id": 116,
+    "identifier": "JSONDecodeError.__reduce__",
+    "file_path": "exceptions.py",
+    "symbol_type": "method",
+    "line_start": 44,
+    "line_end": 52,
+    "degree": 1
+  },
+  {
+    "id": 117,
+    "identifier": "HTTPError",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 55,
+    "line_end": 56,
+    "degree": 1
+  },
+  {
+    "id": 118,
+    "identifier": "ConnectionError",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 59,
+    "line_end": 60,
+    "degree": 2
+  },
+  {
+    "id": 119,
+    "identifier": "ProxyError",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 63,
+    "line_end": 64,
+    "degree": 1
+  },
+  {
+    "id": 120,
+    "identifier": "SSLError",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 67,
+    "line_end": 68,
+    "degree": 2
+  },
+  {
+    "id": 121,
+    "identifier": "Timeout",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 71,
+    "line_end": 77,
+    "degree": 0
+  },
+  {
+    "id": 122,
+    "identifier": "ConnectTimeout",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 80,
+    "line_end": 84,
+    "degree": 1
+  },
+  {
+    "id": 123,
+    "identifier": "ReadTimeout",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 87,
+    "line_end": 88,
+    "degree": 1
+  },
+  {
+    "id": 124,
+    "identifier": "URLRequired",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 91,
+    "line_end": 92,
+    "degree": 0
+  },
+  {
+    "id": 125,
+    "identifier": "TooManyRedirects",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 95,
+    "line_end": 96,
+    "degree": 1
+  },
+  {
+    "id": 126,
+    "identifier": "MissingSchema",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 99,
+    "line_end": 100,
+    "degree": 1
+  },
+  {
+    "id": 127,
+    "identifier": "InvalidSchema",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 103,
+    "line_end": 104,
+    "degree": 2
+  },
+  {
+    "id": 128,
+    "identifier": "InvalidURL",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 107,
+    "line_end": 108,
+    "degree": 4
+  },
+  {
+    "id": 129,
+    "identifier": "InvalidHeader",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 111,
+    "line_end": 112,
+    "degree": 2
+  },
+  {
+    "id": 130,
+    "identifier": "InvalidProxyURL",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 115,
+    "line_end": 116,
+    "degree": 2
+  },
+  {
+    "id": 131,
+    "identifier": "ChunkedEncodingError",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 119,
+    "line_end": 120,
+    "degree": 1
+  },
+  {
+    "id": 132,
+    "identifier": "ContentDecodingError",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 123,
+    "line_end": 124,
+    "degree": 1
+  },
+  {
+    "id": 133,
+    "identifier": "StreamConsumedError",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 127,
+    "line_end": 128,
+    "degree": 1
+  },
+  {
+    "id": 134,
+    "identifier": "RetryError",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 131,
+    "line_end": 132,
+    "degree": 1
+  },
+  {
+    "id": 135,
+    "identifier": "UnrewindableBodyError",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 135,
+    "line_end": 136,
+    "degree": 1
+  },
+  {
+    "id": 136,
+    "identifier": "RequestsWarning",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 142,
+    "line_end": 143,
+    "degree": 0
+  },
+  {
+    "id": 137,
+    "identifier": "FileModeWarning",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 146,
+    "line_end": 147,
+    "degree": 0
+  },
+  {
+    "id": 138,
+    "identifier": "RequestsDependencyWarning",
+    "file_path": "exceptions.py",
+    "symbol_type": "class",
+    "line_start": 150,
+    "line_end": 151,
+    "degree": 0
+  },
+  {
+    "id": 139,
+    "identifier": "_implementation",
+    "file_path": "help.py",
+    "symbol_type": "function",
+    "line_start": 34,
+    "line_end": 66,
+    "degree": 1
+  },
+  {
+    "id": 140,
+    "identifier": "info",
+    "file_path": "help.py",
+    "symbol_type": "function",
+    "line_start": 69,
+    "line_end": 125,
+    "degree": 2
+  },
+  {
+    "id": 141,
+    "identifier": "main",
+    "file_path": "help.py",
+    "symbol_type": "function",
+    "line_start": 128,
+    "line_end": 130,
+    "degree": 1
+  },
+  {
+    "id": 142,
+    "identifier": "default_hooks",
+    "file_path": "hooks.py",
+    "symbol_type": "function",
+    "line_start": 15,
+    "line_end": 16,
+    "degree": 3
+  },
+  {
+    "id": 143,
+    "identifier": "dispatch_hook",
+    "file_path": "hooks.py",
+    "symbol_type": "function",
+    "line_start": 22,
+    "line_end": 33,
+    "degree": 1
+  },
+  {
+    "id": 144,
+    "identifier": "RequestEncodingMixin",
+    "file_path": "models.py",
+    "symbol_type": "class",
+    "line_start": 84,
+    "line_end": 203,
+    "degree": 3
+  },
+  {
+    "id": 145,
+    "identifier": "RequestEncodingMixin.path_url",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 85,
+    "line_end": 104,
+    "degree": 1
+  },
+  {
+    "id": 146,
+    "identifier": "RequestEncodingMixin._encode_params",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 106,
+    "line_end": 134,
+    "degree": 4
+  },
+  {
+    "id": 147,
+    "identifier": "RequestEncodingMixin._encode_files",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 136,
+    "line_end": 203,
+    "degree": 4
+  },
+  {
+    "id": 148,
+    "identifier": "RequestHooksMixin",
+    "file_path": "models.py",
+    "symbol_type": "class",
+    "line_start": 206,
+    "line_end": 227,
+    "degree": 2
+  },
+  {
+    "id": 149,
+    "identifier": "RequestHooksMixin.register_hook",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 207,
+    "line_end": 216,
+    "degree": 3
+  },
+  {
+    "id": 150,
+    "identifier": "RequestHooksMixin.deregister_hook",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 218,
+    "line_end": 227,
+    "degree": 1
+  },
+  {
+    "id": 151,
+    "identifier": "Request",
+    "file_path": "models.py",
+    "symbol_type": "class",
+    "line_start": 230,
+    "line_end": 310,
+    "degree": 4
+  },
+  {
+    "id": 152,
+    "identifier": "Request.__init__",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 258,
+    "line_end": 290,
+    "degree": 3
+  },
+  {
+    "id": 153,
+    "identifier": "Request.__repr__",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 292,
+    "line_end": 293,
+    "degree": 1
+  },
+  {
+    "id": 154,
+    "identifier": "Request.prepare",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 295,
+    "line_end": 310,
+    "degree": 2
+  },
+  {
+    "id": 155,
+    "identifier": "PreparedRequest",
+    "file_path": "models.py",
+    "symbol_type": "class",
+    "line_start": 313,
+    "line_end": 637,
+    "degree": 15
+  },
+  {
+    "id": 156,
+    "identifier": "PreparedRequest.__init__",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 334,
+    "line_end": 349,
+    "degree": 2
+  },
+  {
+    "id": 157,
+    "identifier": "PreparedRequest.prepare",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 351,
+    "line_end": 377,
+    "degree": 8
+  },
+  {
+    "id": 158,
+    "identifier": "PreparedRequest.__repr__",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 379,
+    "line_end": 380,
+    "degree": 1
+  },
+  {
+    "id": 159,
+    "identifier": "PreparedRequest.copy",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 382,
+    "line_end": 391,
+    "degree": 2
+  },
+  {
+    "id": 160,
+    "identifier": "PreparedRequest.prepare_method",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 393,
+    "line_end": 397,
+    "degree": 3
+  },
+  {
+    "id": 161,
+    "identifier": "PreparedRequest._get_idna_encoded_host",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 399,
+    "line_end": 407,
+    "degree": 2
+  },
+  {
+    "id": 162,
+    "identifier": "PreparedRequest.prepare_url",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 409,
+    "line_end": 481,
+    "degree": 9
+  },
+  {
+    "id": 163,
+    "identifier": "PreparedRequest.prepare_headers",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 483,
+    "line_end": 492,
+    "degree": 5
+  },
+  {
+    "id": 164,
+    "identifier": "PreparedRequest.prepare_body",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 494,
+    "line_end": 570,
+    "degree": 7
+  },
+  {
+    "id": 165,
+    "identifier": "PreparedRequest.prepare_content_length",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 572,
+    "line_end": 586,
+    "degree": 4
+  },
+  {
+    "id": 166,
+    "identifier": "PreparedRequest.prepare_auth",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 588,
+    "line_end": 608,
+    "degree": 5
+  },
+  {
+    "id": 167,
+    "identifier": "PreparedRequest.prepare_cookies",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 610,
+    "line_end": 628,
+    "degree": 4
+  },
+  {
+    "id": 168,
+    "identifier": "PreparedRequest.prepare_hooks",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 630,
+    "line_end": 637,
+    "degree": 3
+  },
+  {
+    "id": 169,
+    "identifier": "Response",
+    "file_path": "models.py",
+    "symbol_type": "class",
+    "line_start": 640,
+    "line_end": 1039,
+    "degree": 24
+  },
+  {
+    "id": 170,
+    "identifier": "Response.__init__",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 658,
+    "line_end": 703,
+    "degree": 3
+  },
+  {
+    "id": 171,
+    "identifier": "Response.__enter__",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 705,
+    "line_end": 706,
+    "degree": 1
+  },
+  {
+    "id": 172,
+    "identifier": "Response.__exit__",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 708,
+    "line_end": 709,
+    "degree": 2
+  },
+  {
+    "id": 173,
+    "identifier": "Response.__getstate__",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 711,
+    "line_end": 717,
+    "degree": 1
+  },
+  {
+    "id": 174,
+    "identifier": "Response.__setstate__",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 719,
+    "line_end": 725,
+    "degree": 1
+  },
+  {
+    "id": 175,
+    "identifier": "Response.__repr__",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 727,
+    "line_end": 728,
+    "degree": 1
+  },
+  {
+    "id": 176,
+    "identifier": "Response.__bool__",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 730,
+    "line_end": 738,
+    "degree": 1
+  },
+  {
+    "id": 177,
+    "identifier": "Response.__nonzero__",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 740,
+    "line_end": 748,
+    "degree": 1
+  },
+  {
+    "id": 178,
+    "identifier": "Response.__iter__",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 750,
+    "line_end": 752,
+    "degree": 2
+  },
+  {
+    "id": 179,
+    "identifier": "Response.ok",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 754,
+    "line_end": 767,
+    "degree": 2
+  },
+  {
+    "id": 180,
+    "identifier": "Response.is_redirect",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 769,
+    "line_end": 774,
+    "degree": 1
+  },
+  {
+    "id": 181,
+    "identifier": "Response.is_permanent_redirect",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 776,
+    "line_end": 782,
+    "degree": 1
+  },
+  {
+    "id": 182,
+    "identifier": "Response.next",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 784,
+    "line_end": 787,
+    "degree": 2
+  },
+  {
+    "id": 183,
+    "identifier": "Response.apparent_encoding",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 789,
+    "line_end": 797,
+    "degree": 1
+  },
+  {
+    "id": 184,
+    "identifier": "Response.iter_content",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 799,
+    "line_end": 855,
+    "degree": 8
+  },
+  {
+    "id": 185,
+    "identifier": "Response.generate",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 816,
+    "line_end": 837,
+    "degree": 6
+  },
+  {
+    "id": 186,
+    "identifier": "Response.iter_lines",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 857,
+    "line_end": 888,
+    "degree": 2
+  },
+  {
+    "id": 187,
+    "identifier": "Response.content",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 890,
+    "line_end": 907,
+    "degree": 2
+  },
+  {
+    "id": 188,
+    "identifier": "Response.text",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 909,
+    "line_end": 945,
+    "degree": 1
+  },
+  {
+    "id": 189,
+    "identifier": "Response.json",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 947,
+    "line_end": 980,
+    "degree": 3
+  },
+  {
+    "id": 190,
+    "identifier": "Response.links",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 982,
+    "line_end": 997,
+    "degree": 2
+  },
+  {
+    "id": 191,
+    "identifier": "Response.raise_for_status",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 999,
+    "line_end": 1026,
+    "degree": 3
+  },
+  {
+    "id": 192,
+    "identifier": "Response.close",
+    "file_path": "models.py",
+    "symbol_type": "method",
+    "line_start": 1028,
+    "line_end": 1039,
+    "degree": 2
+  },
+  {
+    "id": 193,
+    "identifier": "merge_setting",
+    "file_path": "sessions.py",
+    "symbol_type": "function",
+    "line_start": 61,
+    "line_end": 88,
+    "degree": 4
+  },
+  {
+    "id": 194,
+    "identifier": "merge_hooks",
+    "file_path": "sessions.py",
+    "symbol_type": "function",
+    "line_start": 91,
+    "line_end": 103,
+    "degree": 2
+  },
+  {
+    "id": 195,
+    "identifier": "SessionRedirectMixin",
+    "file_path": "sessions.py",
+    "symbol_type": "class",
+    "line_start": 106,
+    "line_end": 353,
+    "degree": 6
+  },
+  {
+    "id": 196,
+    "identifier": "SessionRedirectMixin.get_redirect_target",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 107,
+    "line_end": 125,
+    "degree": 3
+  },
+  {
+    "id": 197,
+    "identifier": "SessionRedirectMixin.should_strip_auth",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 127,
+    "line_end": 157,
+    "degree": 2
+  },
+  {
+    "id": 198,
+    "identifier": "SessionRedirectMixin.resolve_redirects",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 159,
+    "line_end": 280,
+    "degree": 12
+  },
+  {
+    "id": 199,
+    "identifier": "SessionRedirectMixin.rebuild_auth",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 282,
+    "line_end": 300,
+    "degree": 4
+  },
+  {
+    "id": 200,
+    "identifier": "SessionRedirectMixin.rebuild_proxies",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 302,
+    "line_end": 331,
+    "degree": 5
+  },
+  {
+    "id": 201,
+    "identifier": "SessionRedirectMixin.rebuild_method",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 333,
+    "line_end": 353,
+    "degree": 2
+  },
+  {
+    "id": 202,
+    "identifier": "Session",
+    "file_path": "sessions.py",
+    "symbol_type": "class",
+    "line_start": 356,
+    "line_end": 816,
+    "degree": 20
+  },
+  {
+    "id": 203,
+    "identifier": "Session.__init__",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 390,
+    "line_end": 449,
+    "degree": 6
+  },
+  {
+    "id": 204,
+    "identifier": "Session.__enter__",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 451,
+    "line_end": 452,
+    "degree": 1
+  },
+  {
+    "id": 205,
+    "identifier": "Session.__exit__",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 454,
+    "line_end": 455,
+    "degree": 2
+  },
+  {
+    "id": 206,
+    "identifier": "Session.prepare_request",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 457,
+    "line_end": 498,
+    "degree": 9
+  },
+  {
+    "id": 207,
+    "identifier": "Session.request",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 500,
+    "line_end": 591,
+    "degree": 12
+  },
+  {
+    "id": 208,
+    "identifier": "Session.get",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 593,
+    "line_end": 602,
+    "degree": 2
+  },
+  {
+    "id": 209,
+    "identifier": "Session.options",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 604,
+    "line_end": 613,
+    "degree": 2
+  },
+  {
+    "id": 210,
+    "identifier": "Session.head",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 615,
+    "line_end": 624,
+    "degree": 2
+  },
+  {
+    "id": 211,
+    "identifier": "Session.post",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 626,
+    "line_end": 637,
+    "degree": 2
+  },
+  {
+    "id": 212,
+    "identifier": "Session.put",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 639,
+    "line_end": 649,
+    "degree": 2
+  },
+  {
+    "id": 213,
+    "identifier": "Session.patch",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 651,
+    "line_end": 661,
+    "degree": 2
+  },
+  {
+    "id": 214,
+    "identifier": "Session.delete",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 663,
+    "line_end": 671,
+    "degree": 2
+  },
+  {
+    "id": 215,
+    "identifier": "Session.send",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 673,
+    "line_end": 748,
+    "degree": 8
+  },
+  {
+    "id": 216,
+    "identifier": "Session.merge_environment_settings",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 750,
+    "line_end": 779,
+    "degree": 4
+  },
+  {
+    "id": 217,
+    "identifier": "Session.get_adapter",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 781,
+    "line_end": 792,
+    "degree": 3
+  },
+  {
+    "id": 218,
+    "identifier": "Session.close",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 794,
+    "line_end": 797,
+    "degree": 2
+  },
+  {
+    "id": 219,
+    "identifier": "Session.mount",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 799,
+    "line_end": 808,
+    "degree": 2
+  },
+  {
+    "id": 220,
+    "identifier": "Session.__getstate__",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 810,
+    "line_end": 812,
+    "degree": 1
+  },
+  {
+    "id": 221,
+    "identifier": "Session.__setstate__",
+    "file_path": "sessions.py",
+    "symbol_type": "method",
+    "line_start": 814,
+    "line_end": 816,
+    "degree": 1
+  },
+  {
+    "id": 222,
+    "identifier": "session",
+    "file_path": "sessions.py",
+    "symbol_type": "function",
+    "line_start": 819,
+    "line_end": 831,
+    "degree": 1
+  },
+  {
+    "id": 223,
+    "identifier": "_init",
+    "file_path": "status_codes.py",
+    "symbol_type": "function",
+    "line_start": 109,
+    "line_end": 125,
+    "degree": 1
+  },
+  {
+    "id": 224,
+    "identifier": "doc",
+    "file_path": "status_codes.py",
+    "symbol_type": "function",
+    "line_start": 116,
+    "line_end": 118,
+    "degree": 1
+  },
+  {
+    "id": 225,
+    "identifier": "CaseInsensitiveDict",
+    "file_path": "structures.py",
+    "symbol_type": "class",
+    "line_start": 13,
+    "line_end": 80,
+    "degree": 14
+  },
+  {
+    "id": 226,
+    "identifier": "CaseInsensitiveDict.__init__",
+    "file_path": "structures.py",
+    "symbol_type": "method",
+    "line_start": 40,
+    "line_end": 44,
+    "degree": 2
+  },
+  {
+    "id": 227,
+    "identifier": "CaseInsensitiveDict.__setitem__",
+    "file_path": "structures.py",
+    "symbol_type": "method",
+    "line_start": 46,
+    "line_end": 49,
+    "degree": 1
+  },
+  {
+    "id": 228,
+    "identifier": "CaseInsensitiveDict.__getitem__",
+    "file_path": "structures.py",
+    "symbol_type": "method",
+    "line_start": 51,
+    "line_end": 52,
+    "degree": 1
+  },
+  {
+    "id": 229,
+    "identifier": "CaseInsensitiveDict.__delitem__",
+    "file_path": "structures.py",
+    "symbol_type": "method",
+    "line_start": 54,
+    "line_end": 55,
+    "degree": 1
+  },
+  {
+    "id": 230,
+    "identifier": "CaseInsensitiveDict.__iter__",
+    "file_path": "structures.py",
+    "symbol_type": "method",
+    "line_start": 57,
+    "line_end": 58,
+    "degree": 1
+  },
+  {
+    "id": 231,
+    "identifier": "CaseInsensitiveDict.__len__",
+    "file_path": "structures.py",
+    "symbol_type": "method",
+    "line_start": 60,
+    "line_end": 61,
+    "degree": 1
+  },
+  {
+    "id": 232,
+    "identifier": "CaseInsensitiveDict.lower_items",
+    "file_path": "structures.py",
+    "symbol_type": "method",
+    "line_start": 63,
+    "line_end": 65,
+    "degree": 2
+  },
+  {
+    "id": 233,
+    "identifier": "CaseInsensitiveDict.__eq__",
+    "file_path": "structures.py",
+    "symbol_type": "method",
+    "line_start": 67,
+    "line_end": 73,
+    "degree": 2
+  },
+  {
+    "id": 234,
+    "identifier": "CaseInsensitiveDict.copy",
+    "file_path": "structures.py",
+    "symbol_type": "method",
+    "line_start": 76,
+    "line_end": 77,
+    "degree": 1
+  },
+  {
+    "id": 235,
+    "identifier": "CaseInsensitiveDict.__repr__",
+    "file_path": "structures.py",
+    "symbol_type": "method",
+    "line_start": 79,
+    "line_end": 80,
+    "degree": 2
+  },
+  {
+    "id": 236,
+    "identifier": "LookupDict",
+    "file_path": "structures.py",
+    "symbol_type": "class",
+    "line_start": 83,
+    "line_end": 99,
+    "degree": 4
+  },
+  {
+    "id": 237,
+    "identifier": "LookupDict.__init__",
+    "file_path": "structures.py",
+    "symbol_type": "method",
+    "line_start": 86,
+    "line_end": 88,
+    "degree": 1
+  },
+  {
+    "id": 238,
+    "identifier": "LookupDict.__repr__",
+    "file_path": "structures.py",
+    "symbol_type": "method",
+    "line_start": 90,
+    "line_end": 91,
+    "degree": 1
+  },
+  {
+    "id": 239,
+    "identifier": "LookupDict.__getitem__",
+    "file_path": "structures.py",
+    "symbol_type": "method",
+    "line_start": 93,
+    "line_end": 96,
+    "degree": 2
+  },
+  {
+    "id": 240,
+    "identifier": "LookupDict.get",
+    "file_path": "structures.py",
+    "symbol_type": "method",
+    "line_start": 98,
+    "line_end": 99,
+    "degree": 2
+  },
+  {
+    "id": 241,
+    "identifier": "proxy_bypass_registry",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 77,
+    "line_end": 113,
+    "degree": 1
+  },
+  {
+    "id": 242,
+    "identifier": "proxy_bypass",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 115,
+    "line_end": 124,
+    "degree": 2
+  },
+  {
+    "id": 243,
+    "identifier": "dict_to_sequence",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 127,
+    "line_end": 133,
+    "degree": 0
+  },
+  {
+    "id": 244,
+    "identifier": "super_len",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 136,
+    "line_end": 204,
+    "degree": 2
+  },
+  {
+    "id": 245,
+    "identifier": "get_netrc_auth",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 207,
+    "line_end": 248,
+    "degree": 2
+  },
+  {
+    "id": 246,
+    "identifier": "guess_filename",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 251,
+    "line_end": 255,
+    "degree": 1
+  },
+  {
+    "id": 247,
+    "identifier": "extract_zipped_paths",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 258,
+    "line_end": 292,
+    "degree": 2
+  },
+  {
+    "id": 248,
+    "identifier": "atomic_open",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 295,
+    "line_end": 305,
+    "degree": 1
+  },
+  {
+    "id": 249,
+    "identifier": "from_key_val_list",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 308,
+    "line_end": 332,
+    "degree": 0
+  },
+  {
+    "id": 250,
+    "identifier": "to_key_val_list",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 335,
+    "line_end": 361,
+    "degree": 3
+  },
+  {
+    "id": 251,
+    "identifier": "parse_list_header",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 365,
+    "line_end": 393,
+    "degree": 1
+  },
+  {
+    "id": 252,
+    "identifier": "parse_dict_header",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 397,
+    "line_end": 428,
+    "degree": 2
+  },
+  {
+    "id": 253,
+    "identifier": "unquote_header_value",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 432,
+    "line_end": 454,
+    "degree": 2
+  },
+  {
+    "id": 254,
+    "identifier": "dict_from_cookiejar",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 457,
+    "line_end": 465,
+    "degree": 0
+  },
+  {
+    "id": 255,
+    "identifier": "add_dict_to_cookiejar",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 468,
+    "line_end": 476,
+    "degree": 1
+  },
+  {
+    "id": 256,
+    "identifier": "get_encodings_from_content",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 479,
+    "line_end": 501,
+    "degree": 0
+  },
+  {
+    "id": 257,
+    "identifier": "_parse_content_type_header",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 504,
+    "line_end": 526,
+    "degree": 1
+  },
+  {
+    "id": 258,
+    "identifier": "get_encoding_from_headers",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 529,
+    "line_end": 551,
+    "degree": 3
+  },
+  {
+    "id": 259,
+    "identifier": "stream_decode_response_unicode",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 554,
+    "line_end": 568,
+    "degree": 1
+  },
+  {
+    "id": 260,
+    "identifier": "iter_slices",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 571,
+    "line_end": 578,
+    "degree": 1
+  },
+  {
+    "id": 261,
+    "identifier": "get_unicode_from_response",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 581,
+    "line_end": 617,
+    "degree": 1
+  },
+  {
+    "id": 262,
+    "identifier": "unquote_unreserved",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 626,
+    "line_end": 647,
+    "degree": 2
+  },
+  {
+    "id": 263,
+    "identifier": "requote_uri",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 650,
+    "line_end": 669,
+    "degree": 3
+  },
+  {
+    "id": 264,
+    "identifier": "address_in_network",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 672,
+    "line_end": 684,
+    "degree": 2
+  },
+  {
+    "id": 265,
+    "identifier": "dotted_netmask",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 687,
+    "line_end": 695,
+    "degree": 1
+  },
+  {
+    "id": 266,
+    "identifier": "is_ipv4_address",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 698,
+    "line_end": 706,
+    "degree": 1
+  },
+  {
+    "id": 267,
+    "identifier": "is_valid_cidr",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 709,
+    "line_end": 730,
+    "degree": 1
+  },
+  {
+    "id": 268,
+    "identifier": "set_environ",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 733,
+    "line_end": 752,
+    "degree": 1
+  },
+  {
+    "id": 269,
+    "identifier": "should_bypass_proxies",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 755,
+    "line_end": 813,
+    "degree": 8
+  },
+  {
+    "id": 270,
+    "identifier": "get_proxy",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 764,
+    "line_end": 765,
+    "degree": 1
+  },
+  {
+    "id": 271,
+    "identifier": "get_environ_proxies",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 816,
+    "line_end": 825,
+    "degree": 3
+  },
+  {
+    "id": 272,
+    "identifier": "select_proxy",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 828,
+    "line_end": 851,
+    "degree": 3
+  },
+  {
+    "id": 273,
+    "identifier": "resolve_proxies",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 854,
+    "line_end": 878,
+    "degree": 4
+  },
+  {
+    "id": 274,
+    "identifier": "default_user_agent",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 881,
+    "line_end": 887,
+    "degree": 1
+  },
+  {
+    "id": 275,
+    "identifier": "default_headers",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 890,
+    "line_end": 901,
+    "degree": 3
+  },
+  {
+    "id": 276,
+    "identifier": "parse_header_links",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 904,
+    "line_end": 938,
+    "degree": 1
+  },
+  {
+    "id": 277,
+    "identifier": "guess_json_utf",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 947,
+    "line_end": 976,
+    "degree": 1
+  },
+  {
+    "id": 278,
+    "identifier": "prepend_scheme_if_needed",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 979,
+    "line_end": 1005,
+    "degree": 2
+  },
+  {
+    "id": 279,
+    "identifier": "get_auth_from_url",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 1008,
+    "line_end": 1021,
+    "degree": 4
+  },
+  {
+    "id": 280,
+    "identifier": "check_header_validity",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 1024,
+    "line_end": 1032,
+    "degree": 2
+  },
+  {
+    "id": 281,
+    "identifier": "_validate_header_part",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 1035,
+    "line_end": 1051,
+    "degree": 2
+  },
+  {
+    "id": 282,
+    "identifier": "urldefragauth",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 1054,
+    "line_end": 1068,
+    "degree": 1
+  },
+  {
+    "id": 283,
+    "identifier": "rewind_body",
+    "file_path": "utils.py",
+    "symbol_type": "function",
+    "line_start": 1071,
+    "line_end": 1086,
+    "degree": 2
+  }
+]

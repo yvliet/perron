@@ -1,0 +1,12 @@
+{
+  "repo": "matplotlib/matplotlib",
+  "commit": "b7d05919865fc0c37a0164cf467d5d5513bd0ede",
+  "symbols_count": 10176,
+  "edges_count": 33323,
+  "shape": [
+    10176,
+    10176
+  ],
+  "schema_version": "1.0",
+  "perron_version": "0.2.0"
+}

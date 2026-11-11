@@ -1,0 +1,12 @@
+{
+  "repo": "sphinx-doc/sphinx",
+  "commit": "7bdc11e87c7d86dcc2a087eccb7a7c129a473415",
+  "symbols_count": 7202,
+  "edges_count": 18961,
+  "shape": [
+    7202,
+    7202
+  ],
+  "schema_version": "1.0",
+  "perron_version": "0.2.0"
+}
