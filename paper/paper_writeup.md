@@ -1,6 +1,6 @@
 # When Does Graph Expansion Help Small Code Models Localize Bugs on Gemma 4?
 
-**Author**: Sultan Haikal ([@yvliet](https://github.com/yvliet), recrified@gmail.com) | **Code**: [perron](https://github.com/yvliet/perron) | **Monograph**: [Supplementary 28-Page Monograph (PDF)](https://github.com/yvliet/perron/raw/main/paper/main.pdf) | **License**: Apache 2.0
+**Author**: Sultan Haikal ([@yvliet](https://github.com/yvliet), recrified@gmail.com) | **Code**: [perron](https://github.com/yvliet/perron) | **Monograph**: [Supplementary 29-Page Monograph (PDF)](https://github.com/yvliet/perron/raw/main/paper/main.pdf) | **License**: Apache 2.0
 
 ---
 
@@ -19,23 +19,23 @@ Five contributions establish where code graphs succeed:
 2. **Pointwise Scoring Overcomes Listwise Syntax Collapse**: Pointwise binary log-odds scoring with Gemma 4 E4B on pruned graph candidates reaches 22.90% Acc@5 (p=0.0129\* over listwise C1 at 15.27%), resolving 90.8% syntax collapse and positional decay (75.0% vs 0.0%) [16].
 3. **Selection Conditioning & Horizon Bounds**: Maintaining E[Rank]≤k requires AUC\*≥1-(k-1)/(M-1). Selection conditioning drops discrimination (0.7966 to 0.6596, p=0.0036\*); candidate pruning (M=15, AUC\*=0.714) with reasoning compacts mean rank (5.88 to 3.74).
 4. **Generalization Split**: LoRA lifts isolated Top-1 to 24.0% (p=0.0312\*) and reaches 58.33% Acc@5 on seen repos, but collapses to 15.38% Acc@5 and 0.4846 ROC-AUC on unseen repos (N=13 [18]).
-5. **Open Resource Suite**: `perron-core v0.3.1`, `perron-mcp` (2.38 s cold start, 1.89-5.10 ms warm CSR solve), 300 Lite (4.87M nodes, 41.59M edges) + 12 Verified (101,397 nodes, 535,377 edges), 707 strata labels (κ=0.918), 27,411 evaluations, and `perron.editor` (76.7% valid edits, 0.0% syntax errors, p < 0.001).
+5. **Open Resource Suite**: `perron-core v0.3.1`, `perron-mcp` (2.38 s cold start, 1.89-5.10 ms warm CSR solve), 300 Lite (4.87M nodes, 41.59M edges) + 12 Verified (101,397 nodes, 535,377 edges), 707 strata labels (κ=0.918), 27,411 evaluations, and `perron.editor`.
 
 ---
 
 ## 2. Related Work
 
-- **Diffusion & Spectral Topology**: Decoupled PageRank builds on push partitioning (APPNP [7], PPRGo [19], PDN [20], Perozzi et al., Rozemberczki et al., Galkin et al., Hemmati et al.). Unweighted walks (β=0.85) funnel 61.4% of mass into sinks (9.2% contamination, HSI@10=90.8%). Perron applies directed CSR diffusion with damping (γ=0.70, HSI@10=99.5%) and Hub Adaptivity (η\_q >= 0.20).
-- **Graph Reasoning & Agents**: Prior frameworks (Aider [1], CodexGraph [3], LocAgent [4], Agentless [5]) evaluate localization. Verbalization shifts accuracy up to 61.8% [8]; composition requires logarithmic depth [9]. Perron stores topology in memory-mapped CSR arrays (<5.2 ms).
+- **Diffusion & Spectral Topology**: Decoupled PageRank builds on push partitioning (APPNP [7], PPRGo [19], PDN [20], Dong et al. [10], Perozzi et al., Rozemberczki et al., Galkin et al., Hemmati et al.). Unweighted walks (β=0.85) funnel 61.4% of mass into sinks (9.2% contamination, HSI@10=90.8%). Perron applies directed CSR diffusion with damping (γ=0.70, HSI@10=99.5%) and Hub Adaptivity (η\_q >= 0.20).
+- **Graph Reasoning & Agents**: Prior frameworks (Aider [1], RepoGraph [2], CodexGraph [3], LocAgent [4], Agentless [5]) evaluate localization. Verbalization shifts accuracy up to 61.8% [8]; composition requires logarithmic depth [9]. Perron stores topology in memory-mapped CSR arrays (<5.2 ms).
 - **AST Multigraph Modeling**: Multigraphs over typed AST entities (`def`, classes, imports, MRO) separate calls from containment shortcuts, bypassing cross-encoders (PRFL [12], SweRank [11]).
 
 ---
 
 ## 3. Study Design & Protocol
 
-![Provenance Pipeline](https://raw.githubusercontent.com/yvliet/perron/main/paper/figures/perron_provenance_pipeline.png)
+![Figure 1: Perron Architecture and Provenance Pipeline](https://raw.githubusercontent.com/yvliet/perron/main/paper/figures/perron_provenance_pipeline.png)
 
-- **Benchmark & Strata**: 344 Verified tasks [6] across 12 repos (101,397 nodes, 535,377 edges; 24 physical CSR layers). We evaluate across three Lexical Strata (N=707, Cohen κ=0.918): **Stratum A (Named, N\_A=208)** with named symbols; **Stratum B (Traceback, N\_B=5)** with tracebacks; and **Stratum C (Un-Named, N\_C=131)** with zero lexical anchors. 56 exclusions confirm 100% syntax validity (68 files, 3,827 symbols; overturning equivalence requires >= +9 net wins, p=0.0016).
+- **Benchmark & Strata**: 344 Verified tasks [6] across 12 repos (101,397 nodes, 535,377 edges; 49 multigraph dataset assets across 24 physical CSR matrix files). Across 344 tasks (within 707 unique strata-annotated tasks across 800 Lite+Verified records, Cohen κ=0.918), lexical strata partition into **Stratum A (Named, N\_A=208)**, **Stratum B (Traceback, N\_B=5)**, and **Stratum C (Un-Named, N\_C=131)** with zero lexical anchors. 56 exclusions confirm 100% syntax validity (68 files, 3,827 symbols; overturning equivalence requires >= +9 net wins, p=0.0016).
 - **Perron CSR Engine**: Solves in 1.89-5.10 ms (<3 MB RAM). Matrix M (β=0.85) satisfies |λ₂(M)|<=β under Doeblin contraction (||π^(t)-π\_∞||₁<=2β^t). Disassortative code graphs (α\*=-0.2730) disperse walks into unrelated leaves, explaining negative weights on higher-order transitions (T³ at -0.2428) and degree violations in 10/12 repos (reaching 1.2579 in Xarray); specificity damping (γ=0.70) suppresses hubs to achieve HSI@10=99.5%.
 - **Candidate Pools**: Scored via frozen `gemma-4-e2b-it` (19,298 passes) across defined arms: **B0** (unscored BM25), **A1** (seeds only), **A2** (depth BM25), **A3** (same-file), **A4** (graph 1-hop), **A5** (null graph), and **A6** (Perron diffusion). Contrasts PC1 (A4 - A2) and PC2 (A4 - A3) use McNemar tests with Holm correction (B=10,000).
 
@@ -45,7 +45,7 @@ Five contributions establish where code graphs succeed:
 
 ### 4.1 Standalone Retrieval & Reachability
 
-Query-directed spectral diffusion matches BM25 lexical recall while reducing candidate subgraphs to localized AST neighborhoods. Across 344 tasks, BM25 reaches 50.9% Fn Acc@10 (175/344); Perron reaches 50.3% (173/344, Holm p=1.000); PPR reaches 50.0% (172/344); tag maps reach 40.0%; and bi-encoders reach 38.4% (bge-small raw 38.4% vs pooled 65.41%; CodeRankEmbed 137M reaches 49.62% on Stratum C). Reachability reaches 57.8% at 1 hop and 66.9% at 2 hops. Leave-Django-Out (N=162) confirms parity: A4 reaches 34.6% vs 32.7% for A2 (Δ=+1.85 pp, p=0.5811, recall 50.0% vs 48.8%).
+Query-directed spectral diffusion matches BM25 lexical recall while reducing candidate subgraphs to localized AST neighborhoods. Across 344 tasks, BM25 reaches 50.9% Fn Acc@10 (175/344); Perron reaches 50.3% (173/344, Holm p=1.000); PPR reaches 50.0% (172/344); tag maps reach 40.0%; and bi-encoders reach 38.4% (bge-small raw 38.4% vs pooled 65.41%; CodeRankEmbed 137M reaches 49.62% on Stratum C, though linear score fusion [ET-E] degrades Stratum C recall by -17.56 pp, p < 0.001 [17]). Reachability reaches 57.8% at 1 hop and 66.9% at 2 hops. Leave-Django-Out (N=162) confirms parity: A4 reaches 34.6% vs 32.7% for A2 (Δ=+1.85 pp, p=0.5811, recall 50.0% vs 48.8%).
 
 ### 4.2 Pointwise Candidate Reranking: Confirmatory Matched-Control Evaluation
 
@@ -68,7 +68,7 @@ The upstream retrieval boundary is the dominant system bottleneck, exceeding dow
 
 ### 4.3 First-Moment Expected-Rank Identity & Stratum Asymmetry
 
-Natural code repositories exhibit negative degree assortativity (r = -0.2730), concentrating distractor degree on hub nodes and establishing a mathematical breakeven bound for local model localization. Expected rank E[Rank]≤k requires AUC\*≥1-(k-1)/(M-1) (AUC\*≥0.830 at mean M=24.5, k=5). At graph AUC=0.6596, expected rank degrades to 1+23.5(1-0.6596)=9.00 (17.68 at M=50): Stratum A converts 6/11 targets (54.5%), whereas un-named Stratum C converts 0/14.
+Expanding candidate pools from M=10 to 50 raises oracle recall (+7.3 pp, 51.2% to 58.4%), but non-seed neighbors suffer from candidate selection conditioning (T\* ∉ Top10[BM25]), dropping Gemma 4 discrimination from 0.7966 on seeds to 0.6596 on pure graph targets (p=0.0036\*; matching non-seed BM25 at 0.6380 vs 0.6253, p=0.721). Maintaining expected rank E[Rank]≤k requires AUC\*≥1-(k-1)/(M-1) (AUC\*≥0.830 at mean M=24.5, k=5), bounded by Proposition 1's extremal Markov floor (Acc@k ≥ 1/k = 0.20). At graph AUC=0.6596, expected rank degrades to 1+23.5(1-0.6596)=9.00 (17.68 at M=50): Stratum A converts 6/11 targets (54.5%), whereas un-named Stratum C converts 0/14.
 
 ### 4.4 Cross-Architecture Scaling Surface & Systems MoE Boundary
 
@@ -82,11 +82,11 @@ Scaling model capacity from 2B to 4B restores candidate discrimination, where po
 | `DeepSeek-R1-7B` | RL Distill | 7.0B | 4-bit NF4 | 0.6489 | 6594.6 MB | 5,231s |
 | `gemma-4-26b-a4b-it` | MoE (128 exp) | 3.8B/26B | FP16 | *Bound* | *52.0 GB* | *Exceeds T4* |
 
-![Breakeven Discrimination Bound](https://raw.githubusercontent.com/yvliet/perron/main/paper/figures/breakeven_discrimination_bound.png)
+![Figure 3: Breakeven Discrimination Bound and Scaling Surface](https://raw.githubusercontent.com/yvliet/perron/main/paper/figures/breakeven_discrimination_bound.png)
 
 - **Scaling**: Monotonic scaling (0.8544 to 0.9274 in 4-bit NF4 / FP16) exceeds Phi-4-mini (0.7836) and DeepSeek-7B (0.6489); 26B-A4B requires 52.0 GB FP16 VRAM, exceeding Dual T4 (29.1 GB).
-- **Pointwise E4B & Candidate Horizons**: Pointwise E4B on pruned graph candidates (Arm A4[:15]) reaches **22.90% Acc@5**, **12.21% Top-1**, and MRR **0.1740** (p=0.0129\* over listwise C1 at 15.27%). Clean tasks (N=75) demonstrate statistical parity between graph and lexical retrieval (26.67% vs 25.33%, p=1.0000; at M=15, 26.67% vs 21.33%, p=0.2188). Crucially, taking the union of graph and lexical candidates unlocks substantial synergy, reaching Top-1 **16.79%** (22/131), Acc@5 **37.4%**, and MRR **0.2562** (vs BM25: 3.05% Top-1, 15.27% Acc@5).
-- **Containment & Perturbation**: Structural containment accounts for 26.59% of global edges (58,170 of 218,764) and 72.99% of 1-hop additions (273/374; 90.74% intra-file CSR locality 49/54). Under SchrödingerRepo [13], PPR retains 94.5% natural diffusion (34.88% vs 34.59% BM25, p=1.0000; Hybrid 35.17%, p=0.8679), confirming that topological random walks depend on aligned lexical teleportation priors.
+- **Pointwise E4B & Candidate Horizons**: Pointwise E4B on pruned graph candidates (Arm A4[:15]) reaches **22.90% Acc@5**, **12.21% Top-1**, and MRR **0.1740** (p=0.0129\* over listwise C1 at 15.27%). On matched pools, depth BM25 (A2[:25]) reaches 23.66% Acc@5 (13.74% Top-1, MRR 0.1858) vs A4[:25] at 22.90% (p=1.0000), and full BM25 (B0[:50]) reaches 34.35% Acc@5 (16.03% Top-1, p=0.0026\*), confirming the gain stems from pointwise log-odds scoring rather than graph pool expansion. De-biased clean tasks (N=75 [14]) show parity (26.67% vs 25.33%, p=1.0000; at M=15, 26.67% vs 21.33%, p=0.2188). Across the multi-pool union, scaling from E2B to E4B lifts Top-1 from 6.87% to **16.79%** (22/131), Acc@5 from 18.32% to **37.4%** (49/131), and MRR from 0.1065 to **0.2562** (vs raw BM25: 3.05% Top-1, 15.27% Acc@5).
+- **Containment & Perturbation**: Structural containment accounts for 26.59% of global edges (58,170 of 218,764) and 72.99% of 1-hop additions (273/374; 90.74% intra-file CSR locality 49/54). Under SchrödingerRepo [13], PPR retains 94.5% of unperturbed 36.92% diffusion (34.88% vs 34.59% BM25, p=1.0000; Hybrid 35.17%, p=0.8679), confirming that topological random walks depend on aligned lexical teleportation priors.
 
 ### 4.5 Candidate Pool × Reasoning Factorial Matrix & M=15 Verification (N=131)
 
@@ -105,6 +105,8 @@ Restricting candidate budgets (M=15, AUC\*=0.714) eliminates distractor stubs, a
 | Pruned Depth | 15 | 4.58%→8.40% | 14.50%→18.32% | 0.0954→0.1189 |
 | Pruned Graph | 15 | 4.58% | 17.56% | 0.0970 |
 | **Pruned Graph + Think** | **15** | **9.92%** | **19.85%** | **0.1469** |
+
+![Figure 4: Stratum C Factorial Localization Surface](https://raw.githubusercontent.com/yvliet/perron/main/paper/figures/causal_provenance_forest.png)
 
 - **Direct Readout & Reasoning Lift**: Direct readout (M≤25) ties graph (A4) and depth BM25 (A2) at 16.79% Acc@5 and 4.58% Top-1. Listwise generation suffers 90.8% syntax failure (119/131 empty), collapsing to 2.29% without backfill [15] (p < 0.001) and showing severe positional decay (75.0% vs 0.0%) [16]. Native reasoning lifts A4(25) Top-1 to **9.92% (13/131; +5.34 pp, p=0.0156\*, Holm p=0.0625)** and MRR (0.0934 to 0.1358; 18.32% Acc@5), disambiguating seed symbols (6/28 to 12/28, p=0.0312\*) over graph additions (0/7 to 1/7).
 - **Provenance & Pruning (M=15, AUC\*=0.714)**: Stubs (C1, 2.29%) and comments (C2, 3.82%) yield no lift; provenance with thinking (C3, 9.16%) matches thinking alone (C0, 9.92%). Pruning to M=15 retains 34/35 defects while cutting stubs 40% (rank 5.88 to 5.32). Native reasoning compacts mean rank to **3.74** (Acc@5 **19.85%**, MRR **0.1469**), keeping all 13 Top-1 hits.
@@ -161,7 +163,7 @@ Parameter-efficient fine-tuning (LoRA r=16, 226 Lite tasks; loss 0.9238 to 0.063
 ## 6. Community Resource Toolkit & Specification
 
 Perron is open-source under Apache 2.0 ([github.com/yvliet/perron](https://github.com/yvliet/perron)):
-- **[`perron-core v0.3.1`](https://pypi.org/project/perron-core/) (PyPI)**: Package providing `diffuse_with_provenance()`, CSR diffusion (<3 MB RAM), `perron.polyglot`, and `perron.editor` (AST rollback, reaching 76.7% valid edits with 0.0% syntax errors vs 30.0% and 50.0% for `git apply`, p < 0.001).
+- **[`perron-core v0.3.1`](https://pypi.org/project/perron-core/) (PyPI)**: Package providing `diffuse_with_provenance()`, CSR diffusion (<3 MB RAM), `perron.polyglot`, and `perron.editor` (transactional AST rollback).
 - **`perron-mcp` Protocol Server**: JSON-RPC server for editor agents, with 2.38 s cold startup and 1.89-5.10 ms warm CSR diffusion.
 - **[Multigraph Dataset & Strata](https://www.kaggle.com/datasets/yvliet/swebench-strata-annotations)**: 300 Lite + 12 Verified multigraphs (101,397 nodes, 535,377 edges), 707 strata annotations (κ=0.918), 27,411 evaluations (19,298 E2B and 8,113 E4B Parquet rows), Croissant 1.0 metadata, Datasheet, and SHA-256 manifests.
 - **Verification Harness**: 7 Kaggle notebooks ([Gemma 4 Workstation](https://www.kaggle.com/code/yvliet/perron-gemma-4-workstation), [Quickstart Demo](https://www.kaggle.com/code/yvliet/perron-spectral-code-graph-quickstart-demo)), 250 test suite, and 20-gate CI verification (`verify_paper.py`).
