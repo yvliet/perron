@@ -114,7 +114,7 @@ Restricting candidate budgets (M=15, AUC\*=0.714) eliminates distractor stubs, a
 Serializing graph edges as natural inline code comments (+13.79 pp Top-1, p=0.0386\*) aligns with pretraining distributions, whereas formal edge lists or relational triples trigger capacity degradation. Evaluating `gemma-4-e2b-it` across N=58 reachable Stratum C tasks (baseline 7/58 [12.07%]):
 
 | Condition / Encoding | Acc@1 (Direct) | Acc@1 (Think) | Acc@5 (Direct) | Acc@5 (Think) | Shift |
-| :--- | :--- | :---: | :---: | :---: | :---: | :---: |
+| :--- | :---: | :---: | :---: | :---: | :---: |
 | **O0 / E0: Natural** | 12.07% | 6.90% | 27.59% | 17.24% | -5.17 pp |
 | **O1: α-Renamed** | 10.34% | 6.90% | 24.14% | 17.24% | -3.45 pp |
 | **E1: Comment** | **25.86%** | **12.07%** | **39.66%** | **25.86%** | **-13.79 pp** |
