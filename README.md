@@ -9,8 +9,10 @@
 [![pypi](https://img.shields.io/badge/pypi-v0.3.1-gray.svg?logo=pypi&logoColor=white)](https://pypi.org/project/perron-core/)
 [![python](https://img.shields.io/badge/python-3.10+-gray.svg?logo=python&logoColor=white)](pyproject.toml)
 [![license: apache-2.0](https://img.shields.io/badge/license-Apache--2.0-gray.svg?logo=apache&logoColor=white)](LICENSE)
-[![notebook](https://img.shields.io/badge/notebook-kaggle-gray.svg?logo=kaggle&logoColor=white)](https://www.kaggle.com/code/yvliet/perron-gemma-4-workstation)
-[![dataset](https://img.shields.io/badge/dataset-kaggle-gray.svg?logo=kaggle&logoColor=white)](https://www.kaggle.com/datasets/yvliet/swebench-strata-annotations)
+[![workstation](https://img.shields.io/badge/workstation-kaggle-gray.svg?logo=kaggle&logoColor=white)](https://www.kaggle.com/code/yvliet/perron-gemma-4-workstation)
+[![demo](https://img.shields.io/badge/demo-quickstart-gray.svg?logo=kaggle&logoColor=white)](https://www.kaggle.com/code/yvliet/perron-spectral-code-graph-quickstart-demo)
+[![datasets](https://img.shields.io/badge/datasets-kaggle-gray.svg?logo=kaggle&logoColor=white)](https://www.kaggle.com/datasets/yvliet/swebench-strata-annotations)
+[![benchmark](https://img.shields.io/badge/benchmark-kaggle-gray.svg?logo=kaggle&logoColor=white)](https://www.kaggle.com/datasets/yvliet/perron-gemma4-benchmark)
 [![paper](https://img.shields.io/badge/paper-PDF-gray.svg?logo=arxiv&logoColor=white)](paper/main.pdf)
 
 [Quickstart](#quickstart) •
@@ -89,13 +91,13 @@ Exposed tools:
 
 ### Dataset & Interactive Notebook Resources
 
-Perron releases two documented benchmark datasets and a turnkey workstation notebook:
+Perron releases documented benchmark datasets and turnkey execution notebooks:
 
-1. **SWE-bench Lexical Accessibility Strata Annotations (Primary Competition Resource)**:
-   - Contains 707 difficulty strata annotations ($\kappa = 0.918$), 12 CSR multigraph archives (109,240 nodes, 341,892 edges), and 19,298 scored Gemma 4 evaluations across all 344 Verified tasks.
+1. **SWE-bench Lexical Accessibility Strata Annotations (Primary Benchmark Resource)**:
+   - Contains 707 difficulty strata annotations ($\kappa = 0.918$), 12 CSR multigraph archives (109,240 nodes, 341,892 edges), and 27,411 scored Gemma 4 evaluations across all 344 Verified tasks.
    - Local directory: [`dist_dataset/`](dist_dataset/)
    - Kaggle Dataset: [`yvliet/swebench-strata-annotations`](https://www.kaggle.com/datasets/yvliet/swebench-strata-annotations)
-   - Evaluation Parquet: [`dist_dataset/scores.parquet`](dist_dataset/scores.parquet) (19,298 rows)
+   - Evaluation Parquets: [`dist_dataset/scores.parquet`](dist_dataset/scores.parquet) (19,298 rows, Gemma 4 E2B evaluations) and [`dist_dataset/gemma4_e4b_scores.parquet`](dist_dataset/gemma4_e4b_scores.parquet) (8,113 rows, Gemma 4 E4B workstation evaluations)
    - Croissant 1.0 Metadata: [`dist_dataset/croissant.json`](dist_dataset/croissant.json)
    - Dataset Datasheet: [`dist_dataset/DATASHEET.md`](dist_dataset/DATASHEET.md) (Gebru et al. standard)
 
@@ -106,10 +108,13 @@ Perron releases two documented benchmark datasets and a turnkey workstation note
    - Croissant 1.0 Metadata: [`data_release/croissant.json`](data_release/croissant.json)
    - Dataset Datasheet: [`docs/datasheet.md`](docs/datasheet.md)
 
-3. **Turnkey Kaggle Workstation Notebook**:
-   - Executes Perron and Gemma 4 E4B on Kaggle Dual-T4 GPU instances without local installation.
-   - Kaggle Notebook: [`yvliet/perron-gemma-4-workstation`](https://www.kaggle.com/code/yvliet/perron-gemma-4-workstation)
-   - Local source: [`notebooks/kaggle_gemma4_workstation.ipynb`](notebooks/kaggle_gemma4_workstation.ipynb)
+3. **Perron Gemma 4 Benchmark & Evaluation Bundles**:
+   - Contains raw evaluation bundles, prompt datasets (`gemma4_e2b_prompts_19298.parquet`), and offline wheel packages for SWE-bench Verified tasks.
+   - Kaggle Dataset: [`yvliet/perron-gemma4-benchmark`](https://www.kaggle.com/datasets/yvliet/perron-gemma4-benchmark)
+
+4. **Turnkey Kaggle Workstation & Quickstart Notebooks**:
+   - **Workstation Notebook**: Executes Perron and Gemma 4 E4B on Kaggle Dual-T4 GPU instances without local installation ([`yvliet/perron-gemma-4-workstation`](https://www.kaggle.com/code/yvliet/perron-gemma-4-workstation); local: [`notebooks/kaggle_gemma4_workstation.ipynb`](notebooks/kaggle_gemma4_workstation.ipynb)).
+   - **Quickstart Demo Notebook**: CPU-only walkthrough demonstrating zero-copy CSR multigraph loading and spectral diffusion ([`yvliet/perron-spectral-code-graph-quickstart-demo`](https://www.kaggle.com/code/yvliet/perron-spectral-code-graph-quickstart-demo)).
 
 ### Empirical Reproduction & Benchmarking
 ```bash
@@ -123,16 +128,16 @@ perron bench --method bm25 --split heldout
 
 ## 1. Problem Formulation: Hub-Node Explosion & Distractor Dilution
 
-Local code graph agents (2B–4B open-weights models operating within $\le 9.6$ GB VRAM) face two coupled bottlenecks when navigating large repositories:
+Local code graph agents (2B–4B open-weights models operating in standardized 4-bit NF4 weights with FP16 compute kernels within $\le 9.6$ GB resident VRAM due to unquantized Per-Layer Embeddings) face two coupled bottlenecks when navigating large repositories:
 1. **Scale-Free Hub Absorption**: Standard graph walks (Personalized PageRank) concentrate probability mass in ubiquitous utility functions (`logging.getLogger`, `utils.check_type`), absorbing up to 90% of retrieval slots and yielding 0.0% Hub Suppression Index (HSI).
-2. **Distractor Dilution & Selection Conditioning**: Unpruned graph expansion introduces low-lexical-overlap neighbors that drop below the expected-rank discrimination threshold ($AUC = 0.6596 < 0.830$ by Bamber's theorem $\mathbb{E}[\text{Rank}] = 1 + (M-1)(1 - \text{AUC})$), pushing expected target rank past the top-5 evaluation window.
+2. **Distractor Dilution & Selection Conditioning**: Unpruned graph expansion introduces low-lexical-overlap neighbors that drop below the expected-rank discrimination threshold ($\text{AUC} = 0.6596 < 0.830$; by Bamber's theorem, $\mathbb{E}[\text{Rank}] = 1 + (M-1)(1 - \text{AUC})$), pushing expected target rank past the top-5 evaluation window.
 
-Across the complete **$N = 344$ SWE-bench Verified benchmark**, Perron demonstrates that while post-walk specificity damping suppresses hub dominance ($\text{HSI@10} = 99.5\%$, $1.89\text{--}5.10$ ms on CPU), unpruned graph expansion ($A_6$, 45.64%) matches depth-matched lexical retrieval ($A_4$ 47.09% vs BM25 45.06%, Holm $p = 0.2869$, exact McNemar $p = 0.1435$). 
+Across the complete **N = 344 SWE-bench Verified benchmark**, Perron demonstrates that while post-walk specificity damping suppresses hub dominance (HSI@10 = 99.5%, 1.89–5.10 ms on CPU), unpruned graph expansion (A₆, 45.64%) matches depth-matched lexical retrieval (A₄ 47.09% vs BM25 45.06%, Holm p = 0.2869, exact McNemar p = 0.1435). Crucially, under SchrödingerRepo Level-2 virtual namespace bijections, Perron exhibits genuine structural invariance (+34.59 pp for PPR, +34.30 pp for Hybrid over BM25 at 0.29%, p = 0.0000\*), retaining 94.5% of natural localization power and outperforming Agentless AST skeletons by +11.34 pp (47.09% vs 35.76%, p = 0.0000\*). On UTBoost clean Stratum C tasks (N=75), graph expansion lifts Acc@5 by +8.00 pp over depth BM25 (14.67% vs 6.67%, p = 0.0312\*).
 
 Unlocking structural code graphs on local models requires operating within **scale-matched regimes**:
-- **Edge Tier (2B)**: Zero-cost inline provenance comments lift reachable Top-1 from 12.07% to 25.86% ($+13.79$ pp, $p = 0.0078^*$).
-- **Workstation Tier (4B)**: Candidate horizon pruning ($M = 15$, $\text{AUC}^* = 0.714$, $-40\%$ stub tokens) paired with short reasoning ($\le 180$ tokens) lifts Top-1 from 4.58% to 9.92% ($6/131 \to 13/131$, $p = 0.0156^*$) and compacts mean target rank from $5.88 \to 3.74$.
-- **Fine-Tuned Reranking**: Clean LoRA adapters lift isolated listwise graph Top-1 from 0.0% to 24.0% ($p = 0.0312^*$).
+- **Edge Tier (2B)**: Zero-cost inline provenance comments lift reachable Top-1 from 12.07% to 25.86% (+13.79 pp, exact McNemar p = 0.0078\*) without test-time generation latency.
+- **Workstation Tier (4B)**: Pointwise E4B log-odds scoring over pruned candidate horizons ($M = 15$, $\text{AUC}^\ast = 0.714$, $-40\%$ stub tokens) achieves true dominance: **22.90% Acc@5, 12.21% Top-1, MRR 0.1740** (paired McNemar p = 0.0129\*), eliminating listwise generative syntax failures (90.8% failure where 119/131 tasks emit zero IDs without backfill) and remaining immune to positional decay. Pairing candidate horizon pruning with short reasoning ($\le 180$ tokens) lifts listwise Top-1 from 4.58% to 9.92% (6/131 → 13/131, p = 0.0156\*) and compacts mean target rank from 5.88 → 5.32 → 3.74.
+- **Fine-Tuned Reranking**: Clean LoRA adapters lift isolated listwise graph Top-1 from 0.0% to 24.0% (p = 0.0312\*).
 
 Perron resolves this structural bottleneck via **Query-Directed Specificity Ratio Diffusion** and **Versioned Frontier Packing**.
 
@@ -158,28 +163,28 @@ $$D_u = \sum_{v} W_{uv}, \quad T_{uv} = \begin{cases} \frac{W_{uv}}{D_u}, & D_u 
 Loading is performed via `numpy.load(..., mmap_mode='r')` and wrapped in `scipy.sparse.csr_matrix` in **< 1.0 ms**, bypassing runtime API queries.
 
 ### B. Shift-Invariant Softmax Teleportation Prior
-Given cosine similarities $`s_i = \cos(\mathbf{e}_q, \mathbf{e}_i)`$ for candidate symbols, the teleportation restart vector $`\mathbf{p}_0`$ is computed with temperature $\tau = 0.15$ using shift-invariant log-sum-exp in `float64`:
+Given cosine similarities $s_i = \cos(\mathbf{e}_q, \mathbf{e}_i)$ for candidate symbols, the teleportation restart vector $\mathbf{p}_0$ is computed with temperature $\tau = 0.15$ using shift-invariant log-sum-exp in `float64`:
 
 $$c = \max_j \frac{s_j}{\tau}, \quad p_0(i) = \frac{\exp\left(\frac{s_i}{\tau} - c\right)}{\sum_j \exp\left(\frac{s_j}{\tau} - c\right)}$$
 
 ### C. Sparse Personalized PageRank (PPR)
-Stationary probability distribution $`\boldsymbol{\pi}_{\text{query}}`$ (the Perron vector) is obtained via sparse power iteration:
+Stationary probability distribution $\boldsymbol{\pi}_{\text{query}}$ (the Perron vector) is obtained via sparse power iteration:
 
 $$\boldsymbol{\pi}^{(t+1)} = \beta \cdot (\boldsymbol{\pi}^{(t)} T) + \left(\beta \cdot (\boldsymbol{\pi}^{(t)} \mathbf{d}) + 1 - \beta\right) \cdot \mathbf{p}_0$$
 
-With damping factor $\beta = 0.85$, the spectral gap $1 - \beta = 0.15$ ensures geometric convergence within 80-100 iterations (< 3.0 ms on CPU).
+With damping factor $\beta = 0.85$, the spectral gap $1 - \beta = 0.15$ ensures geometric convergence within 80–100 iterations (< 3.0 ms on CPU).
 
 ### D. Specificity Ratio Hub-Damping
-To suppress ubiquitous hub nodes without altering static matrix entries, Perron compares $`\boldsymbol{\pi}_{\text{query}}`$ against a precomputed repository-wide stationary baseline $`\boldsymbol{\pi}_{\text{global}}`$ (obtained via uniform prior $`\mathbf{p}_0 = \frac{1}{|V|} \mathbf{1}`$):
+To suppress ubiquitous hub nodes without altering static matrix entries, Perron compares $\boldsymbol{\pi}_{\text{query}}$ against a precomputed repository-wide stationary baseline $\boldsymbol{\pi}_{\text{global}}$ (obtained via uniform prior $\mathbf{p}_0 = \frac{1}{|V|} \mathbf{1}$):
 
 $$\text{Specificity}(v) = \frac{\pi_{\text{query}}(v)}{(\pi_{\text{global}}(v) + \epsilon)^\gamma}, \quad \gamma = 0.7, \; \epsilon = 10^{-8}$$
 
 Test nodes serve as bipartite routing bridges during random walk diffusion, but are suppressed from the code context packing candidate pool.
 
 ### E. Versioned Priority Queue Frontier Packing
-Context packing extracts a connected subgraph fitting strict token limits ($`K_{\text{effective}} = 3,480`$ tokens):
-- Proportional component budget allocation: $`K_i = \lfloor K \cdot \sum_{u \in C_i} \text{Specificity}(u) / \sum_v \text{Specificity}(v) \rfloor`$.
-- Target-first anchor: $`t^* = \arg\max_{u \in C_i} \text{Specificity}(u)`$.
+Context packing extracts a connected subgraph fitting strict token limits ($K_{\text{effective}} = 3,480$ tokens):
+- Proportional component budget allocation: $K_i = \lfloor K \cdot \sum_{u \in C_i} \text{Specificity}(u) / \sum_v \text{Specificity}(v) \rfloor$.
+- Target-first anchor: $t^\ast = \arg\max_{u \in C_i} \text{Specificity}(u)$.
 - Versioned greedy frontier expansion:
 
 $$\text{score}(v) = \frac{\text{Specificity}(v)}{c(v)} \cdot \left(1 + \mu \cdot \frac{|\text{edges}(v, S_i)|}{\text{deg}(v)}\right)$$
@@ -324,47 +329,59 @@ Evaluating Multi-Scale Diffusion Latency Scaling...
 ---------------------------------------------------------
 ```
 
-### SWE-bench Verified Benchmark ($N = 344$ Callable Tasks)
+### SWE-bench Verified Benchmark (N = 344 Callable Tasks)
 Evaluated across all 344 callable tasks from SWE-bench Verified under frozen pointwise direct scoring and controlled context budgets ($K \le 4,096$ tokens):
 
-| Retrieval & Localization Pipeline | Candidate Pool ($M$) | Acc@5 (Hits) | $\Delta$ vs BM25 | Statistical Significance | Hub Suppression Index (HSI@10) |
+| Retrieval & Localization Pipeline | Candidate Pool (M) | Acc@5 (Hits) | Δ vs BM25 | Statistical Significance | Hub Suppression Index (HSI@10) |
 | :--- | :---: | :---: | :---: | :---: | :---: |
 | **Depth BM25 Baseline** | 10 | 45.06% (155/344) | Ref. | Baseline reference | 0.0% |
-| **Perron Pointwise ($A_4$, 1-Hop Expansion)** | 10 | **47.09% (162/344)** | **+2.03 pp** | Step-down Holm $p = 0.2869$, McNemar $p = 0.1435$ | **99.5%** ($p < .001$) |
-| **Perron Multi-Step Diffusion ($A_6$, Spectral)** | 10 | 45.64% (157/344) | +0.58 pp | Transitive distractor dilution ($t \ge 2$) | **99.5%** ($p < .001$) |
-| **Top-10 Oracle Union ($A_1 \cup A_4$)** | 20 | 54.36% (187/344) | +9.30 pp | Upstream boundary ceiling | **99.5%** ($p < .001$) |
+| **Agentless AST Skeleton Baseline** | -- | 35.76% (123/344) | -9.30 pp | Graph-free AST hierarchy (Xia et al. 2025) | -- |
+| **Perron Pointwise (A₄, 1-Hop Expansion)** | 10 | **47.09% (162/344)** | **+2.03 pp** | Step-down Holm p = 0.2869, McNemar p = 0.1435 (+11.34 pp vs Agentless, p = 0.0000\*) | **99.5%** (p < 0.001) |
+| **Perron Multi-Step Diffusion (A₆, Spectral)** | 10 | 45.64% (157/344) | +0.58 pp | Transitive distractor dilution (t ≥ 2) | **99.5%** (p < 0.001) |
+| **Top-10 Oracle Union (A₁ ∪ A₄)** | 20 | 54.36% (187/344) | +9.30 pp | Upstream boundary ceiling | **99.5%** (p < 0.001) |
+
+#### Structural Invariance & Benchmark De-Biasing (SchrödingerRepo & UTBoost)
+
+| Evaluation Dimension | Metric | Perron Graph | Baseline | Lift (Δ) | Discordant (n₁₀ / n₀₁) | Exact p-value |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **SchrödingerRepo Topological PPR (φ Bijection)** | Acc@5 | **34.88% (120/344)** | 0.29% (1/344, BM25) | **+34.59 pp** | 119 / 0 | p = 0.0000\* |
+| **SchrödingerRepo Hybrid Diffusion (φ Bijection)** | Acc@5 | **34.59% (119/344)** | 0.29% (1/344, BM25) | **+34.30 pp** | 118 / 0 | p = 0.0000\* |
+| **UTBoost Clean Stratum C (N=75, De-Biased)** | Acc@5 | **14.67% (11/75)** | 6.67% (5/75, A₂) | **+8.00 pp** | 7 / 1 | p = 0.0312\* |
+| **Agentless AST Skeletons vs Perron A₄** | Fn Acc@5 | **47.09% (162/344)** | 35.76% (123/344) | **+11.34 pp** | 61 / 22 | p = 0.0000\* |
+
+- **Virtual Namespace Invariance**: Under SchrödingerRepo Level-2 identifier permutations, lexical search collapses to 0.29% (1/344), whereas topological graph diffusion alone preserves 34.88% Acc@5 (+34.59 pp lift, p = 0.0000\*), retaining 94.5% of unperturbed localization power (36.92%, delta -2.03 pp, p = 0.4767 n.s.). This confirms that spectral code graphs capture genuine architectural geometry independent of surface naming.
+- **UTBoost Benchmark De-Biasing**: Isolates N=75 clean un-named tasks free from test-harness leakage (excluding 56 test-parser corrupted tasks touching test harnesses with 0/26 gold edits in source). Graph expansion delivers a statistically significant +8.00 pp lift over depth BM25 (14.67% vs 6.67%, p = 0.0312\*).
 
 ### Four-Tier Operating Regime Unlocking Local Code Models
 
-1. **CPU Pre-Filtering** ($1.89\text{--}5.10$ ms, $\le 3$ MB RAM):
+1. **CPU Pre-Filtering** (1.89–5.10 ms, ≤ 3 MB RAM):
    - Zero-copy memory-mapped CSR power iteration achieves 99.5% Hub Suppression Index without dynamic matrix allocation.
-   - Selective routing ($\pi^*$) saves 31.4% downstream LLM inference compute while preserving 58.4% graph recall.
+   - Selective routing (π\*) saves 31.4% downstream LLM inference compute while preserving 58.4% graph recall.
 
-2. **Edge Tier (`gemma-4-e2b-it`, unquantized FP16, 6.7 GB VRAM)**:
-   - Zero-cost inline provenance comments ($E_1$) lift reachable Top-1 localization from 12.07% to 25.86% ($+13.79$ pp, exact McNemar $p = 0.0078^*$) without test-time generation latency.
-   - Avoid unconstrained reasoning tokens on 2B (which trigger $-42.9\%$ drift).
+2. **Edge Tier (`gemma-4-e2b-it`, 4-bit NF4 weights / FP16 compute kernels, 6.7 GB resident VRAM)**:
+   - Zero-cost inline provenance comments ($E_1$) lift reachable Top-1 localization from 12.07% to 25.86% (+13.79 pp, exact McNemar p = 0.0078\*) without test-time generation latency.
+   - VRAM footprint reflects resident unquantized Per-Layer Embeddings (PLE). Unconstrained reasoning tokens on 2B trigger -42.9% drift.
 
-3. **Workstation Tier (`gemma-4-e4b-it`, unquantized FP16, 9.6 GB VRAM)**:
-   - Candidate horizon pruning ($M = 15$, $\text{AUC}^* = 0.714$, $-40\%$ stub tokens) paired with short reasoning ($\le 180$ tokens) lifts Top-1 from 4.58% to 9.92% ($6/131 \to 13/131$, $p = 0.0156^*$).
-   - Compacts mean target rank from $5.88 \to 5.32 \to 3.74$ with zero Top-1 loss, disambiguating lexical seeds ($12/28$ hits) over trailing graph distractors ($1/7$ hits).
+3. **Workstation Tier (`gemma-4-e4b-it`, 4-bit NF4 weights / FP16 compute kernels, 9.6 GB resident VRAM)**:
+   - **Pointwise E4B Dominance**: Evaluated on pruned $A_4[:15]$ pools, pointwise log-odds scoring achieves **22.90% Acc@5**, **12.21% Top-1** (16/131 hits), and **MRR 0.1740** (paired McNemar p = 0.0129\* vs listwise $C_1$, paired Wilcoxon W = 37.5, p = 0.000162\*). It eliminates listwise generative syntax failures (90.8% failure where 119/131 tasks emit zero IDs without Qiao backfill) and is immune to positional decay (75.0% and 83.3% conversion across slots).
+   - **Candidate Horizon Pruning & Reasoning**: Candidate horizon pruning ($M = 15$, $\text{AUC}^\ast = 0.714$, $-40\%$ stub tokens) paired with short reasoning ($\le 180$ tokens) lifts listwise Top-1 from 4.58% to 9.92% (6/131 → 13/131, p = 0.0156\*) and compacts mean target rank from 5.88 → 5.32 → 3.74 with zero Top-1 loss, disambiguating lexical seeds (12/28 hits) over trailing graph distractors (1/7 hits).
 
 4. **MoE Hardware Boundary (`gemma-4-26b-a4b-it`, 52.0 GB unquantized FP16)**:
-   - Isolates the local MoE execution barrier: fused 3D expert parameter tensors (`[128, d_in, d_out]`) bypass standard 2D `bitsandbytes` NF4 hooks, requiring 52 GB runtime VRAM and making 2B–4B PLE models the true Pareto sweet spot for single-GPU local workstations.
+   - Isolates the local MoE execution barrier: fused 3D expert parameter tensors (`[128, d_in, d_out]`) bypass standard 2D `bitsandbytes` NF4 hooks, requiring 52.0 GB runtime VRAM and making 2B–4B PLE models the true Pareto sweet spot for single-GPU local workstations.
 
-### SWE-bench Lite Architectural Landscape
-Contrasting unconstrained data center cloud APIs against Perron's local consumer offline model profile:
+### Fault Localization & Context Pruning: Local Workstations vs. Cloud APIs
 
-| System / Architecture | Deployment / Model Class | Cost / Issue | Defect Resolution (Pass@1 / Diagnostic) |
-| :--- | :--- | :---: | :---: |
-| *Data Center Cloud APIs (Full SWE-bench Lite, N=300, Multi-GPU Cloud Clusters)* | | | |
-| Agentless (Xia et al.) | GPT-4o (Cloud API) | \$0.34 | 27.3% (Pass@1) |
-| AutoCodeRover (Zhang et al.) | GPT-4 (Cloud API) | \$0.65 | 22.0% (Pass@1) |
-| SWE-agent (Yang et al.) | GPT-4 (Cloud API) | \$2.14 | 18.0% (Pass@1) |
-| BM25 + RAG (Yang et al.) | GPT-4 (Cloud API) | \$0.05 | 3.8% (Pass@1) |
-| *Local Consumer Offline Models (<=16GB RAM, No API Cost, Offline Workstation)* | | | |
-| **Perron (Diagnostic Scaffold)** | **Gemma 4 E4B / Deterministic Replay** | **No API fee (Local)** | **5/5 Solvable (5/5 Boundary Handled)** |
+Why focus on fault localization and context pruning? For compact models (2B–4B) running locally on consumer hardware without unconstrained cloud APIs, whole-repository context packing is the critical upstream bottleneck. Feeding hundreds of raw files into limited context windows ($K \le 4,096$ tokens) saturates memory and degrades reasoning. Perron isolates and solves this upstream localization challenge:
 
-*Note: Data Center Cloud APIs report published Pass@1 on full SWE-bench Lite (N=300) running across multi-GPU data center clusters. Local Consumer Offline Models evaluate issues on air-gapped consumer laptop hardware (<=16GB RAM). Evaluating all 300 instances locally with un-sharded weights requires ~150-300 GPU-hours, establishing a concrete computational boundary for offline workstation execution.*
+| System / Architecture | Upstream Localization Primitive | Deployment Envelope | API Cost / Issue | Localization Acc@5 (Fn) | Full Resolution Scope |
+| :--- | :--- | :--- | :---: | :---: | :---: |
+| Agentless (Xia et al.) | Hierarchical AST Skeletons + BM25 | Cloud GPT-4o API | \$0.34 | 35.76% (123/344) | End-to-end repair (27.3% Pass@1) |
+| AutoCodeRover (Zhang et al.) | Dynamic AST & Spectrum Search | Cloud GPT-4 API | \$0.65 | -- | End-to-end repair (22.0% Pass@1) |
+| SWE-agent (Yang et al.) | Interactive Aider-style Tag Map | Cloud GPT-4 API | \$2.14 | 0.0% (Callable Fn) | End-to-end repair (18.0% Pass@1) |
+| **Perron Pointwise (Ours)** | **Directed CSR Spectral Diffusion + Specificity** | **Local Dual T4 / Single GPU (≤9.6 GB VRAM)** | **No API fee (Local)** | **47.09% (162/344)** | **Surgical Context Pruning (+11.34 pp vs Agentless)** |
+| **Perron Pointwise E4B (Ours)** | **Bound-Pruned Log-Odds (M=15)** | **Local Gemma 4 E4B (4-bit NF4 / FP16)** | **No API fee (Local)** | **22.90% (Stratum C)** | **Un-named Defect Disambiguation (12.21% Top-1)** |
+
+*Key Takeaway*: Rather than burning \$0.34–\$2.14 per issue on unconstrained multi-turn cloud LLM queries, Perron executes query-directed spectral diffusion in 1.89–5.10 ms on local CPU ($<$3 MB RAM), providing compact 2B–4B local models with surgical AST contexts that outperform cloud-grade AST skeleton baselines by +11.34 pp (p = 0.0000\*).
 
 ### Running the End-to-End Repair Evaluation
 ```bash
@@ -413,14 +430,18 @@ Perron maintains strict programmatic parity between experimental JSON/Parquet te
 | Benchmark Dimension | Empirical Metric | Sample / Stratum | Source Artifact |
 | :--- | :---: | :---: | :--- |
 | Candidate Reranking Acc@5 | 47.09% (162/344) | N=344 Verified (A4 Graph 1-hop) | `results/gemma4_protocol_tables.json` |
+| Pointwise E4B Dominance | 22.90% Acc@5, 12.21% Top-1 | N=131 Stratum C (A4[:15]) | `results/gemma4_protocol_tables.json` |
 | Reasoning Factorial Acc@1 | 9.92% (13/131) | N=131 Stratum C (A4 + Thinking) | `results/gemma4_protocol_tables.json` |
+| Virtual Namespace Invariance | 34.88% Acc@5 (+34.59 pp) | N=344 SchrödingerRepo PPR | `results/gemma4_protocol_tables.json` |
+| Clean Stratum C Lift | 14.67% Acc@5 (+8.00 pp) | N=75 UTBoost De-Biased | `results/gemma4_protocol_tables.json` |
+| Agentless AST Contrast | 47.09% vs 35.76% (+11.34 pp) | N=344 Verified Matched Context | `results/gemma4_protocol_tables.json` |
 | Scaling Monotonicity ROC-AUC | 0.8544 → 0.9274 | N=58 Stratum C (2B → 4B FP16) | `results/scaling_curve_complete_results.json` |
 | Leave-Django-Out Acc@5 | 34.57% (56/162) | N=162 Non-Django (A4 Graph 1-hop) | `results/gemma4_protocol_tables.json` |
 | 3-Stage Rank Compaction | 5.88 → 5.32 → 3.74 | N=131 Direct → Pruned → Thinking | `paper/main.tex` / `paper_writeup.md` |
 
 #### Programmatic Verification Pipeline
 - **20-Gate Quality Suite**: `python scripts/verify_paper.py` validates citations, macros, telemetry bounds, schema integrity, and word ceilings.
-- **Parquet Integrity (Gate 20)**: Directly tests `dist_dataset/scores.parquet` existence, row count (19,298 rows), and PyArrow schema compliance.
+- **Parquet Dataset Inventory**: Validates `dist_dataset/scores.parquet` (19,298 rows, Gemma 4 E2B evaluations) and `dist_dataset/gemma4_e4b_scores.parquet` (8,113 rows, Gemma 4 E4B evaluations) alongside PyArrow schema compliance.
 - **Text Layer Verification**: Extracts raw text layers directly from compiled `paper/main.pdf` using `pypdf`, confirming that compiled publication outputs match underlying numerical claims.
 
 ## 7. Author & License
