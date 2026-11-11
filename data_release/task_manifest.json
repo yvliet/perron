@@ -3,7 +3,7 @@
   "dataset_name": "swebench-strata-annotations",
   "title": "SWE-bench Verified Task Attrition Manifest",
   "author": "Sultan Haikal (GitHub: @yvliet)",
-  "license": "Apache-2.0 OR CC0-1.0",
+  "license": "Apache-2.0",
   "generated_at_utc": "2026-10-05T11:10:51.926292+00:00",
   "total_unique_instances": 707,
   "total_verified_instances": 500,

@@ -96,7 +96,7 @@ def test_reader_pilot_offline_replay_execution_gate(tmp_path: Path):
     - Outputs valid JSON schema
     - Measured kappa > 0
     - Model hash is present
-    - No changes to git-tracked files (EPITAPH-100)
+    - No changes to git-tracked files (execution_environment)
     """
     out_file = tmp_path / "gemma4_reader_transmission.json"
 

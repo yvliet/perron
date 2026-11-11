@@ -75,7 +75,7 @@ def run_control2_decomposition() -> Dict[str, Any]:
     # Matched comparison simulation:
     # If gold target is absent from top-10 BM25 (e.g. graph-only or depth-only),
     # BM25 rank gap forces BM25 AUC against seed distractors to near-zero by construction.
-    # We document the exact selection conditioning effect (Berkson's bias).
+    # We document the exact selection conditioning effect.
     results = {
         "suite": "control2_auc_decomposition",
         "description": "Evaluation of Selection Conditioning & Counterfactual BM25 AUC on Graph-Only Targets",

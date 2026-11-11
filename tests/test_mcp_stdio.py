@@ -111,7 +111,7 @@ def test_mcp_stdio_lifecycle_and_tools(tmp_path: Path):
         proc.stdin.close()
         proc.wait(timeout=5)
 
-    # Save transcript to isolated temporary fixture to prevent git tree pollution (EPITAPH-103)
+    # Save transcript to isolated temporary fixture to prevent git tree pollution (execution_environment)
     transcript_file = tmp_path / "mcp_transcript.json"
     with open(transcript_file, "w", encoding="utf-8") as f:
         json.dump(transcript, f, indent=2)

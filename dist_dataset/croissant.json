@@ -18,7 +18,7 @@
   },
   "@type": "sc:Dataset",
   "name": "swebench-strata-annotations",
-  "description": "Benchmark dataset pairing Princeton SWE-bench with call and import multigraphs across 12 major Python repositories. Includes 800 evaluations across 707 unique task instances, 12 CSR multigraph archives, and 19,298 scored evaluations across Google Gemma 4 models.",
+  "description": "Benchmark dataset pairing Princeton SWE-bench with call and import multigraphs across 12 major Python repositories. Includes 800 evaluations across 707 unique task instances, 12 CSR multigraph archives (101,397 nodes, 535,377 edges), and 27,411 scored evaluations across Google Gemma 4 models.",
   "url": "https://github.com/yvliet/perron",
   "license": "https://spdx.org/licenses/Apache-2.0.html",
   "version": "1.0.0",

@@ -21,7 +21,7 @@ The Perron SWE-bench Strata and Repository Multigraphs dataset was created to re
 The dataset was authored and curated by Sultan Haikal (GitHub: `@yvliet`).
 
 ### Who funded the creation of the dataset?
-Independent research conducted for the Google DeepMind Gemma 4 Developer Agent competition (Track 2: Research Monograph & Resource Track). Compute resources were provided via Kaggle dual Nvidia T4 GPU hardware environments.
+Independent research conducted for the Google DeepMind Gemma 4 Developer Agent competition (Research Monograph & Resource Track). Compute resources were provided via Kaggle dual Nvidia T4 GPU hardware environments.
 
 ---
 
@@ -41,24 +41,24 @@ The 500 SWE-bench Verified instances are partitioned into a strict, mutually exc
 - 93 Exploratory Split Overlap instances (also present in SWE-bench Lite).
 - 56 File-Absent Preimage Drift instances (source files altered or moved between commits).
 - 7 Module-Level Non-Callable instances (bug fixed by top-level variable or statement mutations).
-- Total: $344 + 93 + 56 + 7 = 500$.
+- Total: 344 + 93 + 56 + 7 = 500.
 
 #### Component B: 12 Repository AST Multigraphs (`artifacts/swebench_graphs/`)
 Serialized as compressed SciPy CSR matrices (`*_graph.npz`, `*_layers.npz`), symbol lookup tables (`*_symbols.json`), and graph topology metadata (`*_meta.json`).
-- Total Nodes: 109,240 code entities (modules, classes, methods, functions).
-- Total Edges: 341,892 directed relations partitioned across four typed layers:
+- Total Nodes: 101,397 code entities (modules, classes, methods, functions).
+- Total Edges: 535,377 directed relations partitioned across four typed layers:
   1. `call`: Directed invocation from caller to callee.
   2. `caller`: Inverted invocation edge (callee to caller).
   3. `import`: Dependency binding from importing module to exported entity.
   4. `inherit`: Object-oriented class inheritance and interface implementation.
 - Coverage: Twelve prominent Python open-source repositories: `astropy/astropy`, `django/django`, `matplotlib/matplotlib`, `mwaskom/seaborn`, `pallets/flask`, `psf/requests`, `pydata/xarray`, `pylint-dev/pylint`, `pytest-dev/pytest`, `scikit-learn/scikit-learn`, `sphinx-doc/sphinx`, and `sympy/sympy`.
 
-#### Component C: Scored Evaluation Telemetry (`results/scores.parquet`, `results/gemma4_e4b_scores.parquet`)
+#### Component C: Scored Evaluation Telemetry (27,411 Total Evaluations across `scores.parquet` and `gemma4_e4b_scores.parquet`)
 - `scores.parquet`: 19,298 candidate-level evaluation records from Gemma 4 E2B pointwise scoring, containing columns `['instance_id', 'candidate_id', 'prompt_variant', 's', 'format_mass', 'n_prompt_tokens']`. Relational metadata (gold target indicators and lexical strata) are joined via `data/swebench_verified_gold_labels.json` and `dist_dataset/swebench_strata_annotations.jsonl`.
 - `gemma4_e4b_scores.parquet`: 8,113 candidate-level evaluation records from Gemma 4 E4B pointwise scoring across the multi-pool union on SWE-bench Verified tasks.
 
 ### Are there recommended data splits?
-Yes. The pre-specified confirmatory split consists of the $N=344$ callable SWE-bench Verified tasks. Exploratory analyses should be conducted on the $N=93$ overlapping tasks or the $N=300$ SWE-bench Lite tasks to preserve confirmatory validity.
+Yes. The pre-specified confirmatory split consists of the N=344 callable SWE-bench Verified tasks. Exploratory analyses should be conducted on the N=93 overlapping tasks or the N=300 SWE-bench Lite tasks to preserve confirmatory validity.
 
 ---
 
@@ -79,10 +79,10 @@ Data extraction and evaluation runs took place during October 2026.
 ### What preprocessing or cleaning was done?
 - **Normalization**: File paths were normalized to POSIX standards, stripping Windows drive letters and local workstation prefixes.
 - **Unreachable Distance Encoding**: In compliance with RFC 8259, infinite graph path lengths and missing hops were serialized as JSON `null` rather than non-standard `Infinity` or `NaN` literals.
-- **Expert Boundary Concordance Audit (Cohen's Kappa)**: To verify that the deterministic regex heuristic represents genuine linguistic ground truth rather than algorithmic idiosyncrasy, an author expert boundary concordance audit was conducted on a stratified random sample of $N=100$ tasks (45 from Stratum A, 15 from Stratum B, 40 from Stratum C; seed=42) against raw GitHub issue statements without access to regex tags.
-  - Observed Concordance: 95.0% ($95/100$).
+- **Expert Boundary Concordance Audit (Cohen's Kappa)**: To verify that the deterministic regex heuristic represents genuine linguistic ground truth rather than algorithmic idiosyncrasy, an author expert boundary concordance audit was conducted on a stratified random sample of N=100 tasks (45 from Stratum A, 15 from Stratum B, 40 from Stratum C; seed=42) against raw GitHub issue statements without access to regex tags.
+  - Observed Concordance: 95.0% (95/100).
   - Chance Agreement: 38.75%.
-  - Cohen's $\kappa$: $0.9184$ (95% CI $[0.849, 0.988]$).
+  - Cohen's κ: 0.9184 (95% CI [0.849, 0.988]).
   - Qualitative Analysis: Disagreements were confined to 5 edge cases involving incidental helper mentions or non-standard attribute syntax.
 
 ---

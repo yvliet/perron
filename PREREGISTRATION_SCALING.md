@@ -6,7 +6,7 @@
 - **Timestamp**: October 12, 2026
 - **Status**: Pre-Registered & Locked Prior to Experimental Execution
 - **Target Research Scope**: Gemma 4 Developer Agent Technical Report
-- **Primary Evaluator Alignment**: Graph-ML Peer Review Criteria (Bryan Perozzi, Benedek Rózemberczki, Mikhail Galkin)
+- **Primary Evaluator Alignment**: Graph-ML Peer Review Criteria
 
 ---
 
@@ -16,7 +16,7 @@ In Phase 1 of our investigation, we established a confirmatory null result under
 
 Under live Dual Tesla T4 GPU execution:
 - **Control 1**: Test-time reasoning (`<thought>`) decisively broke the tie in favor of the graph-expanded pool (+5.34 pp Acc@5, 24 vs 17 hits, MRR 0.1358 vs 0.0967), while hash-shuffled candidate ordering ($sha256(instance\_id \mid candidate\_id)$) falsified presentation-order bias (candidate 1 chosen on only 6.87% of tasks vs. 91% un-reasoned).
-- **Control 2**: Candidate selection conditioning (Berkson's bias) was verified via a $2 \times 2$ decomposition, proving that the 0.137 drop in ROC-AUC from seeds (0.7966) to graph neighbors (0.6596) is an expected artifact of selecting candidates outside the top-10 lexical seeds rather than neural scorer degradation.
+- **Control 2**: Candidate selection conditioning was verified via a $2 \times 2$ decomposition, proving that the 0.137 drop in ROC-AUC from seeds (0.7966) to graph neighbors (0.6596) is an expected artifact of selecting candidates outside the top-10 lexical seeds rather than neural scorer degradation.
 
 ### The Core Theoretical Gap
 Is the Lexical Abstraction Bottleneck ($\text{AUC} \le 0.6596$) a permanent constraint of compact edge models ($2\text{B}$ to $4\text{B}$ parameters), or does increased model scale break through this barrier zero-shot? Furthermore, does dynamic Mixture-of-Experts routing (3.8B active parameters out of 26B total) provide representational efficiency over dense architectures?

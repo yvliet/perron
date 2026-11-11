@@ -14,9 +14,9 @@ The dataset comprises three primary components:
     \item \textbf{Repository AST Multigraphs (Two-Tier Design)}:
     \begin{itemize}[noitemsep,topsep=1pt,parsep=0pt,partopsep=0pt]
         \item \textbf{Per-Task Base-Commit Multigraphs} (\path{data_release/graphs/}, $N=300$ Lite tasks): CSR matrices and symbol tables extracted from checkouts at each task's immutable git base commit for community benchmarking.
-        \item \textbf{Single-Snapshot Repository Multigraphs} (\path{artifacts/swebench_graphs/}, 12 repositories): monolithic CSR graphs ($109{,}240$ nodes, $341{,}892$ directed edges) indexed at a frozen snapshot to benchmark static offline caching on SWE-bench Verified ($N=344$).
+        \item \textbf{Single-Snapshot Repository Multigraphs} (\path{artifacts/swebench_graphs/}, 12 repositories): monolithic CSR graphs ($101{,}397$ nodes, $535{,}377$ directed edges) indexed at a frozen snapshot to benchmark static offline caching on SWE-bench Verified ($N=344$).
     \end{itemize}
-    \item \textbf{Scored Model Telemetry} (\path{scores.parquet}, \path{gemma4_e4b_scores.parquet}): 19{,}298 candidate evaluations from Gemma~4 E2B and 8{,}113 candidate evaluations from Gemma~4 E4B across SWE-bench Verified.
+    \item \textbf{Scored Model Telemetry} (\path{scores.parquet}, \path{gemma4_e4b_scores.parquet}): 27{,}411 scored evaluations (19{,}298 candidate evaluations from Gemma~4 E2B and 8{,}113 candidate evaluations from Gemma~4 E4B across SWE-bench Verified).
 \end{enumerate}
 
 \subsection{Collection Process}

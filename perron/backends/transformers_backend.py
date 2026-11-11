@@ -111,12 +111,27 @@ class TransformersBackend(ModelBackend):
         print(f"Initializing model on device={kwargs['device_map']} with dtype={kwargs.get('torch_dtype', 'default')}...")
         try:
             self.model = AutoModelForCausalLM.from_pretrained(resolved_path, **kwargs)
-        except Exception:
-            try:
-                from transformers import Gemma4ForConditionalGeneration
-                self.model = Gemma4ForConditionalGeneration.from_pretrained(resolved_path, **kwargs)
-            except Exception as e:
-                raise e
+        except Exception as load_err:
+            loaded = False
+            for cls_name in ["Gemma4ForConditionalGeneration", "Gemma4UnifiedForConditionalGeneration"]:
+                try:
+                    import transformers
+                    cls = getattr(transformers, cls_name, None)
+                    if cls is not None:
+                        self.model = cls.from_pretrained(resolved_path, **kwargs)
+                        loaded = True
+                        break
+                except Exception:
+                    pass
+            if not loaded:
+                try:
+                    from transformers import AutoModelForMultimodalLM
+                    self.model = AutoModelForMultimodalLM.from_pretrained(resolved_path, **kwargs)
+                    loaded = True
+                except Exception:
+                    pass
+            if not loaded:
+                raise load_err
 
         # Mount PEFT LoRA adapter if provided
         if adapter_path and Path(adapter_path).exists():

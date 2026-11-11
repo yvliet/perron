@@ -24,6 +24,8 @@ class EdgeType(str, Enum):
     SEED = "seed"
     CALLED_BY_SEED = "called_by_seed"
     CALLS_SEED = "calls_seed"
+    CONTAINMENT = "containment"
+    CONTAINS_SEED = "contains_seed"
     SUBCLASSES_SEED = "subclasses_seed"
     BASE_CLASS_OF_SEED = "base_class_of_seed"
     IMPORTED_BY_SEED = "imported_by_seed"
@@ -37,6 +39,8 @@ class EdgeType(str, Enum):
             EdgeType.SEED: "Issue seed retrieved via lexical search",
             EdgeType.CALLED_BY_SEED: "Called by seed function",
             EdgeType.CALLS_SEED: "Calls seed function",
+            EdgeType.CONTAINMENT: "Defined inside seed class",
+            EdgeType.CONTAINS_SEED: "Enclosing class of seed method",
             EdgeType.SUBCLASSES_SEED: "Subclasses seed class",
             EdgeType.BASE_CLASS_OF_SEED: "Base class of seed class",
             EdgeType.IMPORTED_BY_SEED: "Imported by seed module",
@@ -68,6 +72,25 @@ class SymbolProvenance:
             file_hint = f" in '{self.seed_file_path}'" if self.seed_file_path else ""
             return f"# Provenance: Co-located in same file as seed{file_hint}"
         return f"# Provenance: {self.edge_type.to_human_label()}"
+
+
+def _is_containment(class_sym: Dict[str, Any], method_sym: Dict[str, Any]) -> bool:
+    """Detect if method_sym is defined inside class_sym."""
+    if not class_sym or not method_sym:
+        return False
+    if class_sym.get("file_path") and method_sym.get("file_path"):
+        if class_sym.get("file_path") != method_sym.get("file_path"):
+            return False
+    c_type = class_sym.get("symbol_type")
+    m_type = method_sym.get("symbol_type")
+    c_id = class_sym.get("identifier", "")
+    m_id = method_sym.get("identifier", "")
+    if c_type == "class" or (m_type in ("method", "function") and "." in m_id):
+        if method_sym.get("parent_class") and method_sym.get("parent_class") == c_id:
+            return True
+        if c_id and m_id.startswith(f"{c_id}."):
+            return True
+    return False
 
 
 class ProvenanceResolver:
@@ -124,6 +147,15 @@ class ProvenanceResolver:
             for u, v in layers["call_edges"]:
                 if u in seeds_set and v == candidate_symbol_id:
                     s_sym = symbols[u] if u < len(symbols) else {}
+                    c_sym = symbols[v] if v < len(symbols) else {}
+                    if _is_containment(s_sym, c_sym):
+                        return SymbolProvenance(
+                            edge_type=EdgeType.CONTAINMENT,
+                            seed_symbol_id=int(u),
+                            seed_identifier=s_sym.get("identifier"),
+                            seed_file_path=s_sym.get("file_path"),
+                            hops=1,
+                        )
                     return SymbolProvenance(
                         edge_type=EdgeType.CALLED_BY_SEED,
                         seed_symbol_id=int(u),
@@ -133,6 +165,15 @@ class ProvenanceResolver:
                     )
                 elif v in seeds_set and u == candidate_symbol_id:
                     s_sym = symbols[v] if v < len(symbols) else {}
+                    c_sym = symbols[u] if u < len(symbols) else {}
+                    if _is_containment(c_sym, s_sym):
+                        return SymbolProvenance(
+                            edge_type=EdgeType.CONTAINS_SEED,
+                            seed_symbol_id=int(v),
+                            seed_identifier=s_sym.get("identifier"),
+                            seed_file_path=s_sym.get("file_path"),
+                            hops=1,
+                        )
                     return SymbolProvenance(
                         edge_type=EdgeType.CALLS_SEED,
                         seed_symbol_id=int(v),

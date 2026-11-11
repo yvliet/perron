@@ -309,14 +309,14 @@
     "scaling_surface_table": {
       "gemma_4_e2b_it": {
         "params": "2.0B",
-        "precision": "FP16",
+        "precision": "4-bit NF4 / FP16",
         "roc_auc": 0.8544,
         "vram_mb": 6698.9,
         "runtime_s": 1798
       },
       "gemma_4_e4b_it": {
         "params": "4.0B",
-        "precision": "FP16",
+        "precision": "4-bit NF4 / FP16",
         "roc_auc": 0.9274,
         "vram_mb": 9648.4,
         "runtime_s": 6250

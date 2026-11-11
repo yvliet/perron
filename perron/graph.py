@@ -348,12 +348,23 @@ def extract_repository_graph(
     exclude_dirs: Optional[Set[str]] = None,
     max_files: Optional[int] = None,
     return_multiplex: bool = False,
+    include_containment: bool = True,
 ) -> Union[
     Tuple[List[ASTSymbolNode], List[Tuple[int, int]], List[Tuple[int, int]], Dict[str, int], Dict[int, str]],
     Tuple[List[ASTSymbolNode], List[Tuple[int, int]], List[Tuple[int, int]], Dict[str, int], Dict[int, str], List[Tuple[int, int]], List[Tuple[int, int]]],
 ]:
     """
     Extracts complete AST call graph from a repository directory with composite keying.
+
+    Args:
+        repo_dir: Path to repository root.
+        include_patterns: Optional list of glob patterns to include.
+        exclude_dirs: Directories to exclude from traversal.
+        max_files: Optional budget cap on parsed files.
+        return_multiplex: If True, returns multiplex layer edge lists.
+        include_containment: When True, injects hierarchical class-to-method containment
+            edges into call_edges and caller_edges. When False, strictly restricts
+            call/caller edges to functional invocations. Defaults to True for backwards compatibility.
 
     Returns:
         (symbols, call_edges, caller_edges, canonical_to_id, id_to_canonical) or
@@ -573,13 +584,14 @@ def extract_repository_graph(
                                         break
 
     # Add hierarchical class-to-method containment edges
-    for sym in symbols:
-        if sym.parent_class:
-            class_key = f"{sym.file_path}::{sym.parent_class}"
-            p_id = canonical_to_id.get(class_key)
-            if p_id is not None and p_id != sym.node_id:
-                call_edges_set.add((p_id, sym.node_id))
-                caller_edges_set.add((sym.node_id, p_id))
+    if include_containment:
+        for sym in symbols:
+            if sym.parent_class:
+                class_key = f"{sym.file_path}::{sym.parent_class}"
+                p_id = canonical_to_id.get(class_key)
+                if p_id is not None and p_id != sym.node_id:
+                    call_edges_set.add((p_id, sym.node_id))
+                    caller_edges_set.add((sym.node_id, p_id))
 
     # Propagate test markings along class containment and inheritance
     test_changed = True
@@ -620,6 +632,7 @@ def compile_and_save_repository_graph(
     omega_inherit: float = 0.25,
     omega_import: float = 0.15,
     omega_caller: float = 0.10,
+    include_containment: bool = True,
 ) -> Tuple[csr_matrix, np.ndarray, Dict[str, int], Dict[int, str], List[ASTSymbolNode]]:
     """
     Extracts AST graph, builds static CSR transition matrix, and saves zero-copy mmap binaries.
@@ -627,7 +640,7 @@ def compile_and_save_repository_graph(
     """
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    res = extract_repository_graph(repo_dir, return_multiplex=True)
+    res = extract_repository_graph(repo_dir, return_multiplex=True, include_containment=include_containment)
     symbols, call_edges, caller_edges, canonical_to_id, id_to_canonical, inherit_edges, import_edges = res
     num_nodes = len(symbols)
 

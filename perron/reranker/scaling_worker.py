@@ -51,6 +51,8 @@ def truncate_issue_text(text: str, max_chars: int = 3000) -> str:
 
 
 def format_candidate_breadcrumb(cand: Dict[str, Any]) -> str:
+    if cand.get("breadcrumb"):
+        return str(cand["breadcrumb"])
     sym_name = cand.get("symbol_name") or cand.get("identifier") or "unknown_symbol"
     fpath = cand.get("file_path") or cand.get("file") or "unknown_file"
     lines = cand.get("lines") or [cand.get("line_start", 1), cand.get("line_end", 1)]
@@ -118,6 +120,48 @@ def purge_hf_cache():
             shutil.rmtree(cdir, ignore_errors=True)
 
 
+def get_input_target_device(model: Any) -> Any:
+    if hasattr(model, "get_input_embeddings") and model.get_input_embeddings() is not None:
+        emb = model.get_input_embeddings()
+        if hasattr(emb, "weight") and emb.weight is not None:
+            return emb.weight.device
+    if hasattr(model, "device"):
+        return model.device
+    return next(model.parameters()).device
+
+
+def estimate_params_b(model_id: str, target_path: str = "") -> float:
+    for p in [Path(target_path) / "config.json", Path(model_id) / "config.json"]:
+        if p.exists():
+            try:
+                with open(p, "r", encoding="utf-8") as f:
+                    cfg = json.load(f)
+                if "num_parameters" in cfg:
+                    return cfg["num_parameters"] / 1e9
+            except Exception:
+                pass
+    text = f"{model_id} {target_path}".lower()
+    m = re.search(r'(\d+(?:\.\d+)?)\s*b\b', text)
+    if m:
+        try:
+            return float(m.group(1))
+        except ValueError:
+            pass
+    if "26b" in text:
+        return 26.0
+    if "31b" in text:
+        return 31.0
+    if "12b" in text:
+        return 12.0
+    if "7b" in text:
+        return 7.0
+    if "4b" in text or "e4b" in text:
+        return 4.0
+    if "2b" in text or "e2b" in text:
+        return 2.0
+    return 0.0
+
+
 def run_worker():
     parser = argparse.ArgumentParser(description="Perron Scaling Model Worker")
     parser.add_argument("--model_id", required=True, help="HuggingFace model ID")
@@ -125,6 +169,7 @@ def run_worker():
     parser.add_argument("--bundle", required=True, help="Path to stratum_c_eval_bundle.json")
     parser.add_argument("--output", required=True, help="Path to write output JSON")
     parser.add_argument("--batch_size", type=int, default=4)
+    parser.add_argument("--params_b", type=float, default=None, help="Model parameters in billions")
     args = parser.parse_args()
 
     bundle_path = Path(args.bundle)
@@ -166,19 +211,10 @@ def run_worker():
         tokenizer.pad_token = tokenizer.eos_token
     tokenizer.padding_side = "left"
 
-def get_input_target_device(model) -> torch.device:
-    if hasattr(model, "get_input_embeddings") and model.get_input_embeddings() is not None:
-        emb = model.get_input_embeddings()
-        if hasattr(emb, "weight") and emb.weight is not None:
-            return emb.weight.device
-    if hasattr(model, "device"):
-        return model.device
-    return next(model.parameters()).device
-
-
     if cuda_available:
         num_gpus = torch.cuda.device_count()
-        target_dmap = "auto" if (num_gpus > 1 and "26b" in args.model_id.lower()) else "cuda:0"
+        params_b = args.params_b if getattr(args, "params_b", None) is not None else estimate_params_b(args.model_id, target_path)
+        target_dmap = "auto" if (num_gpus > 1 and params_b >= 10.0) else "cuda:0"
         model_kwargs = {
             "quantization_config": bnb_config,
             "device_map": target_dmap,

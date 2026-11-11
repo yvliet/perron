@@ -94,7 +94,7 @@ Exposed tools:
 Perron releases documented benchmark datasets and turnkey execution notebooks:
 
 1. **SWE-bench Lexical Accessibility Strata Annotations (Primary Benchmark Resource)**:
-   - Contains 707 difficulty strata annotations ($\kappa = 0.918$), 12 CSR multigraph archives (109,240 nodes, 341,892 edges), and 27,411 scored Gemma 4 evaluations across all 344 Verified tasks.
+   - Contains 707 difficulty strata annotations (κ = 0.918), 12 CSR multigraph archives (101,397 nodes, 535,377 edges), and 27,411 scored Gemma 4 evaluations across all 344 Verified tasks.
    - Local directory: [`dist_dataset/`](dist_dataset/)
    - Kaggle Dataset: [`yvliet/swebench-strata-annotations`](https://www.kaggle.com/datasets/yvliet/swebench-strata-annotations)
    - Evaluation Parquets: [`dist_dataset/scores.parquet`](dist_dataset/scores.parquet) (19,298 rows, Gemma 4 E2B evaluations) and [`dist_dataset/gemma4_e4b_scores.parquet`](dist_dataset/gemma4_e4b_scores.parquet) (8,113 rows, Gemma 4 E4B workstation evaluations)
@@ -128,15 +128,15 @@ perron bench --method bm25 --split heldout
 
 ## 1. Problem Formulation: Hub-Node Explosion & Distractor Dilution
 
-Local code graph agents (2B–4B open-weights models operating in standardized 4-bit NF4 weights with FP16 compute kernels within $\le 9.6$ GB resident VRAM due to unquantized Per-Layer Embeddings) face two coupled bottlenecks when navigating large repositories:
+Local code graph agents (2B–4B open-weights models operating in standardized 4-bit NF4 weights with FP16 compute kernels within ≤ 9648.4 MB resident VRAM due to unquantized Per-Layer Embeddings) face two coupled bottlenecks when navigating large repositories:
 1. **Scale-Free Hub Absorption**: Standard graph walks (Personalized PageRank) concentrate probability mass in ubiquitous utility functions (`logging.getLogger`, `utils.check_type`), absorbing up to 90% of retrieval slots and yielding 0.0% Hub Suppression Index (HSI).
-2. **Distractor Dilution & Selection Conditioning**: Unpruned graph expansion introduces low-lexical-overlap neighbors that drop below the expected-rank discrimination threshold ($\text{AUC} = 0.6596 < 0.830$; by Bamber's theorem, $\mathbb{E}[\text{Rank}] = 1 + (M-1)(1 - \text{AUC})$), pushing expected target rank past the top-5 evaluation window.
+2. **Distractor Dilution & Selection Conditioning**: Unpruned graph expansion introduces low-lexical-overlap neighbors that drop below the expected-rank discrimination threshold (AUC = 0.6596 < 0.830; by Bamber's theorem, E[Rank] = 1 + (M-1)(1 - AUC)), pushing expected target rank past the top-5 evaluation window.
 
-Across the complete **N = 344 SWE-bench Verified benchmark**, Perron demonstrates that while post-walk specificity damping suppresses hub dominance (HSI@10 = 99.5%, 1.89–5.10 ms on CPU), unpruned graph expansion (A₆, 45.64%) matches depth-matched lexical retrieval (A₄ 47.09% vs BM25 45.06%, Holm p = 0.2869, exact McNemar p = 0.1435). Crucially, under SchrödingerRepo Level-2 virtual namespace bijections, Perron exhibits genuine structural invariance (+34.59 pp for PPR, +34.30 pp for Hybrid over BM25 at 0.29%, p = 0.0000\*), retaining 94.5% of natural localization power and outperforming Agentless AST skeletons by +11.34 pp (47.09% vs 35.76%, p = 0.0000\*). On UTBoost clean Stratum C tasks (N=75), graph expansion lifts Acc@5 by +8.00 pp over depth BM25 (14.67% vs 6.67%, p = 0.0312\*).
+Across the complete **N = 344 SWE-bench Verified benchmark**, Perron demonstrates that while post-walk specificity damping suppresses hub dominance (HSI@10 = 99.5%, 1.89–5.10 ms on CPU), unpruned graph expansion (A₆, 45.64%) matches depth-matched lexical retrieval (A₄ 47.09% vs BM25 45.06%, Holm p = 0.2869, exact McNemar p = 0.1435). Auditing SchrödingerRepo virtual namespace perturbations (N=344) reveals that under consistent identifier permutations (φ), topological PPR preserves 34.88% Acc@5 (120/344), matching depth-matched aligned BM25 (34.59%, 119/344, exact McNemar p = 1.0000) and retaining 94.5% of unperturbed PPR (36.92%), while unaligned queries collapse both to 1.74% and 0.87%, demonstrating that topological random walks fundamentally rely on aligned lexical teleportation priors p₀. Furthermore, auditing 1-hop graph additions (A₄ \ A₁) discloses 90.74% intra-file CSR locality (49/54) and 49.02% class-method containment edges (25/51), where 88.0% of tasks (22/25) retain genuine call relationships.
 
 Unlocking structural code graphs on local models requires operating within **scale-matched regimes**:
 - **Edge Tier (2B)**: Zero-cost inline provenance comments lift reachable Top-1 from 12.07% to 25.86% (+13.79 pp, exact McNemar p = 0.0078\*) without test-time generation latency.
-- **Workstation Tier (4B)**: Pointwise E4B log-odds scoring over pruned candidate horizons ($M = 15$, $\text{AUC}^\ast = 0.714$, $-40\%$ stub tokens) achieves true dominance: **22.90% Acc@5, 12.21% Top-1, MRR 0.1740** (paired McNemar p = 0.0129\*), eliminating listwise generative syntax failures (90.8% failure where 119/131 tasks emit zero IDs without backfill) and remaining immune to positional decay. Pairing candidate horizon pruning with short reasoning ($\le 180$ tokens) lifts listwise Top-1 from 4.58% to 9.92% (6/131 → 13/131, p = 0.0156\*) and compacts mean target rank from 5.88 → 5.32 → 3.74.
+- **Workstation Tier (4B)**: Pointwise E4B log-odds scoring over pruned candidate horizons (M = 15, AUC* = 0.714, -40% stub tokens) achieves true dominance: **22.90% Acc@5, 12.21% Top-1, MRR 0.1740** (paired McNemar p = 0.0129\*), eliminating listwise generative syntax failures (90.8% failure where 119/131 tasks emit zero IDs without backfill) and remaining immune to positional decay. Pairing candidate horizon pruning with short reasoning (≤ 180 tokens) lifts listwise Top-1 from 4.58% to 9.92% (6/131 → 13/131, p = 0.0156\*) and compacts mean target rank from 5.88 → 5.32 → 3.74.
 - **Fine-Tuned Reranking**: Clean LoRA adapters lift isolated listwise graph Top-1 from 0.0% to 24.0% (p = 0.0312\*).
 
 Perron resolves this structural bottleneck via **Query-Directed Specificity Ratio Diffusion** and **Versioned Frontier Packing**.
@@ -156,28 +156,38 @@ Hierarchical AST Breadcrumbs ←── Versioned Priority Queue ←── Compon
 ### A. Zero-Copy Static Matrix Ingestion
 Repository call, caller, inheritance MRO, and import dependencies are compiled into a static directed row-stochastic transition matrix $T \in \mathbb{R}^{|V| \times |V|}$ and serialized as raw uncompressed `.npy` arrays (`data.npy`, `indices.npy`, `indptr.npy`, `dangling.npy`):
 
-$$W_{uv} = 0.50 A^{(\text{call})}_{uv} + 0.25 A^{(\text{inherit})}_{uv} + 0.15 A^{(\text{import})}_{uv} + 0.10 A^{(\text{caller})}_{uv}$$
+$$
+W_{uv} = 0.50 A^{(\text{call})}_{uv} + 0.25 A^{(\text{inherit})}_{uv} + 0.15 A^{(\text{import})}_{uv} + 0.10 A^{(\text{caller})}_{uv}
+$$
 
-$$D_u = \sum_{v} W_{uv}, \quad T_{uv} = \begin{cases} \frac{W_{uv}}{D_u}, & D_u > 0 \\ 0, & D_u = 0 \end{cases}, \quad d_u = \begin{cases} 1.0, & D_u = 0 \\ 0.0, & D_u > 0 \end{cases}$$
+$$
+D_u = \sum_{v} W_{uv}, \quad T_{uv} = \begin{cases} \frac{W_{uv}}{D_u}, & D_u > 0 \\ 0, & D_u = 0 \end{cases}, \quad d_u = \begin{cases} 1.0, & D_u = 0 \\ 0.0, & D_u > 0 \end{cases}
+$$
 
 Loading is performed via `numpy.load(..., mmap_mode='r')` and wrapped in `scipy.sparse.csr_matrix` in **< 1.0 ms**, bypassing runtime API queries.
 
 ### B. Shift-Invariant Softmax Teleportation Prior
 Given cosine similarities $s_i = \cos(\mathbf{e}_q, \mathbf{e}_i)$ for candidate symbols, the teleportation restart vector $\mathbf{p}_0$ is computed with temperature $\tau = 0.15$ using shift-invariant log-sum-exp in `float64`:
 
-$$c = \max_j \frac{s_j}{\tau}, \quad p_0(i) = \frac{\exp\left(\frac{s_i}{\tau} - c\right)}{\sum_j \exp\left(\frac{s_j}{\tau} - c\right)}$$
+$$
+c = \max_j \frac{s_j}{\tau}, \quad p_0(i) = \frac{\exp\left(\frac{s_i}{\tau} - c\right)}{\sum_j \exp\left(\frac{s_j}{\tau} - c\right)}
+$$
 
 ### C. Sparse Personalized PageRank (PPR)
 Stationary probability distribution $\boldsymbol{\pi}_{\text{query}}$ (the Perron vector) is obtained via sparse power iteration:
 
-$$\boldsymbol{\pi}^{(t+1)} = \beta \cdot (\boldsymbol{\pi}^{(t)} T) + \left(\beta \cdot (\boldsymbol{\pi}^{(t)} \mathbf{d}) + 1 - \beta\right) \cdot \mathbf{p}_0$$
+$$
+\boldsymbol{\pi}^{(t+1)} = \beta \cdot (\boldsymbol{\pi}^{(t)} T) + \left(\beta \cdot (\boldsymbol{\pi}^{(t)} \mathbf{d}) + 1 - \beta\right) \cdot \mathbf{p}_0
+$$
 
 With damping factor $\beta = 0.85$, the spectral gap $1 - \beta = 0.15$ ensures geometric convergence within 80–100 iterations (< 3.0 ms on CPU).
 
 ### D. Specificity Ratio Hub-Damping
 To suppress ubiquitous hub nodes without altering static matrix entries, Perron compares $\boldsymbol{\pi}_{\text{query}}$ against a precomputed repository-wide stationary baseline $\boldsymbol{\pi}_{\text{global}}$ (obtained via uniform prior $\mathbf{p}_0 = \frac{1}{|V|} \mathbf{1}$):
 
-$$\text{Specificity}(v) = \frac{\pi_{\text{query}}(v)}{(\pi_{\text{global}}(v) + \epsilon)^\gamma}, \quad \gamma = 0.7, \; \epsilon = 10^{-8}$$
+$$
+\text{Specificity}(v) = \frac{\pi_{\text{query}}(v)}{(\pi_{\text{global}}(v) + \epsilon)^\gamma}, \quad \gamma = 0.7, \; \epsilon = 10^{-8}
+$$
 
 Test nodes serve as bipartite routing bridges during random walk diffusion, but are suppressed from the code context packing candidate pool.
 
@@ -187,7 +197,9 @@ Context packing extracts a connected subgraph fitting strict token limits ($K_{\
 - Target-first anchor: $t^\ast = \arg\max_{u \in C_i} \text{Specificity}(u)$.
 - Versioned greedy frontier expansion:
 
-$$\text{score}(v) = \frac{\text{Specificity}(v)}{c(v)} \cdot \left(1 + \mu \cdot \frac{|\text{edges}(v, S_i)|}{\text{deg}(v)}\right)$$
+$$
+\text{score}(v) = \frac{\text{Specificity}(v)}{c(v)} \cdot \left(1 + \mu \cdot \frac{|\text{edges}(v, S_i)|}{\text{deg}(v)}\right)
+$$
 
 Pointers are versioned `(score, v, version[v])`. Stale entries are evicted in $O(1)$ upon pop, bounding total queue overhead to $O(|E| \log |V|)$.
 
@@ -330,27 +342,31 @@ Evaluating Multi-Scale Diffusion Latency Scaling...
 ```
 
 ### SWE-bench Verified Benchmark (N = 344 Callable Tasks)
-Evaluated across all 344 callable tasks from SWE-bench Verified under frozen pointwise direct scoring and controlled context budgets ($K \le 4,096$ tokens):
+Evaluated across all 344 callable tasks from SWE-bench Verified under frozen pointwise direct scoring and controlled context budgets (K ≤ 4,096 tokens):
 
 | Retrieval & Localization Pipeline | Candidate Pool (M) | Acc@5 (Hits) | Δ vs BM25 | Statistical Significance | Hub Suppression Index (HSI@10) |
 | :--- | :---: | :---: | :---: | :---: | :---: |
-| **Depth BM25 Baseline** | 10 | 45.06% (155/344) | Ref. | Baseline reference | 0.0% |
-| **Agentless AST Skeleton Baseline** | -- | 35.76% (123/344) | -9.30 pp | Graph-free AST hierarchy (Xia et al. 2025) | -- |
-| **Perron Pointwise (A₄, 1-Hop Expansion)** | 10 | **47.09% (162/344)** | **+2.03 pp** | Step-down Holm p = 0.2869, McNemar p = 0.1435 (+11.34 pp vs Agentless, p = 0.0000\*) | **99.5%** (p < 0.001) |
-| **Perron Multi-Step Diffusion (A₆, Spectral)** | 10 | 45.64% (157/344) | +0.58 pp | Transitive distractor dilution (t ≥ 2) | **99.5%** (p < 0.001) |
-| **Top-10 Oracle Union (A₁ ∪ A₄)** | 20 | 54.36% (187/344) | +9.30 pp | Upstream boundary ceiling | **99.5%** (p < 0.001) |
+| **Depth BM25 Baseline (A₂)** | M ≤ 50 | 45.06% (155/344) | Ref. | Baseline reference | 0.0% |
+| **Perron Pointwise (A₄, 1-Hop Expansion)** | M ≤ 50 | **47.09% (162/344)** | **+2.03 pp** | Step-down Holm p = 0.2869, McNemar p = 0.1435 | **99.5%** (p < 0.001) |
+| **Perron Multi-Step Diffusion (A₆, Spectral)** | M ≤ 50 | 45.64% (157/344) | +0.58 pp | Transitive distractor dilution (t ≥ 2) | **99.5%** (p < 0.001) |
+| **Top-10 Oracle Union (A₁ ∪ A₄)** | M ≤ 50 | 54.36% (187/344) | +9.30 pp | Upstream boundary ceiling | **99.5%** (p < 0.001) |
 
-#### Structural Invariance & Benchmark De-Biasing (SchrödingerRepo & UTBoost)
+#### Audited Virtual Namespace Robustness & Pointwise Reranking Comparisons
 
 | Evaluation Dimension | Metric | Perron Graph | Baseline | Lift (Δ) | Discordant (n₁₀ / n₀₁) | Exact p-value |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: |
-| **SchrödingerRepo Topological PPR (φ Bijection)** | Acc@5 | **34.88% (120/344)** | 0.29% (1/344, BM25) | **+34.59 pp** | 119 / 0 | p = 0.0000\* |
-| **SchrödingerRepo Hybrid Diffusion (φ Bijection)** | Acc@5 | **34.59% (119/344)** | 0.29% (1/344, BM25) | **+34.30 pp** | 118 / 0 | p = 0.0000\* |
-| **UTBoost Clean Stratum C (N=75, De-Biased)** | Acc@5 | **14.67% (11/75)** | 6.67% (5/75, A₂) | **+8.00 pp** | 7 / 1 | p = 0.0312\* |
-| **Agentless AST Skeletons vs Perron A₄** | Fn Acc@5 | **47.09% (162/344)** | 35.76% (123/344) | **+11.34 pp** | 61 / 22 | p = 0.0000\* |
+| **SchrödingerRepo Topological PPR (Consistent φ)** | Acc@5 | **34.88% (120/344)** | 34.59% (119/344, BM25) | +0.29 pp | 22 / 21 | p = 1.0000 |
+| **SchrödingerRepo Hybrid Diffusion (Consistent φ)** | Acc@5 | **35.17% (121/344)** | 34.59% (119/344, BM25) | +0.58 pp | 19 / 17 | p = 0.8679 |
+| **Unperturbed Reference (O₀)** | Acc@5 | 36.92% (127/344) | 39.24% (135/344, BM25) | -2.33 pp | 26 / 34 | p = 0.3663 |
+| **Unaligned Query PPR (O₂,unaligned)** | Acc@5 | 1.74% (6/344) | 0.87% (3/344, BM25) | +0.87 pp | 4 / 1 | p = 0.3750 |
+| **Pointwise E4B A₄[:15] vs Listwise C₁ (Stratum C)** | Acc@5 | **22.90% (30/131)** | 15.27% (20/131, Listwise C₁) | **+7.63 pp** | 30 / 0 | p = 0.0129\* |
+| **Pointwise E4B A₄[:25] vs Depth BM25 A₂[:25]** | Acc@5 | 22.90% (30/131) | **23.66% (31/131, A₂[:25])** | -0.76 pp | 5 / 6 | p = 1.0000 |
+| **Pointwise E4B A₄[:15] vs Full BM25 B₀[:50]** | Acc@5 | 22.90% (30/131) | **34.35% (45/131, B₀[:50])** | -11.45 pp | 4 / 19 | p = 0.0026\* |
+| **UTBoost Clean Stratum C (A₄[:25] vs A₂[:25])** | Acc@5 | **26.67% (20/75)** | 25.33% (19/75, A₂) | +1.33 pp | 5 / 4 | p = 1.0000 |
 
-- **Virtual Namespace Invariance**: Under SchrödingerRepo Level-2 identifier permutations, lexical search collapses to 0.29% (1/344), whereas topological graph diffusion alone preserves 34.88% Acc@5 (+34.59 pp lift, p = 0.0000\*), retaining 94.5% of unperturbed localization power (36.92%, delta -2.03 pp, p = 0.4767 n.s.). This confirms that spectral code graphs capture genuine architectural geometry independent of surface naming.
-- **UTBoost Benchmark De-Biasing**: Isolates N=75 clean un-named tasks free from test-harness leakage (excluding 56 test-parser corrupted tasks touching test harnesses with 0/26 gold edits in source). Graph expansion delivers a statistically significant +8.00 pp lift over depth BM25 (14.67% vs 6.67%, p = 0.0312\*).
+- **Virtual Namespace Robustness**: Under consistent SchrödingerRepo Level-2 identifier permutations (O₂,con), topological PPR preserves 34.88% Acc@5 (120/344), matching depth-matched aligned BM25 (34.59%, 119/344, exact McNemar p = 1.0000) and retaining 94.5% of unperturbed localization power (36.92%). When queries remain unaligned with the obfuscated namespace, both collapse (1.74% for PPR, 0.87% for BM25), proving that topological walks fundamentally rely on aligned lexical teleportation priors p₀.
+- **Pointwise E4B Reranking**: On un-named Stratum C tasks (N=131), pointwise log-odds scoring overcomes generative listwise syntax collapse (90.8% failure emitting zero IDs without backfill), achieving 22.90% Acc@5 (p = 0.0129\* vs listwise C₁). Matched pool evaluations confirm that this gain stems from pointwise log-odds scoring rather than structural graph expansion (A₂[:25] hits 23.66%, B₀[:50] hits 34.35%).
+- **Intra-File Graph Locality & Containment**: Auditing A₄ \ A₁ (25 tasks) reveals that 90.74% of CSR transitions (49/54) are intra-file, 49.02% of candidate layer links (25/51) represent class-method containment, 88.0% (22/25 tasks) involve genuine functional calls, and only 12.0% (3/25 tasks) rely solely on containment.
 
 ### Four-Tier Operating Regime Unlocking Local Code Models
 
@@ -359,29 +375,29 @@ Evaluated across all 344 callable tasks from SWE-bench Verified under frozen poi
    - Selective routing (π\*) saves 31.4% downstream LLM inference compute while preserving 58.4% graph recall.
 
 2. **Edge Tier (`gemma-4-e2b-it`, 4-bit NF4 weights / FP16 compute kernels, 6.7 GB resident VRAM)**:
-   - Zero-cost inline provenance comments ($E_1$) lift reachable Top-1 localization from 12.07% to 25.86% (+13.79 pp, exact McNemar p = 0.0078\*) without test-time generation latency.
+   - Zero-cost inline provenance comments (E₁) lift reachable Top-1 localization from 12.07% to 25.86% (+13.79 pp, exact McNemar p = 0.0078\*) without test-time generation latency.
    - VRAM footprint reflects resident unquantized Per-Layer Embeddings (PLE). Unconstrained reasoning tokens on 2B trigger -42.9% drift.
 
-3. **Workstation Tier (`gemma-4-e4b-it`, 4-bit NF4 weights / FP16 compute kernels, 9.6 GB resident VRAM)**:
-   - **Pointwise E4B Dominance**: Evaluated on pruned $A_4[:15]$ pools, pointwise log-odds scoring achieves **22.90% Acc@5**, **12.21% Top-1** (16/131 hits), and **MRR 0.1740** (paired McNemar p = 0.0129\* vs listwise $C_1$, paired Wilcoxon W = 37.5, p = 0.000162\*). It eliminates listwise generative syntax failures (90.8% failure where 119/131 tasks emit zero IDs without Qiao backfill) and is immune to positional decay (75.0% and 83.3% conversion across slots).
-   - **Candidate Horizon Pruning & Reasoning**: Candidate horizon pruning ($M = 15$, $\text{AUC}^\ast = 0.714$, $-40\%$ stub tokens) paired with short reasoning ($\le 180$ tokens) lifts listwise Top-1 from 4.58% to 9.92% (6/131 → 13/131, p = 0.0156\*) and compacts mean target rank from 5.88 → 5.32 → 3.74 with zero Top-1 loss, disambiguating lexical seeds (12/28 hits) over trailing graph distractors (1/7 hits).
+3. **Workstation Tier (`gemma-4-e4b-it`, 4-bit NF4 weights / FP16 compute kernels, 9648.4 MB resident VRAM)**:
+   - **Pointwise E4B Dominance**: Evaluated on pruned A₄[:15] pools, pointwise log-odds scoring achieves **22.90% Acc@5**, **12.21% Top-1** (16/131 hits), and **MRR 0.1740** (paired McNemar p = 0.0129\* vs listwise C₁, paired Wilcoxon W = 37.5, p = 0.000162\*). It eliminates listwise generative syntax failures (90.8% failure where 119/131 tasks emit zero IDs without Qiao backfill) and is immune to positional decay (75.0% and 83.3% conversion across slots).
+   - **Candidate Horizon Pruning & Reasoning**: Candidate horizon pruning (M = 15, AUC* = 0.714, -40% stub tokens) paired with short reasoning (≤ 180 tokens) lifts listwise Top-1 from 4.58% to 9.92% (6/131 → 13/131, p = 0.0156\*) and compacts mean target rank from 5.88 → 5.32 → 3.74 with zero Top-1 loss, disambiguating lexical seeds (12/28 hits) over trailing graph distractors (1/7 hits).
 
 4. **MoE Hardware Boundary (`gemma-4-26b-a4b-it`, 52.0 GB unquantized FP16)**:
    - Isolates the local MoE execution barrier: fused 3D expert parameter tensors (`[128, d_in, d_out]`) bypass standard 2D `bitsandbytes` NF4 hooks, requiring 52.0 GB runtime VRAM and making 2B–4B PLE models the true Pareto sweet spot for single-GPU local workstations.
 
 ### Fault Localization & Context Pruning: Local Workstations vs. Cloud APIs
 
-Why focus on fault localization and context pruning? For compact models (2B–4B) running locally on consumer hardware without unconstrained cloud APIs, whole-repository context packing is the critical upstream bottleneck. Feeding hundreds of raw files into limited context windows ($K \le 4,096$ tokens) saturates memory and degrades reasoning. Perron isolates and solves this upstream localization challenge:
+Why focus on fault localization and context pruning? For compact models (2B–4B) running locally on consumer hardware without unconstrained cloud APIs, whole-repository context packing is the critical upstream bottleneck. Feeding hundreds of raw files into limited context windows (K ≤ 4,096 tokens) saturates memory and degrades reasoning. Perron isolates and solves this upstream localization challenge:
 
 | System / Architecture | Upstream Localization Primitive | Deployment Envelope | API Cost / Issue | Localization Acc@5 (Fn) | Full Resolution Scope |
 | :--- | :--- | :--- | :---: | :---: | :---: |
-| Agentless (Xia et al.) | Hierarchical AST Skeletons + BM25 | Cloud GPT-4o API | \$0.34 | 35.76% (123/344) | End-to-end repair (27.3% Pass@1) |
+| Agentless (Xia et al.) | Hierarchical AST Skeletons + BM25 | Cloud GPT-4o API | \$0.34 | -- | End-to-end repair (27.3% Pass@1) |
 | AutoCodeRover (Zhang et al.) | Dynamic AST & Spectrum Search | Cloud GPT-4 API | \$0.65 | -- | End-to-end repair (22.0% Pass@1) |
 | SWE-agent (Yang et al.) | Interactive Aider-style Tag Map | Cloud GPT-4 API | \$2.14 | 0.0% (Callable Fn) | End-to-end repair (18.0% Pass@1) |
-| **Perron Pointwise (Ours)** | **Directed CSR Spectral Diffusion + Specificity** | **Local Dual T4 / Single GPU (≤9.6 GB VRAM)** | **No API fee (Local)** | **47.09% (162/344)** | **Surgical Context Pruning (+11.34 pp vs Agentless)** |
+| **Perron Pointwise (Ours)** | **Directed CSR Spectral Diffusion + Specificity** | **Local Dual T4 / Single GPU (≤ 9648.4 MB VRAM)** | **No API fee (Local)** | **47.09% (162/344)** | **Surgical Context Pruning (47.09% Acc@5)** |
 | **Perron Pointwise E4B (Ours)** | **Bound-Pruned Log-Odds (M=15)** | **Local Gemma 4 E4B (4-bit NF4 / FP16)** | **No API fee (Local)** | **22.90% (Stratum C)** | **Un-named Defect Disambiguation (12.21% Top-1)** |
 
-*Key Takeaway*: Rather than burning \$0.34–\$2.14 per issue on unconstrained multi-turn cloud LLM queries, Perron executes query-directed spectral diffusion in 1.89–5.10 ms on local CPU ($<$3 MB RAM), providing compact 2B–4B local models with surgical AST contexts that outperform cloud-grade AST skeleton baselines by +11.34 pp (p = 0.0000\*).
+*Key Takeaway*: Rather than burning \$0.34–\$2.14 per issue on unconstrained multi-turn cloud LLM queries, Perron executes query-directed spectral diffusion in 1.89–5.10 ms on local CPU (< 3 MB RAM), providing compact 2B–4B local models with surgical AST contexts that isolate defect preimages within strict local budgets.
 
 ### Running the End-to-End Repair Evaluation
 ```bash
@@ -430,12 +446,12 @@ Perron maintains strict programmatic parity between experimental JSON/Parquet te
 | Benchmark Dimension | Empirical Metric | Sample / Stratum | Source Artifact |
 | :--- | :---: | :---: | :--- |
 | Candidate Reranking Acc@5 | 47.09% (162/344) | N=344 Verified (A4 Graph 1-hop) | `results/gemma4_protocol_tables.json` |
-| Pointwise E4B Dominance | 22.90% Acc@5, 12.21% Top-1 | N=131 Stratum C (A4[:15]) | `results/gemma4_protocol_tables.json` |
+| Pointwise E4B Dominance | 22.90% Acc@5, 12.21% Top-1 | N=131 Stratum C (A4[:15]) | `results/adr003_honest_audit_tables.json` |
 | Reasoning Factorial Acc@1 | 9.92% (13/131) | N=131 Stratum C (A4 + Thinking) | `results/gemma4_protocol_tables.json` |
-| Virtual Namespace Invariance | 34.88% Acc@5 (+34.59 pp) | N=344 SchrödingerRepo PPR | `results/gemma4_protocol_tables.json` |
-| Clean Stratum C Lift | 14.67% Acc@5 (+8.00 pp) | N=75 UTBoost De-Biased | `results/gemma4_protocol_tables.json` |
-| Agentless AST Contrast | 47.09% vs 35.76% (+11.34 pp) | N=344 Verified Matched Context | `results/gemma4_protocol_tables.json` |
-| Scaling Monotonicity ROC-AUC | 0.8544 → 0.9274 | N=58 Stratum C (2B → 4B FP16) | `results/scaling_curve_complete_results.json` |
+| Virtual Namespace Robustness | 34.88% vs 34.59% (p=1.0000) | N=344 SchrödingerRepo O2_con | `results/adr003_honest_audit_tables.json` |
+| Clean Stratum C Analysis | 26.67% vs 25.33% (p=1.0000) | N=75 UTBoost De-Biased (M=25) | `results/adr003_honest_audit_tables.json` |
+| Intra-File CSR Locality | 90.74% (49/54 intra-file edges) | N=25 A4 \ A1 Tasks | `results/adr003_honest_audit_tables.json` |
+| Scaling Monotonicity ROC-AUC | 0.8544 → 0.9274 | N=58 Stratum C (2B → 4B 4-bit NF4 / FP16) | `results/scaling_curve_complete_results.json` |
 | Leave-Django-Out Acc@5 | 34.57% (56/162) | N=162 Non-Django (A4 Graph 1-hop) | `results/gemma4_protocol_tables.json` |
 | 3-Stage Rank Compaction | 5.88 → 5.32 → 3.74 | N=131 Direct → Pruned → Thinking | `paper/main.tex` / `paper_writeup.md` |
 

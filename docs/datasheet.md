@@ -21,7 +21,7 @@ The Perron SWE-bench Strata and Repository Multigraphs dataset was created to re
 The dataset was authored and curated by Sultan Haikal (GitHub: `@yvliet`).
 
 ### Who funded the creation of the dataset?
-Independent research conducted for the Google DeepMind Gemma 4 Developer Agent competition (Track 2: Research Monograph & Resource Track). Compute resources were provided via Kaggle dual Nvidia T4 GPU hardware environments.
+Independent research conducted for the Google DeepMind Gemma 4 Developer Agent competition (Research Monograph & Resource Track). Compute resources were provided via Kaggle dual Nvidia T4 GPU hardware environments.
 
 ---
 
@@ -45,15 +45,15 @@ The 500 SWE-bench Verified instances are partitioned into a strict, mutually exc
 
 #### Component B: 12 Repository AST Multigraphs (`artifacts/swebench_graphs/`)
 Serialized as compressed SciPy CSR matrices (`*_graph.npz`, `*_layers.npz`), symbol lookup tables (`*_symbols.json`), and graph topology metadata (`*_meta.json`).
-- Total Nodes: 109,240 code entities (modules, classes, methods, functions).
-- Total Edges: 341,892 directed relations partitioned across four typed layers:
+- Total Nodes: 101,397 code entities (modules, classes, methods, functions).
+- Total Edges: 535,377 directed relations partitioned across four typed layers:
   1. `call`: Directed invocation from caller to callee.
   2. `caller`: Inverted invocation edge (callee to caller).
   3. `import`: Dependency binding from importing module to exported entity.
   4. `inherit`: Object-oriented class inheritance and interface implementation.
 - Coverage: Twelve prominent Python open-source repositories: `astropy/astropy`, `django/django`, `matplotlib/matplotlib`, `mwaskom/seaborn`, `pallets/flask`, `psf/requests`, `pydata/xarray`, `pylint-dev/pylint`, `pytest-dev/pytest`, `scikit-learn/scikit-learn`, `sphinx-doc/sphinx`, and `sympy/sympy`.
 
-#### Component C: Scored Evaluation Telemetry (`results/scores.parquet`, `results/gemma4_e4b_scores.parquet`)
+#### Component C: Scored Evaluation Telemetry (27,411 Total Evaluations across `scores.parquet` and `gemma4_e4b_scores.parquet`)
 - `scores.parquet`: 19,298 candidate-level evaluation records from Gemma 4 E2B pointwise scoring, containing columns `['instance_id', 'candidate_id', 'prompt_variant', 's', 'format_mass', 'n_prompt_tokens']`. Relational metadata (gold target indicators and lexical strata) are joined via `data/swebench_verified_gold_labels.json` and `dist_dataset/swebench_strata_annotations.jsonl`.
 - `gemma4_e4b_scores.parquet`: 8,113 candidate-level evaluation records from Gemma 4 E4B pointwise scoring across the multi-pool union on SWE-bench Verified tasks.
 

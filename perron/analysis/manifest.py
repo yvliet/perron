@@ -125,7 +125,7 @@ def generate_task_manifest(
         "dataset_name": "swebench-strata-annotations",
         "title": "SWE-bench Verified Task Attrition Manifest",
         "author": "Sultan Haikal (GitHub: @yvliet)",
-        "license": "Apache-2.0 OR CC0-1.0",
+        "license": "Apache-2.0",
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "total_unique_instances": len(unique_tasks),
         "total_verified_instances": 500,

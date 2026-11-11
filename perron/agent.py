@@ -205,7 +205,7 @@ class PerronAgent:
         new_sym_map = {item["qualified_name"]: item for item in collector.symbols_raw}
 
         # Update existing symbols for this file in-place.
-        # INVARIANT (EPITAPH-020, EPITAPH-028): Topology is strictly frozen at N_0.
+        # INVARIANT (system_invariants): Topology is strictly frozen at N_0.
         # Memory-mapped CSR arrays cannot be resized dynamically without memory bloat (>12GB)
         # or dimension mismatch in sparse power iteration (pi @ t_matrix). Newly synthesized
         # inner functions/methods are absorbed into their parent class/function symbol spans;

@@ -4906,6 +4906,381 @@
       "file": "results/strata_human_validation.json",
       "ptr": "/chance_agreement_pe",
       "fmt": "pct1"
+    },
+    "HonestNaturalOZeroBMTwentyFiveAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/fixed_e5_retrieval/natural_o0/bm25/pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestNaturalOZeroPPRAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/fixed_e5_retrieval/natural_o0/ppr/pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestNaturalOZeroHybridAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/fixed_e5_retrieval/natural_o0/hybrid/pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestNaturalOZeroPPRPval": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/fixed_e5_retrieval/natural_o0/ppr_vs_bm25/p_exact",
+      "fmt": "pval4"
+    },
+    "HonestNaturalOZeroHybridPval": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/fixed_e5_retrieval/natural_o0/hybrid_vs_bm25/p_exact",
+      "fmt": "pval4"
+    },
+    "HonestLevelTwoConsistentBMTwentyFiveAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/fixed_e5_retrieval/level2_consistent_phi_o2/bm25/pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestLevelTwoConsistentPPRAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/fixed_e5_retrieval/level2_consistent_phi_o2/ppr/pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestLevelTwoConsistentHybridAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/fixed_e5_retrieval/level2_consistent_phi_o2/hybrid/pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestLevelTwoConsistentPPRPval": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/fixed_e5_retrieval/level2_consistent_phi_o2/ppr_vs_bm25/p_exact",
+      "fmt": "pval4"
+    },
+    "HonestLevelTwoConsistentHybridPval": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/fixed_e5_retrieval/level2_consistent_phi_o2/hybrid_vs_bm25/p_exact",
+      "fmt": "pval4"
+    },
+    "HonestLevelTwoConsistentPPRRetentionPct": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/fixed_e5_retrieval/level2_consistent_phi_o2/ppr_retention_pct",
+      "fmt": "pct1_raw"
+    },
+    "HonestLevelTwoConsistentBMTwentyFiveRetentionPct": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/fixed_e5_retrieval/level2_consistent_phi_o2/bm25_retention_pct",
+      "fmt": "pct1_raw"
+    },
+    "HonestLevelTwoUnalignedBMTwentyFiveAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/fixed_e5_retrieval/level2_unaligned_query_o2/bm25/pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestLevelTwoUnalignedPPRAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/fixed_e5_retrieval/level2_unaligned_query_o2/ppr/pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestLevelTwoUnalignedHybridAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/fixed_e5_retrieval/level2_unaligned_query_o2/hybrid/pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestEFourBATwoTwentyFiveAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/full_stratum_c_131/A2_m25/acc5_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestEFourBAFourTwentyFiveAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/full_stratum_c_131/A4_m25/acc5_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestEFourBBZeroFiftyAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/full_stratum_c_131/B0_m50/acc5_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestEFourBATwoTwentyFiveTopOne": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/full_stratum_c_131/A2_m25/top1_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestEFourBAFourTwentyFiveTopOne": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/full_stratum_c_131/A4_m25/top1_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestEFourBAFourFifteenAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/full_stratum_c_131/A4_m15/acc5_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestEFourBAFourFifteenTopOne": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/full_stratum_c_131/A4_m15/top1_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestEFourBAFourFifteenMRR": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/full_stratum_c_131/A4_m15/mrr",
+      "fmt": "num4"
+    },
+    "HonestEFourBAFourVsATwoTwentyFivePval": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/mcnemar_tests_131/a4_vs_a2_m25/p_exact",
+      "fmt": "pval4"
+    },
+    "HonestEFourBAFourVsATwoFifteenPval": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/mcnemar_tests_131/a4_vs_a2_m15/p_exact",
+      "fmt": "pval4"
+    },
+    "HonestEFourBBZeroVsAFourFifteenPval": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/mcnemar_tests_131/b0_vs_a4_m15/p_exact",
+      "fmt": "pval4"
+    },
+    "HonestCleanSeventyFiveAFourTwentyFiveAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/clean_utboost_75/arms/A4_m25/acc5_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestCleanSeventyFiveATwoTwentyFiveAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/clean_utboost_75/arms/A2_m25/acc5_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestCleanSeventyFiveAFourFifteenAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/clean_utboost_75/arms/A4_m15/acc5_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestCleanSeventyFiveATwoFifteenAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/clean_utboost_75/arms/A2_m15/acc5_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestCleanSeventyFiveAFourFifteenTopOne": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/clean_utboost_75/arms/A4_m15/top1_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestCleanSeventyFiveMFifteenPval": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/clean_utboost_75/mcnemar_m15/p_exact",
+      "fmt": "pval4"
+    },
+    "HonestCleanSeventyFiveMTwentyFivePval": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/clean_utboost_75/mcnemar_m25/p_exact",
+      "fmt": "pval4"
+    },
+    "HonestReachableFiftyEightAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/reachable_stratum_c/bundle_gold_mask_58/acc5_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestReachableFiftyEightMeanAUC": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/reachable_stratum_c/bundle_gold_mask_58/mean_auc",
+      "fmt": "num4"
+    },
+    "HonestReachableFiftyNineAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/reachable_stratum_c/parquet_is_gold_59/acc5_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestReachableFiftyNineMeanAUC": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/replayed_gemma4_e4b/reachable_stratum_c/parquet_is_gold_59/mean_auc",
+      "fmt": "num4"
+    },
+    "HonestContainmentGlobalFraction": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/global_layer_containment/containment_fraction_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestContainmentTotalCalls": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/global_layer_containment/total_call_edges",
+      "fmt": "thousands"
+    },
+    "HonestContainmentCtoMCalls": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/global_layer_containment/class_to_method_call_containment",
+      "fmt": "thousands"
+    },
+    "HonestContainmentOneHopTotal": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/n344_1hop_edges/total_edges",
+      "fmt": "int"
+    },
+    "HonestContainmentOneHopEdges": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/n344_1hop_edges/containment_edges",
+      "fmt": "int"
+    },
+    "HonestContainmentOneHopPct": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/n344_1hop_edges/containment_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestContainmentOneHopCrossFile": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/n344_1hop_edges/cross_file",
+      "fmt": "int"
+    },
+    "HonestContainmentOneHopCrossFilePct": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/n344_1hop_edges/cross_file_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestContainmentOneHopIntraFile": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/n344_1hop_edges/intra_file_total",
+      "fmt": "int"
+    },
+    "HonestContainmentOneHopIntraFilePct": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/n344_1hop_edges/intra_file_total_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestContainmentAFourMinusAOneCsrTotal": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/a4_minus_a1_tasks/csr_edges_total",
+      "fmt": "int"
+    },
+    "HonestContainmentAFourMinusAOneCsrIntra": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/a4_minus_a1_tasks/csr_intra_file",
+      "fmt": "int"
+    },
+    "HonestContainmentAFourMinusAOneCsrIntraPct": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/a4_minus_a1_tasks/csr_intra_file_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestContainmentAFourMinusAOneLayerTotal": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/a4_minus_a1_tasks/layer_edges_total",
+      "fmt": "int"
+    },
+    "HonestContainmentAFourMinusAOneLayerEdges": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/a4_minus_a1_tasks/layer_containment_edges",
+      "fmt": "int"
+    },
+    "HonestContainmentAFourMinusAOneLayerPct": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/a4_minus_a1_tasks/layer_containment_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestContainmentAFourMinusAOneSoleTasks": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/a4_minus_a1_tasks/sole_containment_tasks",
+      "fmt": "int"
+    },
+    "HonestContainmentAFourMinusAOneSolePct": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/a4_minus_a1_tasks/sole_containment_pct",
+      "fmt": "pct1_raw"
+    },
+    "HonestContainmentAFourMinusAOneGenuineTasks": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/a4_minus_a1_tasks/genuine_calls_callers_tasks",
+      "fmt": "int"
+    },
+    "HonestContainmentAFourMinusAOneGenuinePct": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/a4_minus_a1_tasks/genuine_calls_callers_pct",
+      "fmt": "pct1_raw"
+    },
+    "HonestContainmentExcludedAblationDelta": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/containment_excluded_ablation/perron_static_r10/mcnemar/delta_pp",
+      "fmt": "pct2_raw"
+    },
+    "HonestMcpColdStartupS": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/mcp_latency_benchmarks/baseline_cold_startup_s",
+      "fmt": "s2"
+    },
+    "HonestMcpColdStartupMs": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/mcp_latency_benchmarks/baseline_cold_startup_ms",
+      "fmt": "ms1"
+    },
+    "HonestMcpWarmDiffusionMinMs": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/mcp_latency_benchmarks/warm_csr_diffusion_ms/baseline_min",
+      "fmt": "ms2"
+    },
+    "HonestMcpWarmDiffusionMaxMs": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/mcp_latency_benchmarks/warm_csr_diffusion_ms/baseline_max",
+      "fmt": "ms2"
+    },
+    "HonestSpectralUndirectedHKTOneAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/spectral_and_demotion_metrics/undirected_hk_t1_r5/pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestSpectralPerronStaticAccFive": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/spectral_and_demotion_metrics/undirected_hk_t1_r5/vs_perron_static/perron_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestSpectralDeltaPP": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/spectral_and_demotion_metrics/undirected_hk_t1_r5/vs_perron_static/delta_pp",
+      "fmt": "delta_pp"
+    },
+    "HonestSpectralHolmPval": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/spectral_and_demotion_metrics/undirected_hk_t1_r5/vs_perron_static/p_holm",
+      "fmt": "pval4"
+    },
+    "HonestDemotionDegOneFourImprovedPct": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/spectral_and_demotion_metrics/pdn_hub_demotion/deg_1_4/improved_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestDemotionDegGeTwentyDemotedPct": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/spectral_and_demotion_metrics/pdn_hub_demotion/deg_ge_20/demoted_pct",
+      "fmt": "pct2_raw"
+    },
+    "HonestCausalCommentHolmPval": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/spectral_and_demotion_metrics/causal_comment_ablation/e0_vs_e1_top1_holm_p",
+      "fmt": "pval4"
+    },
+    "HonestContainmentOneHopFrac": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/n344_1hop_edges/containment_edges",
+      "fmt": "kn",
+      "n_ptr": "/containment_decomposition/n344_1hop_edges/total_edges"
+    },
+    "HonestContainmentAFourMinusAOneLayerFrac": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/a4_minus_a1_tasks/layer_containment_edges",
+      "fmt": "kn",
+      "n_ptr": "/containment_decomposition/a4_minus_a1_tasks/layer_edges_total"
+    },
+    "HonestContainmentAFourMinusAOneSoleFrac": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/a4_minus_a1_tasks/sole_containment_tasks",
+      "fmt": "kn",
+      "n_ptr": "/containment_decomposition/a4_minus_a1_tasks/n_tasks"
+    },
+    "HonestContainmentAFourMinusAOneGenuineFrac": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/a4_minus_a1_tasks/genuine_calls_callers_tasks",
+      "fmt": "kn",
+      "n_ptr": "/containment_decomposition/a4_minus_a1_tasks/n_tasks"
+    },
+    "HonestContainmentAFourMinusAOneCsrIntraFrac": {
+      "file": "results/adr003_honest_audit_tables.json",
+      "ptr": "/containment_decomposition/a4_minus_a1_tasks/csr_intra_file",
+      "fmt": "kn",
+      "n_ptr": "/containment_decomposition/a4_minus_a1_tasks/csr_edges_total"
     }
   }
 }

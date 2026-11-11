@@ -70,6 +70,7 @@ FORMATS = {
     "ms1": lambda v, n: f"{v:.1f}~ms",
     "ms2": lambda v, n: f"{v:.2f}~ms",
     "s1": lambda v, n: f"{v:.1f}~s",
+    "s2": lambda v, n: f"{v:.2f}~s",
 }
 N_REQUIRED = {"pct_kn", "frac", "kn"}
 

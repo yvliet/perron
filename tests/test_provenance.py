@@ -114,3 +114,59 @@ def test_provenance_resolver_real_astropy():
     assert prov.edge_type == EdgeType.CALLS_SEED
     assert prov.seed_symbol_id == 15227
     assert prov.seed_identifier == "where_not_allclose"
+
+
+def test_edge_type_containment_labels():
+    assert EdgeType.CONTAINMENT.to_human_label() == "Defined inside seed class"
+    assert EdgeType.CONTAINS_SEED.to_human_label() == "Enclosing class of seed method"
+
+
+def test_symbol_provenance_containment_formatting():
+    prov = SymbolProvenance(
+        edge_type=EdgeType.CONTAINMENT,
+        seed_symbol_id=5,
+        seed_identifier="BaseService",
+        seed_file_path="services/base.py",
+        hops=1,
+    )
+    cmt = prov.format_comment()
+    assert "# Provenance: Defined inside seed class 'BaseService'" in cmt
+    assert "(services/base.py)" in cmt
+
+
+def test_provenance_resolver_containment_vs_call(tmp_path: Path):
+    """
+    Verifies that class-to-method containment pairs are categorized as CONTAINMENT
+    rather than mislabeled as 'Called by seed function'.
+    """
+    repo_slug = "test__repo"
+    symbols = [
+        {"id": 0, "identifier": "MyClass", "file_path": "mod.py", "symbol_type": "class"},
+        {"id": 1, "identifier": "MyClass.run", "file_path": "mod.py", "symbol_type": "method", "parent_class": "MyClass"},
+        {"id": 2, "identifier": "caller_func", "file_path": "other.py", "symbol_type": "function"},
+        {"id": 3, "identifier": "callee_func", "file_path": "other.py", "symbol_type": "function"},
+    ]
+    call_edges = np.array([[0, 1], [2, 3]], dtype=np.int64)
+
+    np.savez(tmp_path / f"{repo_slug}_layers.npz", call_edges=call_edges)
+    (tmp_path / f"{repo_slug}_symbols.json").write_text(json.dumps(symbols), encoding="utf-8")
+
+    resolver = ProvenanceResolver(graphs_dir=tmp_path)
+
+    # 1. Seed is class (0), candidate is method (1) -> CONTAINMENT
+    prov_containment = resolver.resolve(candidate_symbol_id=1, seed_symbol_ids={0}, repo_slug=repo_slug)
+    assert prov_containment.edge_type == EdgeType.CONTAINMENT
+    assert prov_containment.seed_identifier == "MyClass"
+    assert "Defined inside seed class" in prov_containment.format_comment()
+    assert "Called by seed function" not in prov_containment.format_comment()
+
+    # 2. Seed is method (1), candidate is class (0) -> CONTAINS_SEED
+    prov_enclosing = resolver.resolve(candidate_symbol_id=0, seed_symbol_ids={1}, repo_slug=repo_slug)
+    assert prov_enclosing.edge_type == EdgeType.CONTAINS_SEED
+    assert prov_enclosing.seed_identifier == "MyClass.run"
+    assert "Enclosing class of seed method" in prov_enclosing.format_comment()
+
+    # 3. Seed is function (2), candidate is callee function (3) -> CALLED_BY_SEED
+    prov_call = resolver.resolve(candidate_symbol_id=3, seed_symbol_ids={2}, repo_slug=repo_slug)
+    assert prov_call.edge_type == EdgeType.CALLED_BY_SEED
+    assert "Called by seed function" in prov_call.format_comment()

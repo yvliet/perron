@@ -6,7 +6,7 @@
 - **Timestamp**: October 12, 2026
 - **Status**: Pre-Registered & Locked Prior to Experimental Execution
 - **Target Research Scope**: Gemma 4 Developer Agent Technical Report
-- **Primary Evaluator Alignment**: Graph-ML Peer Review Criteria (Bryan Perozzi, Benedek Rózemberczki, Mikhail Galkin)
+- **Primary Evaluator Alignment**: Graph-ML Peer Review Criteria
 
 ---
 

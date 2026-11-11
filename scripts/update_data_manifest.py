@@ -73,8 +73,8 @@ def update_manifest():
         "swebench_verified_callable": 344,
         "swebench_lite_total": 300,
         "total_graph_repositories": 12,
-        "total_graph_nodes": 109240,
-        "total_graph_edges": 341892,
+        "total_graph_nodes": 101397,
+        "total_graph_edges": 535377,
         "inter_annotator_validation": {
             "sample_size": human_val["sample_size"],
             "human_concordance_pct": human_val["human_concordance_pct"],

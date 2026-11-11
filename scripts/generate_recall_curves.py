@@ -9,7 +9,7 @@ for developer agents on SWE-bench tasks across four canonical retrieval strategi
 3. Perron Static (gamma = 0.70 Decoupled Specificity)
 4. Slot-Fused (8 BM25 + 2 Perron structural slots)
 
-Pins SOURCE_DATE_EPOCH for byte-reproducible PDF rendering (EPITAPH-105).
+Pins SOURCE_DATE_EPOCH for byte-reproducible PDF rendering (system_invariants).
 Adheres to academic-viz-stats guidelines with Okabe-Ito color palette and publication styling.
 
 Author: Sultan Haikal (GitHub: @yvliet)
@@ -26,7 +26,7 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
-# Pin SOURCE_DATE_EPOCH for deterministic PDF generation (EPITAPH-105)
+# Pin SOURCE_DATE_EPOCH for deterministic PDF generation (system_invariants)
 os.environ["SOURCE_DATE_EPOCH"] = "1790812800"
 
 import matplotlib

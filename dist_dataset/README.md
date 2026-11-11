@@ -1,7 +1,7 @@
 # SWE-bench Lexical Accessibility Strata Annotations & Evaluation Parquet
 
 ## Overview
-This dataset provides per-instance lexical accessibility stratification across 800 benchmark runs (707 unique software engineering task instances across SWE-bench Lite and SWE-bench Verified) alongside 19,298 neural evaluation records from the Perron study.
+This dataset provides per-instance lexical accessibility stratification across 800 benchmark runs (707 unique software engineering task instances across SWE-bench Lite and SWE-bench Verified) alongside 27,411 neural evaluation records from the Perron study (19,298 Gemma 4 E2B evaluations in `scores.parquet` and 8,113 Gemma 4 E4B evaluations in `gemma4_e4b_scores.parquet`).
 Authored by Sultan Haikal (@yvliet) as part of the Perron spectral diffusion framework for Google DeepMind's Gemma 4 Developer Agent challenge.
 
 ## Motivation & Problem Statement
@@ -50,7 +50,7 @@ Programmatic verification is enforced via Gate 20 of `scripts/verify_paper.py`, 
 - **Total Annotated Instances**: 800 (707 unique task instances)
 - **SWE-bench Lite Coverage**: 300 instances
 - **SWE-bench Verified Coverage**: 500 instances
-- **Total Empirical Evaluation Records**: 19,298 rows (`scores.parquet`)
+- **Total Empirical Evaluation Records**: 27,411 rows across `scores.parquet` (19,298 rows) and `gemma4_e4b_scores.parquet` (8,113 rows)
 - **Stratum Distribution**:
   - Stratum A: ~38%
   - Stratum B: ~18%

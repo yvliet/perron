@@ -5,11 +5,11 @@ Audits:
 1. RFC 8259 Compliance: Unreachable distances serialize to JSON null, zero unquoted Infinity/NaN literals.
 2. Compound Primary Key Uniqueness: (instance_id, benchmark) across 800 records; 707 unique tasks; 93 overlap.
 3. CONSORT Waterfall MECE Partition: 344 + 93 + 56 + 7 == 500 Verified tasks.
-4. Frozen Table 5 Parity (EPITAPH-109): Exactly N_A=208, N_B=5, N_C=131 on callable Verified.
+4. Frozen Table 5 Parity (boundary_invariants): Exactly N_A=208, N_B=5, N_C=131 on callable Verified.
 5. Task Manifest Production Verification: data_release/task_manifest.json schema and counts.
 6. Dynamic Hub-Pruned BFS Algorithm: Prunes intermediate hubs while preserving endpoint reachability.
 7. Multi-Target Vector Reduction: Evaluates min_hop and mean_hop aggregation guards.
-8. Read-Only Gate (EPITAPH-100): Zero disk mutations on tracked repository files.
+8. Read-Only Gate (execution_environment): Zero disk mutations on tracked repository files.
 
 License: Apache-2.0
 Author: Sultan Haikal (GitHub: @yvliet)
@@ -101,7 +101,7 @@ def test_compound_primary_key_uniqueness() -> None:
 
 
 # =========================================================================
-# 3. Frozen Table 5 Parity (EPITAPH-109)
+# 3. Frozen Table 5 Parity (boundary_invariants)
 # =========================================================================
 
 def test_frozen_table5_legacy_strata_concordance() -> None:

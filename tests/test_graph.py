@@ -282,3 +282,32 @@ def test_inheritance_edges_do_not_leak_into_call_edges(tmp_path: Path):
     # Inheritance MUST NOT be in call_edges or caller_edges
     assert (derived_id, base_id) not in call_edges
     assert (base_id, derived_id) not in caller_edges
+
+
+def test_extract_repository_graph_include_containment(tmp_path: Path):
+    """
+    Verifies that include_containment=True includes class-to-method edges in call_edges
+    and include_containment=False isolates genuine call edges without containment edges.
+    """
+    src = (
+        "class Worker:\n"
+        "    def run(self):\n"
+        "        return 1\n"
+    )
+    (tmp_path / "worker.py").write_text(src, encoding="utf-8")
+
+    # 1. Default (include_containment=True)
+    syms_with, calls_with, callers_with, can_to_id, _ = extract_repository_graph(
+        tmp_path, include_containment=True
+    )
+    class_id = can_to_id["worker.py::Worker"]
+    method_id = can_to_id["worker.py::Worker.run"]
+    assert (class_id, method_id) in calls_with
+    assert (method_id, class_id) in callers_with
+
+    # 2. Ablated containment (include_containment=False)
+    syms_without, calls_without, callers_without, _, _ = extract_repository_graph(
+        tmp_path, include_containment=False
+    )
+    assert (class_id, method_id) not in calls_without
+    assert (method_id, class_id) not in callers_without
