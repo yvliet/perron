@@ -151,6 +151,12 @@ Global Baseline π_global ──────────────────
 Hierarchical AST Breadcrumbs ←── Versioned Priority Queue ←── Component-Budget Partition
 ```
 
+<p align="center">
+  <img src="paper/figures/perron_provenance_pipeline.png" alt="Figure 1: Perron Architecture and Provenance Pipeline" width="94%">
+  <br>
+  <em><b>Figure 1:</b> Architectural overview of the Perron retrieval and provenance pipeline. Offline zero-copy CSR compilation of Python AST multigraphs enables sub-millisecond sparse power iteration under Doeblin contraction, followed by specificity-ratio hub damping and provenance serialization for local Gemma 4 agent localization.</em>
+</p>
+
 ## 2. Mathematical Architecture
 
 ### A. Zero-Copy Static Matrix Ingestion
@@ -202,6 +208,12 @@ $$
 $$
 
 Pointers are versioned `(score, v, version[v])`. Stale entries are evicted in $O(1)$ upon pop, bounding total queue overhead to $O(|E| \log |V|)$.
+
+<p align="center">
+  <img src="paper/figures/breakeven_discrimination_bound.png" alt="Figure 3: First-Moment Expected-Rank Identity and Discrimination Bound" width="95%">
+  <br>
+  <em><b>Figure 3:</b> First-moment expected-rank identity, selection conditioning deficit, and scaling surface. Demonstrates the mathematical breakeven bound $AUC^* \ge 1 - (k-1)/(M-1)$ where dense graph distractors invert candidate ordering in compact local models without candidate pruning.</em>
+</p>
 
 ## 3. Project Structure
 
@@ -350,6 +362,12 @@ Evaluated across all 344 callable tasks from SWE-bench Verified under frozen poi
 | **Perron Pointwise (A₄, 1-Hop Expansion)** | M ≤ 50 | **47.09% (162/344)** | **+2.03 pp** | Step-down Holm p = 0.2869, McNemar p = 0.1435 | **99.5%** (p < 0.001) |
 | **Perron Multi-Step Diffusion (A₆, Spectral)** | M ≤ 50 | 45.64% (157/344) | +0.58 pp | Transitive distractor dilution (t ≥ 2) | **99.5%** (p < 0.001) |
 | **Top-10 Oracle Union (A₁ ∪ A₄)** | M ≤ 50 | 54.36% (187/344) | +9.30 pp | Upstream boundary ceiling | **99.5%** (p < 0.001) |
+
+<p align="center">
+  <img src="paper/figures/localization_attrition.png" alt="Figure 5: Candidate Localization Pipeline Attrition" width="90%">
+  <br>
+  <em><b>Figure 5:</b> Candidate localization pipeline attrition across 344 SWE-bench Verified tasks. Upstream boundary retrieval loss (41.6 pp) exceeds downstream LLM compaction loss (11.3 pp) by a factor of 3.68×, showing that candidate horizon pruning rather than unconstrained expansion is necessary for small models.</em>
+</p>
 
 #### Audited Virtual Namespace Robustness & Pointwise Reranking Comparisons
 
